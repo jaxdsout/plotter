@@ -1,0 +1,22 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.nav_button {
+    margin-left: 1rem;
+}
+
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
