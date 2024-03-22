@@ -1,3 +1,5 @@
+/* HEADER */
+
 .header {
     display: flex;
     flex-direction: row;
@@ -5,12 +7,23 @@
     padding-top: 2rem;
     padding-left: 2rem;
     padding-right: 2rem;
+    background-color: lightgrey;
+}
+
+h1 {
+    color:darkslategrey;
+    text-transform: lowercase;
+    font-weight: bolder !important;
 }
 
 .nav_button {
     margin-left: 1rem;
+    background-color:darkslategrey;
+    border: .15rem solid white;
 }
 
+
+/* FOOTER */
 
 .footer {
     display: flex;
@@ -19,4 +32,9 @@
     padding-top: 2rem;
     padding-left: 2rem;
     padding-right: 2rem;
+    background-color: rgb(225, 225, 225);
+}
+
+.iglogo {
+    width: 3rem !important;
 }

@@ -1,13 +1,13 @@
 import './App.css';
 import Header from './partials/Header';
 import Footer from './partials/Footer';
+import AgentHome from './pages/AgentHome';
+import ClientForm from './components/ClientForm'
+import ListForm from './components/ListForm';
 
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-
-// import React, {useState, useEffect, useCallback} from 'react';
-// import {Route, Routes, useNavigate} from 'react-router-dom';
 
 const API_url = 'http://localhost:8000/plotter';
 
@@ -31,15 +31,17 @@ function App() {
   return (
     <div>
       <Header />
-      <div>
-      {agents.map((agent) => (
-        <ul key={agent.id}>
-          <li className="">
-            <Link to={`/agents/${agent.id}`}>{agent.first_name}</Link>
-          </li>
-        </ul>
-      ))}
-      </div>
+      <Routes>
+        <Route path="/" element={
+          <AgentHome />
+        }/>
+        <Route path='/clients/create/' element={
+          <ClientForm />
+        }/>
+        <Route path='/lists/create/' element={
+          <ListForm />
+        }/>
+      </Routes>
       <Footer />
     </div>
   );
