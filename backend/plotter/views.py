@@ -4,8 +4,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import AllowAny
 
 
-from .models import Agent, Client, List, Option, Detail
-from .serializers import AgentSerializer, ClientSerializer, ListSerializer, OptionSerializer, DetailSerializer
+from .models import Agent, Client, List, Option
+from .serializers import AgentSerializer, ClientSerializer, ListSerializer, OptionSerializer
 
 class AgentViewSet(viewsets.ModelViewSet):
     queryset = Agent.objects.all()
@@ -28,10 +28,4 @@ class ListViewSet(viewsets.ModelViewSet):
 class OptionViewSet(viewsets.ModelViewSet):
     queryset = Option.objects.all()
     serializer_class = OptionSerializer
-    parser_classes = [MultiPartParser, FormParser]
-
-
-class DetailViewSet(viewsets.ModelViewSet):
-    queryset = Detail.objects.all()
-    serializer_class = DetailSerializer
     parser_classes = [MultiPartParser, FormParser]

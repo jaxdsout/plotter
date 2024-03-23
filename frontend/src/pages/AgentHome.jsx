@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 function AgentHome () {
 
-
     return (
         <div className="agent_homepage">
             <div className="lists container">

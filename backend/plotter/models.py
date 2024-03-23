@@ -40,13 +40,12 @@ class Option(models.Model):
     property_name = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
     geo_coordinates = models.CharField(max_length=50)
-    list = models.ForeignKey(List, on_delete=models.CASCADE, related_name='options')
-
-class Detail(models.Model):
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.IntegerField()
     unit_number = models.CharField(max_length=20)
     layout = models.CharField(max_length=50)
     sq_ft = models.PositiveIntegerField()
-    date_available = models.DateField()
+    date_available = models.DateField(blank=True)
     notes_specials = models.TextField('Notes / Specials', blank=True)
-    option = models.ForeignKey(Option, on_delete=models.CASCADE, related_name='details')
+    list = models.ForeignKey(List, on_delete=models.CASCADE, related_name='options')
+
+    

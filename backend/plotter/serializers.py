@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Agent, Client, List, Option, Detail
+from .models import Agent, Client, List, Option
 
 class AgentSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
@@ -47,13 +47,7 @@ class OptionSerializer(serializers.HyperlinkedModelSerializer):
             'address',
             'geo_coordinates',
             'list',
-            'details'
-        )
-
-class DetailSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Detail
-        fields = (
+            'details',
             'price',
             'unit_number',
             'layout',
