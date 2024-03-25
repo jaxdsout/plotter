@@ -22,7 +22,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'djoser',
-    'users',
     'rest_framework',
     'rest_framework.authtoken',
     'plotter'
@@ -102,14 +101,14 @@ REST_FRAMEWORK = {
     ],
 }
 
-AUTH_USER_MODEL='users.User'
+AUTH_USER_MODEL='plotter.Agent'
 
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'SERIALIZERS': {
-        'user_create': 'users.serializers.UserCreateSerializer',
-        'user': 'users.serializers.UserCreateSerializer'
+        'agent_create': 'plotter.serializers.AgentSerializer',
+        'agent': 'plotter.serializers.AgentSerializer'
     }
 }
 

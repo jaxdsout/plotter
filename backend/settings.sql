@@ -1,3 +1,3 @@
-CREATE DATABASE plotplot;
-CREATE USER plotplotuser WITH PASSWORD 'plotter123';
-GRANT ALL PRIVILEGES ON DATABASE plotplot TO plotplotuser;
+CREATE DATABASE plotplotplot;
+CREATE USER plotplotplotuser WITH PASSWORD 'plotter123';
+GRANT ALL PRIVILEGES ON DATABASE plotplotplot TO plotplotplotuser;

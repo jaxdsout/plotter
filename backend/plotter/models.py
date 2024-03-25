@@ -1,29 +1,17 @@
 from django.db import models
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.models import AbstractUser
+
+class Agent(AbstractUser):
+    email = models.EmailField(unique=True)
+    trec_id = models.CharField(unique=True, max_length=6)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'trec_id', 'username']
+   
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
 
 
-class Agent(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.EmailField(blank=True)
-    phone_number = models.CharField(max_length=20, blank=True)
-    trec_id = models.IntegerField('TREC ID')
-    password = models.CharField(max_length=128)
-
-    def set_password(self, raw_password):
-        self.password = make_password(raw_password)
-
-    def check_password(self, raw_password):
-        return check_password(raw_password, self.password)
-    
-    def save(self, *args, **kwargs):
-        if not self.password.startswith('pbkdf2_sha256$'):
-            self.set_password(self.password)
-        super().save(*args, **kwargs)
-
-    def __str__(self) -> str:
-        return f"{self.first_name} {self.last_name}"
-        
 class Client(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(blank=True)

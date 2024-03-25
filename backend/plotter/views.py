@@ -15,16 +15,6 @@ class AgentViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=201, headers=headers)
-    
-    def perform_create(self, serializer):
-        serializer.save()
-
 class LoginView (APIView):
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 

@@ -2,8 +2,6 @@ from rest_framework import serializers
 from .models import Agent, Client, List, Option
 
 class AgentSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField()
-
     class Meta:
         model = Agent
         fields = (
@@ -11,7 +9,6 @@ class AgentSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'email', 
-            'phone_number',
             'trec_id',
             'password'
         )
