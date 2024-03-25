@@ -8,9 +8,10 @@ class AgentSerializer(serializers.ModelSerializer):
         model = Agent
         fields = (
             'id', 
-            'email', 
             'first_name',
             'last_name',
+            'email', 
+            'phone_number',
             'trec_id',
             'password'
         )

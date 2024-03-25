@@ -2,12 +2,15 @@ import './App.css';
 import Header from './partials/Header';
 import Footer from './partials/Footer';
 import AgentHome from './pages/AgentHome';
+import Landing from './pages/Landing';
 import ClientForm from './components/ClientForm'
 import CreateList from './pages/CreateList';
+import AgentForm from './components/AgentForm';
 
 import axios from 'axios';
 import { useNavigate, Link, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import LoginForm from './components/LoginForm';
 
 const API_url = 'http://localhost:8000/plotter';
 
@@ -50,16 +53,25 @@ function App() {
     <div>
       <Header />
       <Routes>
-        <Route path="/" element={
+        <Route path="" element={
+          <Landing />
+        }/>
+        <Route path="/signup/" element={
+          <AgentForm />
+        } />
+        <Route path="/login/" element={
+          <LoginForm />
+        } />
+        <Route path="/agent/home" element={
           <AgentHome />
         }/>
-        <Route path='/clients/create/' element={
+        <Route path='/agent/home/create-client' element={
           <ClientForm 
             handleChange={handleChange}
             handleSubmit={handleSubmit}
             clientForm={clientForm}/>
         }/>
-        <Route path='/lists/create/' element={
+        <Route path='/agent/home/create-list' element={
           <CreateList />
         }/>
       </Routes>
