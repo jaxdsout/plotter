@@ -6,28 +6,32 @@ from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from django.contrib.auth import authenticate
 
-from .models import Agent, Client, List, Option
-from .serializers import AgentSerializer, ClientSerializer, ListSerializer, OptionSerializer
+from .models import User, Client, List, Option
+from .serializers import UserSerializer, ClientSerializer, ListSerializer, OptionSerializer, LoginSerializer
 
-class AgentViewSet(viewsets.ModelViewSet):
-    queryset = Agent.objects.all()
-    serializer_class = AgentSerializer
-    permission_classes = [AllowAny]
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
 class LoginView (APIView):
+    serializer_class = LoginSerializer
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def post(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
-        user = authenticate(email=email, password=password)
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            email = request.data.get('email')
+            password = request.data.get('password')
+            user = authenticate(email=email, password=password)
 
-        if user:
-            token, _ = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key}, status=status.HTTP_200_OK)
+            if user:
+                token, _ = Token.objects.get_or_create(user=user)
+                return Response({'token': token.key}, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
         else:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()

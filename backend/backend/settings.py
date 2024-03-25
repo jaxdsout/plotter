@@ -101,14 +101,14 @@ REST_FRAMEWORK = {
     ],
 }
 
-AUTH_USER_MODEL='plotter.Agent'
+AUTH_USER_MODEL='plotter.User'
 
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'SERIALIZERS': {
-        'agent_create': 'plotter.serializers.AgentSerializer',
-        'agent': 'plotter.serializers.AgentSerializer'
+        'user_create': 'plotter.serializers.UserRegisterSerializer',
+        'user': 'plotter.serializers.UserSerializer'
     }
 }
 

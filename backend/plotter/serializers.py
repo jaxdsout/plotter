@@ -1,9 +1,11 @@
 from rest_framework import serializers
-from .models import Agent, Client, List, Option
+from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate
+from .models import User, Client, List, Option
 
-class AgentSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Agent
+        model = User
         fields = (
             'id', 
             'first_name',
@@ -12,6 +14,42 @@ class AgentSerializer(serializers.ModelSerializer):
             'trec_id',
             'password'
         )
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+    def create(self, validated_data):
+        username = validated_data.get('username')
+        email = validated_data.get('email')
+        password = validated_data.get('password')
+
+        if not username:
+            raise serializers.ValidationError('Username is required')
+        
+        user = User.objects.create_user(username=username, email=email, password=password)
+        return user
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+    def validate(self, attrs):
+        username = attrs.get('username')
+        password = attrs.get('password')
+
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if not user:
+                raise serializers.ValidationError('Invalid username or password')
+            else:
+                raise serializers.ValidationError('Both username and password are required')
+        attrs['user'] = user
+        return attrs
+    
+    
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -26,7 +64,7 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
-    agent = serializers.PrimaryKeyRelatedField(queryset=Agent.objects.all())
+    agent = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all(), allow_null=True, required=False)
 
     class Meta:
