@@ -24,7 +24,8 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
             'name',
             'email',
             'phone_number',
-            'agent'
+            'agent',
+            'lists'
         )
 
 class ListSerializer(serializers.HyperlinkedModelSerializer):
@@ -35,24 +36,24 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
         model = List
         fields = (
             'version',
-            'options',
             'agent',
-            'client'
+            'client',
+            'options'
         )
 
 class OptionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Option
         fields = (
+            'id',
             'property_name',
             'address',
             'geo_coordinates',
-            'list',
-            'details',
             'price',
             'unit_number',
             'layout',
             'sq_ft',
             'date_available',
-            'notes_specials'
+            'notes_specials',
+            'list'
         )

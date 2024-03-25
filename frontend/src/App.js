@@ -1,23 +1,24 @@
 import './App.css';
+import 'semantic-ui-css/semantic.min.css'
+
 import Header from './partials/Header';
 import Footer from './partials/Footer';
 import AgentHome from './pages/AgentHome';
 import Landing from './pages/Landing';
 import ClientForm from './components/ClientForm'
 import CreateList from './pages/CreateList';
-import AgentForm from './components/AgentForm';
+import SignUpForm from './components/SignUpForm';
 
 import axios from 'axios';
 import { useNavigate, Link, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import LoginForm from './components/LoginForm';
 
-const API_url = 'http://localhost:8000/plotter';
 
 function App() {
   const [agents, setAgents] = useState([1])
 
-  console.log(agents.id)
+  // console.log(agents.id)
 
   const [clientForm, setClientForm] = useState({
     name: '',
@@ -38,7 +39,7 @@ function App() {
   useEffect(() => {
     async function getAgents() {
       try {
-        const response = await axios.get(`${API_url}/agents/`);
+        const response = await axios.get(`${process.env.REACT_APP_APIURL}/agents/`);
         const data = response.data;
         setAgents(data);
       } catch (error) {
@@ -50,14 +51,14 @@ function App() {
   }, [])
 
   return (
-    <div>
+    <div className='main_shell'>
       <Header />
       <Routes>
         <Route path="" element={
           <Landing />
         }/>
         <Route path="/signup/" element={
-          <AgentForm />
+          <SignUpForm />
         } />
         <Route path="/login/" element={
           <LoginForm />
