@@ -1,20 +1,16 @@
+import { useEffect } from 'react';
 import '../App.css';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 
-function Dashboard () {
+function Dashboard ({agent, handleDashboard}) {
 
-    const [agent, setAgent] = useState(null)
-
-    useEffect(()=> {
-        const token = localStorage.getItem('token');
-        console.log(token)
-    }, [])
+    useEffect(() => {
+        handleDashboard()
+      }, [])
 
     return (
         <div className="agent_homepage">
-            <h1> Hi! </h1>
+            <h1> Hi! {agent.first_name} </h1>
             <div className="lists container">
                 <h3>LISTS</h3>
                 <Link to='/lists/create'><button className='nav_button'>CREATE LIST</button></Link>

@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
 from django.contrib.auth import login as auth_login, logout
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 from .models import User, Client, List, Option
 from .serializers import UserSerializer, ClientSerializer, ListSerializer, OptionSerializer, LoginSerializer
@@ -14,6 +16,11 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+    filterset_fields = ['email', 'trec_id']
+    search_fields = ['email', 'trec_id']
+
 
 
         

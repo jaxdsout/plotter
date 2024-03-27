@@ -13,6 +13,7 @@ django-cors-headers = "*"
 whitenoise = "*"
 python-dotenv = "*"
 djangorestframework = "*"
+django-filter = "*"
 
 [dev-packages]
 
