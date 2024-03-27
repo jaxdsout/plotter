@@ -20,20 +20,12 @@ class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
 
-    def validate(self, attrs):
-        email = attrs.get('email')
-        password = attrs.get('password')
-
-        if email and password:
-            user = authenticate(email=email, password=password)
-
-            if not user:
-                raise ValidationError('Invalid email or password')
-        else:
-            raise ValidationError('Email and password must be provided')
-
-        attrs['user'] = user
-        return attrs
+    def validate(self, clean_data):
+        user = authenticate(username=clean_data['email'], password=clean_data['password'])
+        print(user)
+        if not user:
+            raise ValidationError('user not found')
+        return user
     
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):

@@ -20,10 +20,7 @@ function LoginForm () {
         e.preventDefault();
         console.log(formData)
         try {
-            const response = await axios.post(`${api_url}/login/`, {
-                email: formData.email,
-                password: formData.password
-            }, {
+            const response = await axios.post(`${api_url}/login/`, JSON.stringify(formData), {
                 headers: {
                     'Content-Type': 'application/json'
                 }
