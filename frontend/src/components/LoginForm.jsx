@@ -27,7 +27,8 @@ function LoginForm () {
             });
             if (response.status === 200) {
                 console.log('Login successful');
-                navigate('/dashboard');
+                localStorage.setItem('token', response.data.token);
+                navigate('/dashboard/');
             } else {
                 console.error('Login failed');
             }

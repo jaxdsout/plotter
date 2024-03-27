@@ -1,10 +1,20 @@
 import '../App.css';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function AgentHome () {
+function Dashboard () {
+
+    const [agent, setAgent] = useState(null)
+
+    useEffect(()=> {
+        const token = localStorage.getItem('token');
+        console.log(token)
+    }, [])
 
     return (
         <div className="agent_homepage">
+            <h1> Hi! </h1>
             <div className="lists container">
                 <h3>LISTS</h3>
                 <Link to='/lists/create'><button className='nav_button'>CREATE LIST</button></Link>
@@ -23,9 +33,8 @@ function AgentHome () {
                     <button className='nav_button'>SEARCH CLIENTS</button>
                 </form>
             </div>
-
         </div>
     )
 }
 
-export default AgentHome;
+export default Dashboard;

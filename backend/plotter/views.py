@@ -2,10 +2,9 @@ from rest_framework import viewsets, status, permissions
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login as auth_login, logout
 
 from .models import User, Client, List, Option
 from .serializers import UserSerializer, ClientSerializer, ListSerializer, OptionSerializer, LoginSerializer
@@ -20,16 +19,16 @@ class UserViewSet(viewsets.ModelViewSet):
         
 class UserLogin (APIView):
     permission_classes = [AllowAny]
-    authentication_classes = (SessionAuthentication,)
+    authentication_classes = [SessionAuthentication,]
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def post(self, request):
-            data = request.data
-            serializer = LoginSerializer(data=data)
-            serializer.is_valid(raise_exception=True)
-            user = serializer.validate(data)
-            login(request, user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        data = request.data
+        serializer = LoginSerializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validate(data)
+        auth_login(request, user)            
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class UserLogout (APIView):

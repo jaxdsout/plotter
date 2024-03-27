@@ -1,6 +1,21 @@
+import { useState } from "react";
 
-
-function ClientForm ({ clientForm, handleChange, handleSubmit }) {
+function ClientForm () {
+    const [clientForm, setClientForm] = useState({
+        name: '',
+        email: '',
+        phone_number: ''
+      }); 
+    
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setClientForm(prevState => ({...prevState, [name]: value}));
+      };
+    
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(clientForm);
+    };
 
     return (
         <div>
