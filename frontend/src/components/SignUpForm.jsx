@@ -10,9 +10,8 @@ function SignUpForm () {
         first_name: '',
         last_name: '',
         email: '',
-        phone_number: '',
         trec_id: '',
-        password: ''
+        password: '',
     });
 
     const handleChange = (e) => {
@@ -47,11 +46,9 @@ function SignUpForm () {
                     <label htmlFor='last_name'>Last Name:</label>
                     <input type='text' id='last_name' name='last_name' value={formData.last_name} onChange={handleChange}/>   
                     <label htmlFor='email'>Email:</label>
-                    <input type='email' id='email' name='email' value={formData.email} onChange={handleChange}/>
-                    <label htmlFor='phone_number'>Phone Number:</label>
-                    <input type='tel' id='phone_number' name='phone_number' value={formData.phone_number} onChange={handleChange}/>     
+                    <input type='email' id='email' name='email' value={formData.email} onChange={handleChange}/>   
                     <label htmlFor='trec_id'>TREC ID:</label>
-                    <input type='number' id='trec_id' name='trec_id' value={formData.trec_id} onChange={handleChange}/>  
+                    <input type='number' id='trec_id' name='trec_id' value={formData.trec_id} onChange={handleChange} min_length="6" max_length="6"/> 
                     <label htmlFor='password'>Password:</label>
                     <input type='password' id='password' name='password' value={formData.password} onChange={handleChange}/>   
                     <button type="submit" className="nav_button" >SUBMIT</button>                

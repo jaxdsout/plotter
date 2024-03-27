@@ -36,19 +36,19 @@ function App() {
     console.log(clientForm);
   };
   
-  useEffect(() => {
-    async function getAgents() {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_APIURL}/agents/`);
-        const data = response.data;
-        setAgents(data);
-      } catch (error) {
-        console.error('Error fetching agents', error);
-      } 
-    }
+  // useEffect(() => {
+  //   async function getAgents() {
+  //     try {
+  //       const response = await axios.get(`${process.env.REACT_APP_APIURL}/agents/`);
+  //       const data = response.data;
+  //       setAgents(data);
+  //     } catch (error) {
+  //       console.error('Error fetching agents', error);
+  //     } 
+  //   }
 
-    getAgents()
-  }, [])
+  //   getAgents()
+  // }, [])
 
   return (
     <div className='main_shell'>

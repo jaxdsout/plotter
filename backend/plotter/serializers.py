@@ -15,40 +15,25 @@ class UserSerializer(serializers.ModelSerializer):
             'password'
         )
 
-class UserRegisterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
-
-    def create(self, validated_data):
-        username = validated_data.get('username')
-        email = validated_data.get('email')
-        password = validated_data.get('password')
-
-        if not username:
-            raise serializers.ValidationError('Username is required')
-        
-        user = User.objects.create_user(username=username, email=email, password=password)
-        return user
-
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
 
     def validate(self, attrs):
-        username = attrs.get('username')
+        email = attrs.get('email')
         password = attrs.get('password')
 
-        if username and password:
-            user = authenticate(username=username, password=password)
+        if email and password:
+            user = authenticate(email=email, password=password)
+
             if not user:
-                raise serializers.ValidationError('Invalid username or password')
-            else:
-                raise serializers.ValidationError('Both username and password are required')
+                raise ValidationError('Invalid email or password')
+        else:
+            raise ValidationError('Email and password must be provided')
+
         attrs['user'] = user
         return attrs
-    
     
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):

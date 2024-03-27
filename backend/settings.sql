@@ -1,3 +1,3 @@
-CREATE DATABASE plotty;
-CREATE USER plottyuser WITH PASSWORD 'plotter123';
-GRANT ALL PRIVILEGES ON DATABASE plotty TO plottyuser;
+CREATE DATABASE theplot;
+CREATE USER theplotuser WITH PASSWORD 'plotter123';
+GRANT ALL PRIVILEGES ON DATABASE theplot TO theplotuser;
