@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom"
 
-function LoginForm ({ handleChange, handleSubmit}) {
+function LoginForm ({ handleChange, handleLogin}) {
 
     return (
         <div className="loginsignup_shell">
             <h3> sign into the platform </h3>
             <div className="loginsignup_form">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleLogin}>
                     <label htmlFor='email'>Email:</label>
                     <input type='email' id='email' name='email' onChange={handleChange}/>
                     <label htmlFor='password'>Password:</label>

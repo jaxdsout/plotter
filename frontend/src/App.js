@@ -19,7 +19,7 @@ const api_url = process.env.REACT_APP_APIURL
 function App() {
   const navigate = useNavigate()
 
-  const [formData, setFormData] = useState({
+  const [login, setLogin] = useState({
       email: '',
       password: '',
   })
@@ -32,23 +32,22 @@ function App() {
     id: ''
   })
 
-
   const handleChange = (e) => {
-      setFormData({ ...formData, [e.target.name]: e.target.value })
+    setLogin({ ...login, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
       e.preventDefault();
-      console.log(formData)
+      console.log(login)
       try {
-          const response = await axios.post(`${api_url}/login/`, JSON.stringify(formData), {
+          const response = await axios.post(`${api_url}/login/`, JSON.stringify(login), {
               headers: {
                   'Content-Type': 'application/json'
               }
           });
           if (response.status === 200) {
               console.log('Login successful');
-              localStorage.setItem('token', formData.email);
+              localStorage.setItem('token', login.email);
               navigate('/dashboard/');
           } else {
               console.error('Login failed');
@@ -68,13 +67,10 @@ function App() {
         if (response.data && response.data.length === 1) {
           setAgent(response.data[0])
         }
-        console.log(agent)
     } catch (error) {
         console.error('Error:', error);
     }
   }
-
-
 
 
   return (
@@ -90,7 +86,7 @@ function App() {
         <Route path="/login/" element={
           <LoginForm 
             handleChange={handleChange}
-            handleSubmit={handleSubmit}
+            handleLogin={handleLogin}
           />
         } />
         <Route path="/dashboard/" element={
@@ -99,8 +95,10 @@ function App() {
             handleDashboard={handleDashboard}
           />
         }/>
-        <Route path='/agent/home/create-client' element={
-          <ClientForm />
+        <Route path='/dashboard/create-client/' element={
+          <ClientForm
+             agent={agent}
+            />
         }/>
         <Route path='/agent/home/create-list' element={
           <CreateList />

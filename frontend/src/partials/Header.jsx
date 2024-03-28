@@ -7,6 +7,7 @@ function Header () {
                 <Link to={"/"}><h1 className="logo">plotter</h1></Link>
                 <div>
                     <Link to={"/signup/"}><button className='nav_button'>SIGN UP</button></Link>
+                
                     <Link to={"/login/"}><button className='nav_button'>LOGIN</button></Link>
                 </div>
         </div>

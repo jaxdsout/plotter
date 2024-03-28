@@ -27,8 +27,9 @@ class LoginSerializer(serializers.Serializer):
             raise ValidationError('user not found')
         return user
     
+    
 
-class ClientSerializer(serializers.HyperlinkedModelSerializer):
+class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = (
@@ -36,19 +37,16 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
             'name',
             'email',
             'phone_number',
-            'agent',
-            'lists'
+            'user',
         )
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
-    agent = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
-    client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all(), allow_null=True, required=False)
 
+class ListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = List
         fields = (
             'version',
-            'agent',
+            'user',
             'client',
             'options'
         )

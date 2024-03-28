@@ -29,12 +29,12 @@ class Client(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
-    agent = models.ForeignKey(User, on_delete=models.CASCADE, related_name='clients')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='clients')
 
 class List(models.Model):
     version = models.IntegerField()
     creation_date_time = models.DateTimeField(blank=True, auto_now_add=True)
-    agent = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lists')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lists')
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True, blank=True, related_name='lists')
 
 class Option(models.Model):

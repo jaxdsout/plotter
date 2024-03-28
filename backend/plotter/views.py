@@ -11,8 +11,27 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import User, Client, List, Option
 from .serializers import UserSerializer, ClientSerializer, ListSerializer, OptionSerializer, LoginSerializer
 
+        
+class UserLogin (APIView):
+    permission_classes = [AllowAny]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
-class UserViewSet(viewsets.ModelViewSet):
+    def post(self, request):
+        data = request.data
+        serializer = LoginSerializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.validate(data)
+            auth_login(request, user)            
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class UserLogout (APIView):
+    permission_classes = [AllowAny]
+    def post(self, request):
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
+
+
+class UserQuerySet (viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
@@ -22,39 +41,34 @@ class UserViewSet(viewsets.ModelViewSet):
     search_fields = ['email', 'trec_id']
 
 
-
-        
-class UserLogin (APIView):
+class NewClient (APIView):
     permission_classes = [AllowAny]
-    authentication_classes = [SessionAuthentication,]
-    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def post(self, request):
         data = request.data
-        serializer = LoginSerializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validate(data)
-        auth_login(request, user)            
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        serializer = ClientSerializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserLogout (APIView):
-    permission_classes = [AllowAny]
-    def post(self, request):
-        logout(request)
-        return Response(status=status.HTTP_200_OK)
 
 
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-
-
+    
 class ListViewSet(viewsets.ModelViewSet):
     queryset = List.objects.all()
     serializer_class = ListSerializer
-
 
 class OptionViewSet(viewsets.ModelViewSet):
     queryset = Option.objects.all()

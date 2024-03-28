@@ -6,7 +6,7 @@ const api_url = process.env.REACT_APP_APIURL
 
 function SignUpForm () {
     
-    const [formData, setFormData] = useState({
+    const [newUser, setNewUser] = useState({
         first_name: '',
         last_name: '',
         email: '',
@@ -15,13 +15,13 @@ function SignUpForm () {
     });
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setNewUser({ ...newUser, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${api_url}/agents/`, formData, {
+            const response = await axios.post(`${api_url}/agents/`, newUser, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -42,15 +42,15 @@ function SignUpForm () {
             <div className="loginsignup_form">
                <form onSubmit={handleSubmit} method="POST">
                     <label htmlFor='first_name'>First Name:</label>
-                    <input type='text' id='first_name' name='first_name' value={formData.first_name} onChange={handleChange}/>   
+                    <input type='text' id='first_name' name='first_name' value={newUser.first_name} onChange={handleChange}/>   
                     <label htmlFor='last_name'>Last Name:</label>
-                    <input type='text' id='last_name' name='last_name' value={formData.last_name} onChange={handleChange}/>   
+                    <input type='text' id='last_name' name='last_name' value={newUser.last_name} onChange={handleChange}/>   
                     <label htmlFor='email'>Email:</label>
-                    <input type='email' id='email' name='email' value={formData.email} onChange={handleChange}/>   
+                    <input type='email' id='email' name='email' value={newUser.email} onChange={handleChange}/>   
                     <label htmlFor='trec_id'>TREC ID:</label>
-                    <input type='number' id='trec_id' name='trec_id' value={formData.trec_id} onChange={handleChange} min_length="6" max_length="6"/> 
+                    <input type='number' id='trec_id' name='trec_id' value={newUser.trec_id} onChange={handleChange} min_length="6" max_length="6"/> 
                     <label htmlFor='password'>Password:</label>
-                    <input type='password' id='password' name='password' value={formData.password} onChange={handleChange}/>   
+                    <input type='password' id='password' name='password' value={newUser.password} onChange={handleChange}/>   
                     <button type="submit" className="nav_button" >SUBMIT</button>                
                 </form>
             </div>

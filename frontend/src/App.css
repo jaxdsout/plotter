@@ -17,8 +17,39 @@
 
 /* AGENT HOME PAGE */
 
-.agent_homepage {
+.dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.subdash {
   display: flex;
   flex-direction: row;
 }
+
+.dash_header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.client_search_bar {
+  display: flex;
+  flex-direction: row;
+}
+
+
+/* CLIENT FORM */
+
+.form_shell {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.new_client {
+  width: 35%;
+  align-self: center;
+}
+
 
