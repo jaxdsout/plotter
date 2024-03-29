@@ -16,8 +16,10 @@ function ClientForm ({ agent }) {
 
     const handleNewClient = async (e) => {
         e.preventDefault();
+        console.log(api_url)
+        console.log(newClient)
         try {
-          const response = await axios.post(`${api_url}/new-client/`, newClient, {
+          const response = await axios.post(`${api_url}/clients/`, newClient, {
               headers: {
                   'Content-Type': 'application/json'
               }

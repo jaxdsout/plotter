@@ -8,12 +8,12 @@ django = "*"
 psycopg2-binary = "*"
 dj-database-url = "*"
 gunicorn = "*"
-djoser = "*"
 django-cors-headers = "*"
 whitenoise = "*"
 python-dotenv = "*"
 djangorestframework = "*"
 django-filter = "*"
+djoser = "*"
 
 [dev-packages]
 

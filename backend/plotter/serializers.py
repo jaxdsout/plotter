@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import authenticate
 from .models import User, Client, List, Option
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -14,6 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
             'trec_id',
             'password'
         )
+
 
 
 class LoginSerializer(serializers.Serializer):
@@ -41,7 +43,7 @@ class ClientSerializer(serializers.ModelSerializer):
         )
 
 
-class ListSerializer(serializers.HyperlinkedModelSerializer):
+class ListSerializer(serializers.ModelSerializer):
     class Meta:
         model = List
         fields = (
@@ -51,7 +53,7 @@ class ListSerializer(serializers.HyperlinkedModelSerializer):
             'options'
         )
 
-class OptionSerializer(serializers.HyperlinkedModelSerializer):
+class OptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Option
         fields = (

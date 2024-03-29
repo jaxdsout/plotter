@@ -46,6 +46,7 @@ function App() {
               }
           });
           if (response.status === 200) {
+              const auth = await axios.post(`${api_url}/auth/`)
               console.log('Login successful');
               localStorage.setItem('token', login.email);
               navigate('/dashboard/');
