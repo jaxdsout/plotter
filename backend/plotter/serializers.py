@@ -16,8 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
             'password'
         )
 
-
-
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
@@ -29,8 +27,6 @@ class LoginSerializer(serializers.Serializer):
             raise ValidationError('user not found')
         return user
     
-    
-
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client

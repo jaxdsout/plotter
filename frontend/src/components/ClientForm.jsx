@@ -3,6 +3,9 @@ import axios from "axios";
 const api_url = process.env.REACT_APP_APIURL
 
 function ClientForm ({ agent }) {
+
+    console.log(agent.id)
+
     const [newClient, setNewClient] = useState({
         name: '',
         email: '',
@@ -16,10 +19,10 @@ function ClientForm ({ agent }) {
 
     const handleNewClient = async (e) => {
         e.preventDefault();
-        console.log(api_url)
-        console.log(newClient)
+        console.log("apiurl", api_url)
+        console.log("newclient",newClient)
         try {
-          const response = await axios.post(`${api_url}/clients/`, newClient, {
+          const response = await axios.post(`${api_url}/plotter/clients/`, newClient, {
               headers: {
                   'Content-Type': 'application/json'
               }

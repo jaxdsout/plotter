@@ -1,8 +1,6 @@
 
-
 function ListForm () {
-   
-    
+
     return (
         <div>
             <div className="list_assigner">

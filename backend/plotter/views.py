@@ -3,7 +3,7 @@ from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import SessionAuthentication
 from django.contrib.auth import login as auth_login, logout
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -36,8 +36,7 @@ class UserLogout (APIView):
 class UserViewSet (viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    authentication_classes = [TokenAuthentication, ]
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     parser_classes = [MultiPartParser, FormParser, JSONParser]
     filterset_fields = ['email', 'trec_id']
@@ -47,14 +46,12 @@ class UserViewSet (viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        Token.objects.create(user=user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    authentication_classes = [TokenAuthentication, ]
-    permission_classes = [IsAuthenticated, ]
+    permission_classes = [AllowAny, ]
     parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     

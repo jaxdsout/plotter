@@ -21,7 +21,7 @@ function SignUpForm () {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${api_url}/agents/`, newUser, {
+            const response = await axios.post(`${api_url}/plotter/agents/`, newUser, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

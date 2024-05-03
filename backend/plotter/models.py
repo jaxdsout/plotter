@@ -7,7 +7,7 @@ class User(AbstractUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     trec_id = models.CharField(unique=True, max_length=6)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username', 'trec_id']
 
     def set_password(self, raw_password):
         self.password = make_password(raw_password)

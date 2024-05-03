@@ -1,12 +1,43 @@
-import { useEffect } from 'react';
-import '../App.css';
+import { useState, useEffect } from 'react';
+import axios from "axios";
 import { Link } from 'react-router-dom';
 
-function Dashboard ({agent, handleDashboard}) {
+import ClientForm from '../components/ClientForm'
+import ListForm from "../components/ListForm"
+import MapBox from "../components/MapBox"
+
+const api_url = process.env.REACT_APP_APIURL
+
+
+function Dashboard () {
+
+    
+    const [agent, setAgent] = useState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        trec_id: '',
+        id: ''
+    })
+
+
+    const handleDashboard = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const encoded_token = encodeURIComponent(token)
+            const response = await axios.get(`${api_url}/plotter/agents/?email=${encoded_token}`);
+            console.log(response.data[0])
+            if (response.data && response.data.length === 1) {
+            setAgent(response.data[0])
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
 
     useEffect(() => {
         handleDashboard()
-      }, [])
+    }, [])
 
     return (
         <div className="dashboard">
@@ -16,6 +47,7 @@ function Dashboard ({agent, handleDashboard}) {
                 <div className='dash_header'>
                     <h3>CLIENTS</h3>
                     <Link to='/dashboard/create-client/'><button className='nav_button'> + NEW CLIENT</button></Link>
+                    <ClientForm />
                 </div>
                 <form className='client_search_bar'>
                     <input></input>
@@ -25,7 +57,9 @@ function Dashboard ({agent, handleDashboard}) {
             <div className="container">
                 <div className='dash_header'>
                     <h3>LISTS</h3>
-                    <Link to='/lists/create'><button className='nav_button'>CREATE LIST</button></Link>
+                    <Link to='/dashboard/create-list/'><button className='nav_button'>CREATE LIST</button></Link>
+                    <ListForm />
+                    <MapBox />
                 </div>
                 <p>RECENT LISTS</p>
                     <ul>
