@@ -42,16 +42,16 @@ function LoginForm () {
     // const token = await axios.post(`${api_url}/auth/`)
 
     return (
-        <div className="loginsignup_shell">
-            <h3> sign into the platform </h3>
-            <div className="loginsignup_form">
+        <div className="container-sm sm w-50 pt-5">
+            <h6 className="noto-sans-upper"> sign into the platform </h6>
+            <div className="form-group">
                 <form onSubmit={handleLogin}>
-                    <label htmlFor='email'>Email:</label>
+                    <label className="noto-sans-upper label" htmlFor='email'>Email:</label>
                     <input type='email' id='email' name='email' onChange={handleChange}/>
-                    <label htmlFor='password'>Password:</label>
+                    <label className="noto-sans-upper label" htmlFor='password'>Password:</label>
                     <input type='password' id='password' name='password' onChange={handleChange}/> 
-                    <button className="nav_button" type="submit">LOGIN</button>     
-                    <h3>Don't have an account? <Link to={"/signup/"}>Signup</Link></h3>           
+                    <button className="noto-sans-upper" type="submit">LOGIN</button>     
+                    <h6 className="noto-sans-upper pt-5 label">Don't have an account? <Link to={"/signup/"}>Signup</Link></h6>           
                 </form>
             </div>
         </div>

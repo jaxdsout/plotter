@@ -12,7 +12,7 @@ import LoginForm from './components/LoginForm';
 function App() {
 
   return (
-    <div className='container-lg --bs-secondary-bg --bs-secondary-color-rgb'>
+    <div className='root'>
       <Header />
       <Routes>
         <Route path="" element={

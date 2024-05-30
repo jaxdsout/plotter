@@ -3,22 +3,8 @@
 function Landing () {
 
     return (
-        <div>
-            <h1>here's the landing page</h1>
-            <br></br>
-            <br></br>
-
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-
-
+        <div className="container text-center">
+            <h1 className="noto-sans">here's the landing page</h1>
         </div>
     )
 }

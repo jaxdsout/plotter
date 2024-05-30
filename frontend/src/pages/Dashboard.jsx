@@ -10,7 +10,11 @@ const api_url = process.env.REACT_APP_APIURL
 
 
 function Dashboard () {
+    const [activeSection, setActiveSection] = useState(null);
 
+    const toggleSection = (section) => {
+        setActiveSection(prevSection => prevSection === section ? null : section);
+    };
     
     const [agent, setAgent] = useState({
         first_name: '',
@@ -40,34 +44,69 @@ function Dashboard () {
     }, [])
 
     return (
-        <div className="dashboard">
-            <h1> Hi! {agent.first_name} </h1>
-            <div className='subdash'>
-               <div className="container">
-                <div className='dash_header'>
-                    <h3>CLIENTS</h3>
-                    <Link to='/dashboard/create-client/'><button className='nav_button'> + NEW CLIENT</button></Link>
-                    <ClientForm />
-                </div>
-                <form className='client_search_bar'>
-                    <input></input>
-                    <button className='nav_button'>SEARCH CLIENTS</button>
-                </form>
+        <div className="container">
+            <div className=' d-flex align-items-center'>
+                <Link to=""><h2 className='poetsen tabs'>clients</h2></Link>
+                <Link><h2 className='poetsen tabs'>lists</h2></Link>
             </div>
-            <div className="container">
-                <div className='dash_header'>
-                    <h3>LISTS</h3>
-                    <Link to='/dashboard/create-list/'><button className='nav_button'>CREATE LIST</button></Link>
-                    <ListForm />
-                    <MapBox />
+            <div className='container'>
+                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseClientNew" aria-expanded="false" aria-controls="collapseClientNew">
+                    NEW CLIENT
+                </button>
+
+                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseClientSearch" aria-expanded="false" aria-controls="collapseClientSearch">
+                    SEARCH CLIENTS
+                </button>
+
+
+
+                <div class="collapse multi-collapse" id="collapseClientNew">
+                    <div class="card card-body">
+                        <ClientForm />
+                    </div>
                 </div>
-                <p>RECENT LISTS</p>
-                    <ul>
-                        <li>aaa</li>
-                        <li>aaa</li>
-                        <li>aaa</li>
-                    </ul>
-            </div> 
+                
+                <div class="collapse multi-collapse" id="collapseClientSearch">
+                    <div class="card card-body">
+                    <form className='client_search_bar'>
+                        <input type='search'></input>
+                        <button className='nav_button'>SEARCH CLIENTS</button>
+                    </form>
+                    </div>
+                </div>
+            
+
+
+            </div>
+
+            <div className='container'>
+        
+                
+                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseListNew" aria-expanded="false" aria-controls="collapseListNew">
+                    CREATE LIST
+                </button>
+
+                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseListRecent" aria-expanded="false" aria-controls="collapseListRecent">
+                    RECENT LISTS
+                </button>
+
+                <div class="collapse" id="collapseListNew">
+                    <div class="card card-body">
+                        <ListForm />
+                        <MapBox />
+                    </div>
+                </div>
+
+                <div class="collapse" id="collapseListRecent">
+                    <div class="card card-body">
+                        <p>RECENT LISTS</p>
+                        <ul>
+                            <li>aaa</li>
+                            <li>aaa</li>
+                            <li>aaa</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             
         </div>

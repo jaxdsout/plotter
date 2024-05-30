@@ -2,15 +2,15 @@ import { useState } from "react";
 import axios from "axios";
 const api_url = process.env.REACT_APP_APIURL
 
-function ClientForm ({ agent }) {
+function ClientForm () {
 
-    console.log(agent.id)
+    // console.log(agent.id)
 
     const [newClient, setNewClient] = useState({
         name: '',
         email: '',
         phone_number: '',
-        agent: agent.id,
+        // agent: agent.id,
       }); 
 
     const handleChange = (e) => {

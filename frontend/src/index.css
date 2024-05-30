@@ -5,9 +5,61 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(31, 31, 31);
+}
+
+* {
+  color: white;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+/* FONTS */
+.noto-sans {
+  font-family: "Noto Sans JP", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.noto-sans-upper {
+  font-family: "Noto Sans JP", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  text-transform: uppercase;
+}
+
+.label {
+  font-size: 1rem;
+}
+
+.poetsen {
+  font-family: "Poetsen One", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+/* CONTAINERS */
+
+.header {
+  background-color: rgb(24, 24, 24);
+  border-bottom: rgb(43, 43, 43) solid 2px;
+}
+
+.root {
+  background-color: rgb(31, 31, 31);
+}
+
+.button {
+  margin-right: .5rem;
+}
+
+.tabs {
+  margin-right: 2rem;
 }
