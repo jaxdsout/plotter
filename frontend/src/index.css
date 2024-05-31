@@ -63,3 +63,8 @@ code {
 .tabs {
   margin-right: 2rem;
 }
+
+.icon {
+  margin-right: 1rem;
+  fill: blueviolet !important;
+}
