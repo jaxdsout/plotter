@@ -1,46 +1,26 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, PermissionsMixin 
-from django.contrib.auth.hashers import make_password, check_password
-from django.utils.text import slugify
 
-class User(AbstractUser, PermissionsMixin):
-    email = models.EmailField(unique=True)
+class Agent (models.Model):
     trec_id = models.CharField(unique=True, max_length=6)
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'trec_id']
 
-    def set_password(self, raw_password):
-        self.password = make_password(raw_password)
-    def check_password(self, raw_password):
-        return check_password(raw_password, self.password)
-    
-    def save(self, *args, **kwargs):
-        if not self.username:
-            self.username = slugify(self.email.split('@')[0])
-        if self.password:
-            self.password = make_password(self.password)
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f'{self.first_name} {self.last_name}'
-
+class Property(models.Model):
+    name = models.CharField(max_length=200)
+    address = models.CharField(max_length=250)
+    coordinate = models.CharField(max_length=200)
 
 class Client(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='clients')
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='clients')
 
 class List(models.Model):
-    version = models.IntegerField()
-    creation_date_time = models.DateTimeField(blank=True, auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='lists')
+    creation = models.DateTimeField(blank=True, auto_now_add=True)
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='lists')
     client = models.ForeignKey(Client, on_delete=models.SET_NULL, null=True, blank=True, related_name='lists')
 
 class Option(models.Model):
-    property_name = models.CharField(max_length=100)
-    address = models.CharField(max_length=255)
-    geo_coordinates = models.CharField(max_length=50)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     unit_number = models.CharField(max_length=20)
     layout = models.CharField(max_length=50)
@@ -48,5 +28,3 @@ class Option(models.Model):
     date_available = models.DateField(blank=True)
     notes_specials = models.TextField('Notes / Specials', blank=True)
     list = models.ForeignKey(List, on_delete=models.CASCADE, related_name='options')
-
-    

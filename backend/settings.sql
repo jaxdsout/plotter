@@ -1,3 +1,6 @@
-CREATE DATABASE theplot;
-CREATE USER theplotuser WITH PASSWORD 'plotter123';
-GRANT ALL PRIVILEGES ON DATABASE theplot TO theplotuser;
+CREATE DATABASE plotter;
+CREATE USER plotuser WITH PASSWORD 'plotter123';
+GRANT ALL PRIVILEGES ON DATABASE plotter TO plotuser;
+ALTER DATABASE plotter OWNER TO plotuser;
+GRANT USAGE ON SCHEMA public TO plotuser;
+GRANT CREATE ON SCHEMA public to plotuser;

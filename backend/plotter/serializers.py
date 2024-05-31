@@ -1,32 +1,25 @@
 from rest_framework import serializers
-from django.core.exceptions import ValidationError
-from django.contrib.auth import authenticate
-from .models import User, Client, List, Option
+from .models import Property, Agent, Client, List, Option
 
 
-class UserSerializer(serializers.ModelSerializer):
+class AgentSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = Agent
         fields = (
-            'id', 
-            'first_name',
-            'last_name',
-            'email', 
-            'trec_id',
-            'password'
+            'id',
+            'trec_id'
         )
 
-class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField()
+class PropertySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Property
+        fields = (
+            'id',
+            'name',
+            'address',
+            'coordinate'
+        )
 
-    def validate(self, clean_data):
-        user = authenticate(username=clean_data['email'], password=clean_data['password'])
-        print(user)
-        if not user:
-            raise ValidationError('user not found')
-        return user
-    
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
@@ -35,28 +28,24 @@ class ClientSerializer(serializers.ModelSerializer):
             'name',
             'email',
             'phone_number',
-            'user',
+            'agent',
         )
-
 
 class ListSerializer(serializers.ModelSerializer):
     class Meta:
         model = List
         fields = (
-            'version',
-            'user',
+            'id',
+            'creation',
+            'agent',
             'client',
-            'options'
         )
 
 class OptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Option
         fields = (
-            'id',
-            'property_name',
-            'address',
-            'geo_coordinates',
+            'property',
             'price',
             'unit_number',
             'layout',
