@@ -6,8 +6,9 @@ class AgentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Agent
         fields = (
-            'id',
-            'trec_id'
+            'trec_id',
+            'name',
+            'user'
         )
 
 class PropertySerializer(serializers.ModelSerializer):
@@ -16,8 +17,12 @@ class PropertySerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'name',
+            'website',
+            'market',
+            'neighborhood',
             'address',
-            'coordinate'
+            'latitude',
+            'longitude'
         )
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -39,6 +44,7 @@ class ListSerializer(serializers.ModelSerializer):
             'creation',
             'agent',
             'client',
+            'options'
         )
 
 class OptionSerializer(serializers.ModelSerializer):
