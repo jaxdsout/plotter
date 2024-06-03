@@ -5,7 +5,11 @@ import {
     LOAD_USER_FAIL,
     AUTHENTICATE_SUCCESS,
     AUTHENTICATE_FAIL,
-    LOGOUT
+    LOGOUT,
+    PASSWORD_RESET_CONFIRM_FAIL,
+    PASSWORD_RESET_FAIL,
+    PASSWORD_RESET_CONFIRM_SUCCESS,
+    PASSWORD_RESET_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -24,6 +28,8 @@ export default function authReducer(state = initialState, action) {
                 isAuthenticated: true
             }
         case LOGIN_SUCCESS:
+            localStorage.setItem('access', payload.access);
+            localStorage.setItem('refresh', payload.refresh);
             return {
                 ...state,
                 isAuthenticated: true,
@@ -56,6 +62,13 @@ export default function authReducer(state = initialState, action) {
                 isAuthenticated: false,
                 user: null
             };
+        case PASSWORD_RESET_CONFIRM_FAIL:
+        case PASSWORD_RESET_FAIL:
+        case PASSWORD_RESET_CONFIRM_SUCCESS:
+        case PASSWORD_RESET_SUCCESS:
+            return {
+                ...state
+            }
         default:
             return state;
     }

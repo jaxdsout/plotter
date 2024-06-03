@@ -2,11 +2,13 @@ import { Route, Routes } from 'react-router-dom';
 
 
 
-import Header from './fragments/Header';
+import Navbar from './components/Navbar';
 import Dashboard from './containers/Dashboard';
-import Landing from './fragments/Landing';
+import Landing from './containers/Landing';
 import SignUpForm from './containers/SignUp';
 import Login from './containers/Login';
+import ResetPassword from './containers/ResetPassword';
+import ConfirmPassword from './containers/ConfirmPassword';
 
 
 
@@ -14,13 +16,19 @@ function App() {
 
   return (
     <div className='root'>
-      <Header />
+      <Navbar />
       <Routes>
-        <Route path="" element={
+        <Route path="/" element={
           <Landing />
         }/>
         <Route path="/signup/" element={
           <SignUpForm />
+        } />
+        <Route path="/reset-password/" element={
+          <ResetPassword />
+        } />
+        <Route path="/password/reset/confirm/:uid/:token" element={
+          <ConfirmPassword />
         } />
         <Route path="/login/" element={ <Login /> } />
         <Route path="/dashboard/" element={

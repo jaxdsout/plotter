@@ -1,9 +1,11 @@
-import { Link, Navigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { login } from "../actions/auth";
 
 function Login ({ login, isAuthenticated }) {
+    const navigate = useNavigate()
+
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -20,7 +22,7 @@ function Login ({ login, isAuthenticated }) {
     }
 
     if (isAuthenticated) {
-        return <Navigate to='/dashboard/' />
+        return navigate('/dashboard/');
     }
 
     return (
