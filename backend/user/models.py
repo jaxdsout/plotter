@@ -1,17 +1,26 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-# Permissions,Mixin
-# from django.contrib.auth.hashers import make_password, check_password
-# from django.utils.text import slugify
+from django.contrib.auth.models import AbstractUser, PermissionsMixin
 
+    
+class User(AbstractUser, PermissionsMixin):
+    email = models.EmailField(verbose_name='email', max_length=255, unique=True)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
 
-class User(AbstractUser):
-    email = models.EmailField( verbose_name='email', max_length=255, unique=True)
-    REQUIRED_FIELDS = ['username']
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
 
     def get_username(self):
         return self.email
+    
+    def __str__(self):
+        return self.email
+    
+    def get_full_name(self) -> str:
+        return super().get_full_name()
+    
+    
     
     # def set_password(self, raw_password):
     #     self.password = make_password(raw_password)

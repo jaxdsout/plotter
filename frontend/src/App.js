@@ -2,11 +2,12 @@ import { Route, Routes } from 'react-router-dom';
 
 
 
-import Header from './components/Header';
-import Dashboard from './pages/Dashboard';
-import Landing from './pages/Landing';
-import SignUpForm from './components/SignUpForm';
-import LoginForm from './components/LoginForm';
+import Header from './fragments/Header';
+import Dashboard from './containers/Dashboard';
+import Landing from './fragments/Landing';
+import SignUpForm from './containers/SignUp';
+import Login from './containers/Login';
+
 
 
 function App() {
@@ -21,9 +22,7 @@ function App() {
         <Route path="/signup/" element={
           <SignUpForm />
         } />
-        <Route path="/login/" element={
-          <LoginForm />
-        } />
+        <Route path="/login/" element={ <Login /> } />
         <Route path="/dashboard/" element={
           <Dashboard />
         }/>

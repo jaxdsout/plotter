@@ -12,38 +12,38 @@ const api_url = process.env.REACT_APP_APIURL
 
 
 function Dashboard () {
-    const [activeSection, setActiveSection] = useState(null);
+    // const [activeSection, setActiveSection] = useState(null);
 
-    const toggleSection = (section) => {
-        setActiveSection(prevSection => prevSection === section ? null : section);
-    };
+    // const toggleSection = (section) => {
+    //     setActiveSection(prevSection => prevSection === section ? null : section);
+    // };
     
-    const [agent, setAgent] = useState({
-        first_name: '',
-        last_name: '',
-        email: '',
-        trec_id: '',
-        id: ''
-    })
+    // const [agent, setAgent] = useState({
+    //     first_name: '',
+    //     last_name: '',
+    //     email: '',
+    //     trec_id: '',
+    //     id: ''
+    // })
 
 
-    const handleDashboard = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const encoded_token = encodeURIComponent(token)
-            const response = await axios.get(`${api_url}/plotter/agents/?email=${encoded_token}`);
-            console.log(response.data[0])
-            if (response.data && response.data.length === 1) {
-            setAgent(response.data[0])
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
+    // const handleDashboard = async () => {
+    //     try {
+    //         const token = localStorage.getItem('token');
+    //         const encoded_token = encodeURIComponent(token)
+    //         const response = await axios.get(`${api_url}/plotter/agents/?email=${encoded_token}`);
+    //         console.log(response.data[0])
+    //         if (response.data && response.data.length === 1) {
+    //         setAgent(response.data[0])
+    //         }
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //     }
+    // }
 
-    useEffect(() => {
-        handleDashboard()
-    }, [])
+    // useEffect(() => {
+    //     handleDashboard()
+    // }, [])
 
     return (
         <div className="container">

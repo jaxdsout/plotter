@@ -3,11 +3,10 @@ from django.conf import settings
 
 class Agent (models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=255, default="Unknown Agent")
     trec_id = models.CharField(unique=True, max_length=6)
 
     def __str__(self):
-        return self.name
+        return self.user.email
     
 
 class Property(models.Model):
