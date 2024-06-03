@@ -7,7 +7,6 @@ class AgentSerializer(serializers.ModelSerializer):
         model = Agent
         fields = (
             'trec_id',
-            'name',
             'user'
         )
 

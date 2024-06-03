@@ -1,62 +1,111 @@
-import { Link } from "react-router-dom"
-import { useState } from "react";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom"
+import { connect } from "react-redux"
+import { useState } from "react"
+import { signup } from "../actions/auth";
 
-const api_url = process.env.REACT_APP_APIURL
+function Signup ({ signup, isAuthenticated }) {
+    const navigate = useNavigate()
+    const [account, setAccount] = useState(false)
 
-function SignUpForm () {
-    
-    const [newUser, setNewUser] = useState({
+    const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
         email: '',
-        trec_id: '',
         password: '',
+        re_password: ''
     });
-
-    const handleChange = (e) => {
-        setNewUser({ ...newUser, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post(`${api_url}/plotter/agents/`, newUser, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (response.status === 201) {
-                console.log('User registered successfully');
-            } else {
-                console.error('Error:', response.data);
-            }
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    }
     
+    const { first_name, last_name, email, password, re_password } = formData;
+
+    const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        if (password === re_password) {
+            signup(first_name, last_name, email, password, re_password)
+            setAccount(true)
+        }
+        
+    }
+
+    if (isAuthenticated) {
+        return navigate('/');
+    }
+
+    if (account) {
+        return navigate('/login/')
+    }
+
     return (
         <div className="container-sm sm w-50 pt-5">
-            <h6 className="noto-sans-upper"> sign up to use the platform </h6>
-            <div className="form-group">
-               <form onSubmit={handleSubmit} method="POST">
-                    <label htmlFor='first_name' className="noto-sans-upper label">First Name:</label>
-                    <input type='text' id='first_name' name='first_name' value={newUser.first_name} onChange={handleChange}/>   
-                    <label htmlFor='last_name' className="noto-sans-upper label">Last Name:</label>
-                    <input type='text' id='last_name' name='last_name' value={newUser.last_name} onChange={handleChange}/>   
-                    <label htmlFor='email' className="noto-sans-upper label">Email:</label>
-                    <input type='email' id='email' name='email' value={newUser.email} onChange={handleChange}/>   
-                    <label htmlFor='trec_id' className="noto-sans-upper label">TREC ID:</label>
-                    <input type='number' id='trec_id' name='trec_id' value={newUser.trec_id} onChange={handleChange} min_length="6" max_length="6"/> 
-                    <label htmlFor='password' className="noto-sans-upper label">Password:</label>
-                    <input type='password' id='password' name='password' value={newUser.password} onChange={handleChange}/>   
-                    <button type="submit" className="noto-sans-upper" >SUBMIT</button>                
-                </form>
-            </div>
-            <h6 className="noto-sans-upper label">Already have an account? <Link to={"/login/"}>Login</Link></h6> 
+            <h6 className="noto-sans-upper"> sign up for the platform </h6>
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label className="noto-sans-upper label" htmlFor='first_name'>First Name:</label>
+                    <input 
+                        className='form-control'
+                        type='text'
+                        name='first_name'
+                        value={first_name}
+                        onChange={e => handleChange(e)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label className="noto-sans-upper label" htmlFor='last_name'>Last Name:</label>
+                    <input 
+                        className='form-control'
+                        type='text'
+                        name='last_name'
+                        value={last_name}
+                        onChange={e => handleChange(e)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label className="noto-sans-upper label" htmlFor='email'>Email:</label>
+                    <input 
+                        className='form-control'
+                        type='email'
+                        name='email'
+                        value={email}
+                        onChange={e => handleChange(e)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label className="noto-sans-upper label" htmlFor='password'>Password:</label>
+                    <input 
+                        className='form-control'
+                        type='password'
+                        name='password'
+                        value={password}
+                        onChange={e => handleChange(e)}
+                        minLength='8'
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label className="noto-sans-upper label" htmlFor='re_password'>Re-Enter Password:</label>
+                    <input 
+                        className='form-control'
+                        type='password'
+                        name='re_password'
+                        value={re_password}
+                        onChange={e => handleChange(e)}
+                        minLength='8'
+                        required
+                    />
+                </div>
+                <button className="noto-sans-upper" type="submit">SIGN UP</button>   
+            </form>
+            <h6 className="noto-sans-upper pt-5 label">Already have an account? <Link to={"/login/"}>Login</Link></h6>
         </div>
     )
 }
 
-export default SignUpForm
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { signup })( Signup );

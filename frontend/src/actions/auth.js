@@ -1,4 +1,8 @@
 import {
+    SIGNUP_SUCCESS,
+    SIGNUP_FAIL,
+    ACTIVATE_SUCCESS,
+    ACTIVATE_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOAD_USER_SUCCESS,
@@ -78,6 +82,51 @@ export const auth_user = () => async dispatch => {
     }
 };
 
+export const signup = (first_name, last_name, email, password, re_password) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ first_name, last_name, email, password, re_password });
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/`, body, config);
+
+        dispatch({
+            type: SIGNUP_SUCCESS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: SIGNUP_FAIL
+        })
+    }
+};
+
+export const activate = (uid, token) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ uid, token });
+    
+    try {
+        await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/activation/`, body, config);
+        
+        dispatch({
+            type: ACTIVATE_SUCCESS,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: ACTIVATE_FAIL
+        })
+    }
+}
 
 export const login = (email, password) => async dispatch => {
     const config = {

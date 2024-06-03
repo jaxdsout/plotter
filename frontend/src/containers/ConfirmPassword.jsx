@@ -40,7 +40,7 @@ function ConfirmPassword ({ reset_password_confirm }) {
                         name='new_password'
                         value={new_password}
                         onChange={e => handleChange(e)}
-                        minLength='6'
+                        minLength='8'
                         required
                     />
                 </div>
@@ -52,7 +52,7 @@ function ConfirmPassword ({ reset_password_confirm }) {
                         name='re_new_password'
                         value={re_new_password}
                         onChange={e => handleChange(e)}
-                        minLength='6'
+                        minLength='8'
                         required
                     />
                 </div>

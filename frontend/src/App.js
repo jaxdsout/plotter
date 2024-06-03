@@ -9,6 +9,7 @@ import SignUpForm from './containers/SignUp';
 import Login from './containers/Login';
 import ResetPassword from './containers/ResetPassword';
 import ConfirmPassword from './containers/ConfirmPassword';
+import Activate from './containers/Activate';
 
 
 
@@ -29,6 +30,9 @@ function App() {
         } />
         <Route path="/password/reset/confirm/:uid/:token" element={
           <ConfirmPassword />
+        } />
+        <Route path="/activate/:uid/:token" element={
+          <Activate />
         } />
         <Route path="/login/" element={ <Login /> } />
         <Route path="/dashboard/" element={
