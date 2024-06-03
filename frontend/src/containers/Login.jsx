@@ -15,10 +15,8 @@ function Login ({ login }) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        
+
         login(email, password)
-
-
     }
 
     // if (isAuthenticated) {
