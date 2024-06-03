@@ -2,7 +2,10 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOAD_USER_SUCCESS,
-    LOAD_USER_FAIL
+    LOAD_USER_FAIL,
+    AUTHENTICATE_SUCCESS,
+    AUTHENTICATE_FAIL,
+    LOGOUT
 } from '../actions/types';
 
 const initialState = {
@@ -15,6 +18,11 @@ const initialState = {
 export default function authReducer(state = initialState, action) {
     const { type, payload } = action;
     switch(type) {
+        case AUTHENTICATE_SUCCESS:
+            return {
+                ...state,
+                isAuthenticated: true
+            }
         case LOGIN_SUCCESS:
             return {
                 ...state,
@@ -27,12 +35,20 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 user: payload
             };
+        case AUTHENTICATE_FAIL:
+            return {
+                ...state,
+                isAuthenticated: false
+            }
         case LOAD_USER_FAIL:
             return {
                 ...state,
                 user: null
             };
         case LOGIN_FAIL:
+        case LOGOUT:
+            localStorage.removeItem('access');
+            localStorage.removeItem('refresh')
             return {
                 ...state,
                 access: null,

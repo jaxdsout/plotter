@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { useState } from "react"
 import { login } from "../actions/auth";
 
-function Login ({ login }) {
+function Login ({ login, isAuthenticated }) {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -19,9 +19,9 @@ function Login ({ login }) {
         login(email, password)
     }
 
-    // if (isAuthenticated) {
-    //     return <Navigate to='/' />
-    // }
+    if (isAuthenticated) {
+        return <Navigate to='/dashboard/' />
+    }
 
     return (
         <div className="container-sm sm w-50 pt-5">
@@ -58,8 +58,8 @@ function Login ({ login }) {
     )
 }
 
-// const mapStateToProps = state => ({
-//     isAuthenticated: state.auth.isAuthenticated
-// });
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
 
-export default connect(null, { login })( Login );
+export default connect(mapStateToProps, { login })( Login );

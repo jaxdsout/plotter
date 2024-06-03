@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { auth_user, load_user } from '../actions/auth';
 
 import ClientForm from '../components/ClientForm'
 import ListForm from "../components/ListForm"
@@ -8,10 +10,15 @@ import MapBox from "../components/MapBox"
 
 import {ReactComponent as Home} from '../components/home.svg'
 
-const api_url = process.env.REACT_APP_APIURL
 
 
-function Dashboard () {
+function Dashboard (props) {
+
+    useEffect(() => {
+        props.auth_user();
+        props.load_user();
+    }, [])
+
     // const [activeSection, setActiveSection] = useState(null);
 
     // const toggleSection = (section) => {
@@ -118,4 +125,4 @@ function Dashboard () {
     )
 }
 
-export default Dashboard;
+export default connect(null, { auth_user, load_user })(Dashboard);
