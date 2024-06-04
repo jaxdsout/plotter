@@ -11,6 +11,8 @@ import {
     EDIT_LIST_FAIL,
     DELETE_LIST_SUCCESS,
     DELETE_LIST_FAIL,
+    ALL_CLIENTS_FAIL,
+    ALL_CLIENTS_SUCCESS
 
 } from './types';
 
@@ -46,3 +48,33 @@ export const new_client = (first_name, last_name, email, phone_number) => async 
         })
     }
 };
+
+export const all_clients = () => async (dispatch, getState) => {
+    const state = getState()
+    const { access, user } = state.auth;
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${access}`,
+            'Accept': 'application/json'
+        }
+    };
+
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/plotter/clients/`, config);
+
+        // if (res.data.agent === user.id) {
+            dispatch({
+                type: ALL_CLIENTS_SUCCESS,
+                payload: res.data
+            });
+        // }
+        
+    } catch (err) {
+        dispatch({
+            type: ALL_CLIENTS_FAIL
+        });
+    }
+
+}

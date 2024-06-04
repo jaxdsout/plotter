@@ -24,7 +24,7 @@ function NewClient ({ new_client }) {
     }
 
     return (
-        <div className="container-sm sm w-50 pt-5">
+        <div className="">
             <h6 className="noto-sans-upper"> add a client to the system </h6>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">

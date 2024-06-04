@@ -1,18 +1,12 @@
 import NewClient from "../components/NewClient"
+import AllClients from "../components/AllClients"
 
 function Clients () {
 
-
-    // CREATE NEW CLIENT
-
-    // SEARCH CLIENTS
-
-    // CLIENT SPECIFIC PAGE (READ, UPDATE DESTROY)
-
     return (
-        <div className="container">
-            <h6>New Client</h6>
+        <div className="container-sm sm w-50 pt-5">
             <NewClient />
+            <AllClients />
         </div>
     )
 }
