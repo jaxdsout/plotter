@@ -1,8 +1,10 @@
 
-function ListForm () {
+function Lists () {
 
     return (
         <div>
+                <h1> this is the lists page</h1>
+
             <div className="list_assigner">
                 <form>
                     {/* VERSION: LOGIC (if version > 0... +1) */}
@@ -42,4 +44,4 @@ function ListForm () {
     )
 }
 
-export default ListForm
+export default Lists

@@ -6,7 +6,7 @@ class Agent (models.Model):
     trec_id = models.CharField(unique=True, max_length=6)
 
     def __str__(self):
-        return self.user.email
+        return self.user.get_full_name()
     
 
 class Property(models.Model):
@@ -25,13 +25,14 @@ class Property(models.Model):
 
 
 class Client(models.Model):
-    name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
     email = models.EmailField(blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE, related_name='clients')
 
     def __str__(self):
-        return self.name
+        return str(self.first_name) + " " + str(self.last_name)
 
 class List(models.Model):
     creation = models.DateTimeField(blank=True, auto_now_add=True)

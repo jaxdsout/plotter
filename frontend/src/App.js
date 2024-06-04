@@ -19,25 +19,13 @@ function App() {
     <div className='root'>
       <Navbar />
       <Routes>
-        <Route path="/" element={
-          <Landing />
-        }/>
-        <Route path="/signup/" element={
-          <SignUpForm />
-        } />
-        <Route path="/reset-password/" element={
-          <ResetPassword />
-        } />
-        <Route path="/password/reset/confirm/:uid/:token" element={
-          <ConfirmPassword />
-        } />
-        <Route path="/activate/:uid/:token" element={
-          <Activate />
-        } />
+        <Route path="/" element={ <Landing /> }/>
+        <Route path="/signup/" element={ <SignUpForm /> } />
+        <Route path="/reset-password/" element={ <ResetPassword /> } />
+        <Route path="/password/reset/confirm/:uid/:token" element={ <ConfirmPassword /> } />
+        <Route path="/activate/:uid/:token" element={ <Activate /> } />
         <Route path="/login/" element={ <Login /> } />
-        <Route path="/dashboard/" element={
-          <Dashboard />
-        }/>
+        <Route path="/dashboard/" element={ <Dashboard /> }/>
       </Routes>
     </div>
   );

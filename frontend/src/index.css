@@ -58,10 +58,15 @@ code {
 }
 
 .tabs {
-  margin-right: 2rem;
+  margin-left: 2rem;
 }
 
 .icon {
-  margin-right: 1rem;
+  margin-right: .5rem;
   fill: blueviolet !important;
+}
+
+.dashnav {
+  background-color: rgb(36, 36, 36);
+  border-bottom: rgb(43, 43, 43) solid 2px;
 }
