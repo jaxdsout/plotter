@@ -1,20 +1,10 @@
 import {
     NEW_CLIENT_SUCCESS,
     NEW_CLIENT_FAIL,
-    EDIT_CLIENT_SUCCESS,
-    EDIT_CLIENT_FAIL,
-    DELETE_CLIENT_SUCCESS,
-    DELETE_CLIENT_FAIL,
-    CREATE_LIST_SUCCESS,
-    CREATE_LIST_FAIL,
-    EDIT_LIST_SUCCESS,
-    EDIT_LIST_FAIL,
-    DELETE_LIST_SUCCESS,
-    DELETE_LIST_FAIL,
-    ALL_CLIENTS_FAIL,
-    ALL_CLIENTS_SUCCESS
+    UPDATE_CLIENT_FAIL,
+    UPDATE_CLIENT_SUCCESS
 
-} from './types';
+} from '../actions/types'
 
 const initialState = {
     clients: []
@@ -23,12 +13,14 @@ const initialState = {
 export default function dashReducer(state = initialState, action) {
     const { type, payload } = action;
     switch(type) {
-        case ALL_CLIENTS_SUCCESS:
+        case UPDATE_CLIENT_SUCCESS:
+        case NEW_CLIENT_SUCCESS:
             return {
                 ...state,
                 clients: payload
             };
-        case ALL_CLIENTS_FAIL:
+        case UPDATE_CLIENT_FAIL:
+        case NEW_CLIENT_FAIL:
             return {
                 ...state,
                 clients: []

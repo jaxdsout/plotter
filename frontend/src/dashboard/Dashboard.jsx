@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { auth_user, load_user } from '../actions/auth';
 import { Routes, Route } from 'react-router-dom';
-import DashNavbar from '../components/DashNav';
-import Clients from './Clients';
-import Lists from './Lists';
-import Deals from './Deals';
-import Stats from '../components/Stats'
+import DashNavbar from './DashNav';
+import Clients from '../clients/Clients';
+import Lists from '../lists/Lists';
+import Deals from '../deals/Deals';
+import Stats from './Stats'
 
 
 function Dashboard (props) {

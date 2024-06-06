@@ -45,6 +45,7 @@ class ClientSerializer(serializers.ModelSerializer):
             'email',
             'phone_number',
             'agent',
+            'lists'
         )
 
 class ListSerializer(serializers.ModelSerializer):

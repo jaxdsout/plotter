@@ -15,6 +15,7 @@ function NewClient ({ new_client }) {
     
     const { first_name, last_name, email, phone_number } = formData;
 
+    
     const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
 
     const handleSubmit = e => {
@@ -25,7 +26,6 @@ function NewClient ({ new_client }) {
 
     return (
         <div className="">
-            <h6 className="noto-sans-upper"> add a client to the system </h6>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label className="noto-sans-upper label" htmlFor='first_name'>First Name:</label>

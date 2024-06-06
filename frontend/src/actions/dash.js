@@ -1,18 +1,8 @@
 import {
     NEW_CLIENT_SUCCESS,
     NEW_CLIENT_FAIL,
-    EDIT_CLIENT_SUCCESS,
-    EDIT_CLIENT_FAIL,
-    DELETE_CLIENT_SUCCESS,
-    DELETE_CLIENT_FAIL,
-    CREATE_LIST_SUCCESS,
-    CREATE_LIST_FAIL,
-    EDIT_LIST_SUCCESS,
-    EDIT_LIST_FAIL,
-    DELETE_LIST_SUCCESS,
-    DELETE_LIST_FAIL,
-    ALL_CLIENTS_FAIL,
-    ALL_CLIENTS_SUCCESS
+    UPDATE_CLIENT_FAIL,
+    UPDATE_CLIENT_SUCCESS
 
 } from './types';
 
@@ -49,7 +39,8 @@ export const new_client = (first_name, last_name, email, phone_number) => async 
     }
 };
 
-export const all_clients = () => async (dispatch, getState) => {
+
+export const update_client = (first_name, last_name, email, phone_number) => async (dispatch, getState) => {
     const state = getState()
     const { access, user } = state.auth;
 
@@ -61,20 +52,22 @@ export const all_clients = () => async (dispatch, getState) => {
         }
     };
 
-    try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/plotter/clients/`, config);
+    const agent = user.id
+    console.log(agent)
 
-        // if (res.data.agent === user.id) {
-            dispatch({
-                type: ALL_CLIENTS_SUCCESS,
-                payload: res.data
-            });
-        // }
-        
+    const body = JSON.stringify({ first_name, last_name, email, phone_number, agent });
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/plotter/clients/`, body, config);
+
+        dispatch({
+            type: NEW_CLIENT_SUCCESS,
+            payload: res.data
+        });
     } catch (err) {
         dispatch({
-            type: ALL_CLIENTS_FAIL
-        });
+            type: NEW_CLIENT_FAIL
+        })
     }
+};
 
-}

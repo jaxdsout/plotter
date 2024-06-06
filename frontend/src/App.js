@@ -3,13 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 
 
 import Navbar from './components/Navbar';
-import Dashboard from './containers/Dashboard';
-import Landing from './containers/Landing';
-import SignUpForm from './containers/SignUp';
-import Login from './containers/Login';
-import ResetPassword from './containers/ResetPassword';
-import ConfirmPassword from './containers/ConfirmPassword';
-import Activate from './containers/Activate';
+import Dashboard from './dashboard/Dashboard';
+import Landing from './components/Landing';
+import SignUpForm from './auth/SignUp';
+import Login from './auth/Login';
+import ResetPassword from './auth/ResetPassword';
+import ConfirmPassword from './auth/ConfirmPassword';
+import Activate from './auth/Activate';
+import ClientDetail from './clients/ClientDetail';
 
 
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/activate/:uid/:token" element={ <Activate /> } />
         <Route path="/login/" element={ <Login /> } />
         <Route path="/dashboard/" element={ <Dashboard /> }/>
+        <Route path="/dashboard/client/:id" element={ <ClientDetail /> } />
       </Routes>
     </div>
   );
