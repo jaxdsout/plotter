@@ -1,6 +1,5 @@
 
 import axios from "axios";
-import { all_clients } from "../actions/dash"
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -15,12 +14,11 @@ function AllClients () {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem('access')}`,
-                'Accept': 'application/json'
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
             }
         };
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/plotter/clients/`, config);
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/clients/`, config);
             setClients(res.data)
         } catch (error) {
             console.error(error)
@@ -36,7 +34,7 @@ function AllClients () {
     }, [])
 
     return (
-        <div>
+        <div className="container bg-dark-subtle">
             <ul>
                 {clients.map(client => (
                     <li key={client.id}>

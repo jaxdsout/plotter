@@ -2,17 +2,17 @@ import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import axios from "axios";
 
-function NewClient ({ userID }) {
+function Settings () {
     const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
-        email: '',
-        agent: userID,
+        full_name: '',
+        trec: '',
+        website: '',
         phone_number: '',
     });
 
-    const { first_name, last_name, email, agent, phone_number } = formData;
-    const newClient = async () => {
+    const { full_name, trec, website, phone_number } = formData;
+
+    const saveEdit = async () => {
         if(localStorage.getItem('access')) {
             const config = {
                 headers: {
@@ -20,9 +20,9 @@ function NewClient ({ userID }) {
                     'Authorization': `Bearer ${localStorage.getItem('access')}`,
                 }
             };
-            const body = JSON.stringify({ first_name, last_name, email, agent, phone_number });
+            const body = JSON.stringify({ full_name, trec, website, phone_number });
             try {
-                const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/clients/`, body, config);
+                const res = await axios.put(`${process.env.REACT_APP_API_URL}/api/profiles/`, body, config);
                 console.log(res.data)
             } catch (err) {
                 console.error(err);
@@ -35,41 +35,41 @@ function NewClient ({ userID }) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        newClient();
+        saveEdit();
     }
 
     return (
         <div className="">
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label className="noto-sans-upper label" htmlFor='first_name'>First Name:</label>
+                    <label className="noto-sans-upper label" htmlFor='full_name'>Full Name:</label>
                     <input 
                         className='form-control'
                         type='text'
-                        name='first_name'
-                        value={first_name}
+                        name='full_name'
+                        value={full_name}
                         onChange={e => handleChange(e)}
                         required
                     />
                 </div>
                 <div className="form-group">
-                    <label className="noto-sans-upper label" htmlFor='last_name'>Last Name:</label>
+                    <label className="noto-sans-upper label" htmlFor='trec'>TREC ID:</label>
                     <input 
                         className='form-control'
                         type='text'
-                        name='last_name'
-                        value={last_name}
+                        name='trec'
+                        value={trec}
                         onChange={e => handleChange(e)}
                         required
                     />
                 </div>
                 <div className="form-group">
-                    <label className="noto-sans-upper label" htmlFor='email'>Email:</label>
+                    <label className="noto-sans-upper label" htmlFor='website'>Website:</label>
                     <input 
                         className='form-control'
-                        type='email'
-                        name='email'
-                        value={email}
+                        type='text'
+                        name='website'
+                        value={website}
                         onChange={e => handleChange(e)}
                         required
                     />
@@ -85,12 +85,10 @@ function NewClient ({ userID }) {
                         required
                     />
                 </div>
-                <button className="noto-sans-upper" type="submit">CREATE CLIENT</button>   
+                <button className="noto-sans-upper" type="submit">UPDATE PROFILE</button>   
             </form>
         </div>
     )
 }
 
-
-
-export default NewClient;
+export default Settings; 

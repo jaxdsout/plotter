@@ -13,7 +13,6 @@ import Activate from './auth/Activate';
 import ClientDetail from './clients/ClientDetail';
 
 
-
 function App() {
 
   return (

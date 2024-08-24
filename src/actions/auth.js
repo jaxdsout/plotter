@@ -23,14 +23,11 @@ export const load_user = () => async dispatch => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `JWT ${localStorage.getItem('access')}`,
-                'Accept': 'application/json'
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
             }
         }; 
-
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/`, config);
-    
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/auth/users/me/`, config);
             dispatch({
                 type: LOAD_USER_SUCCESS,
                 payload: res.data
@@ -55,9 +52,7 @@ export const auth_user = () => async dispatch => {
                 'Accept': 'application/json'
             }
         };
-
         const body = JSON.stringify({ token: localStorage.getItem('access') })
-
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/verify/`, body, config)
 

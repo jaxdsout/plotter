@@ -1,50 +1,61 @@
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { auth_user, load_user } from '../actions/auth';
-import { Routes, Route } from 'react-router-dom';
+
 import DashNavbar from './DashNav';
-import Profile from './Profile';
 import Clients from '../clients/Clients';
 import Lists from '../lists/Lists';
 import Deals from '../deals/Deals';
-import Stats from './Stats'
+import Dash from './Dash'
+import Settings from './Settings';
 
 
 function Dashboard (props) {
     const [activeTab, setActiveTab] = useState('home')
+    const [userID, setUserID] = useState(null)
 
     useEffect(() => {
-        props.auth_user();
         props.load_user();
+        props.auth_user();
+        if (props.user) {
+            setUserID(props.user.id);
+        }
     }, [])
+
+    useEffect(() => {
+        if (props.user) {
+            setUserID(props.user.id);
+        }
+    }, [props.user]);
 
     const tabSwitch = () => {
         switch (activeTab) {
             case 'home':
-                return <Stats />;
+                return <Dash userID={userID}/>;
             case 'clients':
-                return <Clients />;
+                return <Clients userID={userID}/>;
             case 'lists':
                 return <Lists />
             case 'deals':
                 return <Deals />
+            case 'settings':
+                return <Settings />
             default:
-                return <Stats />
+                return <Dash />
             }
     }
 
-
     return (
         <div className='container'>
-            <div>
-                <DashNavbar setActiveTab={setActiveTab} />
-                {tabSwitch()}
-            </div>
-            <div>
-                <Profile />
-            </div>
+            <DashNavbar setActiveTab={setActiveTab} />
+            {tabSwitch()}
         </div>
     )
 }
 
-export default connect(null, { auth_user, load_user })(Dashboard);
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user
+});
+
+export default connect(mapStateToProps, { load_user, auth_user })(Dashboard);

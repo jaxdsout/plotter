@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { update_client } from "../actions/dash";
 import { Link } from "react-router-dom";
 
-function ClientDetail ({ client, update_client }) {
+function ClientDetail ({ client }) {
     console.log(client)
 
     const [formData, setFormData] = useState({
@@ -18,10 +17,41 @@ function ClientDetail ({ client, update_client }) {
     const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
 
     const handleSubmit = e => {
-        e.preventDefault();
-        update_client(first_name, last_name, email, phone_number)
+        // e.preventDefault();
+        // update_client(first_name, last_name, email, phone_number)
         
     }
+
+        // export const update_client = (first_name, last_name, email, phone_number) => async (dispatch, getState) => {
+    //     const state = getState()
+    //     const { access, user } = state.auth;
+    
+    //     const config = {
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Bearer ${access}`,
+    //             'Accept': 'application/json'
+    //         }
+    //     };
+    
+    //     const agent = user.id
+    //     console.log(agent)
+    
+    //     const body = JSON.stringify({ first_name, last_name, email, phone_number, agent });
+    
+    //     try {
+    //         const res = await axios.post(`${process.env.REACT_APP_API_URL}/plotter/clients/`, body, config);
+    
+    //         dispatch({
+    //             type: NEW_CLIENT_SUCCESS,
+    //             payload: res.data
+    //         });
+    //     } catch (err) {
+    //         dispatch({
+    //             type: NEW_CLIENT_FAIL
+    //         })
+    //     }
+    // };
 
     return (
         <div className="container">
@@ -90,4 +120,4 @@ function ClientDetail ({ client, update_client }) {
     )
 }
 
-export default connect(null, { update_client })( ClientDetail );
+export default ClientDetail;
