@@ -25,9 +25,13 @@ function Clients ({ userID }) {
 
     return (
         <div className="container pt-5 pb-5 bg-dark-subtle">
-            <NewClient userID={userID} all_clients={all_clients}/>
-            <h6 className="noto-sans-upper"> all clients </h6>
-            <AllClients all_clients={all_clients} clients={clients}/>
+            <>
+                <NewClient userID={userID} all_clients={all_clients}/>
+            </>
+            <div>
+                <h6 className="noto-sans"> all clients </h6>
+                <AllClients all_clients={all_clients} clients={clients}/>
+            </div>
         </div>
     )
 }

@@ -6,7 +6,9 @@ const MapBox = () => {
     mapboxgl.accessToken = process.env.REACT_APP_YOUR_MAPBOX_ACCESS_TOKEN;
     const map = new mapboxgl.Map({
       container: 'YOUR_CONTAINER_ELEMENT_ID',
-      style: 'mapbox://styles/mapbox/streets-v11'
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: {lng: '-95.36527442209143', lat: '29.76066296068062'}, 
+      zoom: 8,
     });
     return () => {
       map.remove();

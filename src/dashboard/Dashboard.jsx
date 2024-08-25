@@ -25,8 +25,7 @@ function Dashboard (props) {
 
     useEffect(() => {
         if (props.user) {
-            setUserID(props.user.id);
-        }
+            setUserID(props.user.id);        }
     }, [props.user]);
 
     useEffect(() => {
@@ -42,7 +41,7 @@ function Dashboard (props) {
             case 'clients':
                 return <Clients userID={userID}/>;
             case 'lists':
-                return <Lists />
+                return <Lists userID={userID}/>
             case 'deals':
                 return <Deals />
             case 'settings':

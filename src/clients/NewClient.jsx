@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { Modal, Button } from "semantic-ui-react";
+import { Modal, Button, Form, FormField } from "semantic-ui-react";
 
 function NewClient({ userID, all_clients }) {
     const [showModal, setShowModal] = useState(false);
@@ -51,57 +51,53 @@ function NewClient({ userID, all_clients }) {
             <div className="d-flex justify-content-end align-items-end">
                 <Button onClick={handleOpenModal}>+</Button>
             </div>
-            <div className="bg-body-secondary d-flex justify-content-center">
+            <div className="bg-body-secondary">
                 <Modal open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>Add New Client</Modal.Header>
                     <Modal.Content>
-                        <form onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <label className="noto-sans-upper label" htmlFor='first_name'>First Name:</label>
+                        <Form onSubmit={handleSubmit}>
+                            <FormField>
+                                <label className="noto-sans" htmlFor='first_name'>First Name:</label>
                                 <input
-                                    className='form-control'
                                     type='text'
                                     name='first_name'
                                     value={first_name}
                                     onChange={handleChange}
                                     required
                                 />
-                            </div>
-                            <div className="form-group">
-                                <label className="noto-sans-upper label" htmlFor='last_name'>Last Name:</label>
+                            </FormField>
+                            <FormField>
+                                <label className="noto-sans" htmlFor='last_name'>Last Name:</label>
                                 <input
-                                    className='form-control'
                                     type='text'
                                     name='last_name'
                                     value={last_name}
                                     onChange={handleChange}
                                     required
                                 />
-                            </div>
-                            <div className="form-group">
-                                <label className="noto-sans-upper label" htmlFor='email'>Email:</label>
+                            </FormField>
+                            <FormField>
+                                <label className="noto-sans" htmlFor='email'>Email:</label>
                                 <input
-                                    className='form-control'
                                     type='email'
                                     name='email'
                                     value={email}
                                     onChange={handleChange}
                                     required
                                 />
-                            </div>
-                            <div className="form-group">
-                                <label className="noto-sans-upper label" htmlFor='phone_number'>Phone:</label>
+                            </FormField>
+                            <FormField>
+                                <label className="noto-sans" htmlFor='phone_number'>Phone:</label>
                                 <input
-                                    className='form-control'
                                     type='text'
                                     name='phone_number'
                                     value={phone_number}
                                     onChange={handleChange}
                                     required
                                 />
-                            </div>
+                            </FormField>
                             <Button type="submit" color="green">CREATE CLIENT</Button>
-                        </form>
+                        </Form>
                     </Modal.Content>
                     <Modal.Actions>
                         <Button onClick={handleCloseModal}>CLOSE</Button>

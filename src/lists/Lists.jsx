@@ -23,9 +23,13 @@ function Lists ({ userID }) {
 
     return (
         <div className="container pt-5 pb-5 bg-dark-subtle">
-            <NewList userID={userID} all_lists={all_lists}/>
-            <h6 className="noto-sans-upper"> all lists </h6>
-            <AllLists all_lists={all_lists} lists={lists}/>
+            <>
+                <NewList userID={userID} all_lists={all_lists}/>
+            </>
+            <div>
+                <h6 className="noto-sans"> all lists </h6>
+                <AllLists all_lists={all_lists} lists={lists}/>
+            </div>
         </div>
     )
 }

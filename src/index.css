@@ -13,8 +13,6 @@ body {
 /* FONTS */
 .noto-sans {
   font-family: "Noto Sans JP", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
   font-style: normal;
 }
 
@@ -23,4 +21,13 @@ body {
   font-family: "Poetsen One", sans-serif;
   font-weight: 700;
   font-style: normal;
+}
+
+
+/* BOOTSTRAP EXCEPTIONS */
+
+.modal {
+  top: auto;
+  left: auto;
+  height: auto;
 }
