@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { login } from "../actions/auth";
+import { Button } from "semantic-ui-react";
 
 function Login ({ login, isAuthenticated }) {
     const navigate = useNavigate()
@@ -52,7 +53,7 @@ function Login ({ login, isAuthenticated }) {
                         required
                     />
                 </div>
-                <button className="noto-sans-upper" type="submit">LOGIN</button>   
+                <Button type="submit">LOGIN</Button>   
             </form>
             <h6 className="noto-sans-upper pt-5 label">Don't have an account? <Link to={"/signup/"}>Signup</Link></h6>
             <h6 className="noto-sans-upper pt-5 label">Forgot your password? <Link to={"/reset-password/"}>Reset Password</Link></h6>                      

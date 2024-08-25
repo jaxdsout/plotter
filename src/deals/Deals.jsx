@@ -2,13 +2,9 @@
 function Deals () {
     
     return (
-        <div className='container'>
-                <h1> this is the deals page</h1>
-
-    
-
-
-    </div>
+        <div className="container pt-5 pb-5 bg-dark-subtle">
+            <h6 className="noto-sans-upper"> all deals </h6>
+        </div>
     )
 }
 

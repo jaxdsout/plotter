@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { reset_password_confirm } from "../actions/auth";
+import { Button } from "semantic-ui-react";
 
 function ConfirmPassword ({ reset_password_confirm }) {
     const navigate = useNavigate()
@@ -56,7 +57,7 @@ function ConfirmPassword ({ reset_password_confirm }) {
                         required
                     />
                 </div>
-                <button className="noto-sans-upper" type="submit">RESET PASSWORD</button>   
+                <Button type="submit">RESET PASSWORD</Button>   
             </form>
     
         </div>

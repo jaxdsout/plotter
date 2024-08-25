@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { logout } from '../actions/auth';
+import { Button } from 'semantic-ui-react';
 
 function Navbar ({ logout, isAuthenticated }) {
     const navigate = useNavigate()
@@ -12,20 +13,19 @@ function Navbar ({ logout, isAuthenticated }) {
     return (
         <nav className='navbar p-5 bg-body-tertiary'>
             <div class="container-fluid">
-                <Link to={"/"}><h1 className='poetsen'>plotter</h1></Link>
                 {isAuthenticated ? 
-                    <div>
-                        <button type="button" onClick={logout_user}>LOGOUT</button>      
-                    </div>
-                : 
-                    <div>
-                        <Link to={"/signup/"}>
-                            <button type="button">SIGN UP</button>
-                        </Link>
-                            <Link to={"/login/"}>
-                            <button type="button">LOGIN</button>
-                        </Link>
-                    </div>
+                    <>
+                        <Link to={"/dashboard/"}><h1 className='poetsen'>plotter</h1></Link>
+                        <Button onClick={logout_user}>LOGOUT</Button>      
+                    </>
+                    : 
+                    <>
+                        <Link to={"/"}><h1 className='poetsen'>plotter</h1></Link>
+                        <div>
+                            <Link to={"/signup/"}><Button>SIGN UP</Button></Link>
+                            <Link to={"/login/"}><Button>LOGIN</Button></Link>
+                        </div>
+                    </>
                 }
             </div>
         </nav>

@@ -37,12 +37,27 @@ function Dash ({ userID }) {
         <div className='container bg-dark-subtle'>
             {profile ? (
                 <div>
-                    <img className="img-thumbnail rounded-circle w-25" src={profile.avatar} alt='avatar'/>
-                    <p>{profile.full_name}</p>
-                    <p>TREC ID: {profile.trec}</p>
-                    <p>Phone: {profile.phone_number}</p>
-                    <p>Email: {profile.email}</p>
-                    <p>Website: {profile.website}</p>
+                    <div className='container-sm h-25'>
+                        <img className="img-thumbnail rounded-circle w-25" src={profile.avatar} alt='avatar'/>
+                        <p>{profile.full_name}</p>
+                        <p>TREC ID: {profile.trec}</p>
+                        <p>Phone: {profile.phone_number}</p>
+                        <p>Email: {profile.email}</p>
+                        <p>Website: {profile.website}</p>
+                    </div>
+                    <div>
+                        <h4>Ideas for Dash</h4>
+                        <ul className='list-group'>
+                            <li className='list-group-item'>Donut Chart: for Paid, Unpaid, Overdue, Cancelled</li>
+                            <li className='list-group-item'>Bar Graph: Monthly earnings over Year</li>
+                            <li className='list-group-item'>List: Past Client Renewals Coming Up</li>
+                            <li className='list-group-item'>List: Client Move-Ins Approaching</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Guest Cards</h4>
+                        <p>eventual modal for sending guest cards</p>
+                    </div>
                 </div>
             ) : (
                 <p>Loading profile...</p>

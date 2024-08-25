@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { signup } from "../actions/auth";
+import { Button } from "semantic-ui-react";
 
 function Signup ({ signup, isAuthenticated }) {
     const navigate = useNavigate()
@@ -97,7 +98,7 @@ function Signup ({ signup, isAuthenticated }) {
                         required
                     />
                 </div>
-                <button className="noto-sans-upper" type="submit">SIGN UP</button>   
+                <Button>SIGN UP</Button>   
             </form>
             <h6 className="noto-sans-upper pt-5 label">Already have an account? <Link to={"/login/"}>Login</Link></h6>
         </div>

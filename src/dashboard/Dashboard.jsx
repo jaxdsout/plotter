@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { auth_user, load_user } from '../actions/auth';
-
+import { useNavigate } from 'react-router-dom';
 import DashNavbar from './DashNav';
 import Clients from '../clients/Clients';
 import Lists from '../lists/Lists';
@@ -13,6 +13,7 @@ import Settings from './Settings';
 function Dashboard (props) {
     const [activeTab, setActiveTab] = useState('home')
     const [userID, setUserID] = useState(null)
+    const navigate = useNavigate();
 
     useEffect(() => {
         props.load_user();
@@ -27,6 +28,12 @@ function Dashboard (props) {
             setUserID(props.user.id);
         }
     }, [props.user]);
+
+    useEffect(() => {
+        if (!props.isAuthenticated) {
+            navigate('/login/');
+        }
+    }, [navigate]);
 
     const tabSwitch = () => {
         switch (activeTab) {
@@ -45,7 +52,7 @@ function Dashboard (props) {
             }
     }
 
-    return (
+    return (    
         <div className='container'>
             <DashNavbar setActiveTab={setActiveTab} />
             {tabSwitch()}

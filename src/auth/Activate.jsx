@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { activate } from "../actions/auth";
+import { Button } from "semantic-ui-react";
 
 function Activate ({ activate }) {
     const navigate = useNavigate()
@@ -22,7 +23,7 @@ function Activate ({ activate }) {
         <div className="container">
             <div className="container">
                 <h5> Activate your account: </h5>
-                <button className='noto-sans-upper' onClick={activate_account} type='button'> ACTIVATE </button>
+                <Button onClick={activate_account} type='button'>ACTIVATE</Button>
             </div>
         </div>
     )
