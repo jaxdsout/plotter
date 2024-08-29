@@ -9,7 +9,6 @@ function AllLists ({ all_lists, lists }) {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        console.log("firing all lists")
         all_lists();
     }, [])
     

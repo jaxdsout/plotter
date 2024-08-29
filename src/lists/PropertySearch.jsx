@@ -1,36 +1,19 @@
 import { Search, Form, Button, Divider } from "semantic-ui-react"
 import { useState } from "react";
-import MapBox from "./MapBox"
+import MapBox from "../components/MapBox"
 import axios from "axios";
-import OptionList from "../lists/OptionList";
+import OptionList from "./OptionList";
 
-function PropertySearch({ currentList, currentClient }) {
+function PropertySearch({ listID, currentClient, createOption, all_options }) {
     const [searchResults, setSearchResults] = useState([]);
 
     const [formData, setFormData] = useState({
         property: '',
-        list: currentList.id,
+        list: listID,
         client: currentClient.id
     });
     const { property, list, client } = formData;
-
-    const createOption = async () => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                }
-            };
-            const body = JSON.stringify({ property, list, client });
-            console.log(body, "body")
-            try {
-                const res = await axios.post(`${process.env.REACT_APP_API_URL}/options/`, body, config);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
+    
 
     const searchProperties = async (query) => {
         if (localStorage.getItem('access')) {
@@ -61,7 +44,8 @@ function PropertySearch({ currentList, currentClient }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        createOption();
+        createOption(property, list, client);
+        all_options();
     };
 
 
@@ -81,10 +65,6 @@ function PropertySearch({ currentList, currentClient }) {
                 </Form>
             </div>
             <Divider />
-            <div>
-                <OptionList currentList={currentList} />
-            </div>
-         
         </>
     )
 }

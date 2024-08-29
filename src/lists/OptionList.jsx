@@ -1,37 +1,80 @@
+import { useEffect } from "react";
+import {ReactComponent as Trash} from '../components/trash.svg'
+import {ReactComponent as Edit} from '../components/pencil-square.svg'
+import { Button } from "semantic-ui-react";
 import axios from "axios";
 import { useState } from "react";
+import UpdateOption from "./UpdateOption";
 
+function OptionList ({ options, all_options, listID }) {
+    const [optionEnabled, setOptionEnabled] = useState(false);
 
-function OptionList ({ currentList }) {
-    const [list, setList] = useState([])
-
-    const all_options = async () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+    const deleteOption = async (optionID) => {
+        if (localStorage.getItem('access')) {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
+                }
+            };
+            try {
+                await axios.delete(`${process.env.REACT_APP_API_URL}/options/${optionID}/`, config);
+            } catch (err) {
+                console.error(err);
             }
-        };
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/lists/${currentList.id}`, config);
-            setList(res.data)
-        } catch (error) {
-            console.error(error)
         }
-    }
+    };
 
+
+    const handleDelete = (e, optionID) => {
+        e.preventDefault();
+        deleteOption(optionID);
+    };
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        if (optionEnabled) {
+            setOptionEnabled(false)
+        } else {
+            setOptionEnabled(true);
+        }
+    };
+
+    useEffect(() => {
+        all_options();
+    }, [])
 
     return (
         <>
-         <ul class="list-group hover">
-                {list.map(option => (
-                    <li class="list-group-item" key={option.id}>
-                        <div className="d-flex justify-content-between">
-                            <p>option.</p>
-                        </div>     
+          {options ? (
+                <ul class="list-group hover">
+                    {options.map(option => (
+                        <li class="list-group-item" key={option.id}>
+                            <div className="d-flex justify-content-between">
+                                <p>{option.prop_name}</p>
+                                <div>
+                                    <Button onClick={(e) => handleUpdate(e)}>
+                                        <Edit />
+                                    </Button>
+                                    <Button onClick={(e) => handleDelete(e, option.id)}>
+                                        <Trash />
+                                    </Button>
+                                </div>
+                            </div>
+                            {optionEnabled ? (
+                                <UpdateOption 
+                                    optionID={option.id} 
+                                    listID={listID}
+                                />
+                            ) : (
+                                null
+                            )}     
                         </li>
-                ))}
-            </ul>
+                    ))}
+                </ul>
+            ) : (
+                <p>No options available</p>
+            )}
         </>
     )
 }
