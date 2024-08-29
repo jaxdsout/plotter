@@ -9,10 +9,6 @@ function AllClients ({ all_clients, clients }) {
     const [showClientDetail, setShowClientDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
-    useEffect(() => {
-        all_clients();
-    }, [])
-
     const handleOpenModal = (id) => {
         setShowClientDetail(showClientDetail === id ? null : id)
         setShowModal(true);
@@ -20,6 +16,10 @@ function AllClients ({ all_clients, clients }) {
 
     const handleCloseModal = () => setShowModal(false);
 
+    useEffect(() => {
+        console.log("firing all clients")
+        all_clients();
+    }, [])
 
     return (
         <>

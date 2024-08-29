@@ -5,7 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 
 
-function Clients ({ userID }) {
+function Clients ({ user }) {
     const [clients, setClients] = useState([])
 
     const all_clients = async () => {
@@ -16,7 +16,7 @@ function Clients ({ userID }) {
             }
         };
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/clients/`, config);
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/clients/`, config);
             setClients(res.data)
         } catch (error) {
             console.error(error)
@@ -26,7 +26,7 @@ function Clients ({ userID }) {
     return (
         <div className="container pt-5 pb-5 bg-dark-subtle">
             <>
-                <NewClient userID={userID} all_clients={all_clients}/>
+                <NewClient user={user} all_clients={all_clients}/>
             </>
             <div>
                 <h6 className="noto-sans"> all clients </h6>

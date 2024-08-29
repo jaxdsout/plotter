@@ -20,12 +20,12 @@ function Activate ({ activate }) {
     }
 
     return (
-        <div className="container">
+        <>
             <div className="container">
                 <h5> Activate your account: </h5>
                 <Button onClick={activate_account} type='button'>ACTIVATE</Button>
             </div>
-        </div>
+        </>
     )
 }
 

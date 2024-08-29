@@ -9,6 +9,7 @@ function AllLists ({ all_lists, lists }) {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
+        console.log("firing all lists")
         all_lists();
     }, [])
     
@@ -28,18 +29,21 @@ function AllLists ({ all_lists, lists }) {
             year: 'numeric',
             hour: '2-digit',
             minute: '2-digit',
-            hour12: false,
+            hour12: true,
         }).replace(',', '');
     };
 
     return (
         <>
-            <ul class="list-group">
+            <ul class="list-group hover">
                 {lists.map(list => (
                     <li class="list-group-item" key={list.id}>
-                    <Link onClick={() => handleOpenModal(list.id)}>
-                        {formatDate(list.date)} - {list.client_name}
-                    </Link>
+                        <div className="d-flex justify-content-between">
+                            <span>{list.full_name} - {formatDate(list.date)}</span>
+                            <Link onClick={() => handleOpenModal(list.id)}>
+                                View Details
+                            </Link>
+                        </div>                 
                     {showListDetail === list.id && (
                         <Modal open={showModal} onClose={handleCloseModal}>
                             <Modal.Header>List Info</Modal.Header>

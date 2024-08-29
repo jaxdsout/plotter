@@ -3,7 +3,7 @@ import axios from "axios";
 import AllDeals from "./AllDeals";
 import NewDeal from "./NewDeal";
 
-function Deals ({ userID }) {
+function Deals ({ user }) {
     const [deals, setDeals] = useState([])
 
     const all_deals = async () => {
@@ -14,7 +14,7 @@ function Deals ({ userID }) {
             }
         };
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/deals/`, config);
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/deals/`, config);
             setDeals(res.data)
         } catch (error) {
             console.error(error)
@@ -25,7 +25,7 @@ function Deals ({ userID }) {
     return (
         <div className="container pt-5 pb-5 bg-dark-subtle">
         <>
-            <NewDeal userID={userID} all_deals={all_deals}/>
+            <NewDeal user={user} all_deals={all_deals}/>
         </>
         <div>
             <h6 className="noto-sans"> all deals </h6>

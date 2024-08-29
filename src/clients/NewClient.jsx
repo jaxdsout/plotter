@@ -2,14 +2,14 @@ import { useState } from "react";
 import axios from "axios";
 import { Modal, Button, Form, FormField } from "semantic-ui-react";
 
-function NewClient({ userID, all_clients }) {
+function NewClient({ user, all_clients }) {
     const [showModal, setShowModal] = useState(false);
 
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
         email: '',
-        agent: userID,
+        agent: user.id,
         phone_number: '',
     });
 
@@ -25,7 +25,7 @@ function NewClient({ userID, all_clients }) {
             };
             const body = JSON.stringify({ first_name, last_name, email, agent, phone_number });
             try {
-                const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/clients/`, body, config);
+                const res = await axios.post(`${process.env.REACT_APP_API_URL}/clients/`, body, config);
                 console.log(res.data);
             } catch (err) {
                 console.error(err);

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { signup } from "../actions/auth";
-import { Button } from "semantic-ui-react";
+import { Button, Divider, Form, FormField } from "semantic-ui-react";
 
 function Signup ({ signup, isAuthenticated }) {
     const navigate = useNavigate()
@@ -39,9 +39,11 @@ function Signup ({ signup, isAuthenticated }) {
 
     return (
         <div className="container-sm sm w-50 pt-5">
-            <h6 className="noto-sans-upper"> sign up for the platform </h6>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
+            <div className="pb-2">
+                <h6 className="noto-sans"> sign up for the platform </h6>
+            </div>
+            <Form onSubmit={handleSubmit}>
+                <FormField>
                     <label className="noto-sans-upper label" htmlFor='first_name'>First Name:</label>
                     <input 
                         className='form-control'
@@ -51,8 +53,8 @@ function Signup ({ signup, isAuthenticated }) {
                         onChange={e => handleChange(e)}
                         required
                     />
-                </div>
-                <div className="form-group">
+                </FormField>
+                <FormField>
                     <label className="noto-sans-upper label" htmlFor='last_name'>Last Name:</label>
                     <input 
                         className='form-control'
@@ -62,8 +64,8 @@ function Signup ({ signup, isAuthenticated }) {
                         onChange={e => handleChange(e)}
                         required
                     />
-                </div>
-                <div className="form-group">
+                </FormField>
+                <FormField>
                     <label className="noto-sans-upper label" htmlFor='email'>Email:</label>
                     <input 
                         className='form-control'
@@ -73,9 +75,9 @@ function Signup ({ signup, isAuthenticated }) {
                         onChange={e => handleChange(e)}
                         required
                     />
-                </div>
-                <div className="form-group">
-                    <label className="noto-sans-upper label" htmlFor='password'>Password:</label>
+                </FormField>
+                <FormField>
+                <label className="noto-sans-upper label" htmlFor='password'>Password:</label>
                     <input 
                         className='form-control'
                         type='password'
@@ -85,9 +87,9 @@ function Signup ({ signup, isAuthenticated }) {
                         minLength='8'
                         required
                     />
-                </div>
-                <div className="form-group">
-                    <label className="noto-sans-upper label" htmlFor='re_password'>Re-Enter Password:</label>
+                </FormField>
+                <FormField>
+                <label className="noto-sans-upper label" htmlFor='re_password'>Re-Enter Password:</label>
                     <input 
                         className='form-control'
                         type='password'
@@ -97,10 +99,13 @@ function Signup ({ signup, isAuthenticated }) {
                         minLength='8'
                         required
                     />
-                </div>
+                </FormField>
                 <Button>SIGN UP</Button>   
-            </form>
-            <h6 className="noto-sans-upper pt-5 label">Already have an account? <Link to={"/login/"}>Login</Link></h6>
+            </Form>
+            <Divider className="mt-4 mb-4" />
+            <div className="d-flex justify-content-evenly">            
+                <h6 className="noto-sans">already have an account? <Link to={"/login/"}>Login</Link></h6>
+            </div>
         </div>
     )
 }

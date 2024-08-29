@@ -3,7 +3,7 @@ import AllLists from "./AllLists";
 import { useState } from "react";
 import axios from "axios";
 
-function Lists ({ userID }) {
+function Lists ({ user }) {
     const [lists, setLists] = useState([])
 
     const all_lists = async () => {
@@ -14,7 +14,7 @@ function Lists ({ userID }) {
             }
         };
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/lists/`, config);
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/lists/`, config);
             setLists(res.data)
         } catch (error) {
             console.error(error)
@@ -24,7 +24,7 @@ function Lists ({ userID }) {
     return (
         <div className="container pt-5 pb-5 bg-dark-subtle">
             <>
-                <NewList userID={userID} all_lists={all_lists}/>
+                <NewList user={user} all_lists={all_lists}/>
             </>
             <div>
                 <h6 className="noto-sans"> all lists </h6>

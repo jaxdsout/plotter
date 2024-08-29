@@ -7,45 +7,31 @@ import Clients from '../clients/Clients';
 import Lists from '../lists/Lists';
 import Deals from '../deals/Deals';
 import Dash from './Dash'
-import Settings from './Settings';
+import Profile from './Profile';
 
 
-function Dashboard (props) {
+function Dashboard ({ load_user, auth_user, user }) {
     const [activeTab, setActiveTab] = useState('home')
-    const [userID, setUserID] = useState(null)
-    const navigate = useNavigate();
+
 
     useEffect(() => {
-        props.load_user();
-        props.auth_user();
-        if (props.user) {
-            setUserID(props.user.id);
-        }
-    }, [])
+        load_user();
+        auth_user();
+    }, [load_user, auth_user]);
 
-    useEffect(() => {
-        if (props.user) {
-            setUserID(props.user.id);        }
-    }, [props.user]);
-
-    useEffect(() => {
-        if (!props.isAuthenticated) {
-            navigate('/login/');
-        }
-    }, [navigate]);
 
     const tabSwitch = () => {
         switch (activeTab) {
             case 'home':
-                return <Dash userID={userID}/>;
+                return <Dash user={user}/>;
             case 'clients':
-                return <Clients userID={userID}/>;
+                return <Clients user={user}/>;
             case 'lists':
-                return <Lists userID={userID}/>
+                return <Lists user={user}/>
             case 'deals':
-                return <Deals />
-            case 'settings':
-                return <Settings />
+                return <Deals user={user}/>
+            case 'profile':
+                return <Profile user={user} />
             default:
                 return <Dash />
             }
@@ -61,7 +47,7 @@ function Dashboard (props) {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    user: state.auth.user
+    user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { load_user, auth_user })(Dashboard);

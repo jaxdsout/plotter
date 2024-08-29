@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { login } from "../actions/auth";
-import { Button } from "semantic-ui-react";
+import { Button, Divider, Form, FormField } from "semantic-ui-react";
 
 function Login ({ login, isAuthenticated }) {
     const navigate = useNavigate()
@@ -28,10 +28,12 @@ function Login ({ login, isAuthenticated }) {
 
     return (
         <div className="container-sm sm w-50 pt-5">
-            <h6 className="noto-sans-upper"> sign into the platform </h6>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label className="noto-sans-upper label" htmlFor='email'>Email:</label>
+            <div className="pb-2">
+                <h6 className="noto-sans"> sign into the platform </h6>
+            </div>
+            <Form onSubmit={handleSubmit}>
+                <FormField>
+                <label className="noto-sans-upper label" htmlFor='email'>Email:</label>
                     <input 
                         className='form-control'
                         type='email'
@@ -40,9 +42,9 @@ function Login ({ login, isAuthenticated }) {
                         onChange={e => handleChange(e)}
                         required
                     />
-                </div>
-                <div className="form-group">
-                    <label className="noto-sans-upper label" htmlFor='password'>Password:</label>
+                </FormField>
+                <FormField>
+                <label className="noto-sans-upper label" htmlFor='password'>Password:</label>
                     <input 
                         className='form-control'
                         type='password'
@@ -52,11 +54,15 @@ function Login ({ login, isAuthenticated }) {
                         minLength='8'
                         required
                     />
-                </div>
+                </FormField>
                 <Button type="submit">LOGIN</Button>   
-            </form>
-            <h6 className="noto-sans-upper pt-5 label">Don't have an account? <Link to={"/signup/"}>Signup</Link></h6>
-            <h6 className="noto-sans-upper pt-5 label">Forgot your password? <Link to={"/reset-password/"}>Reset Password</Link></h6>                      
+
+            </Form>
+            <Divider className="mt-4 mb-4" />
+            <div className="d-flex justify-content-evenly">            
+                <h6 className="noto-sans">don't have an account? <Link to={"/signup/"}>Signup</Link></h6>
+                <h6 className="noto-sans">forgot your password? <Link to={"/reset-password/"}>Reset</Link></h6>                      
+            </div>
         </div>
     )
 }

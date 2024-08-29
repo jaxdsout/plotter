@@ -9,10 +9,6 @@ function AllDeals ({ all_deals, deals }) {
     const [showDealDetail, setShowDealDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
-    useEffect(() => {
-        all_deals();
-    }, [])
-
     const handleOpenModal = (id) => {
         setShowDealDetail(showDealDetail === id ? null : id)
         setShowModal(true);
@@ -20,6 +16,10 @@ function AllDeals ({ all_deals, deals }) {
 
     const handleCloseModal = () => setShowModal(false);
 
+    useEffect(() => {
+        console.log("firing all deals")
+        all_deals();
+    }, [])
 
     return (
         <>

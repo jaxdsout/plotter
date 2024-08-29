@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 
 import {ReactComponent as Home} from '../components/home.svg'
-import {ReactComponent as Settings} from '../components/gear.svg'
+import {ReactComponent as Person} from '../components/person-circle.svg'
 
 function DashNavbar ({ setActiveTab }) {
 
@@ -11,7 +11,7 @@ function DashNavbar ({ setActiveTab }) {
             <Link className='poetsen tabs'  onClick={() => setActiveTab('clients')}>clients</Link>
             <Link className='poetsen tabs'  onClick={() => setActiveTab('lists')}>lists</Link>
             <Link className='poetsen tabs' onClick={() => setActiveTab('deals')}>deals</Link>
-            <Link className='poetsen tabs' onClick={() => setActiveTab('settings')}><Settings className="icon"/></Link>
+            <Link className='poetsen tabs' onClick={() => setActiveTab('profile')}><Person className="icon"/></Link>
         </div>
     )
 
