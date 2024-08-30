@@ -1,46 +1,29 @@
 import { Form, FormField, Button } from "semantic-ui-react";
 import { useState } from "react";
-import axios from "axios";
+import { connect } from "react-redux";
+import { load_options, update_option } from "../actions/listmaker";
 
-function UpdateOption ({ optionID, listID }) {
+function UpdateOption ({ option, listID, update_option }) {
     const [optionForm, setOptionForm] = useState({
-        price: '',
-        unit_number: '',
-        layout: '',
-        sq_ft: '',
-        available: '',
-        notes: '',
-        list: listID 
+        price: option.price || '',
+        unit_number: option.unit_number || '',
+        layout: option.layout || '',
+        sq_ft: option.sq_ft || '',
+        available: option.available || '',
+        notes: option.notes || '',
+        list: listID,
+        property: option.property
     });
-    const { price, unit_number, layout, sq_ft, available, notes, list } = optionForm;
+    const { price, unit_number, layout, sq_ft, available, notes, list, property } = optionForm;
 
-
-    const updateOption = async () => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                }
-            };
-            const body = JSON.stringify({ price, unit_number, layout, sq_ft, available, notes, list });
-            console.log("update option body", body)
-            try {
-                console.log("list ID", listID)
-                const res = await axios.put(`${process.env.REACT_APP_API_URL}/options/${optionID}/`, body, config);
-                console.log(res.data);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
+    const optionID = option.id;
 
     const handleChange = (e) => setOptionForm({ ...optionForm, [e.target.name]: e.target.value });
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        updateOption();
+        update_option(optionID, price, unit_number, layout, sq_ft, available, notes, list, property);
+        load_options(listID);
     };
 
     return(
@@ -53,7 +36,6 @@ function UpdateOption ({ optionID, listID }) {
                         name='price'
                         value={price}
                         onChange={handleChange}
-                        required
                     />
                 </FormField>
                 <FormField>
@@ -63,27 +45,24 @@ function UpdateOption ({ optionID, listID }) {
                         name='unit_number'
                         value={unit_number}
                         onChange={handleChange}
-                        required
                     />
                 </FormField>
                 <FormField>
-                    <label className="noto-sans" htmlFor='email'>Layout:</label>
+                    <label className="noto-sans" htmlFor='layout'>Layout:</label>
                     <input
                         type='text'
                         name='layout'
                         value={layout}
                         onChange={handleChange}
-                        required
                     />
                 </FormField>
                 <FormField>
                     <label className="noto-sans" htmlFor='sq_ft'>Sq Ft:</label>
                     <input
-                        type='number'
+                        type='text'
                         name='sq_ft'
                         value={sq_ft}
                         onChange={handleChange}
-                        required
                     />
                 </FormField>
                 <FormField>
@@ -93,7 +72,6 @@ function UpdateOption ({ optionID, listID }) {
                         name='available'
                         value={available}
                         onChange={handleChange}
-                        required
                     />
                 </FormField>
                 <FormField>
@@ -103,7 +81,6 @@ function UpdateOption ({ optionID, listID }) {
                         name='notes'
                         value={notes}
                         onChange={handleChange}
-                        required
                     />
                 </FormField>
                 <Button type="submit" color="green">UPDATE OPTION</Button>
@@ -112,4 +89,10 @@ function UpdateOption ({ optionID, listID }) {
     )
 }
 
-export default UpdateOption;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    listID: state.listmaker.list.id,
+    error: state.auth.error,
+});
+
+export default connect(mapStateToProps, { update_option })(UpdateOption);

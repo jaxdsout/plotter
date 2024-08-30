@@ -8,6 +8,7 @@ import Activate from './auth/Activate';
 import Navbar from './home/Navbar';
 import Landing from './home/Landing';
 import Dashboard from './dashboard/Dashboard';
+import ClientList from './clients/ClientList';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/activate/:uid/:token" element={ <Activate /> } />
         <Route path="/login/" element={ <Login /> } />
         <Route path="/dashboard/" element={ <Dashboard /> }/>
+        <Route path="/list/:uid/:token" element={ <ClientList /> } />
       </Routes>
     </div>
   );

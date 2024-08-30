@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DealDetail from "./DealDetail";
-import { Modal, Button, Divider } from "semantic-ui-react";
+import { Modal, Button } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { load_deals } from "../actions/agent";
 
 
-function AllDeals ({ all_deals, deals }) {
+function AllDeals ({ load_deals, deals }) {
     const [showDealDetail, setShowDealDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
@@ -18,11 +20,12 @@ function AllDeals ({ all_deals, deals }) {
 
     useEffect(() => {
         console.log("firing all deals")
-        all_deals();
+        load_deals();
     }, [])
 
     return (
         <>
+            <h6 className="noto-sans"> all deals </h6>
             <ul class="list-group">
                 {deals.map(deal => (
                     <li class="list-group-item" key={deal.id}>
@@ -49,4 +52,10 @@ function AllDeals ({ all_deals, deals }) {
     )
 }
 
-export default AllDeals
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.auth.error,
+    deals: state.agent.deals
+});
+
+export default connect(mapStateToProps, { load_deals })(AllDeals);

@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Modal, Button } from "semantic-ui-react";
 import ListDetail from "./ListDetail";
+import { load_lists } from "../actions/agent";
+import { connect } from "react-redux";
 
-function AllLists ({ all_lists, lists }) {
+function AllLists ({ load_lists, lists }) {
     const [showListDetail, setShowListDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        all_lists();
+        console.log("firing all lists")
+        load_lists();
     }, [])
     
 
@@ -34,6 +37,7 @@ function AllLists ({ all_lists, lists }) {
 
     return (
         <>
+            <h6 className="noto-sans"> all lists </h6>
             <ul class="list-group hover">
                 {lists.map(list => (
                     <li class="list-group-item" key={list.id}>
@@ -61,4 +65,11 @@ function AllLists ({ all_lists, lists }) {
     )
 }
 
-export default AllLists
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
+    error: state.auth.error,
+    lists: state.agent.lists
+});
+
+export default connect(mapStateToProps, { load_lists })(AllLists);

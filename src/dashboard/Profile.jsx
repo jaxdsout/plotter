@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { Form, FormField, Button, Modal } from 'semantic-ui-react';
 import ProfileWidget from '../components/ProfileWidget';
+import { connect } from 'react-redux';
+import { update_profile } from '../actions/agent';
 
-function Profile({ user }) {
+function Profile({ user, update_profile }) {
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
         full_name: '',
@@ -12,32 +13,14 @@ function Profile({ user }) {
         phone_number: '',
     });
     const { full_name, trec, website, phone_number } = formData;
+    const userID = user.id
 
-    console.log(user, "user");
-
-    const saveEdit = async () => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                }
-            };
-            const body = JSON.stringify({ full_name, trec, website, phone_number });
-            try {
-                const res = await axios.put(`${process.env.REACT_APP_API_URL}/profiles/${user.profile.id}`, body, config);
-                console.log(res.data);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
 
     const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const handleSubmit = e => {
         e.preventDefault();
-        saveEdit();
+        update_profile(userID, full_name, trec, website, phone_number);
     };
 
     const handleOpenModal = () => setShowModal(true);
@@ -118,4 +101,10 @@ function Profile({ user }) {
     );
 }
 
-export default Profile;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.auth.error,
+    user: state.auth.user
+});
+
+export default connect(mapStateToProps, { update_profile })(Profile);

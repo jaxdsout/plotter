@@ -1,8 +1,9 @@
 import { Form, Modal, Button, FormField } from "semantic-ui-react";
 import { useState } from "react";
-import axios from "axios";
+import { load_deals, new_deal } from "../actions/agent";
+import { connect } from "react-redux";
 
-function NewDeal({ user , all_deals }) {
+function NewDeal({ user , load_deals, new_deal }) {
     const [showModal, setShowModal] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -15,39 +16,20 @@ function NewDeal({ user , all_deals }) {
         unit_no: '',
         lease_term: '',
         client: '',
-        agent: user,
     });
-
     const { property, rent, rate, commission, flat_fee, move_date, unit_no,
-            lease_term, client, agent } = formData;
-
-
-    const newDeal = async () => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                }
-            };
-            const body = JSON.stringify({ property, rent, rate, commission, flat_fee, move_date, unit_no,
-                lease_term, client, agent });
-            try {
-                const res = await axios.post(`${process.env.REACT_APP_API_URL}/deals/`, body, config);
-                console.log(res.data);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
+            lease_term, client } = formData;
+    const agent = user.id;
+   
 
     const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        newDeal();
+        new_deal(agent, property, rent, rate, commission, flat_fee, move_date, unit_no,
+            lease_term, client);
         handleCloseModal();
-        all_deals()
+        load_deals()
     };
 
     const handleOpenModal = () => setShowModal(true);
@@ -62,7 +44,7 @@ function NewDeal({ user , all_deals }) {
             </div>
             <div className="bg-body-secondary">
                 <Modal open={showModal} onClose={handleCloseModal}>
-                    <Modal.Header>Add New Client</Modal.Header>
+                    <Modal.Header>Add New Deal</Modal.Header>
                     <Modal.Content>
                         <Form onSubmit={handleSubmit}>
                         </Form>
@@ -76,4 +58,10 @@ function NewDeal({ user , all_deals }) {
     )
 }
 
-export default NewDeal
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
+    error: state.auth.error,
+});
+
+export default connect(mapStateToProps, { new_deal, load_deals })(NewDeal);

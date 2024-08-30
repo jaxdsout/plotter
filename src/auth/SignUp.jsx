@@ -2,9 +2,9 @@ import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { signup } from "../actions/auth";
-import { Button, Divider, Form, FormField } from "semantic-ui-react";
+import { Button, Divider, Form, FormField, Message } from "semantic-ui-react";
 
-function Signup ({ signup, isAuthenticated }) {
+function Signup ({ signup, isAuthenticated, error }) {
     const navigate = useNavigate()
     const [account, setAccount] = useState(false)
 
@@ -43,6 +43,12 @@ function Signup ({ signup, isAuthenticated }) {
                 <h6 className="noto-sans"> sign up for the platform </h6>
             </div>
             <Form onSubmit={handleSubmit}>
+                {error && (
+                    <Message negative>
+                        <Message.Header>Login Failed</Message.Header>
+                        <p>{error}</p>
+                    </Message>
+                )}
                 <FormField>
                     <label className="noto-sans-upper label" htmlFor='first_name'>First Name:</label>
                     <input 
@@ -84,7 +90,6 @@ function Signup ({ signup, isAuthenticated }) {
                         name='password'
                         value={password}
                         onChange={e => handleChange(e)}
-                        minLength='8'
                         required
                     />
                 </FormField>
@@ -96,7 +101,6 @@ function Signup ({ signup, isAuthenticated }) {
                         name='re_password'
                         value={re_password}
                         onChange={e => handleChange(e)}
-                        minLength='8'
                         required
                     />
                 </FormField>
@@ -111,7 +115,8 @@ function Signup ({ signup, isAuthenticated }) {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.auth.error
 });
 
 export default connect(mapStateToProps, { signup })( Signup );

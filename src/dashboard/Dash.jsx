@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 import GuestCard from '../components/GuestCard';
 import EarningDonut from '../components/EarningDonut';
 import EarningBar from '../components/EarningBar';
+import { connect } from 'react-redux';
 
 
-function Dash ({ userID }) {
+function Dash ({ user }) {
 
 
     return (
@@ -44,4 +43,10 @@ function Dash ({ userID }) {
 
 
 
-export default Dash;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.auth.error,
+    user: state.auth.user
+});
+
+export default connect(mapStateToProps, {  })(Dash);

@@ -1,11 +1,9 @@
-import { Search, Form, Button, Divider } from "semantic-ui-react"
+import { Search, Form, Button } from "semantic-ui-react"
 import { useState } from "react";
-import MapBox from "../components/MapBox"
-import axios from "axios";
-import OptionList from "./OptionList";
+import { connect } from "react-redux";
+import { load_options, new_option, search_properties } from "../actions/listmaker";
 
-function PropertySearch({ listID, currentClient, createOption, all_options }) {
-    const [searchResults, setSearchResults] = useState([]);
+function PropertySearch({ userID, listID, search_properties, new_option, load_options, search_results, currentClient }) {
 
     const [formData, setFormData] = useState({
         property: '',
@@ -13,28 +11,10 @@ function PropertySearch({ listID, currentClient, createOption, all_options }) {
         client: currentClient.id
     });
     const { property, list, client } = formData;
-    
-
-    const searchProperties = async (query) => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                }
-            };
-            try {
-                const res = await axios.get(`${process.env.REACT_APP_API_URL}/properties/?search=${query}`, config);
-                setSearchResults(res.data);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
 
     const handleSearchChange = (e, { value }) => {
         if (value.length > 1) {
-            searchProperties(value);
+            search_properties(value, userID);
         }
     };
 
@@ -44,18 +24,18 @@ function PropertySearch({ listID, currentClient, createOption, all_options }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        createOption(property, list, client);
-        all_options();
+        new_option(property, list, client);
+        load_options(listID);
     };
 
 
     return(
         <>
-            <div className="d-flex justify-content-between">
+            <div className="d-flex flex-row justify-content-around">
                 <Search
                     onSearchChange={handleSearchChange}
                     onResultSelect={handleResultSelect}
-                        results={searchResults.map(property => ({
+                        results={search_results.map(property => ({
                             title: `${property.name} ${property.address}`,
                             id: property.id
                     }))}
@@ -64,9 +44,16 @@ function PropertySearch({ listID, currentClient, createOption, all_options }) {
                     <Button type="submit">ADD PROPERTY</Button>
                 </Form>
             </div>
-            <Divider />
         </>
     )
 }
 
-export default PropertySearch
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    userID: state.auth.user.id,
+    error: state.auth.error,
+    search_results: state.listmaker.prop_results,
+    listID: state.listmaker.list.id,
+});
+
+export default connect(mapStateToProps, { search_properties, new_option, load_options })(PropertySearch);

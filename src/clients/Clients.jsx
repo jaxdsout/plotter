@@ -1,37 +1,12 @@
 import NewClient from "./NewClient"
 import AllClients from "./AllClients"
-import ClientDetail from './ClientDetail'
-import { useState } from "react";
-import axios from "axios";
 
-
-function Clients ({ user }) {
-    const [clients, setClients] = useState([])
-
-    const all_clients = async () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('access')}`,
-            }
-        };
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/clients/`, config);
-            setClients(res.data)
-        } catch (error) {
-            console.error(error)
-        }
-    }
+function Clients () {
 
     return (
         <div className="container pt-5 pb-5 bg-dark-subtle">
-            <>
-                <NewClient user={user} all_clients={all_clients}/>
-            </>
-            <div>
-                <h6 className="noto-sans"> all clients </h6>
-                <AllClients all_clients={all_clients} clients={clients}/>
-            </div>
+            <NewClient />
+            <AllClients />
         </div>
     )
 }

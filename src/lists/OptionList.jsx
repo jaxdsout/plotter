@@ -2,33 +2,18 @@ import { useEffect } from "react";
 import {ReactComponent as Trash} from '../components/trash.svg'
 import {ReactComponent as Edit} from '../components/pencil-square.svg'
 import { Button } from "semantic-ui-react";
-import axios from "axios";
+import { connect } from "react-redux";
 import { useState } from "react";
 import UpdateOption from "./UpdateOption";
+import { delete_option, load_options } from "../actions/listmaker";
 
-function OptionList ({ options, all_options, listID }) {
+function OptionList ({ options, load_options, delete_option, listID }) {
     const [optionEnabled, setOptionEnabled] = useState(false);
-
-    const deleteOption = async (optionID) => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                }
-            };
-            try {
-                await axios.delete(`${process.env.REACT_APP_API_URL}/options/${optionID}/`, config);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
-
 
     const handleDelete = (e, optionID) => {
         e.preventDefault();
-        deleteOption(optionID);
+        delete_option(optionID);
+        load_options(listID);
     };
 
     const handleUpdate = (e) => {
@@ -41,7 +26,9 @@ function OptionList ({ options, all_options, listID }) {
     };
 
     useEffect(() => {
-        all_options();
+        load_options(listID);
+        console.log(options, "options")
+
     }, [])
 
     return (
@@ -63,8 +50,7 @@ function OptionList ({ options, all_options, listID }) {
                             </div>
                             {optionEnabled ? (
                                 <UpdateOption 
-                                    optionID={option.id} 
-                                    listID={listID}
+                                    option={option} 
                                 />
                             ) : (
                                 null
@@ -79,4 +65,11 @@ function OptionList ({ options, all_options, listID }) {
     )
 }
 
-export default OptionList
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.auth.error,
+    options: state.listmaker.options.options,
+    listID: state.listmaker.list.id,
+});
+
+export default connect(mapStateToProps, { delete_option, load_options })(OptionList);

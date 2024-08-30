@@ -7,7 +7,6 @@ function DealDetail () {
     return(
         <Form>
             <FormField>
-
             </FormField>
         </Form>
     )

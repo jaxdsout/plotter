@@ -1,109 +1,33 @@
 import { useState } from "react";
-import axios from "axios";
-import { Modal, Button, Search, Form } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { Modal, Button, Search, Form, Divider } from "semantic-ui-react";
 import MapBox from "../components/MapBox";
 import PropertySearch from "./PropertySearch";
 import OptionList from "./OptionList";
+import { new_list, search_clients } from "../actions/listmaker";
 
 
-function NewList({ user }) {
+function NewList({ userID, search_clients, new_list, client_results }) {
     const [showModal, setShowModal] = useState(false);
     const [listMode, setListMode] = useState(false);
-    const [listID, setListID] = useState(null);
-    const [options, setOptions] = useState([]);
+
     const [currentClient, setCurrentClient] = useState({
         id: '',
         full_name: ''
     })
-    const [searchResults, setSearchResults] = useState([]);
+    
     const [userSearchForm, setUserSearchForm] = useState({
-        agent: user.id,
+        agent: userID,
         client: '',
     });
     const { agent, client } = userSearchForm;
 
 
-    const searchClients = async (query) => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                }
-            };
-            try {
-                const res = await axios.get(`${process.env.REACT_APP_API_URL}/clients/?agent=${user.id}&search=${query}`, config);
-                setSearchResults(res.data);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
-
-
-    const newList = async () => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                }
-            };
-            const body = JSON.stringify({ agent, client });
-            try {
-                const res = await axios.post(`${process.env.REACT_APP_API_URL}/lists/`, body, config);
-                setListID(res.data.id);
-                setListMode(true);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
-
-
-    const createOption = async (property, list, client) => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                }
-            };
-            const body = JSON.stringify({ property, list, client });
-            console.log(body, "new option body")
-            try {
-                await axios.post(`${process.env.REACT_APP_API_URL}/options/`, body, config);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
-
-
-    const all_options = async () => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                }
-            };
-            try {
-                const res = await axios.get(`${process.env.REACT_APP_API_URL}/lists/${listID}/`, config);
-                setOptions(res.data.options)
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
-
-
     const handleSearchChange = (e, { value }) => {
         if (value.length > 1) {
-            searchClients(value);
+            search_clients(value, userID);
         }
     };
-
 
     const handleResultSelect = (e, { result }) => {
         setCurrentClient({
@@ -113,24 +37,22 @@ function NewList({ user }) {
         setUserSearchForm({ ...userSearchForm, client: result.id });
     };
 
-
-    const handleSubmit = (e) => {
+    const handleCreateList = (e) => {
         e.preventDefault();
-        newList();
+        console.log(client)
+        new_list(agent, client);
+        setListMode(true);
     };
-
 
     const handleOpenModal = () => {
         setShowModal(true);
-        setListMode(false)
+        setListMode(false);
     }
-
 
     const handleCloseModal = () => {
         setShowModal(false);
         setListMode(false);
         setCurrentClient({ id: '', full_name: '' });
-        setListID(null);
     }
 
 
@@ -151,40 +73,40 @@ function NewList({ user }) {
                     <Modal.Content>
                         <>
                             {listMode ? (
+                                <>
                                 <div className="row">
                                     <div className="col-md-6">
                                         <PropertySearch 
-                                            createOption={createOption}
-                                            listID={listID}
                                             currentClient={currentClient}
-                                            all_options={all_options}
-
                                         />
-                                        <OptionList 
-                                            options={options}
-                                            all_options={all_options}
-                                            listID={listID}
-                                        />
+                                        <Divider />
+                                        <OptionList />
                                     </div>
                                     <div className="col-md-6">
                                         <MapBox />
+                                        <div className="d-flex justify-content-between pt-4">
+                                            <Button type='submit' color='black'>CLEAR LIST</Button>
+                                            <Button type='submit' color='green'>SEND LIST</Button>
+                                        </div>
                                     </div>
                                 </div>
+                                </>
                             ) : (
-                                <div className="d-flex justify-content-evenly">
+                                <div className="d-flex justify-content-center align-items-end">
                                     <div>
-                                        <p>Search Client Name: </p>
+                                        <label for='client_start_list'>Search Client Name: </label>
                                         <Search
                                             onSearchChange={handleSearchChange}
                                             onResultSelect={handleResultSelect}
-                                            results={searchResults.map(client => ({
+                                            results={client_results.map(client => ({
                                                 title: `${client.first_name} ${client.last_name}`,
                                                 id: client.id
                                             }))}
+                                            id='client_start_list'
                                         />
                                     </div>
-                                    <div>
-                                        <Form onSubmit={handleSubmit}>
+                                    <div className="ps-4">
+                                        <Form onSubmit={handleCreateList}>
                                             <Button type="submit">START LIST</Button>
                                         </Form>
                                     </div>
@@ -201,4 +123,11 @@ function NewList({ user }) {
     );
 }
 
-export default NewList;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    userID: state.auth.user.id,
+    error: state.auth.error,
+    client_results: state.listmaker.client_results
+});
+
+export default connect(mapStateToProps, { search_clients, new_list })(NewList);

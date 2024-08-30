@@ -1,58 +1,27 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import { Button, Form, FormField } from "semantic-ui-react";
+import { update_client } from "../actions/agent";
 
-function ClientDetail ({ client }) {
-    console.log(client)
-
+function ClientDetail ({ client, update_client, user }) {
     const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
-        email: '',
-        phone_number: ''
+        agent: user.id,
+        first_name: client.first_name || '',
+        last_name: client.last_name || '',
+        email: client.email || '',
+        phone_number: client.phone_number || '',
     });
+
+    const clientID = client.id;
     
-    const { first_name, last_name, email, phone_number } = formData;
+    const { agent, first_name, last_name, email, phone_number } = formData;
 
     const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
 
     const handleSubmit = e => {
-        // e.preventDefault();
-        // update_client(first_name, last_name, email, phone_number)
-        
+        e.preventDefault();
+        update_client(clientID, agent, first_name, last_name, email, phone_number);
     }
-
-        // export const update_client = (first_name, last_name, email, phone_number) => async (dispatch, getState) => {
-    //     const state = getState()
-    //     const { access, user } = state.auth;
-    
-    //     const config = {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `Bearer ${access}`,
-    //             'Accept': 'application/json'
-    //         }
-    //     };
-    
-    //     const agent = user.id
-    //     console.log(agent)
-    
-    //     const body = JSON.stringify({ first_name, last_name, email, phone_number, agent });
-    
-    //     try {
-    //         const res = await axios.post(`${process.env.REACT_APP_API_URL}/plotter/clients/`, body, config);
-    
-    //         dispatch({
-    //             type: NEW_CLIENT_SUCCESS,
-    //             payload: res.data
-    //         });
-    //     } catch (err) {
-    //         dispatch({
-    //             type: NEW_CLIENT_FAIL
-    //         })
-    //     }
-    // };
 
     return (
         <>
@@ -62,7 +31,6 @@ function ClientDetail ({ client }) {
                     <input 
                         type='text'
                         name='first_name'
-                        placeholder={client.first_name}
                         value={first_name}
                         onChange={e => handleChange(e)}
                         required
@@ -73,7 +41,6 @@ function ClientDetail ({ client }) {
                     <input 
                         type='text'
                         name='last_name'
-                        placeholder={client.last_name}
                         value={last_name}
                         onChange={e => handleChange(e)}
                         required
@@ -84,7 +51,7 @@ function ClientDetail ({ client }) {
                     <input 
                         type='email'
                         name='email'
-                        value={client.email}
+                        value={email}
                         onChange={e => handleChange(e)}
                         required
                     />
@@ -94,7 +61,7 @@ function ClientDetail ({ client }) {
                     <input 
                         type='tel'
                         name='phone_number'
-                        value={client.phone_number}
+                        value={phone_number}
                         onChange={e => handleChange(e)}
                         required
                     />
@@ -105,4 +72,10 @@ function ClientDetail ({ client }) {
     )
 }
 
-export default ClientDetail;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.auth.error,
+    user: state.auth.user
+});
+
+export default connect(mapStateToProps, { update_client })(ClientDetail);

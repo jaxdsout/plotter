@@ -1,49 +1,29 @@
 import { useState } from "react";
-import axios from "axios";
+import { connect } from 'react-redux';
 import { Modal, Button, Form, FormField } from "semantic-ui-react";
+import { load_clients, new_client } from "../actions/agent";
 
-function NewClient({ user, all_clients }) {
+function NewClient({ user, load_clients, new_client }) {
     const [showModal, setShowModal] = useState(false);
-
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
         email: '',
-        agent: user.id,
         phone_number: '',
     });
-
-    const { first_name, last_name, email, agent, phone_number } = formData;
-
-    const newClient = async () => {
-        if (localStorage.getItem('access')) {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                }
-            };
-            const body = JSON.stringify({ first_name, last_name, email, agent, phone_number });
-            try {
-                const res = await axios.post(`${process.env.REACT_APP_API_URL}/clients/`, body, config);
-                console.log(res.data);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-    };
+    const { first_name, last_name, email, phone_number } = formData;
+    const agent = user.id;
 
     const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        newClient();
+        new_client(agent, first_name, last_name, email, phone_number)
         handleCloseModal();
-        all_clients()
+        load_clients()
     };
 
     const handleOpenModal = () => setShowModal(true);
-
     const handleCloseModal = () => setShowModal(false);
 
     return (
@@ -108,4 +88,10 @@ function NewClient({ user, all_clients }) {
     );
 }
 
-export default NewClient;
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
+    error: state.auth.error,
+});
+
+export default connect(mapStateToProps, { new_client, load_clients })(NewClient);

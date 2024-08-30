@@ -2,9 +2,9 @@ import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { login } from "../actions/auth";
-import { Button, Divider, Form, FormField } from "semantic-ui-react";
+import { Button, Divider, Form, FormField, Message } from "semantic-ui-react";
 
-function Login ({ login, isAuthenticated }) {
+function Login ({ login, isAuthenticated, error, message }) {
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
@@ -18,7 +18,6 @@ function Login ({ login, isAuthenticated }) {
 
     const handleSubmit = e => {
         e.preventDefault();
-
         login(email, password)
     }
 
@@ -32,6 +31,17 @@ function Login ({ login, isAuthenticated }) {
                 <h6 className="noto-sans"> sign into the platform </h6>
             </div>
             <Form onSubmit={handleSubmit}>
+                {error && (
+                    <Message negative>
+                        <Message.Header>Login Failed</Message.Header>
+                        <p>{error}</p>
+                    </Message>
+                )}
+                {message && (
+                <Message positive>
+                    <Message.Header>{message}</Message.Header>
+                </Message>
+                )}
                 <FormField>
                 <label className="noto-sans-upper label" htmlFor='email'>Email:</label>
                     <input 
@@ -51,7 +61,6 @@ function Login ({ login, isAuthenticated }) {
                         name='password'
                         value={password}
                         onChange={e => handleChange(e)}
-                        minLength='8'
                         required
                     />
                 </FormField>
@@ -68,7 +77,9 @@ function Login ({ login, isAuthenticated }) {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.auth.error,
+    message: state.auth.message
 });
 
 export default connect(mapStateToProps, { login })( Login );

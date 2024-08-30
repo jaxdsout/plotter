@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ClientDetail from "./ClientDetail";
 import { Modal, Button, Divider } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { load_clients } from "../actions/agent";
 
-
-function AllClients ({ all_clients, clients }) {
+function AllClients ({ load_clients, clients }) {
     const [showClientDetail, setShowClientDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
@@ -18,11 +19,12 @@ function AllClients ({ all_clients, clients }) {
 
     useEffect(() => {
         console.log("firing all clients")
-        all_clients();
+        load_clients();
     }, [])
 
     return (
         <>
+            <h6 className="noto-sans"> all clients </h6>
             <ul class="list-group">
                 {clients.map(client => (
                     <li class="list-group-item" key={client.id}>
@@ -54,4 +56,10 @@ function AllClients ({ all_clients, clients }) {
     )
 }
 
-export default AllClients
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.auth.error,
+    clients: state.agent.clients
+});
+
+export default connect(mapStateToProps, { load_clients })(AllClients);

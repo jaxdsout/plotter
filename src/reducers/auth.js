@@ -29,7 +29,8 @@ export default function authReducer(state = initialState, action) {
         case SIGNUP_SUCCESS:
             return {
                 ...state,
-                isAuthenticated: false
+                isAuthenticated: false,
+                error: 'Invalid signup credentials provided. Please review and adjust.'
             }
         case AUTHENTICATE_SUCCESS:
             return {
@@ -43,7 +44,9 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 access: payload.access,
-                refresh: payload.refresh
+                refresh: payload.refresh,
+                error: null,
+                message: 'Login successful!',
             };
         case LOAD_USER_SUCCESS:
             return {
@@ -61,7 +64,23 @@ export default function authReducer(state = initialState, action) {
                 user: null
             };
         case SIGNUP_FAIL:
+            return {
+                error: 'Invalid signup credentials',
+                ...state,
+                access: null,
+                refresh: null,
+                isAuthenticated: false,
+                user: null
+            }
         case LOGIN_FAIL:
+            return {
+                error: 'Invalid email or password',
+                ...state,
+                access: null,
+                refresh: null,
+                isAuthenticated: false,
+                user: null
+            }
         case LOGOUT:
             localStorage.removeItem('access');
             localStorage.removeItem('refresh')
@@ -70,7 +89,10 @@ export default function authReducer(state = initialState, action) {
                 access: null,
                 refresh: null,
                 isAuthenticated: false,
-                user: null
+                user: null,
+                error: null,
+                message: 'Logout successful.'
+
             };
         case PASSWORD_RESET_CONFIRM_FAIL:
         case PASSWORD_RESET_FAIL:
