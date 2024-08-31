@@ -8,7 +8,7 @@ import Activate from './auth/Activate';
 import Navbar from './home/Navbar';
 import Landing from './home/Landing';
 import Dashboard from './dashboard/Dashboard';
-import ClientList from './clients/ClientList';
+import ClientList from './listmaker/ClientList';
 
 
 function App() {

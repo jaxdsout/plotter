@@ -1,4 +1,4 @@
-import NewList from "./NewList"
+import NewList from "../listmaker/NewList"
 import AllLists from "./AllLists";
 
 function Lists () {

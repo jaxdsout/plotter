@@ -1,9 +1,9 @@
 import { Form, FormField, Button } from "semantic-ui-react";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { load_options, update_option } from "../actions/listmaker";
+import { update_option } from "../actions/listmaker";
 
-function UpdateOption ({ option, listID, update_option }) {
+function UpdateOption ({ option, list, update_option, closeForm }) {
     const [optionForm, setOptionForm] = useState({
         price: option.price || '',
         unit_number: option.unit_number || '',
@@ -11,10 +11,9 @@ function UpdateOption ({ option, listID, update_option }) {
         sq_ft: option.sq_ft || '',
         available: option.available || '',
         notes: option.notes || '',
-        list: listID,
         property: option.property
     });
-    const { price, unit_number, layout, sq_ft, available, notes, list, property } = optionForm;
+    const { price, unit_number, layout, sq_ft, available, notes, property } = optionForm;
 
     const optionID = option.id;
 
@@ -23,7 +22,7 @@ function UpdateOption ({ option, listID, update_option }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         update_option(optionID, price, unit_number, layout, sq_ft, available, notes, list, property);
-        load_options(listID);
+        closeForm();
     };
 
     return(
@@ -91,7 +90,7 @@ function UpdateOption ({ option, listID, update_option }) {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    listID: state.listmaker.list.id,
+    list: state.listmaker.list.id,
     error: state.auth.error,
 });
 

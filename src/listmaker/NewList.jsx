@@ -4,23 +4,20 @@ import { Modal, Button, Search, Form, Divider } from "semantic-ui-react";
 import MapBox from "../components/MapBox";
 import PropertySearch from "./PropertySearch";
 import OptionList from "./OptionList";
-import { new_list, search_clients } from "../actions/listmaker";
+import { new_list, search_clients, clear_options } from "../actions/listmaker";
 
 
-function NewList({ userID, search_clients, new_list, client_results }) {
+function NewList({ userID, search_clients, new_list, client_results, clear_options, list }) {
     const [showModal, setShowModal] = useState(false);
     const [listMode, setListMode] = useState(false);
 
-    const [currentClient, setCurrentClient] = useState({
-        id: '',
-        full_name: ''
+    const [formData, setFormData] = useState({
+        agentID: userID,
+        clientID: null,
+        client_name: null
     })
     
-    const [userSearchForm, setUserSearchForm] = useState({
-        agent: userID,
-        client: '',
-    });
-    const { agent, client } = userSearchForm;
+    const { agentID, clientID, client_name } = formData;
 
 
     const handleSearchChange = (e, { value }) => {
@@ -30,18 +27,24 @@ function NewList({ userID, search_clients, new_list, client_results }) {
     };
 
     const handleResultSelect = (e, { result }) => {
-        setCurrentClient({
-            id: result.id,
-            full_name: result.title
+        setFormData({
+            ...formData,
+            clientID: result.id,
+            client_name: result.title
         })
-        setUserSearchForm({ ...userSearchForm, client: result.id });
+        console.log(formData)
     };
 
     const handleCreateList = (e) => {
         e.preventDefault();
-        console.log(client)
-        new_list(agent, client);
+        console.log(agentID, clientID)
+        new_list(agentID, clientID);
         setListMode(true);
+    };
+
+    const handleClearOptions = (e) => {
+        e.preventDefault();
+        clear_options(list); 
     };
 
     const handleOpenModal = () => {
@@ -52,9 +55,12 @@ function NewList({ userID, search_clients, new_list, client_results }) {
     const handleCloseModal = () => {
         setShowModal(false);
         setListMode(false);
-        setCurrentClient({ id: '', full_name: '' });
+        setFormData({
+            agentID: userID,
+            clientID: '',
+            client_name: ''
+        });
     }
-
 
     return (
         <>
@@ -65,7 +71,7 @@ function NewList({ userID, search_clients, new_list, client_results }) {
                 <Modal open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>
                         {listMode ? (
-                            <p>Add Options to New List: {currentClient.full_name}</p>
+                            <p>Add Options to New List: {client_name}</p>
                         ) : (
                             <p>Create New List</p>
                         )}
@@ -77,7 +83,7 @@ function NewList({ userID, search_clients, new_list, client_results }) {
                                 <div className="row">
                                     <div className="col-md-6">
                                         <PropertySearch 
-                                            currentClient={currentClient}
+                                            clientID={clientID}
                                         />
                                         <Divider />
                                         <OptionList />
@@ -85,7 +91,7 @@ function NewList({ userID, search_clients, new_list, client_results }) {
                                     <div className="col-md-6">
                                         <MapBox />
                                         <div className="d-flex justify-content-between pt-4">
-                                            <Button type='submit' color='black'>CLEAR LIST</Button>
+                                            <Button type='submit' color='black' onClick={handleClearOptions}>CLEAR LIST</Button>
                                             <Button type='submit' color='green'>SEND LIST</Button>
                                         </div>
                                     </div>
@@ -94,7 +100,7 @@ function NewList({ userID, search_clients, new_list, client_results }) {
                             ) : (
                                 <div className="d-flex justify-content-center align-items-end">
                                     <div>
-                                        <label for='client_start_list'>Search Client Name: </label>
+                                        <label htmlFor='client_start_list'>Search Client Name: </label>
                                         <Search
                                             onSearchChange={handleSearchChange}
                                             onResultSelect={handleResultSelect}
@@ -127,7 +133,8 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     userID: state.auth.user.id,
     error: state.auth.error,
-    client_results: state.listmaker.client_results
+    client_results: state.listmaker.client_results,
+    list: state.listmaker.list.id
 });
 
-export default connect(mapStateToProps, { search_clients, new_list })(NewList);
+export default connect(mapStateToProps, { search_clients, new_list, clear_options })(NewList);

@@ -15,16 +15,13 @@ function Dashboard ({ load_user, auth_user, isAuthenticated }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        load_user();
-        auth_user();
-    }, []);
-
-    useEffect(() => {
         if (!isAuthenticated) {
             navigate('/login/');
+        } else if (isAuthenticated) {
+            load_user();
+            auth_user();
         }
     }, [isAuthenticated]);
-
 
     const tabSwitch = () => {
         switch (activeTab) {

@@ -3,10 +3,7 @@ import EarningDonut from '../components/EarningDonut';
 import EarningBar from '../components/EarningBar';
 import { connect } from 'react-redux';
 
-
-function Dash ({ user }) {
-
-
+function Dash () {
     return (
         <div className='container bg-dark-subtle d-flex justify-content-between p-4'>
                 <div className='container'>
@@ -36,12 +33,9 @@ function Dash ({ user }) {
                         </div>
                     </div>     
                 </div>
-    
         </div>
     )
 }
-
-
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,

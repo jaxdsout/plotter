@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { useState } from "react"
 import { signup } from "../actions/auth";
 import { Button, Divider, Form, FormField, Message } from "semantic-ui-react";
+import { useEffect } from "react";
 
 function Signup ({ signup, isAuthenticated, error }) {
     const navigate = useNavigate()
@@ -29,13 +30,16 @@ function Signup ({ signup, isAuthenticated, error }) {
         
     }
 
-    if (isAuthenticated) {
-        return navigate('/');
-    }
 
-    if (account) {
-        return navigate('/login/')
-    }
+    useEffect(() => {
+        if (isAuthenticated) {
+            return navigate('/');
+        }
+        if (account) {
+            return navigate('/login/')
+        }
+    })
+  
 
     return (
         <div className="container-sm sm w-50 pt-5">

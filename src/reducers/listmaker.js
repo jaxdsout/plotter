@@ -11,6 +11,10 @@ import {
     SEARCH_CLIENT_SUCCESS,
     SEARCH_PROPERTY_SUCCESS,
     SEARCH_PROPERTY_FAIL,
+    LOAD_OPTIONS_SUCCESS,
+    LOAD_OPTIONS_FAIL,
+    CLEAR_OPTIONS_SUCCESS,
+    CLEAR_OPTIONS_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -41,6 +45,16 @@ export default function listmakerReducer(state = initialState, action) {
                 ...state,
                 prop_results: payload
             }
+        case LOAD_OPTIONS_SUCCESS:
+                return {
+                    ...state,
+                    options: payload.options
+                }
+        case CLEAR_OPTIONS_SUCCESS:
+            return {
+                ...state,
+                options: payload.options
+            }
         case NEW_OPTION_FAIL:
         case NEW_OPTION_SUCCESS:
         case NEW_LIST_FAIL:
@@ -50,6 +64,8 @@ export default function listmakerReducer(state = initialState, action) {
         case DELETE_OPTION_SUCCESS:
         case SEARCH_CLIENT_FAIL:
         case SEARCH_PROPERTY_FAIL:
+        case LOAD_OPTIONS_FAIL:
+        case CLEAR_OPTIONS_FAIL:
             return {
                 ...state
             }

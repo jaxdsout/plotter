@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { login } from "../actions/auth";
 import { Button, Divider, Form, FormField, Message } from "semantic-ui-react";
 
@@ -21,9 +21,12 @@ function Login ({ login, isAuthenticated, error, message }) {
         login(email, password)
     }
 
-    if (isAuthenticated) {
-        return navigate('/dashboard/');
-    }
+    useEffect(() => {
+        if (isAuthenticated) {
+            console.log("forwarding to dashboard")
+            navigate('/dashboard/');
+        }
+    }, [isAuthenticated]);
 
     return (
         <div className="container-sm sm w-50 pt-5">

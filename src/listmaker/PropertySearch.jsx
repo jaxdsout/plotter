@@ -1,14 +1,14 @@
 import { Search, Form, Button } from "semantic-ui-react"
 import { useState } from "react";
 import { connect } from "react-redux";
-import { load_options, new_option, search_properties } from "../actions/listmaker";
+import { new_option, search_properties } from "../actions/listmaker";
 
-function PropertySearch({ userID, listID, search_properties, new_option, load_options, search_results, currentClient }) {
+function PropertySearch({ userID, listID, search_properties, new_option, search_results, clientID }) {
 
     const [formData, setFormData] = useState({
         property: '',
         list: listID,
-        client: currentClient.id
+        client: clientID
     });
     const { property, list, client } = formData;
 
@@ -24,8 +24,8 @@ function PropertySearch({ userID, listID, search_properties, new_option, load_op
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(property, list, client)
         new_option(property, list, client);
-        load_options(listID);
     };
 
 
@@ -36,8 +36,9 @@ function PropertySearch({ userID, listID, search_properties, new_option, load_op
                     onSearchChange={handleSearchChange}
                     onResultSelect={handleResultSelect}
                         results={search_results.map(property => ({
-                            title: `${property.name} ${property.address}`,
-                            id: property.id
+                            title: `${property.name}`,
+                            subtitle: `${property.address}`,
+                            id: property.id,
                     }))}
                 />
                 <Form onSubmit={handleSubmit}>
@@ -56,4 +57,4 @@ const mapStateToProps = state => ({
     listID: state.listmaker.list.id,
 });
 
-export default connect(mapStateToProps, { search_properties, new_option, load_options })(PropertySearch);
+export default connect(mapStateToProps, { search_properties, new_option })(PropertySearch);

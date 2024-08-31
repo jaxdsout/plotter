@@ -12,7 +12,7 @@ function Navbar ({ logout, isAuthenticated }) {
     }
     return (
         <nav className='navbar p-5 bg-body-tertiary'>
-            <div class="container-fluid">
+            <div className="container-fluid">
                 {isAuthenticated ? 
                     <>
                         <Link to={"/dashboard/"}><h1 className='poetsen'>plotter</h1></Link>

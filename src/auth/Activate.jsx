@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { activate } from "../actions/auth";

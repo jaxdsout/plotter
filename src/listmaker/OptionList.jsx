@@ -7,54 +7,55 @@ import { useState } from "react";
 import UpdateOption from "./UpdateOption";
 import { delete_option, load_options } from "../actions/listmaker";
 
-function OptionList ({ options, load_options, delete_option, listID }) {
-    const [optionEnabled, setOptionEnabled] = useState(false);
+function OptionList ({ options, load_options, delete_option, list }) {
+    const [editID, setEditID] = useState(null);
 
-    const handleDelete = (e, optionID) => {
+    const handleUpdate = (e, optionID) => {
         e.preventDefault();
-        delete_option(optionID);
-        load_options(listID);
-    };
-
-    const handleUpdate = (e) => {
-        e.preventDefault();
-        if (optionEnabled) {
-            setOptionEnabled(false)
+        if (editID === optionID) {
+            setEditID(null)
         } else {
-            setOptionEnabled(true);
+            setEditID(optionID);
         }
     };
 
-    useEffect(() => {
-        load_options(listID);
-        console.log(options, "options")
+    const handleDelete = (e, optionID, list) => {
+        e.preventDefault();
+        delete_option(optionID, list);
+    };
 
-    }, [])
+    const closeForm = () => {
+        setEditID(null);
+    };
+    
+    useEffect(() => {
+        load_options(list);
+    }, [load_options, list])
 
     return (
         <>
-          {options ? (
-                <ul class="list-group hover">
+            {options.length > 0 ? (
+                <ul className="list-group hover">
                     {options.map(option => (
-                        <li class="list-group-item" key={option.id}>
+                        <li className="list-group-item" key={option.id}>
                             <div className="d-flex justify-content-between">
                                 <p>{option.prop_name}</p>
                                 <div>
-                                    <Button onClick={(e) => handleUpdate(e)}>
+                                    <Button onClick={(e) => handleUpdate(e, option.id)}>
                                         <Edit />
                                     </Button>
-                                    <Button onClick={(e) => handleDelete(e, option.id)}>
+                                    <Button onClick={(e) => handleDelete(e, option.id, list)}>
                                         <Trash />
                                     </Button>
                                 </div>
                             </div>
-                            {optionEnabled ? (
+                            {editID === option.id && (
                                 <UpdateOption 
                                     option={option} 
+                                    list={list}
+                                    closeForm={closeForm}
                                 />
-                            ) : (
-                                null
-                            )}     
+                            )}       
                         </li>
                     ))}
                 </ul>
@@ -68,8 +69,8 @@ function OptionList ({ options, load_options, delete_option, listID }) {
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
-    options: state.listmaker.options.options,
-    listID: state.listmaker.list.id,
+    options: state.listmaker.options,
+    list: state.listmaker.list.id,
 });
 
 export default connect(mapStateToProps, { delete_option, load_options })(OptionList);
