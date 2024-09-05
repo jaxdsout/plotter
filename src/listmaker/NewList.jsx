@@ -1,50 +1,25 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { Modal, Button, Search, Form, Divider } from "semantic-ui-react";
-import MapBox from "../components/MapBox";
+import { Modal, Button, Form, Divider } from "semantic-ui-react";
+import MapBox from "./MapBox";
 import PropertySearch from "./PropertySearch";
 import OptionList from "./OptionList";
-import { new_list, search_clients, clear_options } from "../actions/listmaker";
+import ClearOptions from "./ClearOptions";
+import ClientSearch from "./ClientSearch";
+import SendList from "./SendList";
+import { new_list } from "../actions/listmaker";
 
 
-function NewList({ userID, search_clients, new_list, client_results, clear_options, list }) {
+function NewList({ user, new_list, client }) {
     const [showModal, setShowModal] = useState(false);
     const [listMode, setListMode] = useState(false);
 
-    const [formData, setFormData] = useState({
-        agentID: userID,
-        clientID: null,
-        client_name: null
-    })
-    
-    const { agentID, clientID, client_name } = formData;
-
-
-    const handleSearchChange = (e, { value }) => {
-        if (value.length > 1) {
-            search_clients(value, userID);
-        }
-    };
-
-    const handleResultSelect = (e, { result }) => {
-        setFormData({
-            ...formData,
-            clientID: result.id,
-            client_name: result.title
-        })
-        console.log(formData)
-    };
-
     const handleCreateList = (e) => {
-        e.preventDefault();
-        console.log(agentID, clientID)
-        new_list(agentID, clientID);
-        setListMode(true);
-    };
-
-    const handleClearOptions = (e) => {
-        e.preventDefault();
-        clear_options(list); 
+        console.log(user.id, client.id);
+        if (user != null && client != null) { 
+            new_list(user.id, client.id);
+            setListMode(true);
+        }
     };
 
     const handleOpenModal = () => {
@@ -55,11 +30,6 @@ function NewList({ userID, search_clients, new_list, client_results, clear_optio
     const handleCloseModal = () => {
         setShowModal(false);
         setListMode(false);
-        setFormData({
-            agentID: userID,
-            clientID: '',
-            client_name: ''
-        });
     }
 
     return (
@@ -71,7 +41,7 @@ function NewList({ userID, search_clients, new_list, client_results, clear_optio
                 <Modal open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>
                         {listMode ? (
-                            <p>Add Options to New List: {client_name}</p>
+                            <p>Add Options to New List: {client.name}</p>
                         ) : (
                             <p>Create New List</p>
                         )}
@@ -82,17 +52,15 @@ function NewList({ userID, search_clients, new_list, client_results, clear_optio
                                 <>
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <PropertySearch 
-                                            clientID={clientID}
-                                        />
+                                        <PropertySearch />
                                         <Divider />
                                         <OptionList />
                                     </div>
                                     <div className="col-md-6">
                                         <MapBox />
                                         <div className="d-flex justify-content-between pt-4">
-                                            <Button type='submit' color='black' onClick={handleClearOptions}>CLEAR LIST</Button>
-                                            <Button type='submit' color='green'>SEND LIST</Button>
+                                            <ClearOptions />
+                                            <SendList />
                                         </div>
                                     </div>
                                 </div>
@@ -100,16 +68,7 @@ function NewList({ userID, search_clients, new_list, client_results, clear_optio
                             ) : (
                                 <div className="d-flex justify-content-center align-items-end">
                                     <div>
-                                        <label htmlFor='client_start_list'>Search Client Name: </label>
-                                        <Search
-                                            onSearchChange={handleSearchChange}
-                                            onResultSelect={handleResultSelect}
-                                            results={client_results.map(client => ({
-                                                title: `${client.first_name} ${client.last_name}`,
-                                                id: client.id
-                                            }))}
-                                            id='client_start_list'
-                                        />
+                                        <ClientSearch />
                                     </div>
                                     <div className="ps-4">
                                         <Form onSubmit={handleCreateList}>
@@ -131,10 +90,9 @@ function NewList({ userID, search_clients, new_list, client_results, clear_optio
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    userID: state.auth.user.id,
+    user: state.auth.user,
     error: state.auth.error,
-    client_results: state.listmaker.client_results,
-    list: state.listmaker.list.id
+    client: state.listmaker.client,
 });
 
-export default connect(mapStateToProps, { search_clients, new_list, clear_options })(NewList);
+export default connect(mapStateToProps, { new_list })(NewList);

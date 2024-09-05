@@ -84,8 +84,19 @@ export const signup = (first_name, last_name, email, password, re_password) => a
         }
     };
 
-    const body = JSON.stringify({ first_name, last_name, email, password, re_password });
-    console.log(body)
+    const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    const cap_first_name = capitalize(first_name);
+    const cap_last_name = capitalize(last_name);
+
+    const body = JSON.stringify({
+        first_name: cap_first_name,
+        last_name: cap_last_name,
+        email,
+        password,
+        re_password
+    });
+
+    console.log(body);
 
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/`, body, config);
@@ -97,9 +108,10 @@ export const signup = (first_name, last_name, email, password, re_password) => a
     } catch (err) {
         dispatch({
             type: SIGNUP_FAIL
-        })
+        });
     }
 };
+
 
 export const activate = (uid, token) => async dispatch => {
     const config = {

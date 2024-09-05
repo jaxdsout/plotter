@@ -14,12 +14,18 @@ import {
     SEARCH_PROPERTY_SUCCESS,
     SEARCH_PROPERTY_FAIL,
     CLEAR_OPTIONS_FAIL,
-    CLEAR_OPTIONS_SUCCESS
+    CLEAR_OPTIONS_SUCCESS,
+    SET_SEARCH_CLIENT_SUCCESS,
+    SET_SEARCH_CLIENT_FAIL,
+    RETRIEVE_LIST_FAIL,
+    RETRIEVE_LIST_SUCCESS,
+    RESET_CLIENT_VIEW
 } from "./types"
 
 import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
 
-export const new_list = (agentID, clientID) => async dispatch => {
+export const new_list = (agent, client) => async dispatch => {
     if (localStorage.getItem('access')) {
     const config = {
         headers: {
@@ -27,10 +33,11 @@ export const new_list = (agentID, clientID) => async dispatch => {
             'Authorization': `Bearer ${localStorage.getItem('access')}`,
         }
     }; 
-    const body = JSON.stringify({ agentID, clientID });
+    const body = JSON.stringify({ agent, client });
     console.log(body, "body before list creation")
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/lists/`, body, config);
+        console.log("new list res data", res.data)
         dispatch({
             type: NEW_LIST_SUCCESS,
             payload: res.data
@@ -246,3 +253,87 @@ export const clear_options = (listID) => async dispatch => {
     }
 };
 
+
+export const set_search_client = (id, name) => dispatch => {
+    if (localStorage.getItem('access')) {
+        const client = { id, name };
+        try {
+            dispatch({
+                type: SET_SEARCH_CLIENT_SUCCESS,
+                payload: client
+            });
+        } catch (err) {
+            dispatch({
+                type: SET_SEARCH_CLIENT_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: SET_SEARCH_CLIENT_FAIL
+        });
+    }
+}
+
+export const add_list_uuid = (agent, client, listID) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const uuid = uuidv4(); 
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        const body = JSON.stringify({ agent, client, uuid });
+        try {
+            const res = await axios.put(`${process.env.REACT_APP_API_URL}/lists/${listID}/`, body, config);
+            console.log("updated uuid to list", res.data)
+            dispatch({
+                type: NEW_LIST_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: NEW_LIST_FAIL
+            });
+        }
+        } else {
+        dispatch({
+            type: NEW_LIST_FAIL
+        });
+        }
+}
+
+
+export const retrieve_list = (uuid) => async dispatch => {
+    if (uuid) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }; 
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/client-list/${uuid}/`, config);
+            console.log(res.data)
+            dispatch({
+                type: RETRIEVE_LIST_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: RETRIEVE_LIST_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: RETRIEVE_LIST_FAIL
+        });
+    }
+};
+
+
+export const reset_client_view = () => dispatch => {
+    dispatch({
+        type: RESET_CLIENT_VIEW
+    });
+    return Promise.resolve();
+};

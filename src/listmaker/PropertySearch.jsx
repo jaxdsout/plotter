@@ -3,14 +3,12 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { new_option, search_properties } from "../actions/listmaker";
 
-function PropertySearch({ userID, listID, search_properties, new_option, search_results, clientID }) {
+function PropertySearch({ userID, list, search_properties, new_option, search_results, client }) {
 
     const [formData, setFormData] = useState({
         property: '',
-        list: listID,
-        client: clientID
     });
-    const { property, list, client } = formData;
+    const { property } = formData;
 
     const handleSearchChange = (e, { value }) => {
         if (value.length > 1) {
@@ -24,8 +22,8 @@ function PropertySearch({ userID, listID, search_properties, new_option, search_
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(property, list, client)
-        new_option(property, list, client);
+        console.log(property, list.id, client.id)
+        new_option(property, list.id, client.id);
     };
 
 
@@ -54,7 +52,8 @@ const mapStateToProps = state => ({
     userID: state.auth.user.id,
     error: state.auth.error,
     search_results: state.listmaker.prop_results,
-    listID: state.listmaker.list.id,
+    list: state.listmaker.list,
+    client: state.listmaker.client
 });
 
 export default connect(mapStateToProps, { search_properties, new_option })(PropertySearch);

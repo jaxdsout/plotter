@@ -21,7 +21,7 @@ function OptionList ({ options, load_options, delete_option, list }) {
 
     const handleDelete = (e, optionID, list) => {
         e.preventDefault();
-        delete_option(optionID, list);
+        delete_option(optionID, list.id);
     };
 
     const closeForm = () => {
@@ -70,7 +70,7 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
     options: state.listmaker.options,
-    list: state.listmaker.list.id,
+    list: state.listmaker.list,
 });
 
 export default connect(mapStateToProps, { delete_option, load_options })(OptionList);

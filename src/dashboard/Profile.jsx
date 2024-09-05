@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Form, FormField, Button, Modal } from 'semantic-ui-react';
-import ProfileWidget from '../components/ProfileWidget';
+import ProfileWidget from './ProfileWidget';
 import { connect } from 'react-redux';
 import { update_profile } from '../actions/agent';
 
