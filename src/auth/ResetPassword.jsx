@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { reset_password } from "../actions/auth";
-import { Button, FormField, Form } from "semantic-ui-react";
+import { Button, FormField, Form, Image } from "semantic-ui-react";
 
 function ResetPassword ({ reset_password }) {
     const navigate = useNavigate()
@@ -30,6 +30,7 @@ function ResetPassword ({ reset_password }) {
 
     return (
         <div className="container-sm sm w-50 pt-5">
+            <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1001.jpg"/>
             <div className="pb-2">
                 <h6 className="noto-sans"> request a new password </h6>
             </div>

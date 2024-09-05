@@ -15,14 +15,11 @@ function Dashboard ({ load_user, auth_user, isAuthenticated }) {
     const [activeTab, setActiveTab] = useState('home')
     const navigate = useNavigate();
 
+    console.log(isAuthenticated)
     useEffect(() => {
-        if (!isAuthenticated) {
-            navigate('/login/');
-        } else if (isAuthenticated) {
             load_user();
             auth_user();
-        }
-    }, [isAuthenticated]);
+    }, [load_user, auth_user]);
 
     const tabSwitch = () => {
         switch (activeTab) {
@@ -42,7 +39,7 @@ function Dashboard ({ load_user, auth_user, isAuthenticated }) {
     }
 
     return (    
-        <div className='container'>
+        <div className='container pb-5 pt-5'>
             <div className='navbar p-5 bg-body-secondary'>
                 <Link onClick={() => setActiveTab('home')}><Home className='icon'/></Link>
                 <Link className='poetsen tabs'  onClick={() => setActiveTab('clients')}>clients</Link>

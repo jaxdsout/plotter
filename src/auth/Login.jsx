@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState, useEffect } from "react"
 import { login } from "../actions/auth";
-import { Button, Divider, Form, FormField, Message } from "semantic-ui-react";
+import { Button, Divider, Form, FormField, Message, Image } from "semantic-ui-react";
 
 function Login ({ login, isAuthenticated, error, message }) {
     const navigate = useNavigate()
@@ -23,13 +23,13 @@ function Login ({ login, isAuthenticated, error, message }) {
 
     useEffect(() => {
         if (isAuthenticated) {
-            console.log("forwarding to dashboard")
             navigate('/dashboard/');
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, navigate]);
 
     return (
         <div className="container-sm sm w-50 pt-5">
+            <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.jpg"/>
             <div className="pb-2">
                 <h6 className="noto-sans"> sign into the platform </h6>
             </div>

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { signup } from "../actions/auth";
-import { Button, Divider, Form, FormField, Message } from "semantic-ui-react";
+import { Button, Divider, Form, FormField, Message, Image } from "semantic-ui-react";
 import { useEffect } from "react";
 
 function Signup ({ signup, isAuthenticated, error }) {
@@ -42,7 +42,8 @@ function Signup ({ signup, isAuthenticated, error }) {
   
 
     return (
-        <div className="container-sm sm w-50 pt-5">
+        <div className="container-sm sm w-50 pt-5 pb-5">
+            <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1000.jpg"/>
             <div className="pb-2">
                 <h6 className="noto-sans"> sign up for the platform </h6>
             </div>

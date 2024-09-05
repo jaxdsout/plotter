@@ -2,6 +2,8 @@ import { Form, Modal, Button, FormField } from "semantic-ui-react";
 import { useState } from "react";
 import { load_deals, new_deal } from "../actions/agent";
 import { connect } from "react-redux";
+import ClientSearch from "../listmaker/ClientSearch";
+import PropertySearch from "../listmaker/PropertySearch";
 
 function NewDeal({ user , load_deals, new_deal }) {
     const [showModal, setShowModal] = useState(false);
@@ -47,6 +49,78 @@ function NewDeal({ user , load_deals, new_deal }) {
                     <Modal.Header>Add New Deal</Modal.Header>
                     <Modal.Content>
                         <Form onSubmit={handleSubmit}>
+                            <ClientSearch />
+                            <PropertySearch />
+                            <FormField>
+                                <label className="noto-sans" htmlFor='unit_no'>Unit Number:</label>
+                                <input
+                                    type='text'
+                                    name='unit_no'
+                                    value={unit_no}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </FormField>
+                            <FormField>
+                                <label className="noto-sans" htmlFor='move_date'>Move Date:</label>
+                                <input
+                                    type='date'
+                                    name='move_date'
+                                    value={move_date}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </FormField>
+                            <FormField>
+                                <label className="noto-sans" htmlFor='lease_term'>Lease Term:</label>
+                                <input
+                                    type='text'
+                                    name='lease_term'
+                                    value={lease_term}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </FormField>
+                            <FormField>
+                                <label className="noto-sans" htmlFor='rent'>Rent:</label>
+                                <input
+                                    type='number'
+                                    name='rent'
+                                    value={rent}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </FormField>
+                            <FormField>
+                                <label className="noto-sans" htmlFor='rate'>Commission Rate:</label>
+                                <input
+                                    type='number'
+                                    name='rate'
+                                    value={rate}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </FormField>
+                            <FormField>
+                                <label className="noto-sans" htmlFor='commission'>Total Commission:</label>
+                                <input
+                                    type='number'
+                                    name='commission'
+                                    value={commission}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </FormField>
+                            <FormField>
+                                <label className="noto-sans" htmlFor='flat_fee'>Flat Fee?:</label>
+                                <input
+                                    type='number'
+                                    name='flat_fee'
+                                    value={flat_fee}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </FormField>
                         </Form>
                     </Modal.Content>
                     <Modal.Actions>

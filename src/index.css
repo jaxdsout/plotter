@@ -25,6 +25,18 @@ body {
   font-style: normal;
 }
 
+.plotter-banner {
+  z-index: 0 !important;
+}
+
+.tagline {
+  font-size: 7rem;
+  color: rgb(52, 110, 184);
+  z-index: 1 !important;
+  text-align: center;
+  margin-top: 1rem;
+}
+
 
 /* BOOTSTRAP EXCEPTIONS */
 
@@ -33,3 +45,4 @@ body {
   left: auto;
   height: auto;
 }
+
