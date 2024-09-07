@@ -19,10 +19,7 @@ import {
     SET_SEARCH_CLIENT_SUCCESS,
     RETRIEVE_LIST_FAIL,
     RETRIEVE_LIST_SUCCESS,
-    RESET_CLIENT_VIEW,
-    RESET_SEND_MODE,
-    SET_SEND_MODE,
-    RESET_LIST_MODE
+    UPDATE_OPTIONS_ORDER
 } from '../actions/types';
 
 const initialState = {
@@ -34,9 +31,6 @@ const initialState = {
     prop_results: [],
     options: [],  
     retrlist: null,
-    isClientView: false,  
-    isSendMode: false,
-    isListMode: false
 };
 
 export default function listmakerReducer(state = initialState, action) {
@@ -56,7 +50,6 @@ export default function listmakerReducer(state = initialState, action) {
             return {
                 ...state,
                 list: payload,
-                isListMode: true
             }
         case SEARCH_PROPERTY_SUCCESS:
             return {
@@ -77,28 +70,11 @@ export default function listmakerReducer(state = initialState, action) {
             return {
                 ...state,
                 retrlist: payload,
-                isClientView: true
             }
-        case RESET_CLIENT_VIEW:
-            return { 
-                ...state, 
-                isClientView: false 
-            }
-        case SET_SEND_MODE:
-            return { 
-            ...state, 
-            isSendMode: true,
-            isListMode: false, 
-            }
-        case RESET_SEND_MODE:
-            return { 
-            ...state, 
-            isSendMode: false, 
-            }
-        case RESET_LIST_MODE:
-            return { 
-            ...state, 
-            isListMode: false, 
+        case UPDATE_OPTIONS_ORDER:
+            return {
+                ...state,
+                options: payload,
             }
         case NEW_OPTION_FAIL:
         case NEW_OPTION_SUCCESS:

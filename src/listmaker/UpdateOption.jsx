@@ -1,39 +1,41 @@
 import { Form, FormField, Button } from "semantic-ui-react";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { update_option } from "../actions/listmaker";
+import { load_options, update_option } from "../actions/listmaker";
 
-function UpdateOption ({ option, list, update_option, closeForm }) {
+function UpdateOption ({ option, list, update_option, closeForm, load_options }) {
     const [optionForm, setOptionForm] = useState({
-        price: option.price || '',
+        price: option.price ||'',
         unit_number: option.unit_number || '',
         layout: option.layout || '',
         sq_ft: option.sq_ft || '',
         available: option.available || '',
         notes: option.notes || '',
-        property: option.property
     });
-    const { price, unit_number, layout, sq_ft, available, notes, property } = optionForm;
+    const { price, unit_number, layout, sq_ft, available, notes } = optionForm;
 
     const optionID = option.id;
+    const listID = list.id;
+    const property = option.property;
 
     const handleChange = (e) => setOptionForm({ ...optionForm, [e.target.name]: e.target.value });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        update_option(optionID, price, unit_number, layout, sq_ft, available, notes, list, property);
+        await update_option(optionID, price, unit_number, layout, sq_ft, available, notes, property, listID);
+        load_options(listID);
         closeForm();
     };
 
     return(
-        <>
+        <div className="container">
             <Form onSubmit={handleSubmit}>
                 <FormField>
                     <label className="noto-sans" htmlFor='price'>Price:</label>
                     <input
                         type='number'
                         name='price'
-                        value={price}
+                        value={price || option.price}
                         onChange={handleChange}
                     />
                 </FormField>
@@ -84,14 +86,14 @@ function UpdateOption ({ option, list, update_option, closeForm }) {
                 </FormField>
                 <Button type="submit" color="green">UPDATE OPTION</Button>
             </Form>
-        </>
+        </div>
     )
 }
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    list: state.listmaker.list.id,
+    list: state.listmaker.list,
     error: state.auth.error,
 });
 
-export default connect(mapStateToProps, { update_option })(UpdateOption);
+export default connect(mapStateToProps, { update_option, load_options })(UpdateOption);

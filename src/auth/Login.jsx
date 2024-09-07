@@ -23,15 +23,15 @@ function Login ({ login, isAuthenticated, error, message }) {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/dashboard/');
+            navigate('/dashboard/home');
         }
     }, [isAuthenticated, navigate]);
 
     return (
         <div className="container-sm sm w-50 pt-5">
             <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.jpg"/>
-            <div className="pb-2">
-                <h6 className="noto-sans"> sign into the platform </h6>
+            <div className="mb-4">
+                <h6 className="noto-sans text-center"> sign into the platform </h6>
             </div>
             <Form onSubmit={handleSubmit}>
                 {error && (
@@ -71,7 +71,7 @@ function Login ({ login, isAuthenticated, error, message }) {
 
             </Form>
             <Divider className="mt-4 mb-4" />
-            <div className="d-flex justify-content-evenly">            
+            <div className="d-flex flex-md-row justify-content-evenly flex-sm-column flex-column text-center">            
                 <h6 className="noto-sans">don't have an account? <Link to={"/signup/"}>Signup</Link></h6>
                 <h6 className="noto-sans">forgot your password? <Link to={"/reset-password/"}>Reset</Link></h6>                      
             </div>

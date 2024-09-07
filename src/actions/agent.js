@@ -46,8 +46,9 @@ export const update_profile = (userID, full_name, trec, website, phone_number) =
 };
 
 
-export const load_clients = () => async dispatch => {
+export const load_clients = (userID) => async dispatch => {
     if (localStorage.getItem('access')) {
+        console.log(userID, "user ID")
         const config = {
             headers: {
                 'Content-Type': 'application/json',
@@ -55,7 +56,7 @@ export const load_clients = () => async dispatch => {
             }
         }; 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/clients/`, config);
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/clients/?agent=${userID}`, config);
             dispatch({
                 type: LOAD_CLIENTS_SUCCESS,
                 payload: res.data
@@ -131,7 +132,7 @@ export const update_client = (clientID, agent, first_name, last_name, email, pho
 };
 
 
-export const load_deals = () => async dispatch => {
+export const load_deals = (userID) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
             headers: {
@@ -140,7 +141,7 @@ export const load_deals = () => async dispatch => {
             }
         }; 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/deals/`, config);
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/deals/?agent=${userID}`, config);
             dispatch({
                 type: LOAD_DEALS_SUCCESS,
                 payload: res.data

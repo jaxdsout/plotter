@@ -31,7 +31,7 @@ function ResetPassword ({ reset_password }) {
     return (
         <div className="container-sm sm w-50 pt-5">
             <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1001.jpg"/>
-            <div className="pb-2">
+            <div className="mb-4">
                 <h6 className="noto-sans"> request a new password </h6>
             </div>
             <Form onSubmit={handleSubmit}>
@@ -47,7 +47,6 @@ function ResetPassword ({ reset_password }) {
                     />
                 </FormField>
                 <Button className="noto-sans-upper" type="submit">RESET PASSWORD</Button>   
-
             </Form>
         </div>
     )

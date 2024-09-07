@@ -8,8 +8,6 @@ function Landing () {
             <h1 className="poetsen tagline">the only way to locate</h1>
 
         </div>
-
-
     <div className="container-fluid w-50 pt-5 pb-5">
         <div className="row">
             <div className="col-md-6">

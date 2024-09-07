@@ -8,6 +8,11 @@ import Navbar from './components/Navbar';
 import Landing from './components/Landing';
 import Dashboard from './dashboard/Dashboard';
 import ClientList from './listmaker/ClientList';
+import Footer from './components/Footer';
+import Dash from './dashboard/Dash';
+import Clients from './clients/Clients';
+import Lists from './lists/Lists';
+import Deals from './deals/Deals';
 
 
 function App() {
@@ -22,10 +27,16 @@ function App() {
         <Route path="/password/reset/confirm/:uid/:token" element={ <ConfirmPassword /> } />
         <Route path="/activate/:uid/:token" element={ <Activate /> } />
         <Route path="/login/" element={ <Login /> } />
-        <Route path="/dashboard/" element={ <Dashboard /> }/>
+        <Route path="/dashboard/" element={ <Dashboard /> }>
+          <Route path="home" element={<Dash />} />
+          <Route path="clients" element={<Clients />} />
+          <Route path="lists" element={<Lists />} />
+          <Route path="deals" element={<Deals />} />
+        </Route>
         <Route path="/list/:uuid/" element={ <ClientList /> } />
         <Route path="*" element={<Navigate to="/home/" replace />} />
       </Routes>
+      {/* <Footer /> */}
     </div>
     </Router>
 

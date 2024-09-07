@@ -8,16 +8,18 @@ import ClearOptions from "./ClearOptions";
 import ClientSearch from "./ClientSearch";
 import SendList from "./SendList";
 import ShareURL from "./ShareURL";
-import { new_list, reset_list_mode, reset_send_mode } from "../actions/listmaker";
+import { new_list } from "../actions/listmaker";
+import { reset_list_mode, reset_send_mode, set_list_mode } from "../actions/ui"
 
 
-function NewList({ user, new_list, client, isSendMode, isListMode, reset_list_mode, reset_send_mode }) {
+function NewList({ user, new_list, client, isSendMode, isListMode, reset_list_mode, reset_send_mode, set_list_mode }) {
     const [showModal, setShowModal] = useState(false);
 
-    const handleCreateList = (e) => {
+    const handleCreateList = async (e) => {
         console.log(user.id, client.id);
         if (user != null && client != null) { 
-            new_list(user.id, client.id);
+            await new_list(user.id, client.id);
+            set_list_mode()
         }
     };
 
@@ -32,6 +34,8 @@ function NewList({ user, new_list, client, isSendMode, isListMode, reset_list_mo
         reset_send_mode()
     }
 
+    console.log("sendmode", isSendMode)
+    console.log("listmode", isListMode)
     return (
         <>
             <div className="d-flex justify-content-end align-items-end">
@@ -49,9 +53,9 @@ function NewList({ user, new_list, client, isSendMode, isListMode, reset_list_mo
                         )}
                     </Modal.Header>
                     <Modal.Content>
-                        <>
+                        <div className="container h-100">
                             {isListMode ? (
-                                <>
+                                <div>
                                 <div className="row">
                                     <div className="col-md-6">
                                         <PropertySearch />
@@ -66,9 +70,9 @@ function NewList({ user, new_list, client, isSendMode, isListMode, reset_list_mo
                                         </div>
                                     </div>
                                 </div>
-                                </>
+                                </div>
                             ) : isSendMode ? (
-                                <>
+                                <div>
                                    <div className="row">
                                     <div className="col-md-6">
                                        <ShareURL />
@@ -77,7 +81,7 @@ function NewList({ user, new_list, client, isSendMode, isListMode, reset_list_mo
                                
                                     </div>
                                 </div>
-                                </>
+                                </div>
                             ) : (
                                 <div className="d-flex justify-content-center align-items-end">
                                     <div>
@@ -90,7 +94,7 @@ function NewList({ user, new_list, client, isSendMode, isListMode, reset_list_mo
                                     </div>
                                 </div>
                             )}
-                        </>
+                        </div>
                     </Modal.Content>
                     <Modal.Actions>
                         <Button onClick={handleCloseModal}>CLOSE</Button>
@@ -106,8 +110,8 @@ const mapStateToProps = state => ({
     user: state.auth.user,
     error: state.auth.error,
     client: state.listmaker.client,
-    isSendMode: state.listmaker.isSendMode,
-    isListMode: state.listmaker.isListMode
+    isSendMode: state.ui.isSendMode,
+    isListMode: state.ui.isListMode
 });
 
-export default connect(mapStateToProps, { new_list, reset_list_mode, reset_send_mode })(NewList);
+export default connect(mapStateToProps, { new_list, reset_list_mode, reset_send_mode, set_list_mode })(NewList);

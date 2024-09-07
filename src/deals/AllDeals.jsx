@@ -7,9 +7,11 @@ import { connect } from "react-redux";
 import { load_deals } from "../actions/agent";
 
 
-function AllDeals ({ load_deals, deals }) {
+function AllDeals ({ load_deals, deals, user }) {
     const [showDealDetail, setShowDealDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
+
+    const userID = user.id
 
     const handleOpenModal = (id) => {
         setShowDealDetail(showDealDetail === id ? null : id)
@@ -20,34 +22,36 @@ function AllDeals ({ load_deals, deals }) {
 
     useEffect(() => {
         console.log("firing all deals")
-        load_deals();
-    }, [])
+        load_deals(userID);
+    }, [load_deals, userID])
 
     return (
         <>
             <h6 className="noto-sans"> all deals </h6>
-            <ul class="list-group">
-                {deals.map(deal => (
-                    <li class="list-group-item" key={deal.id}>
-                    <Link onClick={() => handleOpenModal(deal.id)}>
-                        {deal}
-                    </Link>
-                    {showDealDetail === deal.id && (
-                        <Modal className='' open={showModal} onClose={handleCloseModal}>
-                            <Modal.Header>Deal Info</Modal.Header>
-                            <Modal.Content>
-                                <>
-                                    <DealDetail deal={deal} />
-                                </>
-                            </Modal.Content>
-                            <Modal.Actions>
-                                <Button onClick={handleCloseModal}>CLOSE</Button>
-                            </Modal.Actions>
-                        </Modal>
-                    )}
-                    </li>
-                ))}
-            </ul>
+            <div className="overflow-y-auto plotterbox">
+                <ul class="list-group">
+                    {deals.map(deal => (
+                        <li class="list-group-item" key={deal.id}>
+                        <Link onClick={() => handleOpenModal(deal.id)}>
+                            {deal}
+                        </Link>
+                        {showDealDetail === deal.id && (
+                            <Modal className='' open={showModal} onClose={handleCloseModal}>
+                                <Modal.Header>Deal Info</Modal.Header>
+                                <Modal.Content>
+                                    <>
+                                        <DealDetail deal={deal} />
+                                    </>
+                                </Modal.Content>
+                                <Modal.Actions>
+                                    <Button onClick={handleCloseModal}>CLOSE</Button>
+                                </Modal.Actions>
+                            </Modal>
+                        )}
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </>
     )
 }
@@ -55,7 +59,8 @@ function AllDeals ({ load_deals, deals }) {
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
-    deals: state.agent.deals
+    deals: state.agent.deals,
+    user: state.auth.user
 });
 
 export default connect(mapStateToProps, { load_deals })(AllDeals);

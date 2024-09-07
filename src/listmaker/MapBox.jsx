@@ -19,7 +19,9 @@ const MapBox = ({ options, retr_options }) => {
       mapOptions.forEach(option => {
         new mapboxgl.Marker()
           .setLngLat([parseFloat(option.longitude), parseFloat(option.latitude)])
-          .setPopup(new mapboxgl.Popup().setHTML(`${option.prop_name}<hr>${option.address}`))
+          .setPopup(new mapboxgl.Popup().setHTML(`
+            <h4>${option.prop_name}</h4><hr><p>${option.address}<p>
+          `))
           .addTo(map);
       });
     }
@@ -30,7 +32,7 @@ const MapBox = ({ options, retr_options }) => {
   }, [options]); 
 
   return (
-    <div id="YOUR_CONTAINER_ELEMENT_ID" style={{ width: '100%', height: '400px' }} />
+    <div id="YOUR_CONTAINER_ELEMENT_ID" className='h-100' />
   );
 };
 

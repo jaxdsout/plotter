@@ -20,7 +20,7 @@ function NewClient({ user, load_clients, new_client }) {
         e.preventDefault();
         new_client(agent, first_name, last_name, email, phone_number)
         handleCloseModal();
-        load_clients()
+        load_clients(agent)
     };
 
     const handleOpenModal = () => setShowModal(true);

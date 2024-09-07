@@ -38,29 +38,31 @@ function AllLists ({ load_lists, lists }) {
     return (
         <>
             <h6 className="noto-sans"> all lists </h6>
-            <ul class="list-group hover">
-                {lists.map(list => (
-                    <li class="list-group-item" key={list.id}>
-                        <div className="d-flex justify-content-between">
-                            <span>{list.full_name} - {formatDate(list.date)}</span>
-                            <Link onClick={() => handleOpenModal(list.id)}>
-                                View Details
-                            </Link>
-                        </div>                 
-                    {showListDetail === list.id && (
-                        <Modal open={showModal} onClose={handleCloseModal}>
-                            <Modal.Header>List Info</Modal.Header>
-                            <Modal.Content>
-                                <ListDetail list={list} />
-                            </Modal.Content>
-                            <Modal.Actions>
-                                <Button onClick={handleCloseModal}>CLOSE</Button>
-                            </Modal.Actions>
-                        </Modal>
-                    )}
-                    </li>
-                ))}
-            </ul>
+            <div className="overflow-y-auto plotterbox">
+                <ul class="list-group hover">
+                    {lists.map(list => (
+                        <li class="list-group-item" key={list.id}>
+                            <div className="d-flex justify-content-between">
+                                <span>{list.client_name} - {formatDate(list.date)}</span>
+                                <Link onClick={() => handleOpenModal(list.id)}>
+                                    View Details
+                                </Link>
+                            </div>                 
+                        {showListDetail === list.id && (
+                            <Modal open={showModal} onClose={handleCloseModal}>
+                                <Modal.Header>List Info</Modal.Header>
+                                <Modal.Content>
+                                    <ListDetail list={list} />
+                                </Modal.Content>
+                                <Modal.Actions>
+                                    <Button onClick={handleCloseModal}>CLOSE</Button>
+                                </Modal.Actions>
+                            </Modal>
+                        )}
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </>
     )
 }

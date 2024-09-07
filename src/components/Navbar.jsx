@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { logout } from '../actions/auth';
 import { Button } from 'semantic-ui-react';
-import { reset_client_view } from '../actions/listmaker';
+import { reset_client_view } from '../actions/ui';
 
 function Navbar ({ logout, isAuthenticated, isClientView, reset_client_view }) {
     const navigate = useNavigate()
@@ -28,7 +28,7 @@ function Navbar ({ logout, isAuthenticated, isClientView, reset_client_view }) {
                     <>
                         {isAuthenticated ? 
                             <>
-                                <Link to={"/dashboard/"}><h1 className='poetsen'>plotter</h1></Link>
+                                <Link to={"/dashboard/home"}><h1 className='poetsen'>plotter</h1></Link>
                                 <Button onClick={logout_user}>LOGOUT</Button>      
                             </>
                         : 
@@ -49,7 +49,7 @@ function Navbar ({ logout, isAuthenticated, isClientView, reset_client_view }) {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    isClientView: state.listmaker.isClientView
+    isClientView: state.ui.isClientView
 });
 
 export default connect(mapStateToProps, { logout, reset_client_view })(Navbar);

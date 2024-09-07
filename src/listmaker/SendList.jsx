@@ -1,13 +1,14 @@
 import { Button, Form } from "semantic-ui-react"
 import { connect } from "react-redux";
-import { add_list_uuid, set_send_mode } from "../actions/listmaker";
+import { add_list_uuid } from "../actions/listmaker";
+import { set_send_mode } from "../actions/ui";
 
-function SendList ({ user, client, list, add_list_uuid, set_send_mode }) {
+function SendList ({ user, client, list, add_list_uuid, set_send_mode, options }) {
 
     const handleSendList = async (e) => {
         e.preventDefault();
         console.log(user.id, client.id, list.id)
-        await add_list_uuid(user.id, client.id, list.id);
+        await add_list_uuid(user.id, client.id, list, options);
         set_send_mode();
     }
 
@@ -25,7 +26,8 @@ const mapStateToProps = state => ({
     user: state.auth.user,
     error: state.auth.error,
     client: state.listmaker.client,
-    list: state.listmaker.list
+    list: state.listmaker.list,
+    options: state.listmaker.options,
 });
 
 export default connect(mapStateToProps, { add_list_uuid, set_send_mode })(SendList);

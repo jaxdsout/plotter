@@ -19,10 +19,7 @@ import {
     SET_SEARCH_CLIENT_FAIL,
     RETRIEVE_LIST_FAIL,
     RETRIEVE_LIST_SUCCESS,
-    RESET_CLIENT_VIEW,
-    SET_SEND_MODE,
-    RESET_SEND_MODE,
-    RESET_LIST_MODE
+    UPDATE_OPTIONS_ORDER
 } from "./types"
 
 import axios from "axios";
@@ -102,7 +99,6 @@ export const new_option = (property, list, client) => async dispatch => {
             type: NEW_OPTION_SUCCESS,
             payload: res.data
         });
-        dispatch(load_options(list));
     } catch (err) {
         dispatch({
             type: NEW_OPTION_FAIL
@@ -158,7 +154,6 @@ export const delete_option = (optionID, list) => async dispatch => {
                 type: DELETE_OPTION_SUCCESS,
             });
             console.log("option deleted")
-            dispatch(load_options(list));
         } catch (err) {
             dispatch({
                 type: DELETE_OPTION_FAIL
@@ -173,7 +168,7 @@ export const delete_option = (optionID, list) => async dispatch => {
 
 
 
-export const update_option = (optionID, listID, price, unit_number, layout, sq_ft, available, notes, list, property) => async dispatch => {
+export const update_option = (option, price, unit_number, layout, sq_ft, available, notes, property, list) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
             headers: {
@@ -181,15 +176,15 @@ export const update_option = (optionID, listID, price, unit_number, layout, sq_f
                 'Authorization': `Bearer ${localStorage.getItem('access')}`,
             }
         }; 
-        const body = JSON.stringify({ price, unit_number, layout, sq_ft, available, notes, list, property });
+        const body = JSON.stringify({ option, property, price, unit_number, layout, sq_ft, available, notes, list });
+        console.log(body, "update option body")
         try {
             console.log(body)
-            const res = await axios.put(`${process.env.REACT_APP_API_URL}/options/${optionID}/`, body, config);
+            const res = await axios.put(`${process.env.REACT_APP_API_URL}/options/${option}/`, body, config);
             dispatch({
                 type: UPDATE_OPTION_SUCCESS,
                 payload: res.data
             });
-            dispatch(load_options(listID));
         } catch (err) {
             dispatch({
                 type: UPDATE_OPTION_FAIL
@@ -201,7 +196,6 @@ export const update_option = (optionID, listID, price, unit_number, layout, sq_f
         });
     }
 };
-
 
 
 export const search_properties = (query) => async dispatch => {
@@ -277,19 +271,19 @@ export const set_search_client = (id, name) => dispatch => {
     }
 }
 
-export const add_list_uuid = (agent, client, listID) => async dispatch => {
+export const add_list_uuid = (agent, client, list) => async dispatch => {
     if (localStorage.getItem('access')) {
-        const uuid = uuidv4(); 
         const config = {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('access')}`,
             }
         }; 
+        const uuid = list.uuid === null ? uuidv4() : list.uuid;
         const body = JSON.stringify({ agent, client, uuid });
         try {
-            const res = await axios.put(`${process.env.REACT_APP_API_URL}/lists/${listID}/`, body, config);
-            console.log("updated uuid to list", res.data)
+            const res = await axios.put(`${process.env.REACT_APP_API_URL}/lists/${list.id}/`, body, config);
+            console.log("Updated list with new order or UUID:", res.data);
             dispatch({
                 type: NEW_LIST_SUCCESS,
                 payload: res.data
@@ -299,12 +293,14 @@ export const add_list_uuid = (agent, client, listID) => async dispatch => {
                 type: NEW_LIST_FAIL
             });
         }
-        } else {
+    } else {
+        console.error("No access token found.");
         dispatch({
             type: NEW_LIST_FAIL
         });
-        }
-}
+    }
+};
+
 
 
 export const retrieve_list = (uuid) => async dispatch => {
@@ -316,7 +312,7 @@ export const retrieve_list = (uuid) => async dispatch => {
         }; 
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/client-list/${uuid}/`, config);
-            console.log(res.data)
+            console.log("retrieved list", res.data)
             dispatch({
                 type: RETRIEVE_LIST_SUCCESS,
                 payload: res.data
@@ -334,30 +330,9 @@ export const retrieve_list = (uuid) => async dispatch => {
 };
 
 
-export const reset_client_view = () => dispatch => {
+export const update_options_order = (newOrder) => (dispatch) => {
     dispatch({
-        type: RESET_CLIENT_VIEW
+        type: 'UPDATE_OPTIONS_ORDER',
+        payload: newOrder,
     });
-    return Promise.resolve();
-};
-
-export const set_send_mode = () => dispatch => {
-    dispatch({
-        type: SET_SEND_MODE
-    });
-    return Promise.resolve();
-};
-
-export const reset_send_mode = () => dispatch => {
-    dispatch({
-        type: RESET_SEND_MODE
-    });
-    return Promise.resolve();
-};
-
-export const reset_list_mode = () => dispatch => {
-    dispatch({
-        type: RESET_LIST_MODE
-    });
-    return Promise.resolve();
 };

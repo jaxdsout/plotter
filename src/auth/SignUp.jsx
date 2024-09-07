@@ -44,8 +44,8 @@ function Signup ({ signup, isAuthenticated, error }) {
     return (
         <div className="container-sm sm w-50 pt-5 pb-5">
             <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1000.jpg"/>
-            <div className="pb-2">
-                <h6 className="noto-sans"> sign up for the platform </h6>
+            <div className="mb-4">
+                <h6 className="noto-sans text-center"> sign up for the platform </h6>
             </div>
             <Form onSubmit={handleSubmit}>
                 {error && (
