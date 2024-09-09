@@ -12,27 +12,13 @@ import {ReactComponent as Person} from '../components/person-circle.svg'
 import ProfileWidget from './ProfileWidget';
 
 
-function Dashboard ({ load_user, auth_user, isAuthenticated }) {
+function Dashboard () {
     const [profileHover, setProfileHover] = useState(false);
     const location = useLocation(); 
-    const navigate = useNavigate();
-
-    console.log(isAuthenticated)
 
     const handleProfileWidget = () => {
         setProfileHover(prev => !prev);
     };
-
-    useEffect(() => {
-            load_user();
-            auth_user();
-    }, [load_user, auth_user]);
-
-    useEffect(() => {
-        if (isAuthenticated === false) {
-            navigate('/login/')
-        }
-    }, [isAuthenticated, navigate])
 
     const basePath = location.pathname.split('/').pop();
 
@@ -62,9 +48,5 @@ function Dashboard ({ load_user, auth_user, isAuthenticated }) {
     )
 }
 
-const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    error: state.auth.error,
-});
 
-export default connect(mapStateToProps, { load_user, auth_user })(Dashboard);
+export default Dashboard;

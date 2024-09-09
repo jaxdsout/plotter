@@ -1,9 +1,28 @@
 import GuestCard from '../components/GuestCard';
 import EarningDonut from '../components/EarningDonut';
 import EarningBar from '../components/EarningBar';
-import { connect } from 'react-redux';
+import { useEffect } from "react";
+import { load_user, auth_user } from "../actions/auth";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-function Dash () {
+
+function Dash ({ isAuthenticated, load_user, auth_user, user }) {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+            load_user();
+            auth_user();
+        }
+    }, [user, auth_user, load_user]);
+
+    useEffect(() => {
+        if (isAuthenticated === false) {
+            navigate('/login/')
+        }
+    }, [isAuthenticated, navigate])
+
     return (
         <div className='z-0 container pt-5 pb-5 bg-dark-subtle'>
             <div className="row">
@@ -37,4 +56,4 @@ const mapStateToProps = state => ({
     user: state.auth.user
 });
 
-export default connect(mapStateToProps, {  })(Dash);
+export default connect(mapStateToProps, { load_user, auth_user })(Dash);

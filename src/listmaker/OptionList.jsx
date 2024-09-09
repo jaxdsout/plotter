@@ -1,167 +1,139 @@
-import { useEffect } from "react";
-import {ReactComponent as Trash} from '../components/trash.svg'
-import {ReactComponent as Edit} from '../components/pencil-square.svg'
-import { Button } from "semantic-ui-react";
+import { useEffect, useCallback } from "react";
+import { Divider, List, Icon, Popup } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { useState } from "react";
 import UpdateOption from "./UpdateOption";
-import { delete_option, load_options, update_options_order } from "../actions/listmaker";
-import { Icon, Popup } from "semantic-ui-react";
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { load_options, update_options_order } from "../actions/listmaker";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import DeleteOption from "./DeleteOption";
+import { ReactComponent as InfoSquare } from '../components/info-square.svg';
 
 
-function OptionList ({ options, load_options, delete_option, list, update_options_order }) {
-    const [editID, setEditID] = useState(null);
-    const [deleteConfirm, setDeleteConfirm] = useState(null);
+function OptionList({ options, load_options, list, update_options_order }) {
 
-    const handleUpdate = (e, optionID) => {
-        e.preventDefault();
-        if (editID === optionID) {
-            setEditID(null)
-        } else {
-            setEditID(optionID);
-        }
+    const formatDate = (datetimeStr) => {
+        const dateObj = new Date(datetimeStr);
+        return dateObj.toLocaleString('default', {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit',
+        }).replace(',', '/');
     };
 
-    const handleDeleteConfirm = (e, optionID) => {
-        e.preventDefault();
-        setDeleteConfirm(optionID)
-    };
-    
-    const handleDelete = (e, optionID, list) => {
-        e.preventDefault();
-        delete_option(optionID, list.id);
-        setDeleteConfirm(null)
-        load_options(list.id)
-    };
-
-    const closeForm = () => {
-        setEditID(null);
-    };
-    
     useEffect(() => {
-        load_options(list);
-    }, [load_options, list])
+        load_options(list.id);
+    }, [load_options, list]);
 
-    setTimeout(() => {
-        if (deleteConfirm > 0) {
-            setDeleteConfirm(null)
-        }
-    }, 7000)
-
-
-    const handleOnDragEnd = (result) => {
-        if (!result.destination) return;
-        const reorderedItems = Array.from(options);
-        const [movedItem] = reorderedItems.splice(result.source.index, 1);
-        reorderedItems.splice(result.destination.index, 0, movedItem);
-        update_options_order(reorderedItems);
+    const reorder = (list, startIndex, endIndex) => {
+        const result = Array.from(list);
+        const [removed] = result.splice(startIndex, 1);
+        result.splice(endIndex, 0, removed);
+        return result;
     };
 
+    const getItemStyle = (isDragging, draggableStyle) => ({
+        userSelect: "none",      
+        background: isDragging ? "lightblue" : "white",
+        position: isDragging ? "fixed" : "static",
+        top: isDragging ? draggableStyle?.transform?.split(",")[1] : "auto",
+        left: isDragging ? draggableStyle?.transform?.split(",")[0] : "auto",
+
+        transform: isDragging ? draggableStyle?.transform : "none",
+        ...draggableStyle
+    });
+
+    const getListStyle = isDraggingOver => ({
+        background: isDraggingOver ? "lightgrey" : "white",
+    });
+
+    const onDragEnd = useCallback((result) => {
+        if (!result.destination) {
+          return;
+        }
+    
+        const reorderedItems = reorder(
+          options,
+          result.source.index,
+          result.destination.index
+        );
+    
+        update_options_order(reorderedItems);
+      }, [options, update_options_order]);
 
     return (
-        <div>
+        <>
             {options.length > 0 ? (
-                <DragDropContext onDragEnd={handleOnDragEnd}>
-                    <Droppable droppableId="options">
-                        {(provided) => (
-                            <ul className="list-group" {...provided.droppableProps} ref={provided.innerRef}>
-                                {options.map((option, index) => (
-                                    <Draggable key={option.id} draggableId={option.id.toString()} index={index}>
-                                        {(provided) => (
-                                            <li
-                                                className="list-group-item pb-3 pt-3"
-                                                ref={provided.innerRef}
-                                                {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                            >
-                                                <div className="d-flex justify-content-between">
-                                                    <div>
-                                                        <h4>{option.prop_name}</h4>
-                                                        {editID === option.id ? (
-                                                            <></>
-                                                        ) : (
-                                                            <Popup
-                                                                content={
-                                                                    <div>
-                                                                        <ul className="list-group">
-                                                                            {option.price === null ? (
-                                                                                <p>No details added yet.</p>
-                                                                            ) : (
-                                                                                <>
-                                                                                    <li className="list-group-item">${option.price}</li>
-                                                                                    <li className="list-group-item">Unit {option.unit_number}</li>
-                                                                                    <li className="list-group-item">{option.layout}</li>
-                                                                                    <li className="list-group-item">{option.sq_ft} sq. ft.</li>
-                                                                                    <li className="list-group-item">Available: {option.available}</li>
-                                                                                    <li className="list-group-item">{option.notes}</li>
-                                                                                </>
-                                                                            )}
-                                                                        </ul>
-                                                                    </div>
-                                                                }
-                                                                trigger={<Icon name="info circle" />}
-                                                            />
-                                                        )}
-                                                    </div>
-                                                    <div>
-                                                        {editID === option.id ? (
-                                                            <Button type="submit" color="black" onClick={(e) => handleUpdate(e, option.id)}>
-                                                                <Edit />
-                                                            </Button>
-                                                        ) : (
-                                                            <Button type="submit" onClick={(e) => handleUpdate(e, option.id)}>
-                                                                <Edit />
-                                                            </Button>
-                                                        )}
-                                                        {deleteConfirm === option.id ? (
-                                                            <Popup
-                                                                content="ARE YOU SURE?"
-                                                                open
-                                                                position="top center"
-                                                                trigger={
-                                                                    <Button
-                                                                        type="submit"
-                                                                        color="red"
-                                                                        onClick={(e) => handleDelete(e, option.id, list)}
-                                                                    >
-                                                                        <Trash />
-                                                                    </Button>
-                                                                }
-                                                            />
-                                                        ) : (
-                                                            <Button type="submit" onClick={(e) => handleDeleteConfirm(e, option.id)}>
-                                                                <Trash />
-                                                            </Button>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                {editID === option.id && (
-                                                    <UpdateOption option={option} list={list} closeForm={closeForm} />
-                                                )}
-                                            </li>
+                <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="options">
+                    {(provided, snapshot) => (
+                        <div
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            style={getListStyle(snapshot.isDraggingOver)}
+                        >
+                        {options.map((option, index) => (
+                            <Draggable key={option.id} draggableId={String(option.id)} index={index} className="mt-4 mb-4">
+                                {(provided, snapshot) => (
+                                    <div
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                        style={getItemStyle(
+                                            snapshot.isDragging,
+                                            provided.draggableProps.style
                                         )}
-                                    </Draggable>
-                                ))}
-                                {provided.placeholder}
-                            </ul>
-                        )}
-                    </Droppable>
+                                    >
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div className="d-flex justify-content-evenly mt-3">
+                                                <h4 className="me-2">{option.prop_name}</h4>
+                                                <Popup
+                                                    content={
+                                                        <List>
+                                                            {option.price === null ? (
+                                                                <p>No details added yet.</p>
+                                                            ) : (
+                                                                <>
+                                                                    <List.Item>${option.price}</List.Item>
+                                                                    <List.Item>Unit {option.unit_number}</List.Item>
+                                                                    <List.Item>{option.layout}; {option.sq_ft} sq. ft.</List.Item>
+                                                                    <List.Item>Available: {formatDate(option.available)}</List.Item>
+                                                                    <List.Item>{option.notes}</List.Item>
+                                                                </>
+                                                            )}
+                                                        </List>
+                                                    }
+                                                    trigger={<InfoSquare/>}
+                                                />
+                                            </div>
+                                            <div className="d-flex">
+                                                <UpdateOption option={option} />
+                                                <DeleteOption option={option} />
+                                            </div>
+                                        </div>
+                                        <Divider />
+                                    </div>
+                                )}
+                            </Draggable>
+                        ))}
+                        {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
                 </DragDropContext>
+
             ) : (
                 <div className="container text-center">
                     <p>No options added yet.</p>
                 </div>
             )}
-        </div>
+        </>
     );
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
     options: state.listmaker.options,
     list: state.listmaker.list,
 });
 
-export default connect(mapStateToProps, { delete_option, load_options, update_options_order })(OptionList);
+export default connect(mapStateToProps, { load_options, update_options_order })(OptionList);

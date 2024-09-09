@@ -17,9 +17,16 @@ import {
     CLEAR_OPTIONS_FAIL,
     SET_SEARCH_CLIENT_FAIL,
     SET_SEARCH_CLIENT_SUCCESS,
+    SET_SEARCH_PROP_FAIL,
+    SET_SEARCH_PROP_SUCCESS,
     RETRIEVE_LIST_FAIL,
     RETRIEVE_LIST_SUCCESS,
-    UPDATE_OPTIONS_ORDER
+    UPDATE_OPTIONS_ORDER,
+    RESET_CLIENT_RESULTS,
+    RESET_CLIENT,
+    RESET_PROP,
+    RESET_PROPERTY_RESULTS,
+    SET_LIST_FOR_EDIT
 } from '../actions/types';
 
 const initialState = {
@@ -28,6 +35,7 @@ const initialState = {
     client_results: [],
     client: null,
     list: null,
+    property: null,
     prop_results: [],
     options: [],  
     retrlist: null,
@@ -56,6 +64,11 @@ export default function listmakerReducer(state = initialState, action) {
                 ...state,
                 prop_results: payload
             }
+        case SET_SEARCH_PROP_SUCCESS:
+            return {
+                ...state,
+                property: payload
+            }
         case LOAD_OPTIONS_SUCCESS:
             return {
                 ...state,
@@ -76,6 +89,31 @@ export default function listmakerReducer(state = initialState, action) {
                 ...state,
                 options: payload,
             }
+        case RESET_CLIENT_RESULTS:
+            return {
+                ...state,
+                client_results: [],
+            }
+        case RESET_PROPERTY_RESULTS:
+            return {
+                ...state,
+                prop_results: [],
+            }
+        case RESET_CLIENT:
+            return {
+                ...state,
+                client: null
+            }
+        case RESET_PROP:
+            return {
+                ...state,
+                property: null
+            }
+        case SET_LIST_FOR_EDIT:
+            return {
+                ...state,
+                list: payload
+            }
         case NEW_OPTION_FAIL:
         case NEW_OPTION_SUCCESS:
         case NEW_LIST_FAIL:
@@ -88,6 +126,7 @@ export default function listmakerReducer(state = initialState, action) {
         case LOAD_OPTIONS_FAIL:
         case CLEAR_OPTIONS_FAIL:
         case SET_SEARCH_CLIENT_FAIL:
+        case SET_SEARCH_PROP_FAIL:
         case RETRIEVE_LIST_FAIL:
             return {
                 ...state

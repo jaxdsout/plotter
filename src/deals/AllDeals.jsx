@@ -11,8 +11,6 @@ function AllDeals ({ load_deals, deals, user }) {
     const [showDealDetail, setShowDealDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
-    const userID = user.id
-
     const handleOpenModal = (id) => {
         setShowDealDetail(showDealDetail === id ? null : id)
         setShowModal(true);
@@ -22,8 +20,9 @@ function AllDeals ({ load_deals, deals, user }) {
 
     useEffect(() => {
         console.log("firing all deals")
-        load_deals(userID);
-    }, [load_deals, userID])
+        console.log(user.id)
+        load_deals(user.id);
+    }, [load_deals, user])
 
     return (
         <>
@@ -33,7 +32,7 @@ function AllDeals ({ load_deals, deals, user }) {
                     {deals.map(deal => (
                         <li class="list-group-item" key={deal.id}>
                         <Link onClick={() => handleOpenModal(deal.id)}>
-                            {deal}
+                            {deal.client} {deal.agent} {deal.property}
                         </Link>
                         {showDealDetail === deal.id && (
                             <Modal className='' open={showModal} onClose={handleCloseModal}>
@@ -43,7 +42,7 @@ function AllDeals ({ load_deals, deals, user }) {
                                         <DealDetail deal={deal} />
                                     </>
                                 </Modal.Content>
-                                <Modal.Actions>
+                                <Modal.Actions className="d-flex">
                                     <Button onClick={handleCloseModal}>CLOSE</Button>
                                 </Modal.Actions>
                             </Modal>

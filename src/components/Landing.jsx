@@ -1,6 +1,9 @@
 import { Image } from "semantic-ui-react"
 
+
 function Landing () {
+
+
     return (
         <>
         <div className="container">        
@@ -81,4 +84,4 @@ function Landing () {
     )
 }
 
-export default Landing
+export default Landing;

@@ -1,14 +1,8 @@
-import { Search, Form, Button } from "semantic-ui-react"
-import { useState } from "react";
+import { Search } from "semantic-ui-react"
 import { connect } from "react-redux";
-import { load_options, new_option, search_properties } from "../actions/listmaker";
+import { load_options, search_properties, reset_prop_results, set_search_prop } from "../actions/listmaker";
 
-function PropertySearch({ userID, list, search_properties, new_option, search_results, client, load_options }) {
-
-    const [formData, setFormData] = useState({
-        property: '',
-    });
-    const { property } = formData;
+function PropertySearch({ userID, search_properties, set_search_prop, prop_results, reset_prop_results}) {
 
     const handleSearchChange = (e, { value }) => {
         if (value.length > 1) {
@@ -17,37 +11,33 @@ function PropertySearch({ userID, list, search_properties, new_option, search_re
     };
 
     const handleResultSelect = (e, { result }) => {
-        setFormData({ ...formData, property: result.id });
+        console.log(result)
+        set_search_prop(result.id, result.title);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (property) {
-            console.log(property, list.id, client.id)
-            await new_option(property, list.id, client.id);
-            setFormData({property: ''})
-            load_options(list.id)
-        }
-    };
+    const handleBlur =  () => {
+        reset_prop_results()
+    }
+
 
 
     return(
-        <>
-            <div className="d-flex flex-row justify-content-around">
-                <Search
-                    onSearchChange={handleSearchChange}
-                    onResultSelect={handleResultSelect}
-                        results={search_results.map(property => ({
-                            title: `${property.name}`,
-                            subtitle: `${property.address}`,
-                            id: property.id,
-                    }))}
+        <div className="d-flex flex-row justify-content-evenly align-items-center">
+            <Search
+                onSearchChange={handleSearchChange}
+                onResultSelect={handleResultSelect}
+                onBlur={handleBlur}
+                results={prop_results.map(property => ({
+                    title: `${property.name}`,
+                    subtitle: `${property.address}`,
+                    id: property.id,
+                }))}
+                icon="none"
+                size="large"
+                className="me-3"
+                placeholder="Search for property..."
                 />
-                <Form onSubmit={handleSubmit}>
-                    <Button type="submit">ADD PROPERTY</Button>
-                </Form>
-            </div>
-        </>
+        </div>
     )
 }
 
@@ -55,9 +45,10 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     userID: state.auth.user.id,
     error: state.auth.error,
-    search_results: state.listmaker.prop_results,
+    prop_results: state.listmaker.prop_results,
     list: state.listmaker.list,
-    client: state.listmaker.client
+    client: state.listmaker.client,
+    isListMode: state.ui.isListMode
 });
 
-export default connect(mapStateToProps, { search_properties, new_option, load_options })(PropertySearch);
+export default connect(mapStateToProps, { set_search_prop, search_properties, load_options, reset_prop_results })(PropertySearch);

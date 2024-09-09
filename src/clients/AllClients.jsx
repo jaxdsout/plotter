@@ -9,13 +9,19 @@ import { load_clients } from "../actions/agent";
 function AllClients ({ load_clients, clients, user, }) {
     const [showClientDetail, setShowClientDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [clientTab, setClientTab] = useState("info");
 
     const handleOpenModal = (id) => {
         setShowClientDetail(showClientDetail === id ? null : id)
         setShowModal(true);
+        setClientTab("info");
     };
 
     const handleCloseModal = () => setShowModal(false);
+
+    const handleTabChange = (tab) => {
+        setClientTab(tab);
+    };
 
     useEffect(() => {
         load_clients(user.id);
@@ -33,18 +39,39 @@ function AllClients ({ load_clients, clients, user, }) {
                         </Link>
                         {showClientDetail === client.id && (
                             <Modal className='' open={showModal} onClose={handleCloseModal}>
-                                <Modal.Header>Client Info</Modal.Header>
+                                <Modal.Header>Client Details</Modal.Header>
                                 <Modal.Content>
-                                    <>
-                                        <ClientDetail client={client} />
-                                    </>
-                                    <Divider />
                                     <div className="pt-1">
-                                        <Button>LISTS</Button>
-                                        <Button>DEALS</Button>
+                                        <Button color="blue" onClick={() => handleTabChange("info")}>INFO</Button>
+                                        <Button color="blue" onClick={() => handleTabChange("lists")}>LISTS</Button>
+                                        <Button color="blue" onClick={() => handleTabChange("deals")}>DEALS</Button>
                                     </div>
+                                    <Divider />
+                                    <>
+                                            {clientTab === "info" && (
+                                                <ClientDetail client={client} />
+                                            )}
+                                            {clientTab === "lists" && (
+                                                <div className="overflow-y-scroll" style={{ height: '250px' }}>
+                                                    <ul>
+                                                        {client.lists.map(list => (
+                                                            <li key={list.id}>{list.date}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )}
+                                            {clientTab === "deals" && (
+                                                <div className="overflow-y-scroll" style={{ height: '250px' }}>
+                                                <ul>
+                                                    {client.deals.map(deal => (
+                                                        <li key={deal.id}>{deal.prop_name} {deal.move_date}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                            )}
+                                    </>
                                 </Modal.Content>
-                                <Modal.Actions>
+                                <Modal.Actions className="d-flex">
                                     <Button onClick={handleCloseModal}>CLOSE</Button>
                                 </Modal.Actions>
                             </Modal>

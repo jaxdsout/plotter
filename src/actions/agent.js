@@ -12,7 +12,7 @@ import {
     UPDATE_PROFILE_SUCCESS,
     UPDATE_PROFILE_FAIL,
     LOAD_LISTS_FAIL,
-    LOAD_LISTS_SUCCESS
+    LOAD_LISTS_SUCCESS,
 } from './types';
 
 import axios from 'axios';
@@ -142,6 +142,7 @@ export const load_deals = (userID) => async dispatch => {
         }; 
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/deals/?agent=${userID}`, config);
+            console.log(res.data)
             dispatch({
                 type: LOAD_DEALS_SUCCESS,
                 payload: res.data
@@ -159,8 +160,7 @@ export const load_deals = (userID) => async dispatch => {
 };
 
 
-export const new_deal = (property, rent, rate, commission, flat_fee, move_date, unit_no,
-            lease_term, client, agent) => async dispatch => {
+export const new_deal = (property, unit_no, move_date, lease_term, rent, rate, commission, flat_fee, agent, client) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
             headers: {
@@ -168,8 +168,19 @@ export const new_deal = (property, rent, rate, commission, flat_fee, move_date, 
                 'Authorization': `Bearer ${localStorage.getItem('access')}`,
             }
         }; 
-        const body = JSON.stringify({ property, rent, rate, commission, flat_fee, move_date, unit_no,
-            lease_term, client, agent });
+        // const body = JSON.stringify({ property, unit_no, move_date, lease_term, rent, rate, commission, flat_fee, agent, client });
+        const body = {
+            property,   // Ensure property is an integer
+            unit_no,                        // String fields remain as they are
+            move_date,                      // String fields remain as they are
+            lease_term,                     // String fields remain as they are
+            rent: parseInt(rent),         // Convert rent to a float
+            rate: parseInt(rate),         // Convert rate to a float
+            commission,  // Convert commission to a float
+            flat_fee: flat_fee ? parseFloat(flat_fee) : null, // Handle flat_fee (nullable)
+            agent,         // Ensure agent is an integer
+            client        // Ensure client is an integer
+        };
         console.log(body)
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/deals/`, body, config);
@@ -215,4 +226,3 @@ export const load_lists = () => async dispatch => {
         });
     }
 };
-

@@ -3,13 +3,15 @@ import {
     RESET_SEND_MODE,
     SET_SEND_MODE,
     RESET_LIST_MODE,
-    SET_LIST_MODE
+    SET_LIST_MODE,
+    SET_CLIENT_VIEW,
+    
 } from '../actions/types';
 
 const initialState = {
     access: localStorage.getItem('access'),
     refresh: localStorage.getItem('refresh'),
-    isClientView: true,  
+    isClientView: false,  
     isSendMode: false,
     isListMode: false,
 };
@@ -17,6 +19,11 @@ const initialState = {
 export default function uiReducer(state = initialState, action) {
     const { type } = action;
     switch(type) {
+        case SET_CLIENT_VIEW:
+            return { 
+                ...state, 
+                isClientView: true 
+            }
         case RESET_CLIENT_VIEW:
             return { 
                 ...state, 

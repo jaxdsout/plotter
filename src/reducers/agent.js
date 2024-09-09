@@ -22,7 +22,7 @@ const initialState = {
     refresh: localStorage.getItem('refresh'),
     clients: [],
     deals: [],
-    lists: []
+    lists: [],
 };
 
 export default function agentReducer(state = initialState, action) {

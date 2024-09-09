@@ -1,15 +1,16 @@
 import { Form, Modal, Button, FormField } from "semantic-ui-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { load_deals, new_deal } from "../actions/agent";
 import { connect } from "react-redux";
 import ClientSearch from "../listmaker/ClientSearch";
 import PropertySearch from "../listmaker/PropertySearch";
 
-function NewDeal({ user , load_deals, new_deal }) {
+function NewDeal({ user, load_deals, new_deal, q_client, q_property }) {
     const [showModal, setShowModal] = useState(false);
 
     const [formData, setFormData] = useState({
-        property: '',
+        agent: null,
+        property: null,
         rent: '',
         rate: '',
         commission: '',
@@ -17,40 +18,76 @@ function NewDeal({ user , load_deals, new_deal }) {
         move_date: '',
         unit_no: '',
         lease_term: '',
-        client: '',
+        client: null, 
     });
-    const { property, rent, rate, commission, flat_fee, move_date, unit_no,
-            lease_term, client } = formData;
-    const agent = user.id;
-   
+
+    const { property, unit_no, move_date, lease_term, rent, rate, commission, flat_fee, agent, client } = formData;
+
+    const handleClientSelect = () => {
+        if (q_client) {
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                client: q_client.id
+            }));
+        }
+    };
+
+    const handlePropSelect = () => {
+        if (q_property) {
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                property: q_property.id
+            }));
+        }
+    };
+
 
     const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        new_deal(agent, property, rent, rate, commission, flat_fee, move_date, unit_no,
-            lease_term, client);
+        await new_deal(property, unit_no, move_date, lease_term, rent, rate, commission, flat_fee, agent, client);
+        await load_deals();
         handleCloseModal();
-        load_deals()
     };
 
     const handleOpenModal = () => setShowModal(true);
 
     const handleCloseModal = () => setShowModal(false);
 
+    useEffect(() => {
+        if (user) {
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                agent: user.id
+            }));
+        }
+    }, [user])
 
-    return(
+    return (
         <>
-        <div className="d-flex justify-content-end align-items-end">
-                <Button onClick={handleOpenModal}>+</Button>
+            <div className="d-flex justify-content-end align-items-end">
+                <Button color="blue" onClick={handleOpenModal}>+</Button>
             </div>
             <div className="bg-body-secondary">
                 <Modal open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>Add New Deal</Modal.Header>
                     <Modal.Content>
+                        <div className="d-flex flex-row justify-content-between align-items-center mb-4">
+                            <div className="d-flex flex-row">
+                                <ClientSearch />
+                                <Form onSubmit={handleClientSelect}>
+                                    <Button color="blue" type="submit">SELECT CLIENT</Button>
+                                </Form>
+                            </div>
+                            <div className="d-flex flex-row">
+                                <PropertySearch />
+                                <Form onSubmit={handlePropSelect}>
+                                    <Button color="blue" type="submit">SELECT PROPERTY</Button>
+                                </Form>
+                            </div>
+                        </div>
                         <Form onSubmit={handleSubmit}>
-                            <ClientSearch />
-                            <PropertySearch />
                             <FormField>
                                 <label className="noto-sans" htmlFor='unit_no'>Unit Number:</label>
                                 <input
@@ -118,9 +155,10 @@ function NewDeal({ user , load_deals, new_deal }) {
                                     name='flat_fee'
                                     value={flat_fee}
                                     onChange={handleChange}
-                                    required
+                                    placeholder="Not Required"
                                 />
                             </FormField>
+                            <Button type="submit" color="green">SUBMIT DEAL</Button>
                         </Form>
                     </Modal.Content>
                     <Modal.Actions>
@@ -129,13 +167,16 @@ function NewDeal({ user , load_deals, new_deal }) {
                 </Modal>
             </div>
         </>
-    )
+    );
 }
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
     error: state.auth.error,
+    q_property: state.listmaker.property,
+    q_client: state.listmaker.client
+
 });
 
 export default connect(mapStateToProps, { new_deal, load_deals })(NewDeal);

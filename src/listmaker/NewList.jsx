@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { Modal, Button, Form, Divider } from "semantic-ui-react";
+import { Modal, Button, Form, Divider, FormField, Message } from "semantic-ui-react";
 import MapBox from "./MapBox";
 import PropertySearch from "./PropertySearch";
 import OptionList from "./OptionList";
@@ -8,99 +8,173 @@ import ClearOptions from "./ClearOptions";
 import ClientSearch from "./ClientSearch";
 import SendList from "./SendList";
 import ShareURL from "./ShareURL";
-import { new_list } from "../actions/listmaker";
+import { new_list, reset_client, delete_list, new_option, reset_prop_results, reset_prop, load_options } from "../actions/listmaker";
 import { reset_list_mode, reset_send_mode, set_list_mode } from "../actions/ui"
 
 
-function NewList({ user, new_list, client, isSendMode, isListMode, reset_list_mode, reset_send_mode, set_list_mode }) {
+function NewList({ new_option, reset_prop_results, property, list, reset_prop, load_options, user, new_list, client, isSendMode, isListMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode, reset_client }) {
     const [showModal, setShowModal] = useState(false);
+    const [showResetModal, setShowResetModal] = useState(false);
+    const [error, setError] = useState(null)
 
+    const handleErrorReset = () => {
+        setError(null);
+    };
     const handleCreateList = async (e) => {
-        console.log(user.id, client.id);
-        if (user != null && client != null) { 
+        if (user !== null && client !== null) { 
             await new_list(user.id, client.id);
             set_list_mode()
+        } else {
+            setError('client')
         }
     };
 
+    const handlePropertyAdd = async (list, property) => {
+        if (property && list) {
+            console.log(property, list.id, client.id)
+            await new_option(property.id, list.id, client.id);
+            await reset_prop_results()
+            await reset_prop()
+            load_options(list.id)
+        }
+    };
+
+    const handleResetClient = async (list) => {
+        if (list && isListMode) {
+            const listID = list.id
+            console.log(listID, "listID")
+          await delete_list(listID);
+          await reset_list_mode();
+          await reset_client();
+        }
+        setShowResetModal(false);
+    };
+
+    const handleEditList = async () => {
+        await reset_send_mode();
+        set_list_mode()
+    }
+
+    const handleOpenResetModal = () => {
+        setShowResetModal(true);
+    };
+
+    const handleCloseResetModal = () => {
+        setShowResetModal(false);
+    };
+
     const handleOpenModal = () => {
+        reset_list_mode();
         setShowModal(true);
-        reset_list_mode();
     }
 
-    const handleCloseModal = () => {
+    const handleCloseModal = async () => {
+        reset_list_mode();
+        reset_send_mode();
+        await reset_client()
         setShowModal(false);
-        reset_list_mode();
-        reset_send_mode()
     }
 
-    console.log("sendmode", isSendMode)
-    console.log("listmode", isListMode)
     return (
         <>
             <div className="d-flex justify-content-end align-items-end">
-                <Button onClick={handleOpenModal}>+</Button>
+                <Button color="blue" onClick={handleOpenModal}>+</Button>
             </div>
             <div className="bg-body-secondary">
                 <Modal open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>
                         {isListMode ? (
-                            <p>Add Options to New List: {client.name}</p>
+                            <p>Add Options to {client.name}'s New List</p>
                         ) : isSendMode ? (
-                            <p>Send New List to {client.name}</p>
+                            <p>Share New List with {client.name}</p>
                         ) : (
                             <p>Create New List</p>
                         )}
                     </Modal.Header>
                     <Modal.Content>
-                        <div className="container h-100">
+                        <>
                             {isListMode ? (
-                                <div>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <PropertySearch />
+                                <div className="d-flex justify-content-evenly" style={{ height: "500px"}}>
+                                    <div className="">
+                                        <div className="d-flex flex-row">
+                                            <PropertySearch />
+                                                <Form onSubmit={() => handlePropertyAdd(list, property)}>
+                                                    <Button color="blue" type="submit">ADD PROPERTY</Button>
+                                                </Form>
+                                        </div>
                                         <Divider />
                                         <OptionList />
                                     </div>
-                                    <div className="col-md-6">
+                                    <div className="">
                                         <MapBox />
-                                        <div className="d-flex justify-content-between pt-4">
+                                        <Divider />
+                                        <div className="d-flex justify-content-between">
                                             <ClearOptions />
                                             <SendList />
                                         </div>
                                     </div>
                                 </div>
-                                </div>
                             ) : isSendMode ? (
-                                <div>
-                                   <div className="row">
-                                    <div className="col-md-6">
+                                <div className="d-flex justify-content-evenly align-items-center" style={{ height: "500px"}}>
+                                    <div className="">
                                        <ShareURL />
                                     </div>
-                                    <div className="col-md-6">
-                               
+                                    <div className="d-flex flex-column">
+                                        <label>Send By Email</label>
+                                        <Button></Button>
+
                                     </div>
-                                </div>
                                 </div>
                             ) : (
-                                <div className="d-flex justify-content-center align-items-end">
-                                    <div>
+                                <div className="d-flex flex-column justify-content-center align-items-center" style={{ height: "500px"}}>
+                                    <div className="d-flex flex-row">
                                         <ClientSearch />
-                                    </div>
-                                    <div className="ps-4">
-                                        <Form onSubmit={handleCreateList}>
-                                            <Button type="submit">START LIST</Button>
+                                        <Form onSubmit={handleCreateList} className="ps-3">
+                                            <Button color="blue" type="submit">START LIST</Button>
                                         </Form>
                                     </div>
+                                    {error === "client" && (
+                                        <div className="mt-4">
+                                            <Message negative onDismiss={handleErrorReset}>
+                                                <Message.Header>Client Not Added</Message.Header>
+                                                <p>Please choose client to start list</p>
+                                            </Message>
+                                        </div>
+                                    )}
                                 </div>
                             )}
-                        </div>
+                        </>
                     </Modal.Content>
                     <Modal.Actions>
+                        <div className="d-flex justify-content-between">
+                        <>
+                        {isListMode ? (
+                            <Button onClick={handleOpenResetModal}>BACK</Button>
+                        ) : isSendMode ? (
+                            <Button onClick={handleEditList}>BACK</Button>
+                        ) : (
+                            <></>
+                        )}
+                        </>
                         <Button onClick={handleCloseModal}>CLOSE</Button>
+                        </div>
                     </Modal.Actions>
                 </Modal>
             </div>
+            <Modal size="tiny" open={showResetModal} onClose={handleCloseResetModal}>
+                <Modal.Header>Confirm List Deletion</Modal.Header>
+                <Modal.Content>
+                    <p>This will delete the current list. Are you sure you want to continue?</p>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button negative onClick={handleCloseResetModal}>
+                        Cancel
+                    </Button>
+                    <Button positive onClick={() => handleResetClient(list)}>
+                        Confirm
+                    </Button>
+                </Modal.Actions>
+            </Modal>
         </>
     );
 }
@@ -111,7 +185,9 @@ const mapStateToProps = state => ({
     error: state.auth.error,
     client: state.listmaker.client,
     isSendMode: state.ui.isSendMode,
-    isListMode: state.ui.isListMode
+    isListMode: state.ui.isListMode,
+    list: state.listmaker.list,
+    property: state.listmaker.property
 });
 
-export default connect(mapStateToProps, { new_list, reset_list_mode, reset_send_mode, set_list_mode })(NewList);
+export default connect(mapStateToProps, { new_option, reset_prop_results, new_list, reset_list_mode, reset_send_mode, delete_list, set_list_mode, reset_client, reset_prop, load_options })(NewList);

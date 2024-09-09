@@ -52,9 +52,9 @@ function AllLists ({ load_lists, lists }) {
                             <Modal open={showModal} onClose={handleCloseModal}>
                                 <Modal.Header>List Info</Modal.Header>
                                 <Modal.Content>
-                                    <ListDetail list={list} />
+                                    <ListDetail list={list} handleCloseModal={handleCloseModal}/>
                                 </Modal.Content>
-                                <Modal.Actions>
+                                <Modal.Actions className="d-flex">
                                     <Button onClick={handleCloseModal}>CLOSE</Button>
                                 </Modal.Actions>
                             </Modal>

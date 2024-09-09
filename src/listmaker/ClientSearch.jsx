@@ -1,9 +1,8 @@
 import { Search } from "semantic-ui-react";
-import { search_clients, set_search_client } from "../actions/listmaker";
-import { set_list_mode } from "../actions/ui"
+import { search_clients, set_search_client, reset_client_results } from "../actions/listmaker";
 import { connect } from "react-redux";
 
-function ClientSearch ({ client_results, search_clients, userID, set_search_client, set_list_mode }) {
+function ClientSearch ({ client_results, search_clients, userID, set_search_client, reset_client_results }) {
     
     const handleSearchChange = (e, { value }) => {
         if (value.length > 1) {
@@ -12,24 +11,39 @@ function ClientSearch ({ client_results, search_clients, userID, set_search_clie
     };
 
     const handleResultSelect =  (e, { result }) => {
-        set_search_client(result.id, result.title)
-        console.log(result.id, result.title)
+        set_search_client(result.id, result.title);
     };
+
+    const handleBlur =  () => {
+        reset_client_results()
+    };
+
+
+
 
     return (
         <>
+       
             <div>
-                <label htmlFor='client_start_list'>Search Client Name: </label>
                 <Search
                     onSearchChange={handleSearchChange}
                     onResultSelect={handleResultSelect}
+                    onBlur={handleBlur}
                     results={client_results.map(result => ({
                         title: `${result.first_name} ${result.last_name}`,
                         id: result.id
                     }))}
+                    on
                     id='client_start_list'
+                    placeholder="Search for client..."
+                    size="large"
+                    icon="none"
+                    className="me-3"
+                    showNoResults={false}
                 />
             </div>
+    
+       
                         
         </>
     )
@@ -42,4 +56,4 @@ const mapStateToProps = state => ({
     client_results: state.listmaker.client_results,
 });
 
-export default connect(mapStateToProps, { search_clients, set_search_client, set_list_mode })(ClientSearch);
+export default connect(mapStateToProps, { search_clients, set_search_client, reset_client_results })(ClientSearch);

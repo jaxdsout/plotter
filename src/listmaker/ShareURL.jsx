@@ -8,12 +8,12 @@ function ShareURL ({ list, isSendMode }) {
     return (
         <>
         {isSendMode ? (
-   <Form>
-   <FormField inline>
-       <label>Shareable URL</label>
-       <Input value={link} readOnly />
-   </FormField>
-</Form>
+            <Form>
+                <FormField>
+                    <label>Shareable URL</label>
+                    <Input value={link} readOnly />
+                </FormField>
+            </Form>
         ) : (
             <></>
         )}

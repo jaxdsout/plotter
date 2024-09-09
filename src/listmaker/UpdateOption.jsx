@@ -1,9 +1,12 @@
-import { Form, FormField, Button } from "semantic-ui-react";
+import { Form, FormField, Button, Modal } from "semantic-ui-react";
+import { ReactComponent as Edit } from '../components/pencil-square.svg';
+
 import { useState } from "react";
 import { connect } from "react-redux";
 import { load_options, update_option } from "../actions/listmaker";
 
-function UpdateOption ({ option, list, update_option, closeForm, load_options }) {
+function UpdateOption ({ option, list, update_option, load_options }) {
+    const [showModal, setShowModal] = useState(false);
     const [optionForm, setOptionForm] = useState({
         price: option.price ||'',
         unit_number: option.unit_number || '',
@@ -20,73 +23,96 @@ function UpdateOption ({ option, list, update_option, closeForm, load_options })
 
     const handleChange = (e) => setOptionForm({ ...optionForm, [e.target.name]: e.target.value });
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         await update_option(optionID, price, unit_number, layout, sq_ft, available, notes, property, listID);
-        load_options(listID);
-        closeForm();
+        await load_options(listID);
+        setShowModal(false);
     };
 
+    const handleOpenModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
+
     return(
-        <div className="container">
-            <Form onSubmit={handleSubmit}>
-                <FormField>
-                    <label className="noto-sans" htmlFor='price'>Price:</label>
-                    <input
-                        type='number'
-                        name='price'
-                        value={price || option.price}
-                        onChange={handleChange}
-                    />
-                </FormField>
-                <FormField>
-                    <label className="noto-sans" htmlFor='unit_number'>Unit Number:</label>
-                    <input
-                        type='text'
-                        name='unit_number'
-                        value={unit_number}
-                        onChange={handleChange}
-                    />
-                </FormField>
-                <FormField>
-                    <label className="noto-sans" htmlFor='layout'>Layout:</label>
-                    <input
-                        type='text'
-                        name='layout'
-                        value={layout}
-                        onChange={handleChange}
-                    />
-                </FormField>
-                <FormField>
-                    <label className="noto-sans" htmlFor='sq_ft'>Sq Ft:</label>
-                    <input
-                        type='text'
-                        name='sq_ft'
-                        value={sq_ft}
-                        onChange={handleChange}
-                    />
-                </FormField>
-                <FormField>
-                    <label className="noto-sans" htmlFor='available'>Available:</label>
-                    <input
-                        type='date'
-                        name='available'
-                        value={available}
-                        onChange={handleChange}
-                    />
-                </FormField>
-                <FormField>
-                    <label className="noto-sans" htmlFor='notes'>Notes/Specials:</label>
-                    <input
-                        type='text'
-                        name='notes'
-                        value={notes}
-                        onChange={handleChange}
-                    />
-                </FormField>
-                <Button type="submit" color="green">UPDATE OPTION</Button>
-            </Form>
-        </div>
+        <>
+        <Button onClick={handleOpenModal}>
+            <Edit />
+        </Button>
+        <div className="bg-body-secondary">
+            <Modal open={showModal} onClose={handleCloseModal}>
+                <Modal.Header className="text-center bg-secondary-subtle">Update Option: {option.prop_name}</Modal.Header>
+                <Modal.Content className="bg-secondary-subtle">
+                    <Form onSubmit={handleSubmit}>
+                        <FormField>
+                            <label className="noto-sans" htmlFor='price'>Price:</label>
+                            <input
+                                type='number'
+                                name='price'
+                                value={price || option.price}
+                                onChange={handleChange}
+                                className="bg-body-secondary"
+                            />
+                        </FormField>
+                        <FormField>
+                            <label className="noto-sans" htmlFor='unit_number'>Unit Number:</label>
+                            <input
+                                type='text'
+                                name='unit_number'
+                                value={unit_number}
+                                onChange={handleChange}
+                                className="bg-body-secondary"
+                            />
+                        </FormField>
+                        <FormField>
+                            <label className="noto-sans" htmlFor='layout'>Layout:</label>
+                            <input
+                                type='text'
+                                name='layout'
+                                value={layout}
+                                onChange={handleChange}
+                                className="bg-body-secondary"
+                            />
+                        </FormField>
+                        <FormField>
+                            <label className="noto-sans" htmlFor='sq_ft'>Sq Ft:</label>
+                            <input
+                                type='text'
+                                name='sq_ft'
+                                value={sq_ft}
+                                onChange={handleChange}
+                                className="bg-body-secondary"
+                            />
+                        </FormField>
+                        <FormField>
+                            <label className="noto-sans" htmlFor='available'>Available:</label>
+                            <input
+                                type='date'
+                                name='available'
+                                value={available}
+                                onChange={handleChange}
+                                className="bg-body-secondary"
+                            />
+                        </FormField>
+                        <FormField>
+                            <label className="noto-sans" htmlFor='notes'>Notes/Specials:</label>
+                            <input
+                                type='text'
+                                name='notes'
+                                value={notes}
+                                onChange={handleChange}
+                                className="bg-body-secondary"
+                            />
+                        </FormField>
+                        <Button type="submit" color="green">UPDATE OPTION</Button>
+                    </Form>
+                    </Modal.Content>
+                    <Modal.Actions className="bg-secondary-subtle">
+                        <Button onClick={handleCloseModal} color="red">CANCEL</Button>
+                    </Modal.Actions>
+                </Modal>
+            </div>
+        </>
     )
 }
 

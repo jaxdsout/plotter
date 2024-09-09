@@ -3,10 +3,11 @@ import { connect } from "react-redux";
 import MapBox from "./MapBox";
 import { useParams } from "react-router-dom";
 import { retrieve_list } from "../actions/listmaker";
-import { Icon } from "semantic-ui-react";
+import { set_client_view } from "../actions/ui"
+import { Icon, Divider, ListItem, List } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-function ClientList({ retrieve_list, retrlist, isClientView }) {
+function ClientList({ retrieve_list, retrlist, isClientView, set_client_view }) {
     const { uuid } = useParams();
 
     const formatDate = (datetimeStr) => {
@@ -23,9 +24,10 @@ function ClientList({ retrieve_list, retrlist, isClientView }) {
 
     useEffect(() => {
         console.log(uuid)
+        set_client_view()
         retrieve_list(uuid)
         console.log("retrived list on clientlist")
-    }, [uuid, retrieve_list])
+    }, [uuid, retrieve_list, set_client_view])
    
     return (
         <div className="d-flex flex-column">
@@ -34,29 +36,32 @@ function ClientList({ retrieve_list, retrlist, isClientView }) {
                     <div className="navbar p-5 bg-body-secondary">
                         <h2>{retrlist.client_name}</h2>
                     </div>
-                    <div className="d-flex container p-5 justify-content-center">
-                        <div className="col-md ps-3 pe-3">
-                                <ul class="list-group hover">
-                                    {retrlist.options.map(option => (
-                                        <div className="">   
-                                            <li className="list-group-item">
-                                                <h4>{option.prop_name}</h4>
-                                                <a href={`https://${option.website}`} target="_blank" rel="noopener noreferrer">
-                                                    <Icon name="linkify" />
-                                                </a>
-                                            </li>
-                                            <li className="list-group-item">${option.price}</li>
-                                            <li className="list-group-item">Unit {option.unit_number}</li>
-                                            <li className="list-group-item">{option.layout} | {option.sq_ft} sq. ft.</li>
-                                            <li className="list-group-item">Available: {option.available}</li>
-                                            <li className="list-group-item">{option.notes}</li>
-                                        </div>
-                                    ))}
-                                </ul>
-                        </div>
-                        <div className="col-md ps-3 pe-3">
-                            <MapBox retr_options={retrlist.options}/>
-                        </div>
+                    <div className="d-flex p-5 justify-content-center">
+                        <MapBox retr_options={retrlist.options}/>
+                    </div>
+                    <Divider/>
+                    <div className="p-5">  
+                        <List className="list-group">
+                            {retrlist.options.map(option => (
+                                <div className="mb-4">   
+                                    <ListItem className="d-flex flex-row justify-content-between list-group-item bg-secondary-subtle">
+                                        <h4>{option.prop_name}</h4>
+                                        <a href={`https://${option.website}`} target="_blank" rel="noopener noreferrer">
+                                            <Icon name="linkify" />
+                                        </a>
+                                    </ListItem>
+                                    <ListItem className="list-group-item">${option.price}</ListItem>
+                                    <ListItem className="list-group-item">Unit {option.unit_number}</ListItem>
+                                    <ListItem className="list-group-item">{option.layout} | {option.sq_ft} sq. ft.</ListItem>
+                                    <ListItem className="list-group-item">Available: {option.available}</ListItem>
+                                    {!option.notes ? (
+                                        <></>
+                                    ) :(
+                                        <li className="list-group-item">{option.notes}</li>
+                                    )}
+                                </div>
+                            ))}
+                        </List>
                     </div>
                     <div className='navbar p-5 bg-body-secondary'>
                         <p>Prepared by {retrlist.agent_name}</p>
@@ -78,4 +83,4 @@ const mapStateToProps = state => ({
     isClientView: state.ui.isClientView
 });
 
-export default connect(mapStateToProps, { retrieve_list })(ClientList);
+export default connect(mapStateToProps, { retrieve_list, set_client_view })(ClientList);

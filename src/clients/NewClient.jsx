@@ -29,7 +29,7 @@ function NewClient({ user, load_clients, new_client }) {
     return (
         <>
             <div className="d-flex justify-content-end align-items-end">
-                <Button onClick={handleOpenModal}>+</Button>
+                <Button color="blue" onClick={handleOpenModal}>+</Button>
             </div>
             <div className="bg-body-secondary">
                 <Modal open={showModal} onClose={handleCloseModal}>

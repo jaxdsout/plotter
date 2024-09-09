@@ -3,9 +3,17 @@ import {
     SET_SEND_MODE,
     RESET_SEND_MODE,
     RESET_LIST_MODE,
-    SET_LIST_MODE
+    SET_LIST_MODE,
+    SET_CLIENT_VIEW
 } from "./types"
 
+
+export const set_client_view = () => dispatch => {
+    dispatch({
+        type: SET_CLIENT_VIEW
+    });
+    return Promise.resolve();
+};
 
 export const reset_client_view = () => dispatch => {
     dispatch({

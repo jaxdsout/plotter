@@ -17,9 +17,18 @@ import {
     CLEAR_OPTIONS_SUCCESS,
     SET_SEARCH_CLIENT_SUCCESS,
     SET_SEARCH_CLIENT_FAIL,
+    SET_SEARCH_PROP_SUCCESS,
+    SET_SEARCH_PROP_FAIL,
     RETRIEVE_LIST_FAIL,
     RETRIEVE_LIST_SUCCESS,
-    UPDATE_OPTIONS_ORDER
+    RESET_CLIENT_RESULTS,
+    UPDATE_OPTIONS_ORDER,
+    RESET_CLIENT,
+    RESET_PROP,
+    RESET_PROPERTY_RESULTS,
+    DELETE_LIST_FAIL,
+    DELETE_LIST_SUCCESS,
+    SET_LIST_FOR_EDIT
 } from "./types"
 
 import axios from "axios";
@@ -51,6 +60,33 @@ export const new_list = (agent, client) => async dispatch => {
     dispatch({
         type: NEW_LIST_FAIL
     });
+    }
+};
+
+
+export const delete_list = (listID) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            await axios.delete(`${process.env.REACT_APP_API_URL}/lists/${listID}/`, config);
+            dispatch({
+                type: DELETE_LIST_SUCCESS,
+            });
+            console.log("list deleted")
+        } catch (err) {
+            dispatch({
+                type: DELETE_LIST_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: DELETE_LIST_FAIL
+        });
     }
 };
 
@@ -271,7 +307,28 @@ export const set_search_client = (id, name) => dispatch => {
     }
 }
 
-export const add_list_uuid = (agent, client, list) => async dispatch => {
+
+export const set_search_prop = (id, name) => dispatch => {
+    if (localStorage.getItem('access')) {
+        const property = { id, name } ;
+        try {
+            dispatch({
+                type: SET_SEARCH_PROP_SUCCESS,
+                payload: property
+            });
+        } catch (err) {
+            dispatch({
+                type: SET_SEARCH_PROP_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: SET_SEARCH_PROP_FAIL
+        });
+    }
+}
+
+export const update_list = (agent, client, list, options) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
             headers: {
@@ -280,7 +337,7 @@ export const add_list_uuid = (agent, client, list) => async dispatch => {
             }
         }; 
         const uuid = list.uuid === null ? uuidv4() : list.uuid;
-        const body = JSON.stringify({ agent, client, uuid });
+        const body = JSON.stringify({ agent, client, uuid, options });
         try {
             const res = await axios.put(`${process.env.REACT_APP_API_URL}/lists/${list.id}/`, body, config);
             console.log("Updated list with new order or UUID:", res.data);
@@ -330,9 +387,41 @@ export const retrieve_list = (uuid) => async dispatch => {
 };
 
 
-export const update_options_order = (newOrder) => (dispatch) => {
+export const set_list_edit = (list) => dispatch => {
     dispatch({
-        type: 'UPDATE_OPTIONS_ORDER',
+        type: SET_LIST_FOR_EDIT,
+        payload: list,
+    });
+};
+
+export const update_options_order = (newOrder) => dispatch => {
+    dispatch({
+        type: UPDATE_OPTIONS_ORDER,
         payload: newOrder,
+    });
+};
+
+
+export const reset_client_results = () => (dispatch) => {
+    dispatch({
+        type: RESET_CLIENT_RESULTS,
+    });
+};
+
+export const reset_client = () => (dispatch) => {
+    dispatch({
+        type: RESET_CLIENT,
+    });
+};
+
+export const reset_prop = () => (dispatch) => {
+    dispatch({
+        type: RESET_PROP,
+    });
+};
+
+export const reset_prop_results = () => (dispatch) => {
+    dispatch({
+        type: RESET_PROPERTY_RESULTS,
     });
 };
