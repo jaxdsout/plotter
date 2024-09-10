@@ -7,7 +7,6 @@ function SendList ({ user, client, list, update_list, set_send_mode, options }) 
 
     const handleSendList = async (e) => {
         e.preventDefault();
-        console.log(user.id, client.id, list.id)
         await update_list(user.id, client.id, list, options);
         set_send_mode();
     }

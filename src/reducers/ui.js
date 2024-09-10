@@ -5,7 +5,7 @@ import {
     RESET_LIST_MODE,
     SET_LIST_MODE,
     SET_CLIENT_VIEW,
-    
+    RESET_DEAL_FORM
 } from '../actions/types';
 
 const initialState = {
@@ -14,6 +14,7 @@ const initialState = {
     isClientView: false,  
     isSendMode: false,
     isListMode: false,
+    resetDealForm: false
 };
 
 export default function uiReducer(state = initialState, action) {
@@ -50,6 +51,11 @@ export default function uiReducer(state = initialState, action) {
             return { 
             ...state, 
             isSendMode: false, 
+            }
+        case RESET_DEAL_FORM:
+            return {
+                ...state,
+                resetDealForm: true
             }
         default:
             return state;

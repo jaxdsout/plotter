@@ -8,6 +8,8 @@ import ClearOptions from "./ClearOptions";
 import ClientSearch from "./ClientSearch";
 import SendList from "./SendList";
 import ShareURL from "./ShareURL";
+import { ReactComponent as Email } from '../components/envelope.svg';
+import { ReactComponent as Link } from '../components/link-45deg.svg';
 import { new_list, reset_client, delete_list, new_option, reset_prop_results, reset_prop, load_options } from "../actions/listmaker";
 import { reset_list_mode, reset_send_mode, set_list_mode } from "../actions/ui"
 
@@ -15,7 +17,7 @@ import { reset_list_mode, reset_send_mode, set_list_mode } from "../actions/ui"
 function NewList({ new_option, reset_prop_results, property, list, reset_prop, load_options, user, new_list, client, isSendMode, isListMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode, reset_client }) {
     const [showModal, setShowModal] = useState(false);
     const [showResetModal, setShowResetModal] = useState(false);
-    const [error, setError] = useState(null)
+    const [error, setError] = useState(null);
 
     const handleErrorReset = () => {
         setError(null);
@@ -31,7 +33,6 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
 
     const handlePropertyAdd = async (list, property) => {
         if (property && list) {
-            console.log(property, list.id, client.id)
             await new_option(property.id, list.id, client.id);
             await reset_prop_results()
             await reset_prop()
@@ -42,12 +43,17 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
     const handleResetClient = async (list) => {
         if (list && isListMode) {
             const listID = list.id
-            console.log(listID, "listID")
-          await delete_list(listID);
-          await reset_list_mode();
-          await reset_client();
+            await delete_list(listID);
+            await reset_list_mode();
+            await reset_client();
         }
         setShowResetModal(false);
+    };
+
+    const handleOpenURL = () => {
+        if (list.uuid) {
+            window.open(`/list/${list.uuid}`, '_blank');
+        }
     };
 
     const handleEditList = async () => {
@@ -96,11 +102,11 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                             {isListMode ? (
                                 <div className="d-flex justify-content-evenly" style={{ height: "500px"}}>
                                     <div className="">
-                                        <div className="d-flex flex-row">
+                                        <div className="d-flex flex-row align-items-center">
                                             <PropertySearch />
-                                                <Form onSubmit={() => handlePropertyAdd(list, property)}>
-                                                    <Button color="blue" type="submit">ADD PROPERTY</Button>
-                                                </Form>
+                                            <Form onSubmit={() => handlePropertyAdd(list, property)}>
+                                                <Button color="blue" type="submit">ADD PROPERTY</Button>
+                                            </Form>
                                         </div>
                                         <Divider />
                                         <OptionList />
@@ -108,7 +114,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                     <div className="">
                                         <MapBox />
                                         <Divider />
-                                        <div className="d-flex justify-content-between">
+                                        <div className="d-flex flex-row justify-content-between align-items-center">
                                             <ClearOptions />
                                             <SendList />
                                         </div>
@@ -119,15 +125,30 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                     <div className="">
                                        <ShareURL />
                                     </div>
+                                    <div className="">
+                                        <Form>
+                                            <FormField>
+                                                <label>Open URL</label>
+                                                <Button onClick={handleOpenURL}>
+                                                    <Link/>
+                                                </Button>
+                                            </FormField>
+                                        </Form>
+                                    </div>
                                     <div className="d-flex flex-column">
-                                        <label>Send By Email</label>
-                                        <Button></Button>
-
+                                        <Form>
+                                            <FormField>
+                                                <label>Send Email</label>
+                                                <Button>
+                                                    <Email/>
+                                                </Button>
+                                            </FormField>
+                                        </Form>
                                     </div>
                                 </div>
                             ) : (
                                 <div className="d-flex flex-column justify-content-center align-items-center" style={{ height: "500px"}}>
-                                    <div className="d-flex flex-row">
+                                    <div className="d-flex flex-row align-items-center">
                                         <ClientSearch />
                                         <Form onSubmit={handleCreateList} className="ps-3">
                                             <Button color="blue" type="submit">START LIST</Button>
@@ -151,12 +172,14 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                         {isListMode ? (
                             <Button onClick={handleOpenResetModal}>BACK</Button>
                         ) : isSendMode ? (
-                            <Button onClick={handleEditList}>BACK</Button>
+                            <>
+                                <Button onClick={handleEditList}>BACK</Button>
+                                <Button onClick={handleCloseModal}>CLOSE</Button>
+                            </>
                         ) : (
-                            <></>
+                            <Button onClick={handleCloseModal}>CLOSE</Button>
                         )}
                         </>
-                        <Button onClick={handleCloseModal}>CLOSE</Button>
                         </div>
                     </Modal.Actions>
                 </Modal>
@@ -168,10 +191,10 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                 </Modal.Content>
                 <Modal.Actions>
                     <Button negative onClick={handleCloseResetModal}>
-                        Cancel
+                        CANCEL
                     </Button>
                     <Button positive onClick={() => handleResetClient(list)}>
-                        Confirm
+                        CONFIRM
                     </Button>
                 </Modal.Actions>
             </Modal>

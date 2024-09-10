@@ -3,6 +3,19 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+// first create field on model: status [not invoiced, pending, paid, overdue ]
+
+// RULES:
+// not invoiced DEFAULT
+// pending ENABLED BY USER
+// overdue OVERWRITES pending 60 DAYS AFTER pending ENABLED
+// paid ENABLED BY USER
+
+
+// then filter by year
+// then filter by status
+// map the filtered status array
+
 const EarningDonut = () => {
   const data = {
     labels: ['Overdue', 'Not Invoiced', 'Pending', 'Paid'],

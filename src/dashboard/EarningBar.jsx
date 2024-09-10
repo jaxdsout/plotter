@@ -4,6 +4,12 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
+// first classify by year
+// then classify earnings by month (date submitted)
+// then add up all commission fields for each month
+// then map that sorted array
+
+
 const EarningBar = () => {
   const data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -36,7 +42,7 @@ const EarningBar = () => {
     },
   };
 
-  return <Bar data={data} options={options} />;
+  return <Bar data={data} options={options} style={{ height: '20rem' }}/>;
 };
 
 export default EarningBar;

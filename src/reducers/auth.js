@@ -13,7 +13,9 @@ import {
     PASSWORD_RESET_CONFIRM_FAIL,
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_CONFIRM_SUCCESS,
-    PASSWORD_RESET_SUCCESS
+    PASSWORD_RESET_SUCCESS,
+    REFRESH_TOKEN_FAIL, 
+    REFRESH_TOKEN_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -47,6 +49,15 @@ export default function authReducer(state = initialState, action) {
                 refresh: payload.refresh,
                 error: null,
                 message: 'Login successful!',
+            };
+        case REFRESH_TOKEN_SUCCESS:
+            localStorage.setItem('access', payload.access);
+            return {
+                ...state,
+                isAuthenticated: true,
+                access: payload.access,
+                error: null,
+                message: 'Refresh successful!',
             };
         case LOAD_USER_SUCCESS:
             return {
@@ -99,6 +110,7 @@ export default function authReducer(state = initialState, action) {
         case PASSWORD_RESET_CONFIRM_SUCCESS:
         case PASSWORD_RESET_SUCCESS:
         case ACTIVATE_FAIL:
+        case REFRESH_TOKEN_FAIL:
         case ACTIVATE_SUCCESS:
             return {
                 ...state

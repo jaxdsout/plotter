@@ -24,7 +24,7 @@ const MapBox = ({ options, retr_options, isClientView }) => {
         const marker = new mapboxgl.Marker()
           .setLngLat([parseFloat(option.longitude), parseFloat(option.latitude)])
           .setPopup(new mapboxgl.Popup().setHTML(`
-            <h4>${option.prop_name}</h4><hr><p>${option.address}<p>
+            <h4>${option.prop_name}</h4><hr><a href=''>${option.address}<a>
           `))
           .addTo(map);
 
@@ -46,7 +46,7 @@ const MapBox = ({ options, retr_options, isClientView }) => {
   return (
     <>
     {isClientView ? (
-      <div id="MAPBOXBOX" style={{ height: "30rem", width: "60rem" }} />
+      <div id="MAPBOXBOX" className='h-100' />
     ): (
       <div id="MAPBOXBOX" style={{ height: "400px", width: "400px" }} />
     )}

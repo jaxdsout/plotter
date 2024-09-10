@@ -2,11 +2,20 @@ import { Search, Form, FormField, Modal, Button } from "semantic-ui-react";
 import { useState } from "react";
 
 
-function GuestCard () {
+/*
+first search for client
+then set client
+then search for property
+then set property
+then open large input form with preloaded guest card info from client AND email from property
+allow user to edit input
+then submit to property using backend request
+*/
 
+
+function GuestCard () {
     const [showModal, setShowModal] = useState(false);
     const handleOpenModal = () => setShowModal(true);
-
     const handleCloseModal = () => setShowModal(false);
 
     return(

@@ -26,7 +26,8 @@ import {
     RESET_CLIENT,
     RESET_PROP,
     RESET_PROPERTY_RESULTS,
-    SET_LIST_FOR_EDIT
+    SET_LIST_FOR_EDIT,
+    RESET_DEAL_FORM
 } from '../actions/types';
 
 const initialState = {
@@ -113,6 +114,14 @@ export default function listmakerReducer(state = initialState, action) {
             return {
                 ...state,
                 list: payload
+            }
+        case RESET_DEAL_FORM:
+            return {
+                ...state,
+                property: null,
+                client: null,
+                prop_results: [],
+                client_results: []
             }
         case NEW_OPTION_FAIL:
         case NEW_OPTION_SUCCESS:

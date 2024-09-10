@@ -14,7 +14,6 @@ function ProfileWidget ({ user }) {
     const { full_name, trec, website, phone_number } = formData;
     const userID = user.id
     const profile = user.profile
-    console.log(profile, "profile")
 
     const [showModal, setShowModal] = useState(false);
 

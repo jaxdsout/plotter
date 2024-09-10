@@ -1,12 +1,16 @@
-import { Form, Modal, Button, FormField } from "semantic-ui-react";
+import { Form, Modal, Button, FormField, Checkbox } from "semantic-ui-react";
 import { useState, useEffect } from "react";
 import { load_deals, new_deal } from "../actions/agent";
 import { connect } from "react-redux";
 import ClientSearch from "../listmaker/ClientSearch";
 import PropertySearch from "../listmaker/PropertySearch";
+import { reset_deal_form } from "../actions/ui";
 
-function NewDeal({ user, load_deals, new_deal, q_client, q_property }) {
+function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_form }) {
     const [showModal, setShowModal] = useState(false);
+    const [clientSel, setClientSel] = useState(false);
+    const [propSel, setPropSel] = useState(false);
+    const [flatFee, setFlatFee] = useState(false);
 
     const [formData, setFormData] = useState({
         agent: null,
@@ -21,7 +25,9 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property }) {
         client: null, 
     });
 
-    const { property, unit_no, move_date, lease_term, rent, rate, commission, flat_fee, agent, client } = formData;
+
+    const { property, unit_no, move_date, lease_term, rent, rate, flat_fee, commission, agent, client } = formData;
+
 
     const handleClientSelect = () => {
         if (q_client) {
@@ -29,6 +35,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property }) {
                 ...prevFormData,
                 client: q_client.id
             }));
+            setClientSel(true)
         }
     };
 
@@ -38,22 +45,54 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property }) {
                 ...prevFormData,
                 property: q_property.id
             }));
+            setPropSel(true)
+        }
+        if (propSel) {
+            setPropSel(false)
         }
     };
 
+    const handleFlatFee = () => {
+        if (flatFee) {
+            setFlatFee(false)
+        } else {
+            setFlatFee(true)
+        }
+    }
 
     const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await new_deal(property, unit_no, move_date, lease_term, rent, rate, commission, flat_fee, agent, client);
-        await load_deals();
+        await new_deal(property, unit_no, move_date, lease_term, rent, rate, flat_fee, commission, agent, client);
+        await load_deals(agent);
         handleCloseModal();
     };
 
     const handleOpenModal = () => setShowModal(true);
 
-    const handleCloseModal = () => setShowModal(false);
+    const handleCloseModal = () => {
+        handleResetDeal();
+        setShowModal(false);
+    };
+
+    const handleResetDeal = () => {
+        setPropSel(false);
+        setClientSel(false);
+        setFormData({
+            agent: user.id,
+            property: null,
+            rent: '',
+            rate: '',
+            commission: '',
+            flat_fee: '',
+            move_date: '',
+            unit_no: '',
+            lease_term: '',
+            client: null, 
+        });
+        reset_deal_form();
+    }
 
     useEffect(() => {
         if (user) {
@@ -74,16 +113,24 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property }) {
                     <Modal.Header>Add New Deal</Modal.Header>
                     <Modal.Content>
                         <div className="d-flex flex-row justify-content-between align-items-center mb-4">
-                            <div className="d-flex flex-row">
+                            <div className="d-flex flex-row align-items-center">
                                 <ClientSearch />
                                 <Form onSubmit={handleClientSelect}>
-                                    <Button color="blue" type="submit">SELECT CLIENT</Button>
+                                    {clientSel ? (
+                                        <Button color="black">CLIENT SELECTED</Button>
+                                    ): (
+                                        <Button color="blue" type="submit">SELECT CLIENT</Button>
+                                    )}
                                 </Form>
                             </div>
-                            <div className="d-flex flex-row">
+                            <div className="d-flex flex-row align-items-center">
                                 <PropertySearch />
                                 <Form onSubmit={handlePropSelect}>
-                                    <Button color="blue" type="submit">SELECT PROPERTY</Button>
+                                    {propSel && property !== null ? (
+                                        <Button color="black">PROPERTY SELECTED</Button>
+                                    ): (
+                                        <Button color="blue" type="submit">SELECT PROPERTY</Button>
+                                    )}
                                 </Form>
                             </div>
                         </div>
@@ -130,13 +177,44 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property }) {
                             </FormField>
                             <FormField>
                                 <label className="noto-sans" htmlFor='rate'>Commission Rate:</label>
-                                <input
-                                    type='number'
-                                    name='rate'
-                                    value={rate}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                {flatFee ? (
+                                    <input
+                                        type='number'
+                                        name='rate'
+                                        value={rate}
+                                        disabled
+                                    />
+                                ) : (
+                                    <input
+                                        type='number'
+                                        name='rate'
+                                        value={rate}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                )}
+                                
+                            </FormField>
+                            <FormField>
+                                <label className="noto-sans d-flex align-items-center" htmlFor='flat_fee'>
+                                    Flat Fee?: <Checkbox toggle  className="ps-2" onClick={handleFlatFee}/>
+                                </label>
+                                {flatFee ? (
+                                    <input
+                                        type='number'
+                                        name='flat_fee'
+                                        value={flat_fee}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                ) : (
+                                    <input
+                                        type='number'
+                                        name='flat_fee'
+                                        value={flat_fee}
+                                        disabled
+                                    />
+                                )}
                             </FormField>
                             <FormField>
                                 <label className="noto-sans" htmlFor='commission'>Total Commission:</label>
@@ -148,20 +226,11 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property }) {
                                     required
                                 />
                             </FormField>
-                            <FormField>
-                                <label className="noto-sans" htmlFor='flat_fee'>Flat Fee?:</label>
-                                <input
-                                    type='number'
-                                    name='flat_fee'
-                                    value={flat_fee}
-                                    onChange={handleChange}
-                                    placeholder="Not Required"
-                                />
-                            </FormField>
                             <Button type="submit" color="green">SUBMIT DEAL</Button>
                         </Form>
                     </Modal.Content>
                     <Modal.Actions>
+                        <Button color="red" onClick={handleResetDeal}>RESET</Button>
                         <Button onClick={handleCloseModal}>CLOSE</Button>
                     </Modal.Actions>
                 </Modal>
@@ -179,4 +248,4 @@ const mapStateToProps = state => ({
 
 });
 
-export default connect(mapStateToProps, { new_deal, load_deals })(NewDeal);
+export default connect(mapStateToProps, { new_deal, load_deals, reset_deal_form })(NewDeal);

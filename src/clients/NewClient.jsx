@@ -12,15 +12,16 @@ function NewClient({ user, load_clients, new_client }) {
         phone_number: '',
     });
     const { first_name, last_name, email, phone_number } = formData;
-    const agent = user.id;
 
     const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        new_client(agent, first_name, last_name, email, phone_number)
-        handleCloseModal();
-        load_clients(agent)
+        if (user) {
+            new_client(user.id, first_name, last_name, email, phone_number)
+            handleCloseModal();
+            load_clients(user.id)
+        }
     };
 
     const handleOpenModal = () => setShowModal(true);

@@ -13,7 +13,9 @@ import {
     PASSWORD_RESET_CONFIRM_FAIL,
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_CONFIRM_SUCCESS,
-    PASSWORD_RESET_SUCCESS
+    PASSWORD_RESET_SUCCESS,
+    REFRESH_TOKEN_SUCCESS,
+    REFRESH_TOKEN_FAIL
 } from './types';
 
 import axios from 'axios';
@@ -96,8 +98,6 @@ export const signup = (first_name, last_name, email, password, re_password) => a
         re_password
     });
 
-    console.log(body);
-
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/`, body, config);
 
@@ -147,7 +147,6 @@ export const login = (email, password) => async dispatch => {
     
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/jwt/create/`, body, config);
-        
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
@@ -218,4 +217,23 @@ export const logout = () => dispatch => {
         type: LOGOUT
     });
 }
+
+export const refresh_token = () => async dispatch => {
+    const refresh = localStorage.getItem('refresh');
+    if (refresh) {
+        try {
+            const res = await axios.post('/auth/jwt/refresh/', { refresh });
+            const { access } = res.data;            
+            localStorage.setItem('access', access);
+            dispatch({
+                type: REFRESH_TOKEN_SUCCESS,
+                payload: access
+            });
+        } catch (error) {
+            dispatch({
+                type: REFRESH_TOKEN_FAIL
+            });
+        }
+    }
+};
 

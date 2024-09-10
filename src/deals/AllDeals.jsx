@@ -19,18 +19,18 @@ function AllDeals ({ load_deals, deals, user }) {
     const handleCloseModal = () => setShowModal(false);
 
     useEffect(() => {
-        console.log("firing all deals")
-        console.log(user.id)
-        load_deals(user.id);
+        if (user){
+            load_deals(user.id);
+        }
     }, [load_deals, user])
 
     return (
         <>
             <h6 className="noto-sans"> all deals </h6>
             <div className="overflow-y-auto plotterbox">
-                <ul class="list-group">
+                <ul className="list-group">
                     {deals.map(deal => (
-                        <li class="list-group-item" key={deal.id}>
+                        <li className="list-group-item" key={deal.id}>
                         <Link onClick={() => handleOpenModal(deal.id)}>
                             {deal.client} {deal.agent} {deal.property}
                         </Link>

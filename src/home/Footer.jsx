@@ -7,7 +7,7 @@ function Footer () {
                 <p> link </p>
             </div>
         </nav>    
-        )
+    )
 }
 
 export default Footer

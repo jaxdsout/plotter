@@ -83,8 +83,7 @@ function OptionList({ options, load_options, list, update_options_order }) {
                                         )}
                                     >
                                         <div className="d-flex justify-content-between align-items-center">
-                                            <div className="d-flex justify-content-evenly mt-3">
-                                                <h4 className="me-2">{option.prop_name}</h4>
+                                            <div className="d-flex flex-row align-items-end mb-4">
                                                 <Popup
                                                     content={
                                                         <List>
@@ -103,6 +102,7 @@ function OptionList({ options, load_options, list, update_options_order }) {
                                                     }
                                                     trigger={<InfoSquare/>}
                                                 />
+                                                <h4 className="ms-2">{option.prop_name}</h4>
                                             </div>
                                             <div className="d-flex">
                                                 <UpdateOption option={option} />

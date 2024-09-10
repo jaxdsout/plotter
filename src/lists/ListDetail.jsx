@@ -7,10 +7,9 @@ import PropertySearch from "../listmaker/PropertySearch";
 import OptionList from "../listmaker/OptionList";
 import MapBox from "../listmaker/MapBox";
 import ClearOptions from "../listmaker/ClearOptions";
+import DeleteList from "./DeleteList";
 
 function ListDetail({ list, property, set_list_mode, user, new_option, reset_prop, reset_prop_results, set_search_client, set_list_edit, load_options, handleCloseModal, load_lists, delete_list, isListMode, client, options, update_list, reset_list_mode }) {
-
-    console.log(list)
     const link = `localhost:3000/list/${list.uuid}`
 
     const formatDate = (datetimeStr) => {
@@ -35,14 +34,6 @@ function ListDetail({ list, property, set_list_mode, user, new_option, reset_pro
         }
     }
 
-    const handleDeleteList = async () => {
-        if (user && list) {
-            const listID = list.id;
-            await delete_list(listID)
-            await load_lists()
-            handleCloseModal()
-        }
-    }
 
     const handleSaveList = async () => {
         if (list && isListMode && client && options) {
@@ -54,7 +45,6 @@ function ListDetail({ list, property, set_list_mode, user, new_option, reset_pro
 
     const handlePropertyAdd = async (list, property) => {
         if (property && list) {
-            console.log(property, list.id, client.id)
             await new_option(property.id, list.id, client.id);
             await reset_prop_results()
             await reset_prop()
@@ -92,35 +82,36 @@ function ListDetail({ list, property, set_list_mode, user, new_option, reset_pro
                 </>
             ) : (
                 <>
-                <div className="d-flex justify-content-between">
-                <div>
-                    <p><b>Client: </b>{list.client_name}</p>
-                    <p><b>Date Created: </b>{formatDate(list.date)}</p>
-                    <p><b>Last Updated: </b></p>
-                    <p><b>URL: </b><Input value={link} readOnly /></p>
-                </div>
-                <div>
-                    <Button color="red" type="submit" onClick={handleDeleteList}>DELETE LIST</Button>
-                </div>
-            </div>
-            <div className="mt-5">
-                <div className="d-flex justify-content-between">
-                    <h4>Option List</h4>
-                    <Button type="submit" onClick={handleEditList}>EDIT LIST</Button>
-                </div>
-                <div>
-                    <ul>
-                        {list.options.map(option => (
-                            <li key={option.id}>
-                                <div>
-                                    <b>{option.prop_name}</b>
-                                    <p>Rate: ${option.price} | Unit: {option.unit} | Layout: {option.layout} | Sq Ft: {option.sq_ft} | Available: {option.available} | Notes / Specials: {option.notes}</p>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                </div>
+                    <div className="d-flex justify-content-between mb-4">
+                        <div>
+                            <p><b>Client: </b>{list.client_name}</p>
+                            <p><b>Date Created: </b>{formatDate(list.date)}</p>
+                            <p><b>Last Updated: </b></p>
+                            <p><b>URL: </b><Input value={link} readOnly /></p>
+                        </div>
+                        <div>
+                            <DeleteList handleCloseModal={handleCloseModal}/>
+                        </div>
+                    </div>
+                    <Divider />
+                    <div className="mt-4">
+                        <div className="d-flex justify-content-between">
+                            <h4>Option List</h4>
+                            <Button type="submit" onClick={handleEditList}>EDIT LIST</Button>
+                        </div>
+                        <div>
+                            <ul>
+                                {list.options.map(option => (
+                                    <li key={option.id}>
+                                        <div>
+                                            <b>{option.prop_name}</b>
+                                            <p>Rate: ${option.price} | Unit: {option.unit} | Layout: {option.layout} | Sq Ft: {option.sq_ft} | Available: {option.available} | Notes / Specials: {option.notes}</p>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
                 </>
             )}
 

@@ -1,49 +1,62 @@
-import GuestCard from '../components/GuestCard';
-import EarningDonut from '../components/EarningDonut';
-import EarningBar from '../components/EarningBar';
-import { useEffect } from "react";
-import { load_user, auth_user } from "../actions/auth";
+import GuestCard from './GuestCard';
+import EarningDonut from './EarningDonut';
+import EarningBar from './EarningBar';
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Divider, Button } from 'semantic-ui-react';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
-
-function Dash ({ isAuthenticated, load_user, auth_user, user }) {
+function Dash ({ isAuthenticated }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!user) {
-            load_user();
-            auth_user();
+        if (!isAuthenticated) {
+            navigate('/login/');
         }
-    }, [user, auth_user, load_user]);
-
-    useEffect(() => {
-        if (isAuthenticated === false) {
-            navigate('/login/')
-        }
-    }, [isAuthenticated, navigate])
+    }, [isAuthenticated, navigate]);
 
     return (
-        <div className='z-0 container pt-5 pb-5 bg-dark-subtle'>
-            <div className="row">
-                <div className="col-md-6">
-                    <EarningBar />
+        <div className='z-0 container pt-5 pb-5 bg-dark-subtle d-flex flex-column'>
+            <div className="d-flex flex-column flex-md-row flex-sm-column align-items-center justify-content-evenly">
+                <div className='pb-3'>
                     <EarningDonut />
                 </div>
-                <div className="col-md-6">
-                    <div>
-                        <h4>To Do's</h4>
-                        <ul className='list-group'>
-                            <li className='list-group-item'>Donut Chart: for Paid, Unpaid, Overdue, Cancelled</li>
-                            <li className='list-group-item'>Bar Graph: Monthly earnings over Year</li>
-                            <li className='list-group-item'>List: Past Client Renewals Coming Up</li>
-                            <li className='list-group-item'>List: Client Move-Ins Approaching</li>
-                        </ul>
-                    </div>
-                    <div className="col-md-6">
-                        <h4>Guest Cards</h4>
-                        <GuestCard />
-                    </div>
+                <div className='pb-3'>
+                    <EarningBar />
+                </div>
+            </div>
+            <Divider />
+            <div className="d-flex flex-column flex-md-row flex-sm-column align-items-center justify-content-evenly">
+                <div>
+                    <h4>Upcoming Renewals</h4>
+                    <ul className='list-group'>
+                        <li className='list-group-item'>Client 1</li>
+                        <li className='list-group-item'>Client 2</li>
+                        <li className='list-group-item'>Client 3</li>
+                        <li className='list-group-item'>More...</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Upcoming Move-Ins</h4>
+                    <ul className='list-group'>
+                        <li className='list-group-item'>Client 1</li>
+                        <li className='list-group-item'>Client 2</li>
+                        <li className='list-group-item'>Client 3</li>
+                        <li className='list-group-item'>More...</li>
+                    </ul>
+                </div>
+                <div className='d-flex flex-column justify-content-between'>
+                    <GuestCard />
+                    <Button type="submit">STATS</Button>
+                </div>
+                <div>
+                    <h4>To Do's</h4>
+                    <ul className='list-group'>
+                        <li className='list-group-item'>Donut Chart: for Paid, Unpaid, Overdue, Cancelled</li>
+                        <li className='list-group-item'>Bar Graph: Monthly earnings over Year</li>
+                        <li className='list-group-item'>List: Past Client Renewals Coming Up</li>
+                        <li className='list-group-item'>List: Client Move-Ins Approaching</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -51,9 +64,8 @@ function Dash ({ isAuthenticated, load_user, auth_user, user }) {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
-    user: state.auth.user
+    isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { load_user, auth_user })(Dash);
+export default connect(mapStateToProps, { })(Dash);

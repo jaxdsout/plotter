@@ -11,15 +11,12 @@ function PropertySearch({ userID, search_properties, set_search_prop, prop_resul
     };
 
     const handleResultSelect = (e, { result }) => {
-        console.log(result)
         set_search_prop(result.id, result.title);
     };
 
     const handleBlur =  () => {
         reset_prop_results()
     }
-
-
 
     return(
         <div className="d-flex flex-row justify-content-evenly align-items-center">
@@ -48,7 +45,7 @@ const mapStateToProps = state => ({
     prop_results: state.listmaker.prop_results,
     list: state.listmaker.list,
     client: state.listmaker.client,
-    isListMode: state.ui.isListMode
+    isListMode: state.ui.isListMode,
 });
 
 export default connect(mapStateToProps, { set_search_prop, search_properties, load_options, reset_prop_results })(PropertySearch);

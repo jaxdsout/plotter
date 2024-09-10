@@ -5,15 +5,17 @@ import { Modal, Button } from "semantic-ui-react";
 import ListDetail from "./ListDetail";
 import { load_lists } from "../actions/agent";
 import { connect } from "react-redux";
+import { reset_list_mode, reset_send_mode } from "../actions/ui";
 
-function AllLists ({ load_lists, lists }) {
+function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, isListMode }) {
     const [showListDetail, setShowListDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        console.log("firing all lists")
-        load_lists();
-    }, [])
+        if (user){
+            load_lists(user.id);
+        }
+    }, [load_lists, user])
     
 
     const handleOpenModal = (id) => {
@@ -21,7 +23,16 @@ function AllLists ({ load_lists, lists }) {
         setShowModal(true);
     };
 
-    const handleCloseModal = () => setShowModal(false);
+    const handleCloseModal = async () => {
+        await reset_list_mode();
+        await reset_send_mode();
+        setShowModal(false);
+    }
+
+    const handleCancelEdit = async () => {
+        await reset_list_mode();
+        await reset_send_mode();
+    }
 
     const formatDate = (datetimeStr) => {
         const dateObj = new Date(datetimeStr);
@@ -55,7 +66,11 @@ function AllLists ({ load_lists, lists }) {
                                     <ListDetail list={list} handleCloseModal={handleCloseModal}/>
                                 </Modal.Content>
                                 <Modal.Actions className="d-flex">
-                                    <Button onClick={handleCloseModal}>CLOSE</Button>
+                                    {isListMode ? (
+                                        <Button onClick={handleCancelEdit}>CANCEL</Button>
+                                    ): (
+                                        <Button onClick={handleCloseModal}>CLOSE</Button>
+                                    )}
                                 </Modal.Actions>
                             </Modal>
                         )}
@@ -71,7 +86,8 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
     error: state.auth.error,
-    lists: state.agent.lists
+    lists: state.agent.lists,
+    isListMode: state.ui.isListMode
 });
 
-export default connect(mapStateToProps, { load_lists })(AllLists);
+export default connect(mapStateToProps, { load_lists, reset_list_mode, reset_send_mode })(AllLists);

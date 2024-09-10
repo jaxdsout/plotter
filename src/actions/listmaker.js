@@ -43,10 +43,8 @@ export const new_list = (agent, client) => async dispatch => {
         }
     }; 
     const body = JSON.stringify({ agent, client });
-    console.log(body, "body before list creation")
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/lists/`, body, config);
-        console.log("new list res data", res.data)
         dispatch({
             type: NEW_LIST_SUCCESS,
             payload: res.data
@@ -77,7 +75,6 @@ export const delete_list = (listID) => async dispatch => {
             dispatch({
                 type: DELETE_LIST_SUCCESS,
             });
-            console.log("list deleted")
         } catch (err) {
             dispatch({
                 type: DELETE_LIST_FAIL
@@ -101,7 +98,6 @@ export const search_clients = (query, userID) => async dispatch => {
     }; 
     try {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/clients/?agent=${userID}&search=${query}`, config);
-        console.log("search clients", res.data)
         dispatch({
             type: SEARCH_CLIENT_SUCCESS,
             payload: res.data
@@ -128,7 +124,6 @@ export const new_option = (property, list, client) => async dispatch => {
         }
     }; 
     const body = JSON.stringify({ property, list, client });
-    console.log(body)
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/options/`, body, config);
         dispatch({
@@ -189,7 +184,6 @@ export const delete_option = (optionID, list) => async dispatch => {
             dispatch({
                 type: DELETE_OPTION_SUCCESS,
             });
-            console.log("option deleted")
         } catch (err) {
             dispatch({
                 type: DELETE_OPTION_FAIL
@@ -213,9 +207,7 @@ export const update_option = (option, price, unit_number, layout, sq_ft, availab
             }
         }; 
         const body = JSON.stringify({ option, property, price, unit_number, layout, sq_ft, available, notes, list });
-        console.log(body, "update option body")
         try {
-            console.log(body)
             const res = await axios.put(`${process.env.REACT_APP_API_URL}/options/${option}/`, body, config);
             dispatch({
                 type: UPDATE_OPTION_SUCCESS,
@@ -340,7 +332,6 @@ export const update_list = (agent, client, list, options) => async dispatch => {
         const body = JSON.stringify({ agent, client, uuid, options });
         try {
             const res = await axios.put(`${process.env.REACT_APP_API_URL}/lists/${list.id}/`, body, config);
-            console.log("Updated list with new order or UUID:", res.data);
             dispatch({
                 type: NEW_LIST_SUCCESS,
                 payload: res.data
@@ -369,7 +360,6 @@ export const retrieve_list = (uuid) => async dispatch => {
         }; 
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/client-list/${uuid}/`, config);
-            console.log("retrieved list", res.data)
             dispatch({
                 type: RETRIEVE_LIST_SUCCESS,
                 payload: res.data
