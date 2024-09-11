@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import SignUpForm from './auth/SignUp';
 import Login from './auth/Login';
 import ResetPassword from './auth/ResetPassword';
@@ -17,7 +17,6 @@ import Deals from './deals/Deals';
 
 function App() {
   return (
-    <Router>
     <div className='root'>
       <Navbar />
       <Routes>
@@ -38,8 +37,6 @@ function App() {
       </Routes>
       <Footer />
     </div>
-    </Router>
-
   );
 }
 
