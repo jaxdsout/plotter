@@ -5,21 +5,19 @@ import { delete_list } from '../actions/listmaker';
 import { load_lists } from '../actions/agent';
 import { connect } from 'react-redux';
 
-function DeleteList ( { delete_list, load_lists, list, handleCloseModal}) {
+function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user }) {
     const [deleteConfirm, setDeleteConfirm] = useState(null);
 
-    const handleDeleteConfirm = (optionID) => {
-        setDeleteConfirm(optionID);
+    const handleDeleteConfirm = (listID) => {
+        setDeleteConfirm(listID);
     };
 
-    const handleDelete = async (list) => {
-        if (list) {
-            const listID = list.id;
-            await delete_list(listID)
-            await load_lists(listID)
-            setDeleteConfirm(null);
-            handleCloseModal()
-        }
+    const handleDelete = async (listID, userID) => {
+        console.log(listID, "listID")
+        await delete_list(listID)
+        await load_lists(userID)
+        setDeleteConfirm(null);
+        handleCloseModal()
     }
 
     useEffect(() => {
@@ -42,7 +40,7 @@ function DeleteList ( { delete_list, load_lists, list, handleCloseModal}) {
                         <Button
                             type="submit"
                             color="red"
-                            onClick={() => handleDelete(list.id, list)}
+                            onClick={() => handleDelete(list.id, user.id)}
                         >
                             <Trash />
                         </Button>
@@ -52,8 +50,9 @@ function DeleteList ( { delete_list, load_lists, list, handleCloseModal}) {
                 <Button type="submit" color="red" onClick={() => handleDeleteConfirm(list.id)}>
                     <Trash />
                 </Button>
-            )}
-        </>
+            )
+        }
+    </>
     )
 
 
@@ -63,7 +62,7 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
     options: state.listmaker.options,
-    list: state.listmaker.list,
+    user: state.auth.user
 });
 
 export default connect(mapStateToProps, { delete_list, load_lists })(DeleteList);

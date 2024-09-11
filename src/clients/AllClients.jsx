@@ -4,8 +4,9 @@ import ClientDetail from "./ClientDetail";
 import { Modal, Button, Divider } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { load_clients } from "../actions/agent";
+import DeleteClient from "./DeleteClient";
 
-function AllClients ({ load_clients, clients, user, access, refresh }) {
+function AllClients ({ load_clients, clients, user }) {
     const [showClientDetail, setShowClientDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [clientTab, setClientTab] = useState("info");
@@ -33,6 +34,7 @@ function AllClients ({ load_clients, clients, user, access, refresh }) {
         <>
             <h6 className="noto-sans"> all clients </h6>
             <div className="overflow-y-auto plotterbox">
+                {clients.length > 0 ? ( 
                 <ul class="list-group">
                     {clients.map(client => (
                         <li class="list-group-item" key={client.id}>
@@ -43,10 +45,15 @@ function AllClients ({ load_clients, clients, user, access, refresh }) {
                             <Modal className='' open={showModal} onClose={handleCloseModal}>
                                 <Modal.Header>Client Details</Modal.Header>
                                 <Modal.Content>
-                                    <div className="pt-1">
-                                        <Button color="blue" onClick={() => handleTabChange("info")}>INFO</Button>
-                                        <Button color="blue" onClick={() => handleTabChange("lists")}>LISTS</Button>
-                                        <Button color="blue" onClick={() => handleTabChange("deals")}>DEALS</Button>
+                                    <div className="d-flex pt-1 justify-content-between">
+                                        <div>
+                                            <Button color="blue" onClick={() => handleTabChange("info")}>INFO</Button>
+                                            <Button color="blue" onClick={() => handleTabChange("lists")}>LISTS</Button>
+                                            <Button color="blue" onClick={() => handleTabChange("deals")}>DEALS</Button>
+                                        </div>
+                                        <div>
+                                            <DeleteClient client={client} handleCloseModal={handleCloseModal}/>
+                                        </div>
                                     </div>
                                     <Divider />
                                     <>
@@ -89,6 +96,12 @@ function AllClients ({ load_clients, clients, user, access, refresh }) {
                         </li>
                     ))}
                 </ul>
+                ) : (
+                    <div className="text-center">
+                        <p>Loading clients..</p>
+                    </div>
+                )
+            }
             </div>
         </>
     )
@@ -99,8 +112,6 @@ const mapStateToProps = state => ({
     error: state.auth.error,
     clients: state.agent.clients,
     user: state.auth.user,
-    access: state.auth.access,
-    refresh: state.auth.refresh,
 });
 
 export default connect(mapStateToProps, { load_clients })(AllClients);

@@ -1,40 +1,49 @@
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-// first create field on model: status [not invoiced, pending, paid, overdue ]
+function EarningDonut ({ deals }) {
+  const [statusEarnings, setStatusEarnings] = useState(Array(4).fill(0)); 
+  const statusMap = {
+    'not': 0,
+    'pend': 1,
+    'over': 2,
+    'paid': 3
+  };
 
-// RULES:
-// not invoiced DEFAULT
-// pending ENABLED BY USER
-// overdue OVERWRITES pending 60 DAYS AFTER pending ENABLED
-// paid ENABLED BY USER
+  const statusfy_deals = () => {
+    if (deals) {
+      const earningsByStatus = Array(4).fill(0);
 
+      deals.forEach(deal => {
+        const status = deal.status; 
+        const commission = parseFloat(deal.commission) || 0;
+        const statusIndex = statusMap[status]; 
+        if (statusIndex !== undefined) {
+          earningsByStatus[statusIndex] += commission; 
+        }
+      });
 
-// then filter by year
-// then filter by status
-// map the filtered status array
+      setStatusEarnings(earningsByStatus);
+    }
+  }
 
-const EarningDonut = () => {
+  useEffect(() => {
+    if (deals) {
+      statusfy_deals();
+    }
+  }, [deals])
+
   const data = {
-    labels: ['Overdue', 'Not Invoiced', 'Pending', 'Paid'],
+    labels: ['Not Invoiced', 'Pending', 'Overdue', 'Paid'],
     datasets: [
       {
         label: 'Sales',
-        data: [65, 59, 80, 81],
-        backgroundColor: [
-          'rgba(255, 99, 132)',
-          'rgba(54, 162, 235)',
-          'rgba(255, 206, 86)',
-          'rgba(75, 192, 192)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-        ],
+        data: statusEarnings,
+        backgroundColor: ['rgba(54, 162, 235)', 'rgba(255, 206, 86)', 'rgba(255, 99, 132)', 'rgba(75, 192, 192)'],
         borderWidth: 1,
       },
     ],
@@ -49,11 +58,20 @@ const EarningDonut = () => {
       title: {
         display: true,
         text: 'Invoice Status',
+        color: 'black'
       },
     },
   };
 
-  return <Doughnut data={data} options={options} />;
-};
+  return(
+    <>
+      <Doughnut data={data} options={options} />
+    </>
+  )
+}
 
-export default EarningDonut;
+const mapStateToProps = state => ({
+  deals: state.agent.deals,
+});
+
+export default connect(mapStateToProps, { })(EarningDonut);

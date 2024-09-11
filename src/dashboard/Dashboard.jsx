@@ -25,7 +25,6 @@ function Dashboard ({ load_user, auth_user, refresh_token, access, isAuthenticat
     useEffect(() => {
         auth_user();
         load_user();
-        
     }, [load_user, auth_user]);
 
     useEffect(() => {

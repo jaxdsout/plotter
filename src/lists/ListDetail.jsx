@@ -1,7 +1,7 @@
 import { Button, Input, Divider, Form } from "semantic-ui-react";
 import { reset_list_mode, set_list_mode } from "../actions/ui";
 import { connect } from "react-redux";
-import { set_search_client, set_list_edit, delete_list, update_list, reset_prop, reset_prop_results, load_options, new_option} from "../actions/listmaker";
+import { set_search_client, update_list, reset_prop, reset_prop_results, load_options, new_option, set_list_edit} from "../actions/listmaker";
 import { load_lists } from "../actions/agent";
 import PropertySearch from "../listmaker/PropertySearch";
 import OptionList from "../listmaker/OptionList";
@@ -9,7 +9,10 @@ import MapBox from "../listmaker/MapBox";
 import ClearOptions from "../listmaker/ClearOptions";
 import DeleteList from "./DeleteList";
 
-function ListDetail({ list, property, set_list_mode, user, new_option, reset_prop, reset_prop_results, set_search_client, set_list_edit, load_options, handleCloseModal, load_lists, delete_list, isListMode, client, options, update_list, reset_list_mode }) {
+function ListDetail({ list, property, set_list_mode, user, new_option, 
+    reset_prop, reset_prop_results, set_search_client, set_list_edit, load_options, handleCloseModal, load_lists, 
+    isListMode, client, options, update_list, reset_list_mode }) {
+
     const link = `localhost:3000/list/${list.uuid}`
 
     const formatDate = (datetimeStr) => {
@@ -30,7 +33,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option, reset_pro
             const name = user.full_name;
             await set_search_client(userID, name)
             await set_list_edit(list)
-            await set_list_mode()
+            set_list_mode()
         }
     }
 
@@ -66,14 +69,14 @@ function ListDetail({ list, property, set_list_mode, user, new_option, reset_pro
                             </Form>
                         </div>
                         <Divider />
-                        <OptionList />
+                        <OptionList list={list} />
                     </div>
                     <div className="">
                         <MapBox />
                         <Divider />
                         <div className="d-flex justify-content-between">
                             <ClearOptions />
-                            <Button color="green" type="submit" onClick={handleSaveList}>
+                            <Button color="green" type="submit" onClick={() => handleSaveList}>
                                 SAVE LIST
                             </Button>
                         </div>
@@ -90,14 +93,14 @@ function ListDetail({ list, property, set_list_mode, user, new_option, reset_pro
                             <p><b>URL: </b><Input value={link} readOnly /></p>
                         </div>
                         <div>
-                            <DeleteList handleCloseModal={handleCloseModal}/>
+                            <DeleteList list={list} handleCloseModal={handleCloseModal}/>
                         </div>
                     </div>
                     <Divider />
                     <div className="mt-4">
                         <div className="d-flex justify-content-between">
                             <h4>Option List</h4>
-                            <Button type="submit" onClick={handleEditList}>EDIT LIST</Button>
+                            <Button type="submit" onClick={() => handleEditList}>EDIT LIST</Button>
                         </div>
                         <div>
                             <ul>
@@ -129,4 +132,4 @@ const mapStateToProps = state => ({
     property: state.listmaker.property
 });
 
-export default connect(mapStateToProps, { set_list_mode, set_search_client, set_list_edit, load_lists, delete_list, new_option, update_list, load_options, reset_list_mode, reset_prop, reset_prop_results })(ListDetail);
+export default connect(mapStateToProps, { set_list_mode, set_search_client, load_lists, new_option, set_list_edit, update_list, load_options, reset_list_mode, reset_prop, reset_prop_results })(ListDetail);

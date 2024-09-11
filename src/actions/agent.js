@@ -13,6 +13,12 @@ import {
     UPDATE_PROFILE_FAIL,
     LOAD_LISTS_FAIL,
     LOAD_LISTS_SUCCESS,
+    DELETE_DEAL_SUCCESS,
+    DELETE_DEAL_FAIL,
+    UPDATE_STATUS_SUCCESS,
+    UPDATE_STATUS_FAIL,
+    DELETE_CLIENT_FAIL,
+    DELETE_CLIENT_SUCCESS
 } from './types';
 
 import axios from 'axios';
@@ -100,6 +106,32 @@ export const new_client = (agent, first_name, last_name, email, phone_number) =>
 };
 
 
+export const delete_client = (clientID) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            await axios.delete(`${process.env.REACT_APP_API_URL}/clients/${clientID}/`, config);
+            dispatch({
+                type: DELETE_CLIENT_SUCCESS,
+            });
+        } catch (err) {
+            dispatch({
+                type: DELETE_CLIENT_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: DELETE_CLIENT_FAIL
+        });
+    }
+};
+
+
 export const update_client = (clientID, agent, first_name, last_name, email, phone_number) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
@@ -163,18 +195,17 @@ export const new_deal = (property, unit_no, move_date, lease_term, rent, rate, c
                 'Authorization': `Bearer ${localStorage.getItem('access')}`,
             }
         }; 
-        // const body = JSON.stringify({ property, unit_no, move_date, lease_term, rent, rate, commission, flat_fee, agent, client });
         const body = {
-            property,   // Ensure property is an integer
-            unit_no,                        // String fields remain as they are
-            move_date,                      // String fields remain as they are
-            lease_term,                     // String fields remain as they are
-            rent: parseInt(rent),         // Convert rent to a float
-            rate: rate ? parseInt(rate) : null,         // Convert rate to a float
-            commission,  // Convert commission to a float
-            flat_fee: flat_fee ? parseFloat(flat_fee) : null, // Handle flat_fee (nullable)
-            agent,         // Ensure agent is an integer
-            client        // Ensure client is an integer
+            property,   
+            unit_no,
+            move_date,
+            lease_term, 
+            rent: parseInt(rent),   
+            rate: rate ? parseInt(rate) : null, 
+            commission,  
+            flat_fee: flat_fee ? parseFloat(flat_fee) : null, 
+            agent,    
+            client   
         };
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/deals/`, body, config);
@@ -190,6 +221,58 @@ export const new_deal = (property, unit_no, move_date, lease_term, rent, rate, c
     } else {
         dispatch({
             type: NEW_DEAL_FAIL
+        });
+    }
+};
+
+export const delete_deal = (dealID) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            await axios.delete(`${process.env.REACT_APP_API_URL}/deals/${dealID}/`, config);
+            dispatch({
+                type: DELETE_DEAL_SUCCESS,
+            });
+        } catch (err) {
+            dispatch({
+                type: DELETE_DEAL_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: DELETE_DEAL_FAIL
+        });
+    }
+};
+
+export const update_deal_status = (dealID, status) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        const body = JSON.stringify({ status })
+        console.log(body)
+        try {
+            await axios.patch(`${process.env.REACT_APP_API_URL}/deals/${dealID}/`, body, config);
+            dispatch({
+                type: UPDATE_STATUS_SUCCESS,
+            });
+        } catch (err) {
+            dispatch({
+                type: UPDATE_STATUS_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: UPDATE_STATUS_FAIL
         });
     }
 };

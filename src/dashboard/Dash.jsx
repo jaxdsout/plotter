@@ -5,15 +5,48 @@ import { connect } from "react-redux";
 import { Divider, Button } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { load_deals } from '../actions/agent';
 
-function Dash ({ isAuthenticated }) {
+function Dash ({ isAuthenticated, user, load_deals, deals }) {
     const navigate = useNavigate();
+
+    const get_renewals = () => {
+        if (!deals) return [];
+        const now = new Date();
+        return deals
+            .filter(deal => deal.lease_end_date)  // Ensure lease_end_date exists
+            .map(deal => ({ ...deal, lease_end_date: new Date(deal.lease_end_date) }))  // Convert date strings to Date objects
+            .sort((a, b) => a.lease_end_date - b.lease_end_date)  // Sort by lease_end_date
+            .filter(deal => deal.lease_end_date >= now)  // Filter to only upcoming renewals
+            .slice(0, 5);  // Optional: Limit to top 5 upcoming renewals
+    };
+
+
+    const get_move_ins = () => {
+        if (!deals) return [];
+        const now = new Date();
+        return deals
+            .filter(deal => deal.move_date)  // Ensure move_date exists
+            .map(deal => ({ ...deal, move_date: new Date(deal.move_date) }))  // Convert date strings to Date objects
+            .sort((a, b) => a.move_date - b.move_date)  // Sort by move_date
+            .filter(deal => deal.move_date >= now)  // Filter to only upcoming move-ins
+            .slice(0, 5);  // Optional: Limit to top 5 upcoming move-ins
+    };
 
     useEffect(() => {
         if (!isAuthenticated) {
             navigate('/login/');
         }
     }, [isAuthenticated, navigate]);
+
+    useEffect(() => {
+        if (user) {
+            load_deals(user.id)
+        }
+    }, [user, load_deals])
+
+    const renewals = get_renewals();
+    const move_ins = get_move_ins();
 
     return (
         <div className='z-0 container pt-5 pb-5 bg-dark-subtle d-flex flex-column'>
@@ -30,33 +63,33 @@ function Dash ({ isAuthenticated }) {
                 <div>
                     <h4>Upcoming Renewals</h4>
                     <ul className='list-group'>
-                        <li className='list-group-item'>Client 1</li>
-                        <li className='list-group-item'>Client 2</li>
-                        <li className='list-group-item'>Client 3</li>
-                        <li className='list-group-item'>More...</li>
+                        {renewals.length ? (
+                            renewals.map(deal => (
+                                <li key={deal.id} className='list-group-item'>
+                                    <b>Client:</b> {deal.client_name} | <b>Lease End Date:</b> {deal.lease_end_date.toLocaleDateString()}
+                                </li>
+                            ))
+                        ) : (
+                            <li className='list-group-item'>No upcoming renewals...</li>
+                        )}
                     </ul>
                 </div>
                 <div>
                     <h4>Upcoming Move-Ins</h4>
                     <ul className='list-group'>
-                        <li className='list-group-item'>Client 1</li>
-                        <li className='list-group-item'>Client 2</li>
-                        <li className='list-group-item'>Client 3</li>
-                        <li className='list-group-item'>More...</li>
+                        {move_ins.length ? (
+                            move_ins.map(deal => (
+                                <li key={deal.id} className='list-group-item'>
+                                    <b>Client:</b> {deal.client_name} - <b>Move Date:</b> {deal.move_date.toLocaleDateString()}
+                                </li>
+                            ))
+                        ) : (
+                            <li className='list-group-item'>No upcoming move-ins...</li>
+                        )}
                     </ul>
                 </div>
-                <div className='d-flex flex-column justify-content-between'>
+                <div className=''>
                     <GuestCard />
-                    <Button type="submit">STATS</Button>
-                </div>
-                <div>
-                    <h4>To Do's</h4>
-                    <ul className='list-group'>
-                        <li className='list-group-item'>Donut Chart: for Paid, Unpaid, Overdue, Cancelled</li>
-                        <li className='list-group-item'>Bar Graph: Monthly earnings over Year</li>
-                        <li className='list-group-item'>List: Past Client Renewals Coming Up</li>
-                        <li className='list-group-item'>List: Client Move-Ins Approaching</li>
-                    </ul>
                 </div>
             </div>
         </div>
@@ -65,7 +98,9 @@ function Dash ({ isAuthenticated }) {
 
 const mapStateToProps = state => ({
     error: state.auth.error,
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    user: state.auth.user,
+    deals: state.agent.deals
 });
 
-export default connect(mapStateToProps, { })(Dash);
+export default connect(mapStateToProps, { load_deals })(Dash);

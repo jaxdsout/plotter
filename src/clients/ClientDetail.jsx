@@ -73,8 +73,6 @@ function ClientDetail ({ client, update_client, user }) {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    error: state.auth.error,
     user: state.auth.user
 });
 

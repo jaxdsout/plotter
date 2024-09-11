@@ -1,22 +1,41 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { connect } from 'react-redux';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-// first classify by year
-// then classify earnings by month (date submitted)
-// then add up all commission fields for each month
-// then map that sorted array
+function EarningBar ({ deals }) {
+  const [monthlyEarnings, setMonthlyEarnings] = useState(Array(12).fill(0)); 
 
+  const monthify_deals = () => {
+    if (deals) {
+      const earningsByMonth = Array(12).fill(0);
 
-const EarningBar = () => {
+      deals.forEach(deal => {
+        const dealDate = new Date(deal.deal_date);
+        const month = dealDate.getMonth(); 
+        const commission = parseFloat(deal.commission) || 0; 
+        earningsByMonth[month] += commission; 
+        console.log(earningsByMonth, "earnings added")
+      });
+
+      setMonthlyEarnings(earningsByMonth);
+    }
+  }
+
+  useEffect(() => {
+    if (deals) {
+      monthify_deals();
+    }
+  }, [deals])
+
   const data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     datasets: [
       {
         label: 'Sales',
-        data: [65, 59, 80, 81, 56, 55, 40, 80, 81, 56, 55, 40],
+        data: monthlyEarnings,
         backgroundColor: 'rgb(52, 109, 183)',
         borderColor: 'rgb(52, 109, 183)',
         borderWidth: 1,
@@ -33,6 +52,7 @@ const EarningBar = () => {
       title: {
         display: true,
         text: 'Monthly Sales Revenue',
+        color: 'black'
       },
     },
     scales: {
@@ -42,7 +62,20 @@ const EarningBar = () => {
     },
   };
 
-  return <Bar data={data} options={options} style={{ height: '20rem' }}/>;
-};
+  return (
+    <>
+      <Bar data={data} options={options} style={{ height: '20rem' }}/>
+    </>
+  )
 
-export default EarningBar;
+
+}
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  error: state.auth.error,
+  deals: state.agent.deals,
+  user: state.auth.user
+});
+
+export default connect(mapStateToProps, { })(EarningBar);

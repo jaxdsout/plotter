@@ -28,19 +28,21 @@ function AllDeals ({ load_deals, deals, user }) {
         <>
             <h6 className="noto-sans"> all deals </h6>
             <div className="overflow-y-auto plotterbox">
+                {deals.length > 0 ? ( 
                 <ul className="list-group">
                     {deals.map(deal => (
                         <li className="list-group-item" key={deal.id}>
-                        <Link onClick={() => handleOpenModal(deal.id)}>
-                            {deal.client} {deal.agent} {deal.property}
-                        </Link>
-                        {showDealDetail === deal.id && (
+                            <div className="d-flex justify-content-between">
+                                <span><b>{deal.client_name}</b> | {deal.prop_name} | Move-in Date: {deal.move_date}</span>
+                                <Link onClick={() => handleOpenModal(deal.id)}>
+                                    View Details
+                                </Link>
+                            </div>
+                            {showDealDetail === deal.id && (
                             <Modal className='' open={showModal} onClose={handleCloseModal}>
                                 <Modal.Header>Deal Info</Modal.Header>
                                 <Modal.Content>
-                                    <>
-                                        <DealDetail deal={deal} />
-                                    </>
+                                    <DealDetail deal={deal} handleCloseModal={handleCloseModal}/>
                                 </Modal.Content>
                                 <Modal.Actions className="d-flex">
                                     <Button onClick={handleCloseModal}>CLOSE</Button>
@@ -50,6 +52,11 @@ function AllDeals ({ load_deals, deals, user }) {
                         </li>
                     ))}
                 </ul>
+                ) : (
+                    <div className="text-center">
+                        <p>Loading deals..</p>
+                    </div>
+                )}
             </div>
         </>
     )

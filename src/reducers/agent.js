@@ -14,7 +14,13 @@ import {
     LOAD_LISTS_SUCCESS,
     LOAD_LISTS_FAIL,
     UPDATE_PROFILE_SUCCESS,
-    UPDATE_PROFILE_FAIL
+    UPDATE_PROFILE_FAIL,
+    DELETE_DEAL_FAIL,
+    DELETE_DEAL_SUCCESS,
+    UPDATE_STATUS_FAIL,
+    UPDATE_STATUS_SUCCESS,
+    DELETE_CLIENT_FAIL,
+    DELETE_CLIENT_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -56,6 +62,12 @@ export default function agentReducer(state = initialState, action) {
         case LOAD_DEALS_FAIL:
         case LOAD_LISTS_FAIL:
         case LOAD_CLIENTS_FAIL:
+        case DELETE_DEAL_FAIL:
+        case DELETE_DEAL_SUCCESS:
+        case UPDATE_STATUS_FAIL:
+        case UPDATE_STATUS_SUCCESS:
+        case DELETE_CLIENT_FAIL:
+        case DELETE_CLIENT_SUCCESS:
             return {
                 ...state
             }
