@@ -18,12 +18,14 @@ import {
     UPDATE_STATUS_SUCCESS,
     UPDATE_STATUS_FAIL,
     DELETE_CLIENT_FAIL,
-    DELETE_CLIENT_SUCCESS
+    DELETE_CLIENT_SUCCESS,
+    NEW_CARD_SUCCESS,
+    NEW_CARD_FAIL
 } from './types';
 
 import axios from 'axios';
 
-export const update_profile = (userID, full_name, trec, website, phone_number) => async dispatch => {
+export const update_profile = (userObj, trec, website, phone_number) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
             headers: {
@@ -31,9 +33,42 @@ export const update_profile = (userID, full_name, trec, website, phone_number) =
                 'Authorization': `Bearer ${localStorage.getItem('access')}`,
             }
         }; 
-        const body = JSON.stringify({ full_name, trec, website, phone_number });
+        const user = userObj.id
+        const body = JSON.stringify({ user, trec, website, phone_number });
+        console.log(body)
         try {
-            const res = await axios.put(`${process.env.REACT_APP_API_URL}/profiles/${userID}/`, body, config);
+            const res = await axios.put(`${process.env.REACT_APP_API_URL}/profiles/${userObj.id}/`, body, config);
+            dispatch({
+                type: UPDATE_PROFILE_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: UPDATE_PROFILE_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: UPDATE_PROFILE_FAIL
+        });
+    }
+};
+
+export const update_avatar = (userObj, file) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const formData = new FormData();
+        formData.append('avatar', file);
+        formData.append('id', userObj.id);
+
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${localStorage.getItem('access')}`,
+                }
+            };
+
+            const res = await axios.put(`${process.env.REACT_APP_API_URL}/profiles/${userObj.id}/`, formData, config);
             dispatch({
                 type: UPDATE_PROFILE_SUCCESS,
                 payload: res.data
@@ -300,6 +335,34 @@ export const load_lists = () => async dispatch => {
     } else {
         dispatch({
             type: LOAD_LISTS_FAIL
+        });
+    }
+};
+
+
+export const new_guest_card = (property, agent, client, interested, move_by) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        const body = JSON.stringify({ property, agent, client, interested, move_by });
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/cards/`, body, config);
+            dispatch({
+                type: NEW_CARD_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: NEW_CARD_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: NEW_CARD_FAIL
         });
     }
 };

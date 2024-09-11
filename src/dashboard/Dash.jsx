@@ -49,7 +49,7 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
     const move_ins = get_move_ins();
 
     return (
-        <div className='z-0 container pt-5 pb-5 bg-dark-subtle d-flex flex-column'>
+        <div className='container pt-5 pb-5 bg-dark-subtle'>
             <div className="d-flex flex-column flex-md-row flex-sm-column align-items-center justify-content-evenly">
                 <div className='pb-3'>
                     <EarningDonut />
@@ -80,7 +80,7 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
                         {move_ins.length ? (
                             move_ins.map(deal => (
                                 <li key={deal.id} className='list-group-item'>
-                                    <b>Client:</b> {deal.client_name} - <b>Move Date:</b> {deal.move_date.toLocaleDateString()}
+                                    <b>Client:</b> {deal.client_name} | <b>Move Date:</b> {deal.move_date.toLocaleDateString()}
                                 </li>
                             ))
                         ) : (
@@ -91,6 +91,8 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
                 <div className=''>
                     <GuestCard />
                 </div>
+            </div>
+            <div style={{ height: "200px" }}>
             </div>
         </div>
     )

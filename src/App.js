@@ -25,7 +25,7 @@ function App() {
         <Route path="/signup/" element={ <SignUpForm /> } />
         <Route path="/reset-password/" element={ <ResetPassword /> } />
         <Route path="/password/reset/confirm/:uid/:token" element={ <ConfirmPassword /> } />
-        <Route path="/activate/:uid/:token" element={ <Activate /> } />
+        <Route path="/verify/:uid/:token" element={ <Activate /> } />
         <Route path="/login/" element={ <Login /> } />
         <Route path="/dashboard/" element={ <Dashboard /> }>
           <Route path="home" element={<Dash />} />
@@ -36,7 +36,7 @@ function App() {
         <Route path="/list/:uuid/" element={ <ClientList /> } />
         <Route path="*" element={<Navigate to="/home/" replace />} />
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </div>
     </Router>
 

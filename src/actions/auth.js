@@ -19,6 +19,7 @@ import {
 } from './types';
 
 import axios from 'axios';
+import { Base64 } from 'js-base64';
 
 export const load_user = () => async dispatch => {
     if (localStorage.getItem('access')) {
@@ -120,8 +121,8 @@ export const activate = (uid, token) => async dispatch => {
         }
     };
 
-    const body = JSON.stringify({ uid, token });
-    
+    const encodedUid = Base64.encode(uid);
+    const body = JSON.stringify({ uid: encodedUid, token });
     try {
         await axios.post(`${process.env.REACT_APP_API_URL}/auth/users/activation/`, body, config);
         

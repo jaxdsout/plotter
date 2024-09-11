@@ -42,7 +42,7 @@ function Dashboard ({ load_user, auth_user, refresh_token, access, isAuthenticat
     const basePath = location.pathname.split('/').pop();
 
     return (    
-        <div className='container pb-5 pt-5'>
+        <div className='container mb-5 mt-5'>
             <div className='z-0 navbar p-5 bg-body-secondary'>
                 <Link to="/dashboard/home"><Home className='icon' /></Link>
                 <Link className='poetsen tabs' to="/dashboard/clients">clients</Link>

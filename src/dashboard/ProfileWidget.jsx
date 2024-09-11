@@ -1,27 +1,43 @@
 import { Card, CardContent, CardHeader, CardDescription, CardMeta, Image, Form, FormField, Button, Icon, Modal } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { update_profile } from '../actions/agent';
+import { update_profile, update_avatar } from '../actions/agent';
 import { connect } from 'react-redux';
 import { useState } from 'react';
 
-function ProfileWidget ({ user }) {
+function ProfileWidget ({ user, update_profile, update_avatar }) {
     const [formData, setFormData] = useState({
-        full_name: '',
         trec: '',
         website: '',
         phone_number: '',
     });
-    const { full_name, trec, website, phone_number } = formData;
-    const userID = user.id
+    const [avatar, setAvatar] = useState(null);
+    const { trec, website, phone_number } = formData;
     const profile = user.profile
 
     const [showModal, setShowModal] = useState(false);
 
-    const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleProfileChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const handleSubmit = e => {
+    const handleAvatarChange = e => setAvatar(e.target.files[0]);
+
+    const handleProfileSubmit = async (e) => {
         e.preventDefault();
-        update_profile(userID, full_name, trec, website, phone_number);
+        try {
+            await update_profile(user, trec, website, phone_number);
+        } catch (err) {
+            console.error('Error updating profile:', err);
+        }
+    };
+
+    const handleAvatarSubmit = async (e) => {
+        e.preventDefault();
+        if (avatar) {
+            try {
+                await update_avatar(user, avatar);
+            } catch (err) {
+                console.error('Error updating avatar:', err);
+            }
+        }
     };
 
     const handleOpenModal = () => setShowModal(true);
@@ -54,53 +70,61 @@ function ProfileWidget ({ user }) {
                 <Modal open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>Edit Profile</Modal.Header>
                     <Modal.Content>
-                    <Form onSubmit={handleSubmit}>
-                            <FormField>
-                                <label className="noto-sans-upper label" htmlFor="full_name">Full Name:</label>
-                                <input
-                                    className="form-control"
-                                    type="text"
-                                    name="full_name"
-                                    value={full_name}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </FormField>
-                            <FormField>
-                                <label className="noto-sans-upper label" htmlFor="trec">TREC ID:</label>
-                                <input
-                                    className="form-control"
-                                    type="text"
-                                    name="trec"
-                                    value={trec}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </FormField>
-                            <FormField>
-                                <label className="noto-sans-upper label" htmlFor="website">Website:</label>
-                                <input
-                                    className="form-control"
-                                    type="text"
-                                    name="website"
-                                    value={website}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </FormField>
-                            <FormField>
-                                <label className="noto-sans-upper label" htmlFor="phone_number">Phone:</label>
-                                <input
-                                    className="form-control"
-                                    type="text"
-                                    name="phone_number"
-                                    value={phone_number}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </FormField>
-                            <Button type="submit">SAVE UPDATES</Button>
-                        </Form>
+                        <div className='d-flex flex-row justify-content-evenly'>
+                        <div>                    
+                            <Form onSubmit={handleProfileSubmit}>
+                                <FormField>
+                                    <label className="noto-sans-upper label" htmlFor="trec">TREC ID:</label>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        name="trec"
+                                        value={trec}
+                                        onChange={handleProfileChange}
+                                        required
+                                    />
+                                </FormField>
+                                <FormField>
+                                    <label className="noto-sans-upper label" htmlFor="website">Website:</label>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        name="website"
+                                        value={website}
+                                        onChange={handleProfileChange}
+                                        required
+                                    />
+                                </FormField>
+                                <FormField>
+                                    <label className="noto-sans-upper label" htmlFor="phone_number">Phone:</label>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        name="phone_number"
+                                        value={phone_number}
+                                        onChange={handleProfileChange}
+                                        required
+                                    />
+                                </FormField>
+                                <Button type="submit">SAVE PROFILE UPDATES</Button>
+                            </Form>
+                        </div>  
+                        <div>
+                            <Form onSubmit={handleAvatarSubmit}>
+                                <FormField>
+                                    <label className="noto-sans-upper label" htmlFor="avatar">Profile Picture:</label>
+                                    <input
+                                        className="form-control"
+                                        type="file"
+                                        name="avatar"
+                                        accept="image/*"
+                                        onChange={handleAvatarChange}
+                                    />
+                                </FormField>
+                                <Button type="submit">UPLOAD</Button>
+                            </Form>
+                        </div>
+                        </div>
                         </Modal.Content>
                     <Modal.Actions>
                         <Button onClick={handleCloseModal}>CLOSE</Button>
@@ -117,4 +141,4 @@ const mapStateToProps = state => ({
     user: state.auth.user,
 });
 
-export default connect(mapStateToProps, { update_profile })(ProfileWidget);
+export default connect(mapStateToProps, { update_profile, update_avatar })(ProfileWidget);

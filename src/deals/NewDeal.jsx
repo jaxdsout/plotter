@@ -116,7 +116,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                             <div className="d-flex flex-row align-items-center">
                                 <ClientSearch />
                                 <Form onSubmit={handleClientSelect}>
-                                    {clientSel ? (
+                                    {clientSel && client !== null ? (
                                         <Button color="black">CLIENT SELECTED</Button>
                                     ): (
                                         <Button color="blue" type="submit">SELECT CLIENT</Button>

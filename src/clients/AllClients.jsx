@@ -83,7 +83,9 @@ function AllClients ({ load_clients, clients, user }) {
                                                         </ul>
                                                     </div>
                                                 ) : (
-                                                    <p>No deals yet for client.</p>
+                                                    <div className="text-center">
+                                                        <p>No deals to load.</p>
+                                                    </div>
                                                 )
                                             )}
                                     </>
