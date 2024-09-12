@@ -19,30 +19,28 @@ function Navbar ({ logout, isAuthenticated, isClientView, reset_client_view }) {
 
     return (
         <nav className='navbar p-5 bg-body-tertiary'>
-            <div className="container-fluid">
-                {isClientView ?
-                    <>
-                      <Link onClick={redirect_client}><h1 className='poetsen'>plotter</h1></Link>
-                    </>
-                    :
-                    <>
-                        {isAuthenticated ? 
-                            <>
-                                <Link to={"/dashboard/home"}><h1 className='poetsen'>plotter</h1></Link>
-                                <Button onClick={logout_user}>LOGOUT</Button>      
-                            </>
-                        : 
-                            <>
+            {isClientView ?
+                <Link onClick={redirect_client}><h1 className='poetsen'>plotter</h1></Link>                    
+            :
+                <>
+                    {isAuthenticated ? 
+                        <>
+                            <Link to={"/dashboard/home"}><h1 className='poetsen'>plotter</h1></Link>
+                            <Button onClick={logout_user}>LOGOUT</Button>      
+                        </>
+                    : 
+                        <>
+                            <div>
                                 <Link to={"/"}><h1 className='poetsen'>plotter</h1></Link>
-                                <div>
-                                    <Link to={"/signup/"}><Button>SIGN UP</Button></Link>
-                                    <Link to={"/login/"}><Button>LOGIN</Button></Link>
-                                </div>
-                            </>
-                        }
-                    </>
-                }
-            </div>
+                            </div>
+                            <div>
+                                <Link to={"/signup/"}><Button>SIGN UP</Button></Link>
+                                <Link to={"/login/"}><Button>LOGIN</Button></Link>
+                            </div>
+                        </>
+                    }
+                </>
+            }
         </nav>
     )
 }

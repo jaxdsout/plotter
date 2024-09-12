@@ -32,8 +32,7 @@ function AllClients ({ load_clients, clients, user }) {
 
     return (
         <>
-            <h6 className="noto-sans"> all clients </h6>
-            <div className="overflow-y-auto plotterbox">
+            <div className="overflow-y-auto plotterbox mt-3">
                 {clients.length > 0 ? ( 
                 <ul class="list-group">
                     {clients.map(client => (

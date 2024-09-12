@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { connect } from 'react-redux';
+import { readUsedSize } from 'chart.js/helpers';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -17,7 +18,6 @@ function EarningBar ({ deals }) {
         const month = dealDate.getMonth(); 
         const commission = parseFloat(deal.commission) || 0; 
         earningsByMonth[month] += commission; 
-        console.log(earningsByMonth, "earnings added")
       });
 
       setMonthlyEarnings(earningsByMonth);
@@ -63,9 +63,7 @@ function EarningBar ({ deals }) {
   };
 
   return (
-    <>
-      <Bar data={data} options={options} style={{ height: '20rem' }}/>
-    </>
+        <Bar data={data} options={options} style={{ height: "18rem"}}/>
   )
 
 

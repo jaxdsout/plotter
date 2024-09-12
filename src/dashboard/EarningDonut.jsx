@@ -64,9 +64,7 @@ function EarningDonut ({ deals }) {
   };
 
   return(
-    <>
-      <Doughnut data={data} options={options} />
-    </>
+        <Doughnut data={data} options={options}/>
   )
 }
 

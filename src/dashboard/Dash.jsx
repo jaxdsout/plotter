@@ -50,17 +50,17 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
 
     return (
         <div className='container pt-5 pb-5 bg-dark-subtle'>
-            <div className="d-flex flex-column flex-md-row flex-sm-column align-items-center justify-content-evenly">
-                <div className='pb-3'>
+            <div className='d-flex flex-column flex-sm-column flex-md-row justify-content-evenly align-items-center p-4'>
+                <div>
                     <EarningDonut />
                 </div>
-                <div className='pb-3'>
+                <div>
                     <EarningBar />
                 </div>
             </div>
             <Divider />
-            <div className="d-flex flex-column flex-md-row flex-sm-column align-items-center justify-content-evenly">
-                <div>
+            <div className="d-flex flex-column flex-md-row flex-sm-column align-items-center justify-content-evenly p-4">
+                <div className='text-center pt-3'>
                     <h4>Upcoming Renewals</h4>
                     <ul className='list-group'>
                         {renewals.length ? (
@@ -74,7 +74,7 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
                         )}
                     </ul>
                 </div>
-                <div>
+                <div className='text-center pt-3'>
                     <h4>Upcoming Move-Ins</h4>
                     <ul className='list-group'>
                         {move_ins.length ? (
@@ -88,11 +88,9 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
                         )}
                     </ul>
                 </div>
-                <div className=''>
-                    <GuestCard />
-                </div>
             </div>
-            <div style={{ height: "200px" }}>
+            <div className='d-flex align-items-center justify-content-center mt-5'>
+                <GuestCard />
             </div>
         </div>
     )

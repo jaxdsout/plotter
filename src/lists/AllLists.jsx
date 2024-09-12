@@ -6,6 +6,8 @@ import ListDetail from "./ListDetail";
 import { load_lists } from "../actions/agent";
 import { connect } from "react-redux";
 import { reset_list_mode, reset_send_mode } from "../actions/ui";
+import { ReactComponent as InfoSquare } from '../components/info-square.svg';
+
 
 function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, isListMode }) {
     const [showListDetail, setShowListDetail] = useState(null);
@@ -48,15 +50,14 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
 
     return (
         <>
-            <h6 className="noto-sans"> all lists </h6>
-            <div className="overflow-y-auto plotterbox">
+            <div className="overflow-y-auto plotterbox mt-3">
                 <ul class="list-group hover">
                     {lists.map(list => (
                         <li class="list-group-item" key={list.id}>
                             <div className="d-flex justify-content-between">
                                 <span>{list.client_name} - {formatDate(list.date)}</span>
                                 <Link onClick={() => handleOpenModal(list.id)}>
-                                    View Details
+                                    <InfoSquare/>
                                 </Link>
                             </div>                 
                         {showListDetail === list.id && (

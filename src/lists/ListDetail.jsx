@@ -93,30 +93,27 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                                 <p><b>Last Updated: </b></p>
                                 <p><b>URL: </b><Input value={link} readOnly style={{ width: '20rem' }} className="ms-3"/></p>
                             </div>
-                            <div>
+                            <div className="d-flex flex-column justify-content-between">
                                 <DeleteList list={list} handleCloseModal={handleCloseModal}/>
+                                <Button type="submit" onClick={handleEditList}>EDIT LIST</Button>
+
                             </div>
                         </div>
                         <Divider />
-                        <div className="d-flex flex-row justify-content-evenly mt-1">
-                            <div className="d-flex justify-content-between flex-column text-wrap">
-                                <h4>Option List</h4>
-                                <div>
-                                    <ul>
-                                        {list.options.map(option => (
-                                            <li key={option.id}>
-                                                <div>
-                                                    <b>{option.prop_name}</b>
-                                                    <p>Rate: ${option.price} | Unit: {option.unit} | Layout: {option.layout} | Sq Ft: {option.sq_ft}<br></br>
-                                                        Available: {option.available} | Notes / Specials: {option.notes}</p>
-                                                </div>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
+                        <div className="d-flex flex-column justify-content-center align-items-center flex-column text-wrap">
+                            <h4>Option List</h4>
                             <div>
-                                <Button type="submit" onClick={handleEditList}>EDIT LIST</Button>
+                                <ul>
+                                    {list.options.map(option => (
+                                        <li key={option.id}>
+                                            <div>
+                                                <b>{option.prop_name}</b>
+                                                <p>Rate: ${option.price} | Unit: {option.unit} | Layout: {option.layout} | Sq Ft: {option.sq_ft}<br></br>
+                                                    Available: {option.available} | Notes / Specials: {option.notes}</p>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         </div>
                     </div>

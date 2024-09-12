@@ -5,6 +5,7 @@ import DealDetail from "./DealDetail";
 import { Modal, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { load_deals } from "../actions/agent";
+import { ReactComponent as InfoSquare } from '../components/info-square.svg';
 
 
 function AllDeals ({ load_deals, deals, user }) {
@@ -26,8 +27,7 @@ function AllDeals ({ load_deals, deals, user }) {
 
     return (
         <>
-            <h6 className="noto-sans"> all deals </h6>
-            <div className="overflow-y-auto plotterbox">
+            <div className="overflow-y-auto plotterbox mt-3">
                 {deals.length > 0 ? ( 
                 <ul className="list-group">
                     {deals.map(deal => (
@@ -35,7 +35,7 @@ function AllDeals ({ load_deals, deals, user }) {
                             <div className="d-flex justify-content-between">
                                 <span><b>{deal.client_name}</b> | {deal.prop_name} | Move-in Date: {deal.move_date}</span>
                                 <Link onClick={() => handleOpenModal(deal.id)}>
-                                    View Details
+                                    <InfoSquare/>
                                 </Link>
                             </div>
                             {showDealDetail === deal.id && (
