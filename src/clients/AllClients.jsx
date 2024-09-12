@@ -57,37 +57,46 @@ function AllClients ({ load_clients, clients, user }) {
                                     </div>
                                     <Divider />
                                     <>
-                                            {clientTab === "info" && (
-                                                <ClientDetail client={client} />
-                                            )}
-                                            {clientTab === "lists" && (
-                                                client.lists.length > 0 ? (
-                                                    <div className="overflow-y-scroll" style={{ height: '250px' }}>
-                                                    <ul>
-                                                        {client.lists.map(list => (
-                                                            <li key={list.id}>{list.date}</li>
-                                                        ))}
-                                                    </ul>
+                                        {clientTab === "info" && (
+                                            <ClientDetail client={client} />
+                                        )}
+                                        {clientTab === "lists" && (
+                                            <>
+                                                <div 
+                                                    className="overflow-y-scroll" 
+                                                    style={{ height: '300px', minHeight: '300px' }} 
+                                                >
+                                                    {client.lists.length > 0 ? (
+                                                        <ul>
+                                                            {client.lists.map(list => (
+                                                                <li key={list.id}>{list.date}</li>
+                                                            ))}
+                                                        </ul>
+                                                    ) : (
+                                                        <div className="text-center">
+                                                            <p>No lists to load.</p>
+                                                        </div>
+                                                    )}
                                                 </div>
-                                                ) : (
-                                                    <p>No lists yet for client.</p>
-                                                )
-                                            )}
-                                            {clientTab === "deals" && (
-                                                client.deals.length > 0 ? (
-                                                    <div className="overflow-y-scroll" style={{ height: '250px' }}>
+                                            </>
+                                        )}
+                                        {clientTab === "deals" && (
+                                            <>
+                                                <div className="overflow-y-scroll" style={{ height: '300px', minHeight: '300px' }}>
+                                                    {client.deals.length > 0 ? (
                                                         <ul>
                                                             {client.deals.map(deal => (
                                                                 <li key={deal.id}>{deal.prop_name} {deal.move_date}</li>
                                                             ))}
                                                         </ul>
-                                                    </div>
                                                 ) : (
                                                     <div className="text-center">
                                                         <p>No deals to load.</p>
                                                     </div>
-                                                )
-                                            )}
+                                                )}
+                                                </div>
+                                            </>
+                                        )}
                                     </>
                                 </Modal.Content>
                                 <Modal.Actions className="d-flex">

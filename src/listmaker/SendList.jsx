@@ -1,4 +1,4 @@
-import { Button, Form } from "semantic-ui-react"
+import { Button } from "semantic-ui-react"
 import { connect } from "react-redux";
 import { update_list } from "../actions/listmaker";
 import { set_send_mode } from "../actions/ui";

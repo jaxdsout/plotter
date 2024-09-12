@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from "react";
-import { Divider, List, Icon, Popup } from "semantic-ui-react";
+import { Divider, List, Popup } from "semantic-ui-react";
 import { connect } from "react-redux";
 import UpdateOption from "./UpdateOption";
 import { load_options, update_options_order } from "../actions/listmaker";

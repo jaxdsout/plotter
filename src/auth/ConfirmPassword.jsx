@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { reset_password_confirm } from "../actions/auth";
@@ -20,7 +20,6 @@ function ConfirmPassword ({ reset_password_confirm }) {
 
     const handleSubmit = e => {
         e.preventDefault();
-
         reset_password_confirm(uid, token, new_password, re_new_password)
         setRequestSent(true);
     }

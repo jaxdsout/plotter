@@ -222,7 +222,7 @@ export const load_deals = (userID) => async dispatch => {
 };
 
 
-export const new_deal = (property, unit_no, move_date, lease_term, rent, rate, commission, flat_fee, agent, client) => async dispatch => {
+export const new_deal = (property, unit_no, move_date, lease_term, rent, rate, flat_fee, commission, agent, client) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
             headers: {
@@ -237,11 +237,12 @@ export const new_deal = (property, unit_no, move_date, lease_term, rent, rate, c
             lease_term, 
             rent: parseInt(rent),   
             rate: rate ? parseInt(rate) : null, 
-            commission,  
             flat_fee: flat_fee ? parseFloat(flat_fee) : null, 
+            commission,  
             agent,    
             client   
         };
+        console.log(body, "body")
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/deals/`, body, config);
             dispatch({

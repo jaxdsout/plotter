@@ -68,7 +68,6 @@ function Login ({ login, isAuthenticated, error, message }) {
                     />
                 </FormField>
                 <Button type="submit">LOGIN</Button>   
-
             </Form>
             <Divider className="mt-4 mb-4" />
             <div className="d-flex flex-md-row justify-content-evenly flex-sm-column flex-column text-center">            

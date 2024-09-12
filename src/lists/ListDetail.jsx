@@ -13,7 +13,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
     reset_prop, reset_prop_results, set_search_client, set_list_edit, load_options, handleCloseModal, load_lists, 
     isListMode, client, options, update_list, reset_list_mode }) {
 
-    const link = `localhost:3000/list/${list.uuid}`
+    const link = `${window.origin}/#/list/${list.uuid}`
 
     const formatDate = (datetimeStr) => {
         const dateObj = new Date(datetimeStr);
@@ -76,7 +76,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                         <Divider />
                         <div className="d-flex justify-content-between">
                             <ClearOptions />
-                            <Button color="green" type="submit" onClick={() => handleSaveList}>
+                            <Button color="green" type="submit" onClick={handleSaveList}>
                                 SAVE LIST
                             </Button>
                         </div>
@@ -85,34 +85,39 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                 </>
             ) : (
                 <>
-                    <div className="d-flex justify-content-between mb-4">
-                        <div>
-                            <p><b>Client: </b>{list.client_name}</p>
-                            <p><b>Date Created: </b>{formatDate(list.date)}</p>
-                            <p><b>Last Updated: </b></p>
-                            <p><b>URL: </b><Input value={link} readOnly /></p>
+                    <div className="d-flex flex-column justify-content-evenly" style={{ height: "500px"}}>
+                        <div className="d-flex flex-row justify-content-evenly mb-1">
+                            <div>
+                                <p><b>Client: </b>{list.client_name}</p>
+                                <p><b>Date Created: </b>{formatDate(list.date)}</p>
+                                <p><b>Last Updated: </b></p>
+                                <p><b>URL: </b><Input value={link} readOnly style={{ width: '20rem' }} className="ms-3"/></p>
+                            </div>
+                            <div>
+                                <DeleteList list={list} handleCloseModal={handleCloseModal}/>
+                            </div>
                         </div>
-                        <div>
-                            <DeleteList list={list} handleCloseModal={handleCloseModal}/>
-                        </div>
-                    </div>
-                    <Divider />
-                    <div className="mt-4">
-                        <div className="d-flex justify-content-between">
-                            <h4>Option List</h4>
-                            <Button type="submit" onClick={() => handleEditList}>EDIT LIST</Button>
-                        </div>
-                        <div>
-                            <ul>
-                                {list.options.map(option => (
-                                    <li key={option.id}>
-                                        <div>
-                                            <b>{option.prop_name}</b>
-                                            <p>Rate: ${option.price} | Unit: {option.unit} | Layout: {option.layout} | Sq Ft: {option.sq_ft} | Available: {option.available} | Notes / Specials: {option.notes}</p>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
+                        <Divider />
+                        <div className="d-flex flex-row justify-content-evenly mt-1">
+                            <div className="d-flex justify-content-between flex-column text-wrap">
+                                <h4>Option List</h4>
+                                <div>
+                                    <ul>
+                                        {list.options.map(option => (
+                                            <li key={option.id}>
+                                                <div>
+                                                    <b>{option.prop_name}</b>
+                                                    <p>Rate: ${option.price} | Unit: {option.unit} | Layout: {option.layout} | Sq Ft: {option.sq_ft}<br></br>
+                                                        Available: {option.available} | Notes / Specials: {option.notes}</p>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div>
+                                <Button type="submit" onClick={handleEditList}>EDIT LIST</Button>
+                            </div>
                         </div>
                     </div>
                 </>

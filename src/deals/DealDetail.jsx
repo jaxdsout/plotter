@@ -1,4 +1,4 @@
-import { FormField, Divider, Form, Button } from "semantic-ui-react";
+import { Divider, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import DeleteDeal from "./DeleteDeal.jsx";
 import { load_deals, update_deal_status } from "../actions/agent.js";
@@ -60,8 +60,14 @@ function DealDetail ({ deal, handleCloseModal, update_deal_status, load_deals, u
                                 <Button disabled color="red">INVOICE OVERDUE</Button>
                                 <Button onClick={() => changeStatus(deal.id, 'paid')} color="green">SET PAID</Button>
                             </>
-                        ) : deal.staus === 'paid' (
-                            <p>DEAL PAID</p>
+                        ) : (
+                            <></>
+                        )}
+                        {deal.status === 'paid' ? (
+                                <Button disabled color="green">INVOICE PAID</Button>
+                        ) : (
+                            <>
+                            </>
                         )}
                         <Button>EDIT DEAL</Button>
                         <DeleteDeal deal={deal} handleCloseModal={handleCloseModal}/>

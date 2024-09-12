@@ -5,7 +5,8 @@ import {
     RESET_LIST_MODE,
     SET_LIST_MODE,
     SET_CLIENT_VIEW,
-    RESET_DEAL_FORM
+    RESET_DEAL_FORM,
+    CLEAR_MESSAGE
 } from "./types"
 
 
@@ -58,3 +59,9 @@ export const reset_deal_form = () => dispatch => {
     return Promise.resolve();
 };
 
+export const clear_message = () => dispatch => {
+    dispatch({
+        type: CLEAR_MESSAGE,
+    });
+    return Promise.resolve();
+};

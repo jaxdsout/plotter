@@ -1,4 +1,4 @@
-import { Divider, Form, Modal, Button, Input } from "semantic-ui-react";
+import { Divider, Modal, Button, Input } from "semantic-ui-react";
 import { useState, useEffect } from "react";
 import PropertySearch from "../listmaker/PropertySearch";
 import ClientSearch from "../listmaker/ClientSearch";

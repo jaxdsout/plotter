@@ -13,7 +13,6 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
     const [flatFee, setFlatFee] = useState(false);
 
     const [formData, setFormData] = useState({
-        agent: null,
         property: null,
         rent: '',
         rate: '',
@@ -22,6 +21,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
         move_date: '',
         unit_no: '',
         lease_term: '',
+        agent: null,
         client: null, 
     });
 
@@ -33,7 +33,8 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
         if (q_client) {
             setFormData(prevFormData => ({
                 ...prevFormData,
-                client: q_client.id
+                client: q_client.id,
+                agent: user.id
             }));
             setClientSel(true)
         }
@@ -65,7 +66,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
     const handleSubmit = async (e) => {
         e.preventDefault();
         await new_deal(property, unit_no, move_date, lease_term, rent, rate, flat_fee, commission, agent, client);
-        await load_deals(agent);
+        await load_deals(user.id);
         handleCloseModal();
     };
 

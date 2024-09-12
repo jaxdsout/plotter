@@ -22,7 +22,8 @@ import {
     DELETE_CLIENT_FAIL,
     DELETE_CLIENT_SUCCESS,
     NEW_CARD_FAIL,
-    NEW_CARD_SUCCESS
+    NEW_CARD_SUCCESS,
+    CLEAR_MESSAGE
 } from '../actions/types';
 
 const initialState = {
@@ -51,13 +52,22 @@ export default function agentReducer(state = initialState, action) {
                 ...state,
                 lists: payload
             }
+        case UPDATE_CLIENT_SUCCESS:
+            return {
+                ...state,
+                message: 'Client updated successfully'
+            }
+        case CLEAR_MESSAGE:
+            return {
+            ...state,
+            message: null
+        };
         case NEW_CLIENT_SUCCESS:
         case NEW_LIST_SUCCESS:
         case NEW_DEAL_SUCCESS:
         case NEW_CLIENT_FAIL:
         case NEW_LIST_FAIL:
         case NEW_DEAL_FAIL:
-        case UPDATE_CLIENT_SUCCESS:
         case UPDATE_CLIENT_FAIL:
         case UPDATE_PROFILE_SUCCESS:
         case UPDATE_PROFILE_FAIL:

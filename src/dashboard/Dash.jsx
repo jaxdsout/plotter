@@ -2,7 +2,7 @@ import GuestCard from './GuestCard';
 import EarningDonut from './EarningDonut';
 import EarningBar from './EarningBar';
 import { connect } from "react-redux";
-import { Divider, Button } from 'semantic-ui-react';
+import { Divider } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { load_deals } from '../actions/agent';

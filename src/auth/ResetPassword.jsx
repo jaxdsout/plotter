@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
 import { reset_password } from "../actions/auth";
@@ -19,7 +19,6 @@ function ResetPassword ({ reset_password }) {
 
     const handleSubmit = e => {
         e.preventDefault();
-
         reset_password(email)
         setRequestSent(true);
     }

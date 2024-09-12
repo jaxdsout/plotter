@@ -5,42 +5,36 @@ import { signup } from "../actions/auth";
 import { Button, Divider, Form, FormField, Message, Image } from "semantic-ui-react";
 import { useEffect } from "react";
 
-function Signup ({ signup, isAuthenticated, error }) {
+function Signup ({ signup, error }) {
     const navigate = useNavigate()
     const [account, setAccount] = useState(false)
 
     const [formData, setFormData] = useState({
+        email: '',
         first_name: '',
         last_name: '',
-        email: '',
         password: '',
         re_password: ''
     });
     
-    const { first_name, last_name, email, password, re_password } = formData;
+    const { email, first_name, last_name, password, re_password } = formData;
 
     const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (password === re_password) {
-            signup(first_name, last_name, email, password, re_password)
+            await signup(email, first_name, last_name, password, re_password)
             setAccount(true)
         }
         
     }
-
-
     useEffect(() => {
-        if (isAuthenticated) {
-            return navigate('/');
-        }
-        if (account) {
+        if (account && !error) {
             return navigate('/login/')
         }
     })
   
-
     return (
         <div className="container-sm sm w-50 pt-5 pb-5">
             <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1000.jpg"/>
@@ -50,7 +44,7 @@ function Signup ({ signup, isAuthenticated, error }) {
             <Form onSubmit={handleSubmit}>
                 {error && (
                     <Message negative>
-                        <Message.Header>Login Failed</Message.Header>
+                        <Message.Header>Signup Failed</Message.Header>
                         <p>{error}</p>
                     </Message>
                 )}

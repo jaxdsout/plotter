@@ -15,17 +15,32 @@ function NewClient({ user, load_clients, new_client }) {
 
     const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (user) {
-            new_client(user.id, first_name, last_name, email, phone_number)
+            await new_client(user.id, first_name, last_name, email, phone_number)
+            await load_clients(user.id)
+            setFormData({
+                first_name: '',
+                last_name: '',
+                email: '',
+                phone_number: '',
+            })
             handleCloseModal();
-            load_clients(user.id)
         }
     };
 
     const handleOpenModal = () => setShowModal(true);
-    const handleCloseModal = () => setShowModal(false);
+
+    const handleCloseModal = () => {
+        setFormData({
+            first_name: '',
+            last_name: '',
+            email: '',
+            phone_number: '',
+        })
+        setShowModal(false);
+    }
 
     return (
         <>

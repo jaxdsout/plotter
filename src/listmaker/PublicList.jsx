@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import MapBox from "./MapBox";
 import { useParams } from "react-router-dom";
 import { retrieve_list } from "../actions/listmaker";
 import { set_client_view } from "../actions/ui"
 import { Icon, Divider, ListItem, List } from "semantic-ui-react";
-import { Link } from "react-router-dom";
 
 function PublicList({ retrieve_list, retrlist, isClientView, set_client_view }) {
     const { uuid } = useParams();

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { Button, Form, FormField } from "semantic-ui-react";
-import { update_client } from "../actions/agent";
+import { Button, Form, FormField, Message } from "semantic-ui-react";
+import { load_clients, update_client } from "../actions/agent";
+import { clear_message } from "../actions/ui";
 
-function ClientDetail ({ client, update_client, user }) {
+function ClientDetail ({ client, update_client, user, load_clients, message, clear_message }) {
     const [formData, setFormData] = useState({
         agent: user.id,
         first_name: client.first_name || '',
@@ -12,15 +13,22 @@ function ClientDetail ({ client, update_client, user }) {
         phone_number: client.phone_number || '',
     });
 
+
+
     const clientID = client.id;
     
     const { agent, first_name, last_name, email, phone_number } = formData;
 
     const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        update_client(clientID, agent, first_name, last_name, email, phone_number);
+        await update_client(clientID, agent, first_name, last_name, email, phone_number);
+        await load_clients(user.id)
+
+        setTimeout(() => {
+            clear_message();
+        }, 3000);
     }
 
     return (
@@ -66,14 +74,23 @@ function ClientDetail ({ client, update_client, user }) {
                         required
                     />
                 </FormField>
+                <div className="d-flex justify-content-between align-items-center">
                 <Button type="submit">UPDATE CLIENT</Button>   
+
+                {message && (
+                    <Message positive size="mini">
+                        <Message.Header>{message}</Message.Header>
+                    </Message>
+                )}
+                </div>
             </Form>
         </>
     )
 }
 
 const mapStateToProps = state => ({
-    user: state.auth.user
+    user: state.auth.user,
+    message: state.agent.message
 });
 
-export default connect(mapStateToProps, { update_client })(ClientDetail);
+export default connect(mapStateToProps, { update_client, load_clients, clear_message })(ClientDetail);

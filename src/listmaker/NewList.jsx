@@ -9,7 +9,7 @@ import ClientSearch from "./ClientSearch";
 import SendList from "./SendList";
 import ShareURL from "./ShareURL";
 import { ReactComponent as Email } from '../components/envelope.svg';
-import { ReactComponent as Link } from '../components/link-45deg.svg';
+import { ReactComponent as LinkChain } from '../components/link-45deg.svg';
 import { new_list, reset_client, delete_list, new_option, reset_prop_results, reset_prop, load_options } from "../actions/listmaker";
 import { reset_list_mode, reset_send_mode, set_list_mode } from "../actions/ui"
 
@@ -52,7 +52,8 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
 
     const handleOpenURL = () => {
         if (list.uuid) {
-            window.open(`/list/${list.uuid}`, '_blank');
+            const fullURL = `${window.location.origin}/#/list/${list.uuid}`;
+            window.open(fullURL, '_blank');
         }
     };
 
@@ -130,7 +131,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                             <FormField>
                                                 <label>Open URL</label>
                                                 <Button onClick={handleOpenURL}>
-                                                    <Link/>
+                                                    <LinkChain/>
                                                 </Button>
                                             </FormField>
                                         </Form>
