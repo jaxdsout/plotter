@@ -31,7 +31,7 @@ function Login ({ login, isAuthenticated, error, message }) {
         <div className="container-sm sm w-50 pt-5">
             <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.jpg"/>
             <div className="mb-4">
-                <h6 className="noto-sans text-center"> sign into the platform </h6>
+                <h6 className="poetsen fs-1 text-center tagline"> sign into the platform </h6>
             </div>
             <Form onSubmit={handleSubmit}>
                 {error && (
@@ -67,7 +67,9 @@ function Login ({ login, isAuthenticated, error, message }) {
                         required
                     />
                 </FormField>
-                <Button type="submit">LOGIN</Button>   
+                <div className="d-flex justify-content-center">
+                    <Button type="submit">LOGIN</Button>   
+                </div>
             </Form>
             <Divider className="mt-4 mb-4" />
             <div className="d-flex flex-md-row justify-content-evenly flex-sm-column flex-column text-center">            

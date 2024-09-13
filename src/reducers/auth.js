@@ -32,7 +32,7 @@ export default function authReducer(state = initialState, action) {
             return {
                 ...state,
                 isAuthenticated: false,
-                error: 'Invalid signup credentials provided. Please review and adjust.'
+                message: 'Please check provided email address to activate account.',
             }
         case AUTHENTICATE_SUCCESS:
             return {
@@ -76,7 +76,7 @@ export default function authReducer(state = initialState, action) {
             };
         case SIGNUP_FAIL:
             return {
-                error: 'Invalid signup credentials',
+                error: 'Invalid signup credentials provided. Please review and adjust.',
                 ...state,
                 access: null,
                 refresh: null,

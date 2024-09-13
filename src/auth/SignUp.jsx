@@ -5,7 +5,7 @@ import { signup } from "../actions/auth";
 import { Button, Divider, Form, FormField, Message, Image } from "semantic-ui-react";
 import { useEffect } from "react";
 
-function Signup ({ signup, error }) {
+function Signup ({ signup, error, message }) {
     const navigate = useNavigate()
     const [account, setAccount] = useState(false)
 
@@ -17,14 +17,14 @@ function Signup ({ signup, error }) {
         re_password: ''
     });
     
-    const { email, first_name, last_name, password, re_password } = formData;
+    const { first_name, last_name, email, password, re_password } = formData;
 
     const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password === re_password) {
-            await signup(email, first_name, last_name, password, re_password)
+            await signup(first_name, last_name, email, password, re_password)
             setAccount(true)
         }
         
@@ -39,14 +39,20 @@ function Signup ({ signup, error }) {
         <div className="container-sm sm w-50 pt-5 pb-5">
             <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1000.jpg"/>
             <div className="mb-4">
-                <h6 className="noto-sans text-center"> sign up for the platform </h6>
+                <h6 className="poetsen fs-1 text-center tagline"> sign up for the platform </h6>
             </div>
             <Form onSubmit={handleSubmit}>
                 {error && (
-                    <Message negative>
+                    <Message negative size="mini">
                         <Message.Header>Signup Failed</Message.Header>
                         <p>{error}</p>
                     </Message>
+                )}
+                {message && (
+                        <Message positive size="mini">
+                            <Message.Header>Signup Successful</Message.Header>
+                            <p>{message}</p>
+                        </Message>
                 )}
                 <FormField>
                     <label className="noto-sans-upper label" htmlFor='first_name'>First Name:</label>
@@ -103,7 +109,9 @@ function Signup ({ signup, error }) {
                         required
                     />
                 </FormField>
-                <Button>SIGN UP</Button>   
+                <div className="d-flex justify-content-center">
+                    <Button>SIGN UP</Button>   
+                </div>
             </Form>
             <Divider className="mt-4 mb-4" />
             <div className="d-flex justify-content-evenly">            
@@ -115,7 +123,8 @@ function Signup ({ signup, error }) {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    error: state.auth.error
+    error: state.auth.error,
+    message: state.auth.message
 });
 
 export default connect(mapStateToProps, { signup })( Signup );
