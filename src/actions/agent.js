@@ -314,7 +314,7 @@ export const update_deal_status = (dealID, status) => async dispatch => {
 };
 
 
-export const load_lists = () => async dispatch => {
+export const load_lists = (userID) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
             headers: {
@@ -323,7 +323,7 @@ export const load_lists = () => async dispatch => {
             }
         }; 
         try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/lists/`, config);
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/lists/?agent=${userID}`, config);
             dispatch({
                 type: LOAD_LISTS_SUCCESS,
                 payload: res.data

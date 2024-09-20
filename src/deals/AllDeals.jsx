@@ -23,6 +23,7 @@ function AllDeals ({ load_deals, deals, user }) {
         if (user){
             load_deals(user.id);
         }
+        console.log("all_deals useffect")
     }, [load_deals, user])
 
     return (
@@ -54,7 +55,7 @@ function AllDeals ({ load_deals, deals, user }) {
                 </ul>
                 ) : (
                     <div className="text-center">
-                        <p>No deals to load.</p>
+                        <p>No deals to display.</p>
                     </div>
                 )}
             </div>

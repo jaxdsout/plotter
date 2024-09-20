@@ -17,6 +17,7 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
         if (user){
             load_lists(user.id);
         }
+        console.log("all_lists useffect")
     }, [load_lists, user])
     
 
@@ -51,6 +52,7 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
     return (
         <>
             <div className="overflow-y-auto plotterbox mt-3">
+                {lists.length > 0 ? ( 
                 <ul class="list-group hover">
                     {lists.map(list => (
                         <li class="list-group-item" key={list.id}>
@@ -78,6 +80,11 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
                         </li>
                     ))}
                 </ul>
+                ) : (
+                    <div className="text-center">
+                        <p>No lists to display.</p>
+                    </div>
+                )}
             </div>
         </>
     )

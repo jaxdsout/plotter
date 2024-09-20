@@ -27,6 +27,7 @@ function AllClients ({ load_clients, clients, user }) {
         if (user){
             load_clients(user.id);
         }
+        console.log("all_clients useffect")
     }, [load_clients, user])
 
 
@@ -46,9 +47,9 @@ function AllClients ({ load_clients, clients, user }) {
                                 <Modal.Content>
                                     <div className="d-flex pt-1 justify-content-between">
                                         <div>
-                                            <Button color="blue" onClick={() => handleTabChange("info")}>INFO</Button>
-                                            <Button color="blue" onClick={() => handleTabChange("lists")}>LISTS</Button>
-                                            <Button color="blue" onClick={() => handleTabChange("deals")}>DEALS</Button>
+                                            <Button color="blue" onClick={() => handleTabChange("info")} className="button_bg">INFO</Button>
+                                            <Button color="blue" onClick={() => handleTabChange("lists")} className="button_bg">LISTS</Button>
+                                            <Button color="blue" onClick={() => handleTabChange("deals")} className="button_bg">DEALS</Button>
                                         </div>
                                         <div>
                                             <DeleteClient client={client} handleCloseModal={handleCloseModal}/>
@@ -90,7 +91,7 @@ function AllClients ({ load_clients, clients, user }) {
                                                         </ul>
                                                 ) : (
                                                     <div className="text-center">
-                                                        <p>No deals to load.</p>
+                                                        <p>No deals to display.</p>
                                                     </div>
                                                 )}
                                                 </div>
@@ -108,7 +109,7 @@ function AllClients ({ load_clients, clients, user }) {
                 </ul>
                 ) : (
                     <div className="text-center">
-                        <p>Loading clients..</p>
+                        <p>No clients to display</p>
                     </div>
                 )
             }

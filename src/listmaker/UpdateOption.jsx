@@ -41,8 +41,8 @@ function UpdateOption ({ option, list, update_option, load_options }) {
         </Button>
         <div className="bg-body-secondary">
             <Modal open={showModal} onClose={handleCloseModal}>
-                <Modal.Header className="text-center bg-secondary-subtle">Update Option: {option.prop_name}</Modal.Header>
-                <Modal.Content className="bg-secondary-subtle">
+                <Modal.Header className="text-center">Update Option: {option.prop_name}</Modal.Header>
+                <Modal.Content className="bg-dark-subtle">
                     <Form onSubmit={handleSubmit}>
                         <FormField>
                             <label className="noto-sans" htmlFor='price'>Price:</label>

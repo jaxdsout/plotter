@@ -14,11 +14,11 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
         if (!deals) return [];
         const now = new Date();
         return deals
-            .filter(deal => deal.lease_end_date)  // Ensure lease_end_date exists
-            .map(deal => ({ ...deal, lease_end_date: new Date(deal.lease_end_date) }))  // Convert date strings to Date objects
-            .sort((a, b) => a.lease_end_date - b.lease_end_date)  // Sort by lease_end_date
-            .filter(deal => deal.lease_end_date >= now)  // Filter to only upcoming renewals
-            .slice(0, 5);  // Optional: Limit to top 5 upcoming renewals
+            .filter(deal => deal.lease_end_date)
+            .map(deal => ({ ...deal, lease_end_date: new Date(deal.lease_end_date) }))  
+            .sort((a, b) => a.lease_end_date - b.lease_end_date)  
+            .filter(deal => deal.lease_end_date >= now)  
+            .slice(0, 5);  
     };
 
 
@@ -26,11 +26,11 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
         if (!deals) return [];
         const now = new Date();
         return deals
-            .filter(deal => deal.move_date)  // Ensure move_date exists
-            .map(deal => ({ ...deal, move_date: new Date(deal.move_date) }))  // Convert date strings to Date objects
-            .sort((a, b) => a.move_date - b.move_date)  // Sort by move_date
-            .filter(deal => deal.move_date >= now)  // Filter to only upcoming move-ins
-            .slice(0, 5);  // Optional: Limit to top 5 upcoming move-ins
+            .filter(deal => deal.move_date)  
+            .map(deal => ({ ...deal, move_date: new Date(deal.move_date) }))  
+            .sort((a, b) => a.move_date - b.move_date) 
+            .filter(deal => deal.move_date >= now) 
+            .slice(0, 5);
     };
 
     useEffect(() => {
@@ -49,7 +49,7 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
     const move_ins = get_move_ins();
 
     return (
-        <div className='container pt-5 pb-5 bg-dark-subtle'>
+        <div className='container pt-5 pb-5 bg-body-tertiary rounded-4'>
             <div className='d-flex flex-column flex-sm-column flex-md-row justify-content-evenly align-items-center p-4'>
                 <div>
                     <EarningDonut />

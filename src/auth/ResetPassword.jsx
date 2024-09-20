@@ -31,13 +31,13 @@ function ResetPassword ({ reset_password }) {
         <div className="container-sm sm w-50 pt-5">
             <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1001.jpg"/>
             <div className="mb-4">
-                <h6 className="noto-sans"> request a new password </h6>
+                <h6 className="poetsen fs-1 text-center tagline"> sign into the platform </h6>
             </div>
             <Form onSubmit={handleSubmit}>
                 <FormField>
-                    <label className="noto-sans-upper label" htmlFor='email'>Email:</label>
+                    <label className="input_label" htmlFor='email'>Email:</label>
                     <input 
-                        className='form-control'
+                        className='input_bg'
                         type='email'
                         name='email'
                         value={email}
@@ -45,7 +45,9 @@ function ResetPassword ({ reset_password }) {
                         required
                     />
                 </FormField>
-                <Button className="noto-sans-upper" type="submit">RESET PASSWORD</Button>   
+                <div className="d-flex justify-content-center mt-4">
+                    <Button type="submit" className="button_bg">REQUEST NEW PASSWORD</Button>   
+                </div>            
             </Form>
         </div>
     )

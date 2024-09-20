@@ -75,7 +75,7 @@ function ClientDetail ({ client, update_client, user, load_clients, message, cle
                     />
                 </FormField>
                 <div className="d-flex justify-content-between align-items-center">
-                <Button type="submit">UPDATE CLIENT</Button>   
+                <Button type="submit" color="green">UPDATE CLIENT</Button>   
 
                 {message && (
                     <Message positive size="mini">

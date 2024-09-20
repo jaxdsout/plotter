@@ -107,7 +107,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
     return (
         <>
             <div className="d-flex justify-content-end align-items-end">
-                <Button color="blue" onClick={handleOpenModal}>+</Button>
+                <Button color="blue" onClick={handleOpenModal} className="button_bg">+</Button>
             </div>
             <div className="bg-body-secondary">
                 <Modal open={showModal} onClose={handleCloseModal}>
@@ -120,7 +120,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                                     {clientSel && client !== null ? (
                                         <Button color="black">CLIENT SELECTED</Button>
                                     ): (
-                                        <Button color="blue" type="submit">SELECT CLIENT</Button>
+                                        <Button className="button_bg" type="submit">SELECT CLIENT</Button>
                                     )}
                                 </Form>
                             </div>
@@ -130,7 +130,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                                     {propSel && property !== null ? (
                                         <Button color="black">PROPERTY SELECTED</Button>
                                     ): (
-                                        <Button color="blue" type="submit">SELECT PROPERTY</Button>
+                                        <Button className="button_bg" type="submit">SELECT PROPERTY</Button>
                                     )}
                                 </Form>
                             </div>

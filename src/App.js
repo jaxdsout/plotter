@@ -35,7 +35,7 @@ function App() {
         <Route path="/list/:uuid/" element={ <ClientList /> } />
         <Route path="*" element={<Navigate to="/home/" replace />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

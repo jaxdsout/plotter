@@ -279,9 +279,9 @@ export const clear_options = (listID) => async dispatch => {
 };
 
 
-export const set_search_client = (id, name) => dispatch => {
+export const set_search_client = (id, name, phone_number, email) => dispatch => {
     if (localStorage.getItem('access')) {
-        const client = { id, name };
+        const client = { id, name, phone_number, email };
         try {
             dispatch({
                 type: SET_SEARCH_CLIENT_SUCCESS,

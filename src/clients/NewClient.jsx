@@ -45,15 +45,15 @@ function NewClient({ user, load_clients, new_client }) {
     return (
         <>
             <div className="d-flex justify-content-end align-items-end">
-                <Button color="blue" onClick={handleOpenModal}>+</Button>
+                <Button color="blue" onClick={handleOpenModal} className="button_bg">+</Button>
             </div>
-            <div className="bg-body-secondary">
+            <div>
                 <Modal open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>Add New Client</Modal.Header>
                     <Modal.Content>
                         <Form onSubmit={handleSubmit}>
                             <FormField>
-                                <label className="noto-sans" htmlFor='first_name'>First Name:</label>
+                                <label htmlFor='first_name'>First Name:</label>
                                 <input
                                     type='text'
                                     name='first_name'
@@ -63,7 +63,7 @@ function NewClient({ user, load_clients, new_client }) {
                                 />
                             </FormField>
                             <FormField>
-                                <label className="noto-sans" htmlFor='last_name'>Last Name:</label>
+                                <label htmlFor='last_name'>Last Name:</label>
                                 <input
                                     type='text'
                                     name='last_name'
@@ -73,7 +73,7 @@ function NewClient({ user, load_clients, new_client }) {
                                 />
                             </FormField>
                             <FormField>
-                                <label className="noto-sans" htmlFor='email'>Email:</label>
+                                <label htmlFor='email'>Email:</label>
                                 <input
                                     type='email'
                                     name='email'
@@ -83,7 +83,7 @@ function NewClient({ user, load_clients, new_client }) {
                                 />
                             </FormField>
                             <FormField>
-                                <label className="noto-sans" htmlFor='phone_number'>Phone:</label>
+                                <label htmlFor='phone_number'>Phone:</label>
                                 <input
                                     type='text'
                                     name='phone_number'

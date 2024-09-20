@@ -24,7 +24,15 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
         const marker = new mapboxgl.Marker()
           .setLngLat([parseFloat(option.longitude), parseFloat(option.latitude)])
           .setPopup(new mapboxgl.Popup().setHTML(`
-            <h4>${option.prop_name}</h4><hr><a href=''>${option.address}<a>
+            <div>
+                <p>${option.image}</p>
+                <img src="${option.image}" alt="option"/>
+                <h4>${option.prop_name}</h4>
+                <hr>
+                <a href=''>${option.address}<a>
+
+
+            </div>
           `))
           .addTo(map);
 
@@ -32,7 +40,7 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
       });
 
       map.fitBounds(bounds, {
-        padding: 50,
+        padding: 70,
         maxZoom: 15, 
         duration: 1000  
       });
@@ -46,7 +54,7 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
   return (
     <>
     {isClientView ? (
-      <div id="MAPBOXBOX" className='h-100' />
+      <div id="MAPBOXBOX" style={{ height: "45rem"}} className='rounded-4' />
     ) : isListMode ? (
       <div id="MAPBOXBOX" style={{ height: "30rem", width: "30rem" }} />
     ) : (

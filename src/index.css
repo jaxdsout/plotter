@@ -5,10 +5,18 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(161, 161, 161);
+  background-color: #353941 !important;
+}
+
+#root {
+  background-color: #353941;
 }
 
 
+
+.container_bg {
+  background-color: #26282B;
+}
 
 /* FONTS */
 .noto-sans {
@@ -25,15 +33,22 @@ body {
 }
 
 .tagline {
-  color: rgb(52, 110, 184);
-}
-
-.signup:hover {
-  color: rgb(38, 89, 155);
-
+  color: #5F85DB;
 }
 
 
+.navlogo {
+  color: #5F85DB !important;
+  font-size: 3rem;
+}
+
+.navlogo:hover, .signup:hover {
+  color: #5475c1 !important;
+}
+
+.input-color {
+  color: red !important
+}
 
 /* BOOTSTRAP EXCEPTIONS */
 
@@ -47,4 +62,61 @@ body {
 
 .plotterbox {
   height: 40rem;
+}
+
+/* NAVBAR */
+
+.navbar {
+  background-color: #26282B;
+}
+
+.dashnav_button {
+  color: #26282B;
+  font-family: "Poetsen One", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  font-style: normal;
+}
+
+.dashnav_button:active {
+  color:#5475c1
+}
+
+.dashnav_button:hover {
+  color:#5F85DB
+}
+
+.navbar_list {
+  background-color: #202122;
+}
+
+
+/* BUTTONS */
+
+.button_bg {
+  background-color: #90B8F8 !important;
+}
+
+.button_bg:hover {
+  background-color: #5F85DB !important;
+}
+
+/*  INPUT & FORMS */
+
+.input_bg {
+  color: white !important;
+  background-color: rgba(0, 0, 0, 0.293) !important;
+}
+
+.input_label, .text_custom {
+  color: white !important
+}
+
+
+
+/* MODALS */
+
+
+.modal_content {
+  background-color: #353941 !important;
 }

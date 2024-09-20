@@ -37,7 +37,7 @@ function Signup ({ signup, error, message }) {
   
     return (
         <div className="container-sm sm w-50 pt-5 pb-5">
-            <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1000.jpg"/>
+            <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1000.png"/>
             <div className="mb-4">
                 <h6 className="poetsen fs-1 text-center tagline"> sign up for the platform </h6>
             </div>
@@ -55,9 +55,9 @@ function Signup ({ signup, error, message }) {
                         </Message>
                 )}
                 <FormField>
-                    <label className="noto-sans-upper label" htmlFor='first_name'>First Name:</label>
+                    <label className="input_label" htmlFor='first_name'>First Name:</label>
                     <input 
-                        className='form-control'
+                        className="input_bg"
                         type='text'
                         name='first_name'
                         value={first_name}
@@ -66,9 +66,9 @@ function Signup ({ signup, error, message }) {
                     />
                 </FormField>
                 <FormField>
-                    <label className="noto-sans-upper label" htmlFor='last_name'>Last Name:</label>
+                    <label className="input_label" htmlFor='last_name'>Last Name:</label>
                     <input 
-                        className='form-control'
+                        className="input_bg"
                         type='text'
                         name='last_name'
                         value={last_name}
@@ -77,9 +77,9 @@ function Signup ({ signup, error, message }) {
                     />
                 </FormField>
                 <FormField>
-                    <label className="noto-sans-upper label" htmlFor='email'>Email:</label>
+                    <label className="input_label" htmlFor='email'>Email:</label>
                     <input 
-                        className='form-control'
+                        className="input_bg"
                         type='email'
                         name='email'
                         value={email}
@@ -88,9 +88,9 @@ function Signup ({ signup, error, message }) {
                     />
                 </FormField>
                 <FormField>
-                <label className="noto-sans-upper label" htmlFor='password'>Password:</label>
+                <label className="input_label" htmlFor='password'>Password:</label>
                     <input 
-                        className='form-control'
+                        className="input_bg"
                         type='password'
                         name='password'
                         value={password}
@@ -99,9 +99,9 @@ function Signup ({ signup, error, message }) {
                     />
                 </FormField>
                 <FormField>
-                <label className="noto-sans-upper label" htmlFor='re_password'>Re-Enter Password:</label>
+                <label className="input_label" htmlFor='re_password'>Re-Enter Password:</label>
                     <input 
-                        className='form-control'
+                        className="input_bg"
                         type='password'
                         name='re_password'
                         value={re_password}
@@ -109,13 +109,13 @@ function Signup ({ signup, error, message }) {
                         required
                     />
                 </FormField>
-                <div className="d-flex justify-content-center">
-                    <Button>SIGN UP</Button>   
+                <div className="d-flex justify-content-center mt-4">
+                    <Button className="button_bg">SIGN UP</Button>   
                 </div>
             </Form>
             <Divider className="mt-4 mb-4" />
-            <div className="d-flex justify-content-evenly">            
-                <h6 className="noto-sans">already have an account? <Link to={"/login/"}>Login</Link></h6>
+            <div className="d-flex justify-content-evenly mt-4">            
+                <h6 className="noto-sans text_custom">already have an account? <Link to={"/login/"}>Login</Link></h6>
             </div>
         </div>
     )

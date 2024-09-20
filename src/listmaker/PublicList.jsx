@@ -30,22 +30,21 @@ function PublicList({ retrieve_list, retrlist, isClientView, set_client_view }) 
         <div className="d-flex flex-column">
             {isClientView && retrlist !== null ? (
                 <>
-                    <div className="navbar p-5 bg-body-secondary">
-                        <h2>{retrlist.client_name}</h2>
+                    <div className="navbar_list p-5">
+                        <h2 className="text-center text-white">{retrlist.client_name}</h2>
                     </div>
-                    <div className="d-flex flex-column p-5 align-items-center">
-                        <div className="w-75">
+                    <div className="d-flex flex-column flex-md-row flex-sm-column p-3 align-items-start">
+                        <div className="w-100 p-3">
                             <MapBox retr_options={retrlist.options}/>
                         </div>
-                        <Divider/>
-                        <div className="p-5 w-75">  
+                        <div className="p-3 overflow-y-scroll w-100" style={{ height: "46rem", maxWidth: "40rem"}}>  
                             <List className="list-group">
                                 {retrlist.options.map(option => (
-                                    <div className="mb-4">   
-                                        <ListItem className="d-flex flex-row justify-content-between list-group-item bg-secondary-subtle">
-                                            <h4>{option.prop_name}</h4>
+                                    <div className="mb-4 rounded-4">   
+                                        <ListItem className="d-flex flex-row justify-content-between list-group-item navbar_list pt-3 text-white">
+                                            <h4 className="">{option.prop_name}</h4>
                                             <a href={`https://${option.website}`} target="_blank" rel="noopener noreferrer">
-                                                <Icon name="linkify" />
+                                                <Icon name="external alternate" />
                                             </a>
                                         </ListItem>
                                         <ListItem className="list-group-item">${option.price}</ListItem>
@@ -62,9 +61,9 @@ function PublicList({ retrieve_list, retrlist, isClientView, set_client_view }) 
                             </List>
                         </div>
                     </div>
-                    <div className='navbar p-5 bg-body-secondary'>
-                        <p>Prepared by {retrlist.agent_name}</p>
-                        <p>{formatDate(retrlist.date)}</p>
+                    <div className='p-5 d-flex flex-column text-center'>
+                        <p className="text-white">Prepared by {retrlist.agent_name}</p>
+                        <p className="text-white">{formatDate(retrlist.date)}</p>
                     </div>
                 </>
             )

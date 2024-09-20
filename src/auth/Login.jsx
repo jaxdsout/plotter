@@ -29,7 +29,7 @@ function Login ({ login, isAuthenticated, error, message }) {
 
     return (
         <div className="container-sm sm w-50 pt-5">
-            <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.jpg"/>
+            <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.png"/>
             <div className="mb-4">
                 <h6 className="poetsen fs-1 text-center tagline"> sign into the platform </h6>
             </div>
@@ -46,9 +46,9 @@ function Login ({ login, isAuthenticated, error, message }) {
                 </Message>
                 )}
                 <FormField>
-                <label className="noto-sans-upper label" htmlFor='email'>Email:</label>
+                <label className="input_label" htmlFor='email'>Email:</label>
                     <input 
-                        className='form-control'
+                        className="input_bg"
                         type='email'
                         name='email'
                         value={email}
@@ -57,9 +57,9 @@ function Login ({ login, isAuthenticated, error, message }) {
                     />
                 </FormField>
                 <FormField>
-                <label className="noto-sans-upper label" htmlFor='password'>Password:</label>
+                <label className="input_label" htmlFor='password'>Password:</label>
                     <input 
-                        className='form-control'
+                        className="input_bg"
                         type='password'
                         name='password'
                         value={password}
@@ -68,13 +68,13 @@ function Login ({ login, isAuthenticated, error, message }) {
                     />
                 </FormField>
                 <div className="d-flex justify-content-center">
-                    <Button type="submit">LOGIN</Button>   
+                    <Button type="submit" className="button_bg">LOGIN</Button>   
                 </div>
             </Form>
             <Divider className="mt-4 mb-4" />
             <div className="d-flex flex-md-row justify-content-evenly flex-sm-column flex-column text-center">            
-                <h6 className="noto-sans">don't have an account? <Link to={"/signup/"}>Signup</Link></h6>
-                <h6 className="noto-sans">forgot your password? <Link to={"/reset-password/"}>Reset</Link></h6>                      
+                <h6 className="noto-sans text-white">don't have an account? <Link to={"/signup/"}>Signup</Link></h6>
+                <h6 className="noto-sans text-white">forgot your password? <Link to={"/reset-password/"}>Reset</Link></h6>                      
             </div>
         </div>
     )

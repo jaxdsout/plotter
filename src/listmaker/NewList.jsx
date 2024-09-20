@@ -85,9 +85,9 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
     return (
         <>
             <div className="d-flex justify-content-end align-items-end">
-                <Button color="blue" onClick={handleOpenModal}>+</Button>
+                <Button color="blue" onClick={handleOpenModal} className="button_bg">+</Button>
             </div>
-            <div className="bg-body-secondary">
+            <div>
                 <Modal open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>
                         {isListMode ? (
@@ -106,7 +106,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                         <div className="d-flex flex-row align-items-center">
                                             <PropertySearch />
                                             <Form onSubmit={() => handlePropertyAdd(list, property)}>
-                                                <Button color="blue" type="submit">ADD PROPERTY</Button>
+                                                <Button className="button_bg" type="submit">ADD PROPERTY</Button>
                                             </Form>
                                         </div>
                                         <Divider />
@@ -152,7 +152,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                     <div className="d-flex flex-row align-items-center">
                                         <ClientSearch />
                                         <Form onSubmit={handleCreateList} className="ps-3">
-                                            <Button color="blue" type="submit">START LIST</Button>
+                                            <Button className="button_bg" type="submit">START LIST</Button>
                                         </Form>
                                     </div>
                                     {error === "client" && (

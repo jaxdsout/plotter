@@ -17,7 +17,7 @@ function Activate ({ activate, message }) {
     }
 
     if (verify) {
-        setTimeout(() => { navigate('/login/') }, 5000)
+        setTimeout(() => { navigate('/login/') }, 2000)
     }
 
     return (
@@ -27,13 +27,7 @@ function Activate ({ activate, message }) {
                 <p className="poetsen fs-1 text-center tagline"> activate your account </p>
             </div>
             <div className="d-flex justify-content-center mt-5">
-                <Button onClick={activate_account} type='button'>ACTIVATE</Button>
-                {message && (
-                <Message positive size="mini">
-                    <Message.Header>Activation Successful</Message.Header>
-                    <p>{message}</p>
-                </Message>
-                )}
+                <Button onClick={activate_account} type='button' className="button_bg">ACTIVATE</Button>
             </div>
         </>
     )

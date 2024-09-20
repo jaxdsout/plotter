@@ -36,7 +36,7 @@ function EarningBar ({ deals }) {
       {
         label: 'Sales',
         data: monthlyEarnings,
-        backgroundColor: 'rgb(52, 109, 183)',
+        backgroundColor: '#5F85DB',
         borderColor: 'rgb(52, 109, 183)',
         borderWidth: 1,
       },

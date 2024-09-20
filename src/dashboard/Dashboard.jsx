@@ -43,12 +43,12 @@ function Dashboard ({ load_user, auth_user, refresh_token, access, isAuthenticat
 
     return (    
         <div className='container mb-5 mt-5'>
-            <div className='z-0 navbar p-5 bg-body-secondary'>
-                <Link to="/dashboard/home"><Home className='icon' /></Link>
-                <Link className='poetsen tabs' to="/dashboard/clients">clients</Link>
-                <Link className='poetsen tabs' to="/dashboard/lists">lists</Link>
-                <Link className='poetsen tabs' to="/dashboard/deals">deals</Link>
-                <Link className='poetsen tabs' onClick={handleProfileWidget}>
+            <div className='z-0 navbar p-5 bg-body-tertiary rounded-4 mb-4'>
+                <Link to="/dashboard/home"><Home className='icon dashnav_button' /></Link>
+                <Link className='dashnav_button tabs' to="/dashboard/clients">clients</Link>
+                <Link className='dashnav_button tabs' to="/dashboard/lists">lists</Link>
+                <Link className='dashnav_button tabs' to="/dashboard/deals">deals</Link>
+                <Link className='dashnav_button tabs' onClick={handleProfileWidget}>
                     <Person className="icon"/>
                 </Link>
             </div>
@@ -57,12 +57,12 @@ function Dashboard ({ load_user, auth_user, refresh_token, access, isAuthenticat
                     <ProfileWidget /> 
                 </div>
             )}
-            <div>
+            <>
                 {basePath === 'home' && <Dash />}
                 {basePath === 'clients' && <Clients />}
                 {basePath === 'lists' && <Lists />}
                 {basePath === 'deals' && <Deals />}
-            </div>
+            </>
         </div>
     )
 }

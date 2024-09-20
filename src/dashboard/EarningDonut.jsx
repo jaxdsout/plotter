@@ -35,7 +35,7 @@ function EarningDonut ({ deals }) {
     if (deals) {
       statusfy_deals();
     }
-  }, [deals])
+  }, [deals, ])
 
   const data = {
     labels: ['Not Invoiced', 'Pending', 'Overdue', 'Paid'],
@@ -43,7 +43,7 @@ function EarningDonut ({ deals }) {
       {
         label: 'Sales',
         data: statusEarnings,
-        backgroundColor: ['rgba(54, 162, 235)', 'rgba(255, 206, 86)', 'rgba(255, 99, 132)', 'rgba(75, 192, 192)'],
+        backgroundColor: ['#5F85DB', '#FABC3F', '#C7253E', '#387F39'],
         borderWidth: 1,
       },
     ],

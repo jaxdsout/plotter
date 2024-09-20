@@ -11,7 +11,7 @@ function ClientSearch ({ client_results, search_clients, userID, set_search_clie
     };
 
     const handleResultSelect =  (e, { result }) => {
-        set_search_client(result.id, result.title);
+        set_search_client(result.id, result.title, result.phone_number, result.email);
     };
 
     const handleBlur =  () => {
@@ -31,7 +31,9 @@ function ClientSearch ({ client_results, search_clients, userID, set_search_clie
                     onBlur={handleBlur}
                     results={client_results.map(result => ({
                         title: `${result.first_name} ${result.last_name}`,
-                        id: result.id
+                        id: result.id,
+                        phone_number: result.phone_number,
+                        email: result.email
                     }))}
                     on
                     id='client_start_list'
