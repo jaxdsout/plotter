@@ -3,7 +3,7 @@ import { Image, Divider } from "semantic-ui-react";
 
 function Landing() {
     return (
-        <div className="d-flex flex-column align-items-center justifyc-content-evenly body_bg">  
+        <div className="d-flex flex-column align-items-center justify-content-evenly body_bg">  
             <div className="container">
                 <div className="container mb-3 mt-4">                
                         <Image className="plotter-banner" src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1006.png" />
@@ -11,19 +11,19 @@ function Landing() {
                 </div>
                 <div className="container-fluid w-75 p-5 d-flex flex-column flex-lg-row container_bg rounded-4">
                     <div className="d-flex flex-column pe-4 ps-4">
-                        <p className="text-white">Our goal at plotter is to make apartment locating a more streamlined process for the real estate agent. Rather than utilize multiple software technologies or outmoded designs, plotter aims to become your one-stop shop for locating. </p>
-                        <p className="text-white">The platform is built on three pillars: clients, lists, and deals. At the heart of your business is your client. Your whole reason for making that coffee each morning is to find your client the best options which fit their needs and timeline. Plotter understands this so we have centralized everything under the client first and foremost.</p>
+                        <p className="text-white">At Plotter, our mission is to streamline the apartment locating process for real estate agents. Instead of juggling multiple platforms or outdated tools, Plotter is designed to be your one-stop shop for finding the perfect home. </p>
+                        <p className="text-white">The platform is built on three core pillars: clients, lists, and deals. At the heart of your business is your client. The reason you brew that morning coffee is to help them find the best options that suit their needs and timeline. Plotter understands this, so we’ve centralized everything around your client to make their journey as smooth as possible.</p>
                         <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1008.png" />
                     </div>
                     <div className="d-flex flex-column pe-4 ps-4">
-                        <p className="text-white">The second pillar is the listmaking feature of plotter. The real meat & potatoes as they say. While in list mode, you will be able to index across all of the properties in your respective area. Once selected, you can specify details for their unit and any specials or notes. Whenever you're ready to hit send, plotter will package everything up neatly into a unique link that you can share with your client.</p>
+                        <p className="text-white">The second pillar is our powerful list-making feature—the true workhorse of Plotter. While in list mode, you can browse properties across your region, select units, and add any important details, such as specials or notes. When you're ready to send, Plotter packages everything into a unique, shareable link for your client.</p>
                         <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1009.png" />  
-                        <p className="text-white">The third pillar of the platform is deals. Once you find someone the perfect place to call home, it makes a lot of sense to track the details of their lease. Along with notifying you when something is overdue. Plotter has you handled on all fronts when it comes to deals utilizing a daily dashboard.</p>
+                        <p className="text-white">The third pillar is deals. Once you've found your client the perfect place, it’s crucial to track their lease details and stay on top of deadlines. Plotter’s deal-tracking tools notify you about important updates, so nothing slips through the cracks.</p>
                     </div>
                     <div className="d-flex flex-column pe-4 ps-4">
                         <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1010.png" />  
-                        <p className="text-white">The dashboard is also where you will find daily stats like upcoming client move-ins or past client renewal timeframes. We are also developing a full stats pillar (yay!) so you can track everything from most recommended properties to most leased at to dare we say, the moon.</p>
-                        <p className="text-white">Plotter is currently 100% free for any licensed real estate agent to use. Simply sign up and provide your TREC details after activating your account! A member of our team will then confirm everything is okay. Once confirmed, you'll be free to start plotting full-time! </p>
+                        <p className="text-white">From your dashboard, you'll also see daily stats like upcoming move-ins and renewal timeframes. We’re currently developing a comprehensive stats feature (exciting, right?) to track everything from most-recommended properties to most-leased, and beyond.</p>
+                        <p className="text-white">Plotter is 100% free for licensed real estate agents. Simply sign up, provide your TREC details after activating your account, and a member of our team will confirm everything. Once verified, you're all set to start plotting full-time! </p>
                     </div>
                 </div>
             </div>
