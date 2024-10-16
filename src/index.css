@@ -42,10 +42,6 @@ body {
   font-size: 3rem;
 }
 
-.signup {
-  font-size: 4rem !important;
-}
-
 .navlogo:hover, .signup:hover {
   color: #5475c1 !important;
 }
