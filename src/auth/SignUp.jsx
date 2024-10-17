@@ -37,9 +37,9 @@ function Signup ({ signup, error, message }) {
   
     return (
         <div className="container-sm sm w-50 pt-5 pb-5">
-            <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1000.png"/>
-            <div className="mb-4">
-                <h6 className="poetsen fs-1 text-center tagline"> sign up for the platform </h6>
+            <div className="mb-4 d-flex flex-column align-items-center">
+                <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1000.png" className="art_thumb"/>
+                <h6 className="poetsen tagline text-nowrap"> sign up for the platform </h6>
             </div>
             <Form onSubmit={handleSubmit}>
                 {error && (
@@ -114,8 +114,9 @@ function Signup ({ signup, error, message }) {
                 </div>
             </Form>
             <Divider className="mt-4 mb-4" />
-            <div className="d-flex justify-content-evenly mt-4">            
-                <h6 className="noto-sans text_custom">already have an account? <Link to={"/login/"}>Login</Link></h6>
+            <div className="d-flex flex-column align-items-center justify-content-evenly mt-4">            
+                <h6 className="noto-sans text_custom mb-4">already have an account?</h6>
+                <Link to={"/login/"}><Button inverted>LOGIN</Button></Link>
             </div>
         </div>
     )

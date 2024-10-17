@@ -1,4 +1,3 @@
-import { ReactComponent as Trash } from '../components/trash.svg';
 import { Button, Popup } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { delete_option, load_options } from '../actions/listmaker';
@@ -39,13 +38,13 @@ function DeleteOption ( { delete_option, load_options, option, list}) {
                             color="red"
                             onClick={() => handleDelete(option.id, list)}
                         >
-                            <Trash />
+                            <i class="user circle icon"></i>
                         </Button>
                     }
                 />
             ) : (
                 <Button type="submit" onClick={() => handleDeleteConfirm(option.id)}>
-                    <Trash />
+                    <i class="trash alternate icon"></i>
                 </Button>
             )}
         </>

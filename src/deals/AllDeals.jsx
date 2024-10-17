@@ -5,8 +5,6 @@ import DealDetail from "./DealDetail";
 import { Modal, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { load_deals } from "../actions/agent";
-import { ReactComponent as InfoSquare } from '../components/info-square.svg';
-
 
 function AllDeals ({ load_deals, deals, user }) {
     const [showDealDetail, setShowDealDetail] = useState(null);
@@ -36,7 +34,7 @@ function AllDeals ({ load_deals, deals, user }) {
                             <div className="d-flex justify-content-between">
                                 <span><b>{deal.client_name}</b> | {deal.prop_name} | Move-in Date: {deal.move_date}</span>
                                 <Link onClick={() => handleOpenModal(deal.id)}>
-                                    <InfoSquare/>
+                                    <i class="ellipsis horizontal icon"></i>
                                 </Link>
                             </div>
                             {showDealDetail === deal.id && (

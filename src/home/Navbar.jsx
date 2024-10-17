@@ -12,37 +12,33 @@ function Navbar ({ logout, isAuthenticated, isClientView, reset_client_view }) {
         navigate("/login/")
     }
 
-    const redirect_client = async () => {
-        await reset_client_view();
-        navigate("/home/")
-    }
-
-    const logo_click = async () => {
+    const logo_click =  () => {
         if (isClientView) {
-            await reset_client_view();
-            navigate("/home/")
-        } else if (isAuthenticated) {
-            navigate("/dashboard/home/")
-        } else {
+            reset_client_view();
             navigate("/")
+        } else {
+            navigate("/home/")
         }
+
+        if (isAuthenticated) {
+            navigate("/dashboard/home/")
+        } 
+
     }
 
     return (
-        <nav className='navbar p-5'>
-                <Link onClick={logo_click}><h1 className='poetsen navlogo'>plotter</h1></Link>                    
-                {isAuthenticated ? 
-                    <>
-                        <Button onClick={logout_user}>LOGOUT</Button>      
-                    </>
-                : 
-                    <div>
-                        <Link to={"/signup/"}><Button className='button_bg'>SIGN UP</Button></Link>
-                        <Link to={"/login/"}><Button>LOGIN</Button></Link>
-                    </div>
-                }
-                
-        </nav>
+        <>
+        {isClientView ? (
+            <nav className='text-center p-5 container_bg'>
+                <h1 className='poetsen navlogo' onClick={logo_click}>plotter</h1>
+            </nav>
+        ) : (
+            <nav className='navbar p-5'>
+                <h1 className='poetsen navlogo' onClick={logo_click}>plotter</h1>
+                {isAuthenticated ? <Button onClick={logout_user}>LOGOUT</Button> : <Link to={"/login/"}><Button>LOGIN</Button></Link>}
+            </nav>          
+        )}
+        </>
     )
 }
 

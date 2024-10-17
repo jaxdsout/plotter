@@ -6,7 +6,6 @@ import ListDetail from "./ListDetail";
 import { load_lists } from "../actions/agent";
 import { connect } from "react-redux";
 import { reset_list_mode, reset_send_mode } from "../actions/ui";
-import { ReactComponent as InfoSquare } from '../components/info-square.svg';
 
 
 function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, isListMode }) {
@@ -59,7 +58,7 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
                             <div className="d-flex justify-content-between">
                                 <span>{list.client_name} - {formatDate(list.date)}</span>
                                 <Link onClick={() => handleOpenModal(list.id)}>
-                                    <InfoSquare/>
+                                    <i class="ellipsis horizontal icon"></i>
                                 </Link>
                             </div>                 
                         {showListDetail === list.id && (
