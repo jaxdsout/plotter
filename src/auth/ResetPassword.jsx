@@ -29,9 +29,9 @@ function ResetPassword ({ reset_password }) {
 
     return (
         <div className="container-sm sm w-50 pt-5">
-            <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1001.jpg"/>
-            <div className="mb-4">
-                <h6 className="poetsen fs-1 text-center tagline"> sign into the platform </h6>
+            <div className="mb-4 d-flex flex-column align-items-center">
+                <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1001.jpg"/>
+                <h6 className="poetsen tagline text-nowrap"> sign into the platform </h6>
             </div>
             <Form onSubmit={handleSubmit}>
                 <FormField>

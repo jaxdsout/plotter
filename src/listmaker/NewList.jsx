@@ -8,8 +8,6 @@ import ClearOptions from "./ClearOptions";
 import ClientSearch from "./ClientSearch";
 import SendList from "./SendList";
 import ShareURL from "./ShareURL";
-import { ReactComponent as Email } from '../components/envelope.svg';
-import { ReactComponent as LinkChain } from '../components/link-45deg.svg';
 import { new_list, reset_client, delete_list, new_option, reset_prop_results, reset_prop, load_options } from "../actions/listmaker";
 import { reset_list_mode, reset_send_mode, set_list_mode } from "../actions/ui"
 
@@ -91,9 +89,9 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                 <Modal open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>
                         {isListMode ? (
-                            <p>Add Options to {client.name}'s New List</p>
+                            <p>New List: {client.name}</p>
                         ) : isSendMode ? (
-                            <p>Share New List with {client.name}</p>
+                            <p>New List: {client.name}</p>
                         ) : (
                             <p>Create New List</p>
                         )}
@@ -101,25 +99,19 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                     <Modal.Content>
                         <>
                             {isListMode ? (
-                                <div className="d-flex justify-content-evenly" style={{ height: "500px"}}>
-                                    <div className="">
-                                        <div className="d-flex flex-row align-items-center">
+                                <div className="d-flex flex-column flex-lg-row justify-content-evenly">
+                                    <div>
+                                        <div className="d-flex flex-column flex-lg-row align-items-center">
                                             <PropertySearch />
-                                            <Form onSubmit={() => handlePropertyAdd(list, property)}>
+                                            <Form onSubmit={() => handlePropertyAdd(list, property)} className="p-3">
                                                 <Button className="button_bg" type="submit">ADD PROPERTY</Button>
                                             </Form>
                                         </div>
                                         <Divider />
                                         <OptionList />
                                     </div>
-                                    <div className="">
-                                        <MapBox />
-                                        <Divider />
-                                        <div className="d-flex flex-row justify-content-between align-items-center">
-                                            <ClearOptions />
-                                            <SendList />
-                                        </div>
-                                    </div>
+                                    <Divider />
+                                    <MapBox />                                                      
                                 </div>
                             ) : isSendMode ? (
                                 <div className="d-flex justify-content-evenly align-items-center" style={{ height: "500px"}}>
@@ -131,7 +123,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                             <FormField>
                                                 <label>Open URL</label>
                                                 <Button onClick={handleOpenURL}>
-                                                    <LinkChain/>
+                                                    <i class="linkify icon"></i>
                                                 </Button>
                                             </FormField>
                                         </Form>
@@ -141,22 +133,22 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                             <FormField>
                                                 <label>Send Email</label>
                                                 <Button>
-                                                    <Email/>
+                                                    <i class="paper plane icon"></i>
                                                 </Button>
                                             </FormField>
                                         </Form>
                                     </div>
                                 </div>
                             ) : (
-                                <div className="d-flex flex-column justify-content-center align-items-center" style={{ height: "500px"}}>
-                                    <div className="d-flex flex-row align-items-center">
+                                <div className="d-flex flex-column flex-row-lg justify-content-evenly" style={{ height: "500px"}}>
+                                    <div className="d-flex flex-column flex-row-lg align-items-center">
                                         <ClientSearch />
-                                        <Form onSubmit={handleCreateList} className="ps-3">
+                                        <Form onSubmit={handleCreateList} className="p-3">
                                             <Button className="button_bg" type="submit">START LIST</Button>
                                         </Form>
                                     </div>
                                     {error === "client" && (
-                                        <div className="mt-4">
+                                        <div>
                                             <Message negative onDismiss={handleErrorReset}>
                                                 <Message.Header>Client Not Added</Message.Header>
                                                 <p>Please choose client to start list</p>
@@ -168,10 +160,16 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                         </>
                     </Modal.Content>
                     <Modal.Actions>
-                        <div className="d-flex justify-content-between">
+                        <div className="d-flex justify-content-between pb-2">
                         <>
                         {isListMode ? (
-                            <Button onClick={handleOpenResetModal}>BACK</Button>
+                            <>
+                                <Button onClick={handleOpenResetModal}>BACK</Button>
+                                <div>
+                                    <ClearOptions />
+                                    <SendList />
+                                </div>
+                            </>
                         ) : isSendMode ? (
                             <>
                                 <Button onClick={handleEditList}>BACK</Button>

@@ -34,6 +34,7 @@ body {
 
 .tagline {
   color: #5F85DB;
+  font-size: 2rem;
 }
 
 
@@ -48,6 +49,10 @@ body {
 
 .input-color {
   color: red !important
+}
+
+.clientnav {
+  background-color: rgb(28, 30, 32);
 }
 
 /* BOOTSTRAP EXCEPTIONS */
@@ -119,4 +124,10 @@ body {
 
 .modal_content {
   background-color: #353941 !important;
+}
+
+
+
+.art_thumb {
+  min-width: 24rem !important;
 }

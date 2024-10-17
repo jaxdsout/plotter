@@ -1,6 +1,4 @@
 import { Form, FormField, Button, Modal } from "semantic-ui-react";
-import { ReactComponent as Edit } from '../components/pencil-square.svg';
-
 import { useState } from "react";
 import { connect } from "react-redux";
 import { load_options, update_option } from "../actions/listmaker";
@@ -37,7 +35,7 @@ function UpdateOption ({ option, list, update_option, load_options }) {
     return(
         <>
         <Button onClick={handleOpenModal}>
-            <Edit />
+            <i class="edit icon"></i>
         </Button>
         <div className="bg-body-secondary">
             <Modal open={showModal} onClose={handleCloseModal}>

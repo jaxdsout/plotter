@@ -1,4 +1,3 @@
-import { ReactComponent as Trash } from '../components/trash.svg';
 import { Button, Popup } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { delete_deal, load_deals } from '../actions/agent';
@@ -43,13 +42,13 @@ function DeleteDeal({ delete_deal, load_deals, deal, handleCloseModal, user }) {
                         color="red"
                         onClick={() => handleDelete(deal.id, user.id)}
                     >
-                        <Trash />
+                        <i class="trash alternate icon"></i>
                     </Button>
                 }
             />
         ) : (
             <Button type="submit" color="red" onClick={() => handleDeleteConfirm(deal.id)}>
-                <Trash />
+                <i class="trash alternate icon"></i>
             </Button>
         )
     }

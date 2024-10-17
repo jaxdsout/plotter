@@ -1,4 +1,3 @@
-import { ReactComponent as Trash } from '../components/trash.svg';
 import { Button, Popup } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { delete_list } from '../actions/listmaker';
@@ -42,13 +41,13 @@ function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user })
                             color="red"
                             onClick={() => handleDelete(list.id, user.id)}
                         >
-                            <Trash />
+                            <i class="trash alternate icon"></i>
                         </Button>
                     }
                 />
             ) : (
                 <Button type="submit" color="red" onClick={() => handleDeleteConfirm(list.id)}>
-                    <Trash />
+                    <i class="trash alternate icon"></i>
                 </Button>
             )
         }

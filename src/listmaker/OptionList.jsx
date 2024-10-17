@@ -5,7 +5,6 @@ import UpdateOption from "./UpdateOption";
 import { load_options, update_options_order } from "../actions/listmaker";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import DeleteOption from "./DeleteOption";
-import { ReactComponent as InfoSquare } from '../components/info-square.svg';
 
 
 function OptionList({ options, load_options, list, update_options_order }) {
@@ -83,7 +82,7 @@ function OptionList({ options, load_options, list, update_options_order }) {
                                         )}
                                     >
                                         <div className="d-flex justify-content-between align-items-center">
-                                            <div className="d-flex flex-row align-items-end mb-4">
+                                            <div className="d-flex flex-row align-items-end mb-4 align-items-center">
                                                 <Popup
                                                     content={
                                                         <List>
@@ -100,7 +99,7 @@ function OptionList({ options, load_options, list, update_options_order }) {
                                                             )}
                                                         </List>
                                                     }
-                                                    trigger={<InfoSquare/>}
+                                                    trigger={<i class="ellipsis horizontal icon"></i>}
                                                 />
                                                 <h4 className="ms-2">{option.prop_name}</h4>
                                             </div>

@@ -7,8 +7,6 @@ import Clients from '../clients/Clients';
 import Lists from '../lists/Lists';
 import Deals from '../deals/Deals';
 import Dash from './Dash'
-import {ReactComponent as Home} from '../components/home.svg'
-import {ReactComponent as Person} from '../components/person-circle.svg'
 import ProfileWidget from './ProfileWidget';
 
 
@@ -44,12 +42,14 @@ function Dashboard ({ load_user, auth_user, refresh_token, access, isAuthenticat
     return (    
         <div className='container mb-5 mt-5'>
             <div className='z-0 navbar p-5 bg-body-tertiary rounded-4 mb-4'>
-                <Link to="/dashboard/home"><Home className='icon dashnav_button' /></Link>
+                <Link to="/dashboard/home">
+                    <i class="home icon"></i>
+                </Link>
                 <Link className='dashnav_button tabs' to="/dashboard/clients">clients</Link>
                 <Link className='dashnav_button tabs' to="/dashboard/lists">lists</Link>
                 <Link className='dashnav_button tabs' to="/dashboard/deals">deals</Link>
                 <Link className='dashnav_button tabs' onClick={handleProfileWidget}>
-                    <Person className="icon"/>
+                    <i class="user circle icon"></i>
                 </Link>
             </div>
             {profileHover && (
