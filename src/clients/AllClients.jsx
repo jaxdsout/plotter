@@ -33,11 +33,11 @@ function AllClients ({ load_clients, clients, user }) {
 
     return (
         <>
-            <div className="overflow-y-auto plotterbox mt-3">
+            <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
                 {clients.length > 0 ? ( 
-                <ul class="list-group">
+                <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                     {clients.map(client => (
-                        <li class="list-group-item" key={client.id}>
+                        <li className='p-3 flex flex-row justify-evenly items-start font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425]' key={client.id}>
                         <Link onClick={() => handleOpenModal(client.id)}>
                             {client.first_name} {client.last_name}
                         </Link>

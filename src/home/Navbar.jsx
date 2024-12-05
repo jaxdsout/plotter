@@ -17,11 +17,11 @@ function Navbar ({ logout, isAuthenticated, isClientView, reset_client_view }) {
             reset_client_view();
             navigate("/")
         } else {
-            navigate("/home/")
+            navigate("/")
         }
 
         if (isAuthenticated) {
-            navigate("/dashboard/home/")
+            navigate("/dashboard/home")
         } 
 
     }
@@ -29,13 +29,17 @@ function Navbar ({ logout, isAuthenticated, isClientView, reset_client_view }) {
     return (
         <>
         {isClientView ? (
-            <nav className='text-center p-5 container_bg'>
-                <h1 className='poetsen navlogo' onClick={logo_click}>plotter</h1>
+            <nav className='bg-[#FEFAE0] text-center p-5'>
+                <h1 className='poetsen text-[#5F85DB]' onClick={logo_click}>maptor</h1>
             </nav>
         ) : (
-            <nav className='navbar p-5'>
-                <h1 className='poetsen navlogo' onClick={logo_click}>plotter</h1>
-                {isAuthenticated ? <Button onClick={logout_user}>LOGOUT</Button> : <Link to={"/login/"}><Button>LOGIN</Button></Link>}
+            <nav className='bg-white shadow-inner p-5 flex flex-row justify-between items-center'>
+                <h1 className='mont text-[#5F85DB] p-5 text-6xl hover:text-[#4d6ebb]' onClick={logo_click}>maptor</h1>
+                {isAuthenticated ? 
+                    <Button className="p-5" onClick={logout_user}>LOGOUT</Button> 
+                    : 
+                    <Link className='p-5' to={"/login/"}><Button>LOGIN</Button></Link>
+                }
             </nav>          
         )}
         </>

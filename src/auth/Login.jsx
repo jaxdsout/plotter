@@ -28,58 +28,60 @@ function Login ({ login, isAuthenticated, error, message }) {
     }, [isAuthenticated, navigate]);
 
     return (
-        <div className="container-sm sm w-50 pt-5">
-            <div className="mb-4 d-flex flex-column align-items-center">
-                <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.png" className="art_thumb"/>
-                <h6 className="poetsen tagline text-nowrap"> sign into the platform </h6>
-            </div>
-            <Form onSubmit={handleSubmit}>
-                {error && (
-                    <Message negative>
-                        <Message.Header>Login Failed</Message.Header>
-                        <p>{error}</p>
+        <div className="flex flex-col items-center justify-evenly">
+            <div className="w-3/4 max-w-[800px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
+                <div className="mb-10 flex flex-col items-center">
+                    <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.png" className="art_thumb"/>
+                    <h6 className="mont text-white text-3xl md:text-4xl text-nowrap"> sign into the platform </h6>
+                </div>
+                <Form onSubmit={handleSubmit} className="p-5">
+                    {error && (
+                        <Message negative>
+                            <Message.Header>Login Failed</Message.Header>
+                            <p>{error}</p>
+                        </Message>
+                    )}
+                    {message && (
+                    <Message positive>
+                        <Message.Header>{message}</Message.Header>
                     </Message>
-                )}
-                {message && (
-                <Message positive>
-                    <Message.Header>{message}</Message.Header>
-                </Message>
-                )}
-                <FormField>
-                <label className="input_label" htmlFor='email'>Email:</label>
-                    <input 
-                        className="input_bg"
-                        type='email'
-                        name='email'
-                        value={email}
-                        onChange={e => handleChange(e)}
-                        required
-                    />
-                </FormField>
-                <FormField>
-                <label className="input_label" htmlFor='password'>Password:</label>
-                    <input 
-                        className="input_bg"
-                        type='password'
-                        name='password'
-                        value={password}
-                        onChange={e => handleChange(e)}
-                        required
-                    />
-                </FormField>
-                <div className="d-flex justify-content-center">
-                    <Button type="submit" className="button_bg">LOGIN</Button>   
-                </div>
-            </Form>
-            <Divider className="mt-4 mb-4" />
-            <div className="d-flex flex-md-row justify-content-evenly flex-sm-column flex-column text-center">            
-                <div className="mb-4">
-                    <h6 className="noto-sans text-white mb-4">don't have an account?</h6>
-                    <Link to={"/signup/"}><Button inverted>SIGN UP</Button></Link>
-                </div>
-                <div className="mb-4">
-                    <h6 className="noto-sans text-white mb-4">forgot your password?</h6>          
-                    <Link to={"/reset-password/"}><Button inverted>RESET</Button></Link>
+                    )}
+                    <FormField>
+                    <label className="!text-white" htmlFor='email'>Email:</label>
+                        <input 
+                            className="!bg-black !bg-opacity-30 !text-white"
+                            type='email'
+                            name='email'
+                            value={email}
+                            onChange={e => handleChange(e)}
+                            required
+                        />
+                    </FormField>
+                    <FormField>
+                    <label className="!text-white" htmlFor='password'>Password:</label>
+                        <input 
+                            className="!bg-black !bg-opacity-30 !text-white"
+                            type='password'
+                            name='password'
+                            value={password}
+                            onChange={e => handleChange(e)}
+                            required
+                        />
+                    </FormField>
+                    <div className="flex justify-center mt-8 mb-5">
+                        <Button type="submit" className="button_bg">LOGIN</Button>   
+                    </div>
+                </Form>
+                <Divider className="mt-4 mb-4" />
+                <div className="flex flex-col sm:flex-col md:flex-row justify-evenly text-center mt-5">            
+                    <div className="mb-5">
+                        <h6 className="noto-sans text-white mb-4">don't have an account?</h6>
+                        <Link to={"/signup/"}><Button inverted>SIGN UP</Button></Link>
+                    </div>
+                    <div className="mb-5">
+                        <h6 className="noto-sans text-white mb-4">forgot your password?</h6>          
+                        <Link to={"/reset-password/"}><Button inverted>RESET</Button></Link>
+                    </div>
                 </div>
             </div>
         </div>

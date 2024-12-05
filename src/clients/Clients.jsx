@@ -5,10 +5,10 @@ import { connect } from "react-redux";
 function Clients() {
 
     return (
-        <div className="container pt-5 pb-5 bg-body-tertiary rounded-4">
+        <>
             <NewClient />
             <AllClients />
-        </div>
+        </>
     );
 }
 

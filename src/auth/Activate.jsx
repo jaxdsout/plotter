@@ -21,15 +21,19 @@ function Activate ({ activate, message }) {
     }
 
     return (
-        <>
-            <div className="container-sm sm w-50 pt-5">
-                <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1007.jpg"/>
-                <p className="poetsen fs-1 text-center tagline"> activate your account </p>
+        <div className="flex flex-col items-center justify-evenly">
+            <div className="w-3/4 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
+
+                <div className="mb-10 flex flex-col items-center">
+                    <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1007.jpg"/>
+                    <p className="mont text-white text-3xl md:text-4xl text-nowrap mt-4"> activate your account </p>
+                </div>
+                <div className="flex flex-col items-center justify-evenly">
+                    <Button onClick={activate_account} type='button' className="!bg-[#90B8F8] hover:!bg-[#5F85DB]">ACTIVATE</Button>
+                </div>
             </div>
-            <div className="d-flex justify-content-center mt-5">
-                <Button onClick={activate_account} type='button' className="button_bg">ACTIVATE</Button>
-            </div>
-        </>
+        </div>
+          
     )
 }
 
