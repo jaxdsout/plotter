@@ -83,7 +83,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
     return (
         <>
             <div className="flex justify-center items-center">
-                <Button color="blue" onClick={handleOpenModal} className="button_bg">+</Button>
+                <Button color="blue" onClick={handleOpenModal} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">+</Button>
             </div>
             <div>
                 <Modal open={showModal} onClose={handleCloseModal}>
@@ -104,7 +104,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                         <div className="flex flex-col lg:flex-row items-center">
                                             <PropertySearch />
                                             <Form onSubmit={() => handlePropertyAdd(list, property)} className="p-3">
-                                                <Button className="button_bg" type="submit">ADD PROPERTY</Button>
+                                                <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold" type="submit">ADD PROPERTY</Button>
                                             </Form>
                                         </div>
                                         <Divider />

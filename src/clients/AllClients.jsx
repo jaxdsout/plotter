@@ -108,7 +108,7 @@ function AllClients ({ load_clients, clients, user }) {
                     ))}
                 </ul>
                 ) : (
-                    <div className="text-center">
+                    <div className="text-center text-white">
                         <p>No clients to display</p>
                     </div>
                 )

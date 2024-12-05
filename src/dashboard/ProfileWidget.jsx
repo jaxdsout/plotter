@@ -63,7 +63,9 @@ function ProfileWidget ({ user, update_profile, update_avatar }) {
                     <p>Website: {profile.website}</p>
                 </CardContent>
                 <CardContent>
-                    <Link onClick={handleOpenModal}><Icon name='setting' size='large'/></Link>
+                    <Link onClick={handleOpenModal}>
+                        <Icon name='setting' size='large'/>
+                    </Link>
                 </CardContent>
             </Card>
             <div>

@@ -54,7 +54,7 @@ function AllDeals ({ load_deals, deals, user }) {
                     ))}
                 </ul>
                 ) : (
-                    <div className="text-center">
+                    <div className="text-center text-white">
                         <p>No deals to display.</p>
                     </div>
                 )}
