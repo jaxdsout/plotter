@@ -34,7 +34,7 @@ function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user })
                     open
                     position="top center"
                     size="tiny"
-                    style={{ color: 'red', fontWeight: '700' }}
+                    className='!text-red-700 !font-black'
                     trigger={
                         <Button
                             type="submit"

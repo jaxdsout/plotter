@@ -19,7 +19,7 @@ function PropertySearch({ userID, search_properties, set_search_prop, prop_resul
     }
 
     return(
-        <div className="d-flex flex-row justify-content-evenly align-items-center">
+        <div className="flex flex-row justify-evenly items-center">
             <Search
                 onSearchChange={handleSearchChange}
                 onResultSelect={handleResultSelect}

@@ -37,21 +37,24 @@ function AllClients ({ load_clients, clients, user }) {
                 {clients.length > 0 ? ( 
                 <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                     {clients.map(client => (
-                        <li className='p-3 flex flex-row justify-evenly items-start font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425]' key={client.id}>
-                        <Link onClick={() => handleOpenModal(client.id)}>
-                            {client.first_name} {client.last_name}
-                        </Link>
-                        {showClientDetail === client.id && (
+                        <li 
+                            className='p-3 flex flex-row justify-evenly items-start font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425]' 
+                            key={client.id}
+                        >
+                            <Link onClick={() => handleOpenModal(client.id)}>
+                                {client.first_name} {client.last_name}
+                            </Link>
+                            {showClientDetail === client.id && (
                             <Modal className='' open={showModal} onClose={handleCloseModal}>
                                 <Modal.Header>Client Details</Modal.Header>
                                 <Modal.Content>
-                                    <div className="d-flex pt-1 justify-content-between">
+                                    <div className="flex pt-1 justify-between">
                                         <div>
                                             <Button color="blue" onClick={() => handleTabChange("info")} className="button_bg">INFO</Button>
                                             <Button color="blue" onClick={() => handleTabChange("lists")} className="button_bg">LISTS</Button>
                                             <Button color="blue" onClick={() => handleTabChange("deals")} className="button_bg">DEALS</Button>
                                         </div>
-                                        <div>
+                                        <div className="text-center">
                                             <DeleteClient client={client} handleCloseModal={handleCloseModal}/>
                                         </div>
                                     </div>
@@ -62,10 +65,7 @@ function AllClients ({ load_clients, clients, user }) {
                                         )}
                                         {clientTab === "lists" && (
                                             <>
-                                                <div 
-                                                    className="overflow-y-scroll" 
-                                                    style={{ height: '300px', minHeight: '300px' }} 
-                                                >
+                                                <div className="overflow-y-scroll h-[300px] min-h-[300px]">
                                                     {client.lists.length > 0 ? (
                                                         <ul>
                                                             {client.lists.map(list => (
@@ -82,7 +82,7 @@ function AllClients ({ load_clients, clients, user }) {
                                         )}
                                         {clientTab === "deals" && (
                                             <>
-                                                <div className="overflow-y-scroll" style={{ height: '300px', minHeight: '300px' }}>
+                                                <div className="overflow-y-scroll h-[300px] min-h-[300px]">
                                                     {client.deals.length > 0 ? (
                                                         <ul>
                                                             {client.deals.map(deal => (
@@ -99,7 +99,7 @@ function AllClients ({ load_clients, clients, user }) {
                                         )}
                                     </>
                                 </Modal.Content>
-                                <Modal.Actions className="d-flex">
+                                <Modal.Actions className="flex">
                                     <Button onClick={handleCloseModal}>CLOSE</Button>
                                 </Modal.Actions>
                             </Modal>

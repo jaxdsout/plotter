@@ -28,7 +28,7 @@ function ShareURL ({ list, isSendMode }) {
                     )}
                     <FormField>
                         <label>Shareable URL</label>
-                        <Input value={link} readOnly onClick={handleCopy} />
+                        <Input value={link} readOnly onClick={handleCopy} className="!w-[20rem]" />
                     </FormField>
                 </Form>
             ) : (

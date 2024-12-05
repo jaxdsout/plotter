@@ -4,7 +4,7 @@ import MapBox from "./MapBox";
 import { useParams } from "react-router-dom";
 import { retrieve_list } from "../actions/listmaker";
 import { set_client_view } from "../actions/ui"
-import { Icon, Divider, ListItem, List } from "semantic-ui-react";
+import { Icon, Divider, li, List } from "semantic-ui-react";
 
 function PublicList({ retrieve_list, retrlist, isClientView, set_client_view }) {
     const { uuid } = useParams();
@@ -27,41 +27,44 @@ function PublicList({ retrieve_list, retrlist, isClientView, set_client_view }) 
     }, [uuid, retrieve_list, set_client_view])
    
     return (
-        <div className="d-flex flex-column">
+        <div className="flex flex-col items-center">
             {isClientView && retrlist !== null ? (
                 <>
-                    <div className="navbar_list p-5">
+                    <div className="w-3/4 max-w-[800px] p-5 mt-5 mb-5 bg-[#26282B] shadow-inner shadow-md rounded-lg">
                         <h2 className="text-center text-white">{retrlist.client_name}</h2>
                     </div>
-                    <div className="d-flex flex-column flex-md-row flex-sm-column p-3 align-items-start">
-                        <div className="w-100 p-3">
+                    <div className="flex flex-col md:flex-row sm:flex-col p-3 items-center md:items-start">
+                        <div className="p-3">
                             <MapBox retr_options={retrlist.options}/>
                         </div>
-                        <div className="p-3 overflow-y-scroll w-100" style={{ height: "46rem", maxWidth: "40rem"}}>  
-                            <List className="list-group">
+                        <div className="p-3 overflow-y-auto h-[46rem] max-w-[40rem]">  
+                            <ul className='divide-y'>
                                 {retrlist.options.map(option => (
-                                    <div className="mb-4 rounded-4">   
-                                        <ListItem className="d-flex flex-row justify-content-between list-group-item navbar_list pt-3 text-white">
-                                            <h4 className="">{option.prop_name}</h4>
-                                            <a href={`https://${option.website}`} target="_blank" rel="noopener noreferrer">
-                                                <Icon name="external alternate" />
-                                            </a>
-                                        </ListItem>
-                                        <ListItem className="list-group-item">${option.price}</ListItem>
-                                        <ListItem className="list-group-item">Unit {option.unit_number}</ListItem>
-                                        <ListItem className="list-group-item">{option.layout} | {option.sq_ft} sq. ft.</ListItem>
-                                        <ListItem className="list-group-item">Available: {option.available}</ListItem>
-                                        {!option.notes ? (
-                                            <></>
-                                        ) :(
-                                            <li className="list-group-item">{option.notes}</li>
-                                        )}
-                                    </div>
+                                    <li className='p-3 w-[28rem] md:w-[20rem] flex flex-row rounded-md mb-2 justify-evenly items-start font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-[#26282B] even:bg-[#232425]' key={option.id}>   
+                                        <ul>
+                                            <li className="flex flex-row justify-between">
+                                                <h4>{option.prop_name}</h4>
+                                                <a href={`https://${option.website}`} target="_blank" rel="noopener noreferrer">
+                                                    <Icon name="external alternate" />
+                                                </a>
+                                            </li>
+                                            <li>${option.price}</li>
+                                            <li>Unit {option.unit_number}</li>
+                                            <li>{option.layout} | {option.sq_ft} sq. ft.</li>
+                                            <li>Available: {option.available}</li>
+                                            {!option.notes ? (
+                                                <></>
+                                            ) :(
+                                                <li>{option.notes}</li>
+                                            )}
+                                        </ul>
+                                        
+                                    </li>
                                 ))}
-                            </List>
+                            </ul>
                         </div>
                     </div>
-                    <div className='p-5 d-flex flex-column text-center'>
+                    <div className='w-3/4 max-w-[800px] p-5 mb-10 mt-5 bg-[#26282B] shadow-inner shadow-md rounded-lg flex items-center flex-col'>
                         <p className="text-white">Prepared by {retrlist.agent_name}</p>
                         <p className="text-white">{formatDate(retrlist.date)}</p>
                     </div>

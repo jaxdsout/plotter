@@ -66,11 +66,11 @@ function ProfileWidget ({ user, update_profile, update_avatar }) {
                     <Link onClick={handleOpenModal}><Icon name='setting' size='large'/></Link>
                 </CardContent>
             </Card>
-            <div className="bg-body-secondary">
+            <div>
                 <Modal open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>Edit Profile</Modal.Header>
                     <Modal.Content>
-                        <div className='d-flex flex-row justify-content-evenly'>
+                        <div className='flex flex-row justify-evenly '>
                         <div>                    
                             <Form onSubmit={handleProfileSubmit}>
                                 <FormField>

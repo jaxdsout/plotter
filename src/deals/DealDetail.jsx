@@ -26,7 +26,7 @@ function DealDetail ({ deal, handleCloseModal, update_deal_status, load_deals, u
 
     return(
         <>
-            <div className="d-flex flex-column mb-4">
+            <div className="flex flex-col mb-4">
                 <div className="text-center">
                     <p><b>Date Deal Created: </b>{formatDate(deal.deal_date)}</p>
                     <Divider />

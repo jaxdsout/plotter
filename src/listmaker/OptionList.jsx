@@ -81,8 +81,8 @@ function OptionList({ options, load_options, list, update_options_order }) {
                                             provided.draggableProps.style
                                         )}
                                     >
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <div className="d-flex flex-row align-items-end mb-4 align-items-center">
+                                        <div className="flex justify-between items-center">
+                                            <div className="flex flex-row items-center justify-center">
                                                 <Popup
                                                     content={
                                                         <List>
@@ -99,11 +99,11 @@ function OptionList({ options, load_options, list, update_options_order }) {
                                                             )}
                                                         </List>
                                                     }
-                                                    trigger={<i class="ellipsis horizontal icon"></i>}
+                                                    trigger={<i className="ellipsis horizontal icon text-center"></i>}
                                                 />
-                                                <h4 className="ms-2">{option.prop_name}</h4>
+                                                <h4 className="pl-2 mt-1">{option.prop_name}</h4>
                                             </div>
-                                            <div className="d-flex">
+                                            <div className="flex">
                                                 <UpdateOption option={option} />
                                                 <DeleteOption option={option} />
                                             </div>

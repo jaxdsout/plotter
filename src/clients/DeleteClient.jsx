@@ -33,7 +33,7 @@ function DeleteClient({ delete_client, load_clients, client, handleCloseModal, u
                 open
                 position="top center"
                 size="tiny"
-                style={{ color: 'red', fontWeight: '700' }}
+                className='!text-red-700 !font-black'
                 trigger={
                     <Button
                         type="submit"

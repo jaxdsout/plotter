@@ -106,38 +106,38 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
 
     return (
         <>
-            <div className="d-flex justify-content-end align-items-end">
-                <Button color="blue" onClick={handleOpenModal} className="button_bg">+</Button>
+            <div className="flex justify-center items-center">
+                <Button color="blue" onClick={handleOpenModal} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">+</Button>
             </div>
-            <div className="bg-body-secondary">
+            <div className="!w-[500px]">
                 <Modal open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>Add New Deal</Modal.Header>
                     <Modal.Content>
-                        <div className="d-flex flex-row justify-content-between align-items-center mb-4">
-                            <div className="d-flex flex-row align-items-center">
+                        <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+                            <div className="flex flex-row items-center mb-2">
                                 <ClientSearch />
                                 <Form onSubmit={handleClientSelect}>
                                     {clientSel && client !== null ? (
                                         <Button color="black">CLIENT SELECTED</Button>
                                     ): (
-                                        <Button className="button_bg" type="submit">SELECT CLIENT</Button>
+                                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold" type="submit">SELECT CLIENT</Button>
                                     )}
                                 </Form>
                             </div>
-                            <div className="d-flex flex-row align-items-center">
+                            <div className="flex flex-row items-center mb-2">
                                 <PropertySearch />
                                 <Form onSubmit={handlePropSelect}>
                                     {propSel && property !== null ? (
                                         <Button color="black">PROPERTY SELECTED</Button>
                                     ): (
-                                        <Button className="button_bg" type="submit">SELECT PROPERTY</Button>
+                                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold" type="submit">SELECT PROPERTY</Button>
                                     )}
                                 </Form>
                             </div>
                         </div>
                         <Form onSubmit={handleSubmit}>
                             <FormField>
-                                <label className="noto-sans" htmlFor='unit_no'>Unit Number:</label>
+                                <label htmlFor='unit_no'>Unit Number:</label>
                                 <input
                                     type='text'
                                     name='unit_no'
@@ -147,7 +147,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                                 />
                             </FormField>
                             <FormField>
-                                <label className="noto-sans" htmlFor='move_date'>Move Date:</label>
+                                <label htmlFor='move_date'>Move Date:</label>
                                 <input
                                     type='date'
                                     name='move_date'
@@ -157,7 +157,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                                 />
                             </FormField>
                             <FormField>
-                                <label className="noto-sans" htmlFor='lease_term'>Lease Term:</label>
+                                <label htmlFor='lease_term'>Lease Term:</label>
                                 <input
                                     type='text'
                                     name='lease_term'
@@ -167,7 +167,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                                 />
                             </FormField>
                             <FormField>
-                                <label className="noto-sans" htmlFor='rent'>Rent:</label>
+                                <label htmlFor='rent'>Rent:</label>
                                 <input
                                     type='number'
                                     name='rent'
@@ -177,7 +177,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                                 />
                             </FormField>
                             <FormField>
-                                <label className="noto-sans" htmlFor='rate'>Commission Rate:</label>
+                                <label htmlFor='rate'>Commission Rate:</label>
                                 {flatFee ? (
                                     <input
                                         type='number'
@@ -197,8 +197,11 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                                 
                             </FormField>
                             <FormField>
-                                <label className="noto-sans d-flex align-items-center" htmlFor='flat_fee'>
-                                    Flat Fee?: <Checkbox toggle  className="ps-2" onClick={handleFlatFee}/>
+                                <label htmlFor='flat_fee'>
+                                    <div className="flex flex-row justify-start items-start -mb-2" >
+                                        <p>Flat Fee?:</p> 
+                                        <Checkbox toggle  className="pl-2" onClick={handleFlatFee}/>
+                                    </div>
                                 </label>
                                 {flatFee ? (
                                     <input
@@ -218,7 +221,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                                 )}
                             </FormField>
                             <FormField>
-                                <label className="noto-sans" htmlFor='commission'>Total Commission:</label>
+                                <label htmlFor='commission'>Total Commission:</label>
                                 <input
                                     type='number'
                                     name='commission'
