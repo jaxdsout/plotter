@@ -36,87 +36,90 @@ function Signup ({ signup, error, message }) {
     })
   
     return (
-        <div className="container-sm sm w-50 pt-5 pb-5">
-            <div className="mb-4 d-flex flex-column align-items-center">
-                <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1000.png" className="art_thumb"/>
-                <h6 className="poetsen tagline text-nowrap"> sign up for the platform </h6>
-            </div>
-            <Form onSubmit={handleSubmit}>
-                {error && (
-                    <Message negative size="mini">
-                        <Message.Header>Signup Failed</Message.Header>
-                        <p>{error}</p>
-                    </Message>
-                )}
-                {message && (
-                        <Message positive size="mini">
-                            <Message.Header>Signup Successful</Message.Header>
-                            <p>{message}</p>
-                        </Message>
-                )}
-                <FormField>
-                    <label className="input_label" htmlFor='first_name'>First Name:</label>
-                    <input 
-                        className="input_bg"
-                        type='text'
-                        name='first_name'
-                        value={first_name}
-                        onChange={e => handleChange(e)}
-                        required
-                    />
-                </FormField>
-                <FormField>
-                    <label className="input_label" htmlFor='last_name'>Last Name:</label>
-                    <input 
-                        className="input_bg"
-                        type='text'
-                        name='last_name'
-                        value={last_name}
-                        onChange={e => handleChange(e)}
-                        required
-                    />
-                </FormField>
-                <FormField>
-                    <label className="input_label" htmlFor='email'>Email:</label>
-                    <input 
-                        className="input_bg"
-                        type='email'
-                        name='email'
-                        value={email}
-                        onChange={e => handleChange(e)}
-                        required
-                    />
-                </FormField>
-                <FormField>
-                <label className="input_label" htmlFor='password'>Password:</label>
-                    <input 
-                        className="input_bg"
-                        type='password'
-                        name='password'
-                        value={password}
-                        onChange={e => handleChange(e)}
-                        required
-                    />
-                </FormField>
-                <FormField>
-                <label className="input_label" htmlFor='re_password'>Re-Enter Password:</label>
-                    <input 
-                        className="input_bg"
-                        type='password'
-                        name='re_password'
-                        value={re_password}
-                        onChange={e => handleChange(e)}
-                        required
-                    />
-                </FormField>
-                <div className="d-flex justify-content-center mt-4">
-                    <Button className="button_bg">SIGN UP</Button>   
+        <div className="flex flex-col items-center justify-evenly">
+            <div className="w-3/4 max-w-[800px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
+                <div className="mb-10 flex flex-col items-center">
+                    <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1000.png" className="art_thumb"/>
+                    <h6 className="mont text-white text-3xl md:text-4xl text-nowrap"> sign up for the platform </h6>
                 </div>
-            </Form>
-            <Divider className="mt-4 mb-4" />
-            <div className="d-flex flex-column align-items-center justify-content-evenly mt-4">            
-                <h6 className="noto-sans text_custom mb-4">already have an account?</h6>
-                <Link to={"/login/"}><Button inverted>LOGIN</Button></Link>
+                <Form onSubmit={handleSubmit} className="p-5">
+                    {error && (
+                        <Message negative size="mini">
+                            <Message.Header>Signup Failed</Message.Header>
+                            <p>{error}</p>
+                        </Message>
+                    )}
+                    {message && (
+                            <Message positive size="mini">
+                                <Message.Header>Signup Successful</Message.Header>
+                                <p>{message}</p>
+                            </Message>
+                    )}
+                    <FormField>
+                        <label className="!text-white" htmlFor='first_name'>First Name:</label>
+                        <input 
+                            className="!bg-black !bg-opacity-30 !text-white"
+                            type='text'
+                            name='first_name'
+                            value={first_name}
+                            onChange={e => handleChange(e)}
+                            required
+                        />
+                    </FormField>
+                    <FormField>
+                        <label className="!text-white" htmlFor='last_name'>Last Name:</label>
+                        <input 
+                            className="!bg-black !bg-opacity-30 !text-white"
+                            type='text'
+                            name='last_name'
+                            value={last_name}
+                            onChange={e => handleChange(e)}
+                            required
+                        />
+                    </FormField>
+                    <FormField>
+                        <label className="!text-white" htmlFor='email'>Email:</label>
+                        <input 
+                            className="!bg-black !bg-opacity-30 !text-white"
+                            type='email'
+                            name='email'
+                            value={email}
+                            onChange={e => handleChange(e)}
+                            required
+                        />
+                    </FormField>
+                    <FormField>
+                    <label className="!text-white" htmlFor='password'>Password:</label>
+                        <input 
+                            className="!bg-black !bg-opacity-30 !text-white"
+                            type='password'
+                            name='password'
+                            value={password}
+                            onChange={e => handleChange(e)}
+                            required
+                        />
+                    </FormField>
+                    <FormField>
+                    <label className="!text-white" htmlFor='re_password'>Re-Enter Password:</label>
+                        <input 
+                            className="!bg-black !bg-opacity-30 !text-white"
+                            type='password'
+                            name='re_password'
+                            value={re_password}
+                            onChange={e => handleChange(e)}
+                            required
+                        />
+                    </FormField>
+                    <div className="flex justify-center mt-8 mb-5">
+                        <Button className="button_bg">SIGN UP</Button>   
+                    </div>
+                </Form>
+                <Divider className="mt-4 mb-4" />
+                <div className="flex flex-col items-center justify-evenly mt-5 mb-5">            
+                    <h6 className="noto-sans !text-white mb-4">already have an account?</h6>
+                    <Link to={"/login/"}><Button inverted>LOGIN</Button></Link>
+                </div>
+
             </div>
         </div>
     )

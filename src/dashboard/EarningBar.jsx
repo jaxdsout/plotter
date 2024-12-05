@@ -52,7 +52,7 @@ function EarningBar ({ deals }) {
       title: {
         display: true,
         text: 'Monthly Sales Revenue',
-        color: 'black'
+        color: 'white'
       },
     },
     scales: {
@@ -63,7 +63,7 @@ function EarningBar ({ deals }) {
   };
 
   return (
-        <Bar data={data} options={options} style={{ height: "18rem"}}/>
+        <Bar data={data} options={options} />
   )
 
 

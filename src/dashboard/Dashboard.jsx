@@ -40,29 +40,35 @@ function Dashboard ({ load_user, auth_user, refresh_token, access, isAuthenticat
     const basePath = location.pathname.split('/').pop();
 
     return (    
-        <div className='container mb-5 mt-5'>
-            <div className='z-0 navbar p-5 bg-body-tertiary rounded-4 mb-4'>
-                <Link to="/dashboard/home">
-                    <i class="home icon"></i>
-                </Link>
-                <Link className='dashnav_button tabs' to="/dashboard/clients">clients</Link>
-                <Link className='dashnav_button tabs' to="/dashboard/lists">lists</Link>
-                <Link className='dashnav_button tabs' to="/dashboard/deals">deals</Link>
-                <Link className='dashnav_button tabs' onClick={handleProfileWidget}>
-                    <i class="user circle icon"></i>
-                </Link>
-            </div>
-            {profileHover && (
-                <div className='z-1 position-absolute end-0 p-3'>
-                    <ProfileWidget /> 
+        <div className='flex flex-col items-center justify-evenly'>
+            <div className="w-3/4 max-w-[1200px] max-h-[80rem] p-5 mt-5 bg-[#26282B] shadow-inner shadow-md rounded-lg mb-10">
+                <div className='z-0 p-5 flex flex-row items-center justify-center'>
+                    <Link className='mont text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] active:text-[#5475c1]' to="/dashboard/home">
+                        <i className="home icon"></i>
+                    </Link>
+                    <Link 
+                        className='mont text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] active:text-[#5475c1]' 
+                        to="/dashboard/clients">
+                        clients
+                    </Link>
+                    <Link className='mont text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] active:text-[#5475c1]' to="/dashboard/lists">lists</Link>
+                    <Link className='mont text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] active:text-[#5475c1]' to="/dashboard/deals">deals</Link>
+                    <Link className='mont text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] active:text-[#5475c1]' onClick={handleProfileWidget}>
+                        <i className="user circle icon"></i>
+                    </Link>
                 </div>
-            )}
-            <>
-                {basePath === 'home' && <Dash />}
-                {basePath === 'clients' && <Clients />}
-                {basePath === 'lists' && <Lists />}
-                {basePath === 'deals' && <Deals />}
-            </>
+                {profileHover && (
+                    <div className='z-1 position-absolute end-0 p-3'>
+                        <ProfileWidget /> 
+                    </div>
+                )}
+                <>
+                    {basePath === 'home' && <Dash />}
+                    {basePath === 'clients' && <Clients />}
+                    {basePath === 'lists' && <Lists />}
+                    {basePath === 'deals' && <Deals />}
+                </>
+            </div>
         </div>
     )
 }

@@ -58,7 +58,7 @@ function EarningDonut ({ deals }) {
       title: {
         display: true,
         text: 'Invoice Status',
-        color: 'black'
+        color: 'white'
       },
     },
   };

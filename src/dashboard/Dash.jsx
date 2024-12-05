@@ -49,8 +49,8 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
     const move_ins = get_move_ins();
 
     return (
-        <div className='container pt-5 pb-5 bg-body-tertiary rounded-4'>
-            <div className='d-flex flex-column flex-sm-column flex-md-row justify-content-evenly align-items-center p-4'>
+        <div>
+            <div className='flex flex-col md:flex-row justify-evenly items-center p-5'>
                 <div>
                     <EarningDonut />
                 </div>
@@ -59,37 +59,42 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
                 </div>
             </div>
             <Divider />
-            <div className="d-flex flex-column flex-md-row flex-sm-column align-items-center justify-content-evenly p-4">
-                <div className='text-center pt-3'>
-                    <h4>Upcoming Renewals</h4>
-                    <ul className='list-group'>
+            <div className="flex flex-col md:flex-row justify-evenly">
+                <div className='p-5 w-full md:w-1/2'>
+                    <h4 className='text-center text-white'>Upcoming Renewals</h4>
+                    <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                         {renewals.length ? (
                             renewals.map(deal => (
-                                <li key={deal.id} className='list-group-item'>
-                                    <b>Client:</b> {deal.client_name} | <b>Lease End Date:</b> {deal.lease_end_date.toLocaleDateString()}
+                                <li key={deal.id}>
+                                    <div className='p-2 flex flex-row justify-evenly items-start text-white hover:text-black hover:bg-gray-100 transition'>
+                                        <p><b>Client:</b> {deal.client_name} </p>
+                                        <p><b>Lease End Date:</b> {deal.lease_end_date.toLocaleDateString()} </p>
+                                    </div>
                                 </li>
                             ))
                         ) : (
-                            <li className='list-group-item'>No upcoming renewals...</li>
+                            <li className='p-4 text-center text-white'>No upcoming renewals...</li>
                         )}
                     </ul>
                 </div>
-                <div className='text-center pt-3'>
-                    <h4>Upcoming Move-Ins</h4>
-                    <ul className='list-group'>
+                <div className='p-5 w-full md:w-1/2'>
+                    <h4 className='text-center text-white'>Upcoming Move-Ins</h4>
+                    <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                         {move_ins.length ? (
                             move_ins.map(deal => (
-                                <li key={deal.id} className='list-group-item'>
-                                    <b>Client:</b> {deal.client_name} | <b>Move Date:</b> {deal.move_date.toLocaleDateString()}
+                                <li key={deal.id} className='p-4 flex justify-between items-center text-white hover:text-black hover:bg-gray-100 transition'>
+                                    <b>Client:</b> {deal.client_name} | 
+                                    <b>Move Date:</b> {deal.move_date.toLocaleDateString()}
                                 </li>
                             ))
                         ) : (
-                            <li className='list-group-item'>No upcoming move-ins...</li>
+                            <li className='p-4 text-center text-white'>No upcoming move-ins...</li>
                         )}
                     </ul>
                 </div>
             </div>
-            <div className='d-flex align-items-center justify-content-center mt-5'>
+            <Divider />
+            <div className='flex items-center justify-center mt-10 mb-5'>
                 <GuestCard />
             </div>
         </div>

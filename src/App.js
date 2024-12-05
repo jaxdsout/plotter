@@ -20,7 +20,7 @@ function App() {
     <div className='root'>
       <Navbar />
       <Routes>
-        <Route path="/home/" element={ <Landing /> }/>
+        <Route path="/" element={ <Landing /> }/>
         <Route path="/signup/" element={ <SignUpForm /> } />
         <Route path="/reset-password/" element={ <ResetPassword /> } />
         <Route path="/password/reset/confirm/:uid/:token" element={ <ConfirmPassword /> } />
@@ -33,7 +33,7 @@ function App() {
           <Route path="deals" element={<Deals />} />
         </Route>
         <Route path="/list/:uuid/" element={ <ClientList /> } />
-        <Route path="*" element={<Navigate to="/home/" replace />} />
+        {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
       </Routes>
       {/* <Footer /> */}
     </div>

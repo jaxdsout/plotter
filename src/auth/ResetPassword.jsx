@@ -28,27 +28,29 @@ function ResetPassword ({ reset_password }) {
     }
 
     return (
-        <div className="container-sm sm w-50 pt-5">
-            <div className="mb-4 d-flex flex-column align-items-center">
-                <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1001.jpg"/>
-                <h6 className="poetsen tagline text-nowrap"> sign into the platform </h6>
+        <div className="flex flex-col items-center justify-evenly">
+            <div className="w-3/4 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
+                <div className="mb-10 flex flex-col items-center">
+                    <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1001.jpg"/>
+                    <h6 className="mont text-white text-3xl md:text-4xl text-nowrap"> reset your password </h6>
+                </div>
+                <Form onSubmit={handleSubmit} className="p-5">
+                    <FormField>
+                        <label className="!text-white" htmlFor='email'>Email:</label>
+                        <input 
+                            className='!bg-black !bg-opacity-30 !text-white'
+                            type='email'
+                            name='email'
+                            value={email}
+                            onChange={e => handleChange(e)}
+                            required
+                        />
+                    </FormField>
+                    <div className="flex flex-col items-center justify-evenly mt-8">            
+                        <Button type="submit" className="!bg-[#90B8F8] hover:!bg-[#5F85DB]">REQUEST NEW PASSWORD</Button>   
+                    </div>            
+                </Form>
             </div>
-            <Form onSubmit={handleSubmit}>
-                <FormField>
-                    <label className="input_label" htmlFor='email'>Email:</label>
-                    <input 
-                        className='input_bg'
-                        type='email'
-                        name='email'
-                        value={email}
-                        onChange={e => handleChange(e)}
-                        required
-                    />
-                </FormField>
-                <div className="d-flex justify-content-center mt-4">
-                    <Button type="submit" className="button_bg">REQUEST NEW PASSWORD</Button>   
-                </div>            
-            </Form>
         </div>
     )
 }

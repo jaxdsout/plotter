@@ -44,12 +44,12 @@ function NewClient({ user, load_clients, new_client }) {
 
     return (
         <>
-            <div className="d-flex justify-content-end align-items-end">
-                <Button color="blue" onClick={handleOpenModal} className="button_bg">+</Button>
+            <div className="flex justify-center items-center">
+                <Button color="blue" onClick={handleOpenModal} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">+</Button>
             </div>
             <div>
                 <Modal open={showModal} onClose={handleCloseModal}>
-                    <Modal.Header>Add New Client</Modal.Header>
+                    <Modal.Header className="text-center">Add New Client</Modal.Header>
                     <Modal.Content>
                         <Form onSubmit={handleSubmit}>
                             <FormField>
@@ -92,7 +92,9 @@ function NewClient({ user, load_clients, new_client }) {
                                     required
                                 />
                             </FormField>
-                            <Button type="submit" color="green">CREATE CLIENT</Button>
+                            <div className="flex justify-center">
+                                <Button type="submit" color="green" >CREATE CLIENT</Button>
+                            </div>
                         </Form>
                     </Modal.Content>
                     <Modal.Actions>
