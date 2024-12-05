@@ -34,7 +34,7 @@ function EarningBar ({ deals }) {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     datasets: [
       {
-        label: 'Sales',
+        label: '',
         data: monthlyEarnings,
         backgroundColor: '#5F85DB',
         borderColor: 'rgb(52, 109, 183)',
@@ -63,7 +63,7 @@ function EarningBar ({ deals }) {
   };
 
   return (
-        <Bar data={data} options={options} />
+        <Bar data={data} options={options} className='!h-[12rem] !w-[24rem] sm:!h-[12rem] sm:!w-[24rem] md:!h-[12rem] md:!w-[24rem] lg:!h-[18rem] lg:!w-[36rem]'/>
   )
 
 

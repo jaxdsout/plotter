@@ -21,15 +21,16 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
       const bounds = new mapboxgl.LngLatBounds();
 
       mapOptions.forEach(option => {
+        const searchAddy = option.address.replace(/\s+/g, "+")
+
         const marker = new mapboxgl.Marker()
           .setLngLat([parseFloat(option.longitude), parseFloat(option.latitude)])
           .setPopup(new mapboxgl.Popup().setHTML(`
-            <div>
-                <p>${option.image}</p>
-                <img src="${option.image}" alt="option"/>
+            <div className="!rounded-md p-3">
+                <img src="${option.prop_image}" alt="option"/>
                 <h4>${option.prop_name}</h4>
                 <hr>
-                <a href=''>${option.address}<a>
+                <a href='https://www.google.com/maps/place/${searchAddy}'>${option.address}<a>
 
 
             </div>
@@ -54,9 +55,9 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
   return (
     <>
     {isClientView ? (
-      <div id="MAPBOXBOX" className='rounded-md md:h-[37rem] md:w-[37rem] h-[30rem] w-[30rem]' />
+      <div id="MAPBOXBOX" className='rounded-md md:h-[37rem] md:w-[37rem] h-[30rem] w-[30rem] shadow-md' />
     ) : isListMode ? (
-      <div id="MAPBOXBOX" className='rounded-md h-[25rem] w-[25rem]' />
+      <div id="MAPBOXBOX" className='rounded-md h-[25rem] w-[25rem] shadow-md' />
     ) : (
       <></>
     )

@@ -79,7 +79,7 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
                     ))}
                 </ul>
                 ) : (
-                    <div className="text-center">
+                    <div className="text-center text-white">
                         <p>No lists to display.</p>
                     </div>
                 )}

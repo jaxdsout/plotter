@@ -76,27 +76,27 @@ function GuestCard ({ client, property, user, new_guest_card }) {
     return (
         <>
             <div>
-                <Button onClick={handleOpenModal} className="button_bg">SEND GUEST CARD</Button>
+                <Button onClick={handleOpenModal} className="!bg-[#90B8F8] hover:!bg-[#5F85DB]">SEND GUEST CARD</Button>
             </div>
-            <div className="bg-body-secondary">
+            <div>
                 <Modal open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>Send Guest Card</Modal.Header>
                     <Modal.Content>
-                        <div className="d-flex flex-row justify-content-between align-items-center mb-4">
-                            <div className="d-flex flex-row align-items-center">
+                        <div className="flex flex-row justify-between items-center mb-4">
+                            <div className="flex flex-row items-center">
                                 <ClientSearch />
                                 {clientSel && client !== null ? (
                                     <Button color="black" disabled>CLIENT SELECTED</Button>
                                 ) : (
-                                    <Button className="button_bg" type="submit">SELECT CLIENT</Button>
+                                    <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB]" type="submit">SELECT CLIENT</Button>
                                 )}
                             </div>
-                            <div className="d-flex flex-row align-items-center">
+                            <div className="flex flex-row items-center">
                                 <PropertySearch />
                                 {propSel && property !== null ? (
                                     <Button color="black" disabled>PROPERTY SELECTED</Button>
                                 ) : (
-                                    <Button className="button_bg" type="submit">SELECT PROPERTY</Button>
+                                    <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB]" type="submit">SELECT PROPERTY</Button>
                                 )}
                             </div>
                         </div>
@@ -135,7 +135,7 @@ function GuestCard ({ client, property, user, new_guest_card }) {
                                     <p>{user?.first_name} {user?.last_name}</p>
                                     <p>{user?.profile?.phone_number}</p>
                                 </div>
-                                <div className="d-flex justify-content-end mt-3">
+                                <div className="flex justify-end mt-3">
                                     <Button color="green" onClick={handleSubmit}>SEND</Button>
                                 </div>
                             </>

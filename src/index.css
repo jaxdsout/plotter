@@ -20,63 +20,7 @@ body {
   background-color: #F5EFE6;
 }
 
-/* FONTS */
 .mont {
   font-family: "Mont-Heavy", sans-serif;
   font-weight: 700;
-}
-
-.input-color {
-  color: rgb(189, 189, 189) !important;
-
-}
-
-.clientnav {
-  background-color: rgb(28, 30, 32);
-}
-
-/* BOOTSTRAP EXCEPTIONS */
-/* 
-.modal {
-  top: auto;
-  left: auto;
-  height: auto;
-} */
-
-
-
-/* BUTTONS */
-
-.button_bg {
-  background-color: #90B8F8 !important;
-}
-
-.button_bg:hover {
-  background-color: #5F85DB !important;
-}
-
-/*  INPUT & FORMS */
-
-.input_bg {
-  color: white !important;
-  background-color: rgba(0, 0, 0, 0.293) !important;
-}
-
-.input_label, .text_custom {
-  color: white !important
-}
-
-
-
-/* MODALS */
-
-
-.modal_content {
-  background-color: #353941 !important;
-}
-
-
-
-.art_thumb {
-  min-width: 24rem !important;
 }

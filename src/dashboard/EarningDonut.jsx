@@ -41,7 +41,7 @@ function EarningDonut ({ deals }) {
     labels: ['Not Invoiced', 'Pending', 'Overdue', 'Paid'],
     datasets: [
       {
-        label: 'Sales',
+        label: '',
         data: statusEarnings,
         backgroundColor: ['#5F85DB', '#FABC3F', '#C7253E', '#387F39'],
         borderWidth: 1,
@@ -64,7 +64,7 @@ function EarningDonut ({ deals }) {
   };
 
   return(
-        <Doughnut data={data} options={options}/>
+        <Doughnut data={data} options={options} className='!h-[24rem] !w-[24rem]'/>
   )
 }
 
