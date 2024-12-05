@@ -31,14 +31,14 @@ function DeleteOption ( { delete_option, load_options, option, list}) {
                     open
                     position="top center"
                     size="tiny"
-                    style={{ color: 'red', fontWeight: '700' }}
+                    className='!text-red-700 !font-black'
                     trigger={
                         <Button
                             type="submit"
                             color="red"
                             onClick={() => handleDelete(option.id, list)}
                         >
-                            <i class="user circle icon"></i>
+                            <i class="trash alternate icon"></i>
                         </Button>
                     }
                 />

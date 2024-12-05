@@ -37,8 +37,8 @@ function UpdateOption ({ option, list, update_option, load_options }) {
         <Button onClick={handleOpenModal}>
             <i class="edit icon"></i>
         </Button>
-        <div className="bg-body-secondary">
-            <Modal open={showModal} onClose={handleCloseModal}>
+        <div>
+            <Modal open={showModal} onClose={handleCloseModal} className="!w-[500px]">
                 <Modal.Header className="text-center">Update Option: {option.prop_name}</Modal.Header>
                 <Modal.Content className="bg-dark-subtle">
                     <Form onSubmit={handleSubmit}>
@@ -49,7 +49,6 @@ function UpdateOption ({ option, list, update_option, load_options }) {
                                 name='price'
                                 value={price || option.price}
                                 onChange={handleChange}
-                                className="bg-body-secondary"
                             />
                         </FormField>
                         <FormField>
@@ -59,7 +58,6 @@ function UpdateOption ({ option, list, update_option, load_options }) {
                                 name='unit_number'
                                 value={unit_number}
                                 onChange={handleChange}
-                                className="bg-body-secondary"
                             />
                         </FormField>
                         <FormField>
@@ -69,7 +67,7 @@ function UpdateOption ({ option, list, update_option, load_options }) {
                                 name='layout'
                                 value={layout}
                                 onChange={handleChange}
-                                className="bg-body-secondary"
+                            
                             />
                         </FormField>
                         <FormField>
@@ -79,7 +77,6 @@ function UpdateOption ({ option, list, update_option, load_options }) {
                                 name='sq_ft'
                                 value={sq_ft}
                                 onChange={handleChange}
-                                className="bg-body-secondary"
                             />
                         </FormField>
                         <FormField>
@@ -89,7 +86,7 @@ function UpdateOption ({ option, list, update_option, load_options }) {
                                 name='available'
                                 value={available}
                                 onChange={handleChange}
-                                className="bg-body-secondary"
+                            
                             />
                         </FormField>
                         <FormField>
@@ -99,13 +96,12 @@ function UpdateOption ({ option, list, update_option, load_options }) {
                                 name='notes'
                                 value={notes}
                                 onChange={handleChange}
-                                className="bg-body-secondary"
                             />
                         </FormField>
                         <Button type="submit" color="green">UPDATE OPTION</Button>
                     </Form>
                     </Modal.Content>
-                    <Modal.Actions className="bg-secondary-subtle">
+                    <Modal.Actions>
                         <Button onClick={handleCloseModal} color="red">CANCEL</Button>
                     </Modal.Actions>
                 </Modal>

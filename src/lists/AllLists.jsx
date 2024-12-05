@@ -50,15 +50,14 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
 
     return (
         <>
-            <div className="overflow-y-auto plotterbox mt-3">
+            <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
                 {lists.length > 0 ? ( 
-                <ul class="list-group hover">
+                <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                     {lists.map(list => (
-                        <li class="list-group-item" key={list.id}>
-                            <div className="d-flex justify-content-between">
-                                <span>{list.client_name} - {formatDate(list.date)}</span>
+                        <li className='p-3 flex flex-row justify-evenly items-start text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425]' key={list.id}>
+                            <div className="flex justify-between">
                                 <Link onClick={() => handleOpenModal(list.id)}>
-                                    <i class="ellipsis horizontal icon"></i>
+                                    <span className="font-bold">{list.client_name}</span> | <span>{formatDate(list.date)}</span>
                                 </Link>
                             </div>                 
                         {showListDetail === list.id && (
@@ -67,7 +66,7 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
                                 <Modal.Content>
                                     <ListDetail list={list} handleCloseModal={handleCloseModal}/>
                                 </Modal.Content>
-                                <Modal.Actions className="d-flex">
+                                <Modal.Actions className="flex justify-end">
                                     {isListMode ? (
                                         <Button onClick={handleCancelEdit}>CANCEL</Button>
                                     ): (

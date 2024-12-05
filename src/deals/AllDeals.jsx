@@ -26,15 +26,17 @@ function AllDeals ({ load_deals, deals, user }) {
 
     return (
         <>
-            <div className="overflow-y-auto plotterbox mt-3">
+            <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
                 {deals.length > 0 ? ( 
-                <ul className="list-group">
+                <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                     {deals.map(deal => (
-                        <li className="list-group-item" key={deal.id}>
-                            <div className="d-flex justify-content-between">
-                                <span><b>{deal.client_name}</b> | {deal.prop_name} | Move-in Date: {deal.move_date}</span>
+                        <li 
+                            className='p-3 flex flex-row justify-evenly items-start font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425]' 
+                            key={deal.id}
+                        >
+                            <div className="flex justify-between">
                                 <Link onClick={() => handleOpenModal(deal.id)}>
-                                    <i class="ellipsis horizontal icon"></i>
+                                    <span><b>{deal.client_name}</b> | {deal.prop_name} | Move-in Date: {deal.move_date}</span>
                                 </Link>
                             </div>
                             {showDealDetail === deal.id && (
@@ -43,7 +45,7 @@ function AllDeals ({ load_deals, deals, user }) {
                                 <Modal.Content>
                                     <DealDetail deal={deal} handleCloseModal={handleCloseModal}/>
                                 </Modal.Content>
-                                <Modal.Actions className="d-flex">
+                                <Modal.Actions className="flex">
                                     <Button onClick={handleCloseModal}>CLOSE</Button>
                                 </Modal.Actions>
                             </Modal>

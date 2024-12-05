@@ -54,9 +54,9 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
   return (
     <>
     {isClientView ? (
-      <div id="MAPBOXBOX" style={{ height: "45rem"}} className='rounded-4' />
+      <div id="MAPBOXBOX" className='rounded-md md:h-[37rem] md:w-[37rem] h-[30rem] w-[30rem]' />
     ) : isListMode ? (
-      <div id="MAPBOXBOX" style={{ height: "25rem", width: "25rem" }} />
+      <div id="MAPBOXBOX" className='rounded-md h-[25rem] w-[25rem]' />
     ) : (
       <></>
     )

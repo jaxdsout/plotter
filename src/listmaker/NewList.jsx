@@ -50,7 +50,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
 
     const handleOpenURL = () => {
         if (list.uuid) {
-            const fullURL = `${window.location.origin}/#/list/${list.uuid}`;
+            const fullURL = `${window.location.origin}/list/${list.uuid}`;
             window.open(fullURL, '_blank');
         }
     };
@@ -82,7 +82,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
 
     return (
         <>
-            <div className="d-flex justify-content-end align-items-end">
+            <div className="flex justify-center items-center">
                 <Button color="blue" onClick={handleOpenModal} className="button_bg">+</Button>
             </div>
             <div>
@@ -99,9 +99,9 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                     <Modal.Content>
                         <>
                             {isListMode ? (
-                                <div className="d-flex flex-column flex-lg-row justify-content-evenly">
+                                <div className="flex flex-col lg:flex-row justify-evenly h-[30rem]">
                                     <div>
-                                        <div className="d-flex flex-column flex-lg-row align-items-center">
+                                        <div className="flex flex-col lg:flex-row items-center">
                                             <PropertySearch />
                                             <Form onSubmit={() => handlePropertyAdd(list, property)} className="p-3">
                                                 <Button className="button_bg" type="submit">ADD PROPERTY</Button>
@@ -110,12 +110,13 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                         <Divider />
                                         <OptionList />
                                     </div>
-                                    <Divider />
-                                    <MapBox />                                                      
+                                    <div className="flex justify-center items-center">
+                                        <MapBox />                                                      
+                                    </div>
                                 </div>
                             ) : isSendMode ? (
-                                <div className="d-flex justify-content-evenly align-items-center" style={{ height: "500px"}}>
-                                    <div className="">
+                                <div className="flex flex-col justify-evenly items-center h-[30rem]">
+                                    <div className="text-center">
                                        <ShareURL />
                                     </div>
                                     <div className="">
@@ -128,7 +129,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                             </FormField>
                                         </Form>
                                     </div>
-                                    <div className="d-flex flex-column">
+                                    <div className="flex flex-col">
                                         <Form>
                                             <FormField>
                                                 <label>Send Email</label>
@@ -140,8 +141,8 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                     </div>
                                 </div>
                             ) : (
-                                <div className="d-flex flex-column flex-row-lg justify-content-evenly" style={{ height: "500px"}}>
-                                    <div className="d-flex flex-column flex-row-lg align-items-center">
+                                <div className="flex flex-col justify-center items-center h-[30rem]">
+                                    <div className="flex flex-col lg:flex-row items-center">
                                         <ClientSearch />
                                         <Form onSubmit={handleCreateList} className="p-3">
                                             <Button className="button_bg" type="submit">START LIST</Button>
@@ -160,7 +161,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                         </>
                     </Modal.Content>
                     <Modal.Actions>
-                        <div className="d-flex justify-content-between pb-2">
+                        <div className="flex justify-between pb-2">
                         <>
                         {isListMode ? (
                             <>

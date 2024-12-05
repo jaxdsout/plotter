@@ -35,7 +35,7 @@ function DeleteDeal({ delete_deal, load_deals, deal, handleCloseModal, user }) {
                 open
                 position="top center"
                 size="tiny"
-                style={{ color: 'red', fontWeight: '700' }}
+                className='!text-red-700 !font-black'
                 trigger={
                     <Button
                         type="submit"

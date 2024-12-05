@@ -30,11 +30,11 @@ function Navbar ({ logout, isAuthenticated, isClientView, reset_client_view }) {
         <>
         {isClientView ? (
             <nav className='bg-[#FEFAE0] text-center p-5'>
-                <h1 className='poetsen text-[#5F85DB]' onClick={logo_click}>maptor</h1>
+                <h1 className='mont text-[#5F85DB] p-5 text-6xl hover:text-[#4d6ebb]' onClick={logo_click}>plotter</h1>
             </nav>
         ) : (
             <nav className='bg-white shadow-inner p-5 flex flex-row justify-between items-center'>
-                <h1 className='mont text-[#5F85DB] p-5 text-6xl hover:text-[#4d6ebb]' onClick={logo_click}>maptor</h1>
+                <h1 className='mont text-[#5F85DB] p-5 text-6xl hover:text-[#4d6ebb]' onClick={logo_click}>plotter</h1>
                 {isAuthenticated ? 
                     <Button className="p-5" onClick={logout_user}>LOGOUT</Button> 
                     : 

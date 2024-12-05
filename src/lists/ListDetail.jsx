@@ -13,7 +13,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
     reset_prop, reset_prop_results, set_search_client, set_list_edit, load_options, handleCloseModal, load_lists, 
     isListMode, client, options, update_list, reset_list_mode }) {
 
-    const link = `${window.origin}/#/list/${list.uuid}`
+    const link = `${window.origin}/list/${list.uuid}`
 
     const formatDate = (datetimeStr) => {
         const dateObj = new Date(datetimeStr);
@@ -60,9 +60,9 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
       
             {isListMode ? (
                 <>
-                  <div className="d-flex justify-content-evenly" style={{ height: "500px"}}>
+                  <div className="flex justify-evenly h-[500px]">
                     <div className="">
-                        <div className="d-flex flex-row">
+                        <div className="flex flex-row">
                             <PropertySearch />
                             <Form onSubmit={() => handlePropertyAdd(list, property)}>
                                 <Button color="blue" type="submit">ADD PROPERTY</Button>
@@ -74,7 +74,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                     <div className="">
                         <MapBox />
                         <Divider />
-                        <div className="d-flex justify-content-between">
+                        <div className="flex justify-between">
                             <ClearOptions />
                             <Button color="green" type="submit" onClick={handleSaveList}>
                                 SAVE LIST
@@ -85,29 +85,32 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                 </>
             ) : (
                 <>
-                    <div className="d-flex flex-column justify-content-evenly" style={{ height: "500px"}}>
-                        <div className="d-flex flex-row justify-content-evenly mb-1">
+                    <div className="flex flex-col justify-evenly h-[500px]">
+                        <div className="flex flex-row justify-evenly mb-1">
                             <div>
                                 <p><b>Client: </b>{list.client_name}</p>
                                 <p><b>Date Created: </b>{formatDate(list.date)}</p>
                                 <p><b>Last Updated: </b></p>
-                                <p><b>URL: </b><Input value={link} readOnly style={{ width: '20rem' }} className="ms-3"/></p>
+                                <p>
+                                    <b>URL: </b>
+                                    <Input value={link} readOnly className="ml-3 w-[20rem]"/>
+                                </p>
                             </div>
-                            <div className="d-flex flex-column justify-content-between">
+                            <div className="flex flex-col justify-between">
                                 <DeleteList list={list} handleCloseModal={handleCloseModal}/>
                                 <Button type="submit" onClick={handleEditList}>EDIT LIST</Button>
 
                             </div>
                         </div>
                         <Divider />
-                        <div className="d-flex flex-column justify-content-center align-items-center flex-column text-wrap">
-                            <h4>Option List</h4>
-                            <div>
-                                <ul>
+                        <div className="flex flex-col justify-center items-center">
+                            <h4>Options</h4>
+                            <div className="overflow-y-auto pb-10">
+                                <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                                     {list.options.map(option => (
-                                        <li key={option.id}>
-                                            <div>
-                                                <b>{option.prop_name}</b>
+                                        <li className='p-3 font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-[#26282B] even:bg-[#232425]' key={option.id}>
+                                            <div className="flex flex-row justify-between items-start w-[400px]">
+                                                <b className="text-wrap">{option.prop_name}</b>
                                                 <p>Rate: ${option.price} | Unit: {option.unit} | Layout: {option.layout} | Sq Ft: {option.sq_ft}<br></br>
                                                     Available: {option.available} | Notes / Specials: {option.notes}</p>
                                             </div>
