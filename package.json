@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "homepage": "https://plotter-w3vt.onrender.com",
+  "homepage": "https://aptatlas.com",
   "private": true,
   "dependencies": {
     "@capacitor/core": "^6.1.2",
