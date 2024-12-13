@@ -109,12 +109,12 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
             <div className="flex justify-center items-center">
                 <Button color="blue" onClick={handleOpenModal} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">+</Button>
             </div>
-            <div className="!w-[500px]">
-                <Modal open={showModal} onClose={handleCloseModal}>
+            <div>
+                <Modal open={showModal} onClose={handleCloseModal} className="!w-[500px]">
                     <Modal.Header>Add New Deal</Modal.Header>
                     <Modal.Content>
-                        <div className="flex flex-col md:flex-row justify-between items-center mb-4">
-                            <div className="flex flex-row items-center mb-2">
+                        <div className="flex flex-col justify-between items-start mb-4">
+                            <div className="flex flex-row items-center justify-start mb-2">
                                 <ClientSearch />
                                 <Form onSubmit={handleClientSelect}>
                                     {clientSel && client !== null ? (
@@ -230,12 +230,16 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                                     required
                                 />
                             </FormField>
-                            <Button type="submit" color="green">SUBMIT DEAL</Button>
+                            <div className="flex justify-center">
+                                <Button type="submit" color="green">SUBMIT DEAL</Button>
+                            </div>
                         </Form>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Button color="red" onClick={handleResetDeal}>RESET</Button>
-                        <Button onClick={handleCloseModal}>CLOSE</Button>
+                        <div className="flex justify-between">
+                            <Button color="red" onClick={handleResetDeal}>RESET</Button>
+                            <Button onClick={handleCloseModal}>CLOSE</Button>
+                        </div>
                     </Modal.Actions>
                 </Modal>
             </div>

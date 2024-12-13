@@ -60,7 +60,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
       
             {isListMode ? (
                 <>
-                  <div className="flex justify-evenly h-[500px]">
+                  <div className="flex justify-evenly">
                     <div className="">
                         <div className="flex flex-row">
                             <PropertySearch />
@@ -85,8 +85,8 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                 </>
             ) : (
                 <>
-                    <div className="flex flex-col justify-evenly h-[500px]">
-                        <div className="flex flex-row justify-evenly mb-1">
+                    <div className="flex flex-col justify-evenly items-center">
+                        <div className="flex flex-row justify-evenly mb-1 w-[500px]">
                             <div>
                                 <p><b>Client: </b>{list.client_name}</p>
                                 <p><b>Date Created: </b>{formatDate(list.date)}</p>

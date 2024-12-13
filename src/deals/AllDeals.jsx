@@ -40,12 +40,12 @@ function AllDeals ({ load_deals, deals, user }) {
                                 </Link>
                             </div>
                             {showDealDetail === deal.id && (
-                            <Modal className='' open={showModal} onClose={handleCloseModal}>
+                            <Modal className='!w-[500px]' open={showModal} onClose={handleCloseModal}>
                                 <Modal.Header>Deal Info</Modal.Header>
                                 <Modal.Content>
                                     <DealDetail deal={deal} handleCloseModal={handleCloseModal}/>
                                 </Modal.Content>
-                                <Modal.Actions className="flex">
+                                <Modal.Actions className="flex justify-end">
                                     <Button onClick={handleCloseModal}>CLOSE</Button>
                                 </Modal.Actions>
                             </Modal>

@@ -48,13 +48,6 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
         setShowResetModal(false);
     };
 
-    const handleOpenURL = () => {
-        if (list.uuid) {
-            const fullURL = `${window.location.origin}/list/${list.uuid}`;
-            window.open(fullURL, '_blank');
-        }
-    };
-
     const handleEditList = async () => {
         await reset_send_mode();
         set_list_mode()
@@ -91,7 +84,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                         {isListMode ? (
                             <p>New List: {client.name}</p>
                         ) : isSendMode ? (
-                            <p>New List: {client.name}</p>
+                            <p>Send List: {client.name}</p>
                         ) : (
                             <p>Create New List</p>
                         )}
@@ -115,37 +108,15 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                     </div>
                                 </div>
                             ) : isSendMode ? (
-                                <div className="flex flex-col justify-evenly items-center h-[30rem]">
-                                    <div className="text-center">
+                                <div className="flex flex-row justify-center items-center h-[30rem]">
                                        <ShareURL />
-                                    </div>
-                                    <div className="">
-                                        <Form>
-                                            <FormField>
-                                                <label>Open URL</label>
-                                                <Button onClick={handleOpenURL}>
-                                                    <i class="linkify icon"></i>
-                                                </Button>
-                                            </FormField>
-                                        </Form>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <Form>
-                                            <FormField>
-                                                <label>Send Email</label>
-                                                <Button>
-                                                    <i class="paper plane icon"></i>
-                                                </Button>
-                                            </FormField>
-                                        </Form>
-                                    </div>
                                 </div>
                             ) : (
                                 <div className="flex flex-col justify-center items-center h-[30rem]">
                                     <div className="flex flex-col lg:flex-row items-center">
                                         <ClientSearch />
                                         <Form onSubmit={handleCreateList} className="p-3">
-                                            <Button className="button_bg" type="submit">START LIST</Button>
+                                            <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold" type="submit">START LIST</Button>
                                         </Form>
                                     </div>
                                     {error === "client" && (
@@ -161,26 +132,26 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                         </>
                     </Modal.Content>
                     <Modal.Actions>
-                        <div className="flex justify-between pb-2">
                         <>
                         {isListMode ? (
-                            <>
+                            <div className="flex justify-between pb-2">
                                 <Button onClick={handleOpenResetModal}>BACK</Button>
                                 <div>
                                     <ClearOptions />
                                     <SendList />
                                 </div>
-                            </>
+                            </div>
                         ) : isSendMode ? (
-                            <>
+                            <div className="flex justify-between pb-2">
                                 <Button onClick={handleEditList}>BACK</Button>
-                                <Button onClick={handleCloseModal}>CLOSE</Button>
-                            </>
+                                <Button color="green" onClick={handleCloseModal}>DONE</Button>
+                            </div>
                         ) : (
+                            <div className="flex justify-end pb-2">
                             <Button onClick={handleCloseModal}>CLOSE</Button>
+                            </div>
                         )}
                         </>
-                        </div>
                     </Modal.Actions>
                 </Modal>
             </div>

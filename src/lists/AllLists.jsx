@@ -16,7 +16,6 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
         if (user){
             load_lists(user.id);
         }
-        console.log("all_lists useffect")
     }, [load_lists, user])
     
 
@@ -61,7 +60,7 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
                                 </Link>
                             </div>                 
                         {showListDetail === list.id && (
-                            <Modal open={showModal} onClose={handleCloseModal}>
+                            <Modal className='' open={showModal} onClose={handleCloseModal}>
                                 <Modal.Header>List Info</Modal.Header>
                                 <Modal.Content>
                                     <ListDetail list={list} handleCloseModal={handleCloseModal}/>

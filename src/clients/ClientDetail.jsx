@@ -74,14 +74,13 @@ function ClientDetail ({ client, update_client, user, load_clients, message, cle
                         required
                     />
                 </FormField>
-                <div className="d-flex justify-content-between align-items-center">
-                <Button type="submit" color="green">UPDATE CLIENT</Button>   
-
-                {message && (
-                    <Message positive size="mini">
-                        <Message.Header>{message}</Message.Header>
-                    </Message>
-                )}
+                <div className="flex justify-center items-center">
+                    <Button type="submit" color="green">UPDATE CLIENT</Button>   
+                    {message && (
+                        <Message positive size="mini">
+                            <Message.Header>{message}</Message.Header>
+                        </Message>
+                    )}
                 </div>
             </Form>
         </>

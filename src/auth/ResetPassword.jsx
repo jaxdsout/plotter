@@ -31,7 +31,7 @@ function ResetPassword ({ reset_password }) {
         <div className="flex flex-col items-center justify-evenly">
             <div className="w-3/4 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
                 <div className="mb-10 flex flex-col items-center">
-                    <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1001.jpg"/>
+                    <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1010.png"/>
                     <h6 className="mont text-white text-3xl md:text-4xl text-nowrap"> reset your password </h6>
                 </div>
                 <Form onSubmit={handleSubmit} className="p-5">
