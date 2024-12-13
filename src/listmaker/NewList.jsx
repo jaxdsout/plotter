@@ -9,10 +9,10 @@ import ClientSearch from "./ClientSearch";
 import SendList from "./SendList";
 import ShareURL from "./ShareURL";
 import { new_list, reset_client, delete_list, new_option, reset_prop_results, reset_prop, load_options } from "../actions/listmaker";
-import { reset_list_mode, reset_send_mode, set_list_mode } from "../actions/ui"
+import { reset_list_mode, reset_reorder_mode, reset_send_mode, set_list_mode, set_reorder_mode } from "../actions/ui"
 
 
-function NewList({ new_option, reset_prop_results, property, list, reset_prop, load_options, user, new_list, client, isSendMode, isListMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode, reset_client }) {
+function NewList({ new_option, reset_prop_results, property, list, reset_prop, load_options, user, new_list, client, isSendMode, isListMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode, reset_client, isReorderMode, set_reorder_mode, reset_reorder_mode }) {
     const [showModal, setShowModal] = useState(false);
     const [showResetModal, setShowResetModal] = useState(false);
     const [error, setError] = useState(null);
@@ -20,6 +20,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
     const handleErrorReset = () => {
         setError(null);
     };
+
     const handleCreateList = async (e) => {
         if (user !== null && client !== null) { 
             await new_list(user.id, client.id);
@@ -73,6 +74,16 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
         setShowModal(false);
     }
 
+    const handleReorder = () => {
+        if (isReorderMode) {
+            reset_reorder_mode()
+            console.log("re order mode disabled")
+        } else {
+            set_reorder_mode();
+        }
+        console.log("re order mode activated")
+    }
+
     return (
         <>
             <div className="flex justify-center items-center">
@@ -92,8 +103,8 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                     <Modal.Content>
                         <>
                             {isListMode ? (
-                                <div className="flex flex-col lg:flex-row justify-evenly h-[30rem]">
-                                    <div>
+                                <div className="flex flex-col lg:flex-row justify-evenly items-start h-[30rem]">
+                                    <div className="flex flex-col">
                                         <div className="flex flex-col lg:flex-row items-center">
                                             <PropertySearch />
                                             <Form onSubmit={() => handlePropertyAdd(list, property)} className="p-3">
@@ -136,6 +147,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                         {isListMode ? (
                             <div className="flex justify-between pb-2">
                                 <Button onClick={handleOpenResetModal}>BACK</Button>
+                                <Button color='vk' onClick={handleReorder}>REORDER</Button>
                                 <div>
                                     <ClearOptions />
                                     <SendList />
@@ -181,7 +193,8 @@ const mapStateToProps = state => ({
     isSendMode: state.ui.isSendMode,
     isListMode: state.ui.isListMode,
     list: state.listmaker.list,
-    property: state.listmaker.property
+    property: state.listmaker.property,
+    isReorderMode: state.ui.isReorderMode
 });
 
-export default connect(mapStateToProps, { new_option, reset_prop_results, new_list, reset_list_mode, reset_send_mode, delete_list, set_list_mode, reset_client, reset_prop, load_options })(NewList);
+export default connect(mapStateToProps, { new_option, reset_prop_results, new_list, reset_list_mode, reset_send_mode, delete_list, set_list_mode, reset_client, reset_prop, load_options, set_reorder_mode, reset_reorder_mode })(NewList);

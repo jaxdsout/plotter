@@ -44,7 +44,7 @@ function DeleteOption ( { delete_option, load_options, option, list}) {
                 />
             ) : (
                 <Button type="submit" onClick={() => handleDeleteConfirm(option.id)}>
-                    <i class="trash alternate icon"></i>
+                    <i class="trash alternate icon !-mr-1"></i>
                 </Button>
             )}
         </>

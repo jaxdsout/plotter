@@ -35,7 +35,7 @@ function UpdateOption ({ option, list, update_option, load_options }) {
     return(
         <>
         <Button onClick={handleOpenModal}>
-            <i class="edit icon"></i>
+            <i className="edit icon !-mr-1"></i>
         </Button>
         <div>
             <Modal open={showModal} onClose={handleCloseModal} className="!w-[500px]">
