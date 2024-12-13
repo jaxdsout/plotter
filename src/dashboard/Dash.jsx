@@ -51,10 +51,10 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
     return (
         <div>
             <div className='flex flex-col lg:flex-row justify-evenly items-center p-5'>
-                <div className='pt-5'>
+                <div className='pt-5 pb-5'>
                     <EarningDonut />
                 </div>
-                <div className='pt-5'>
+                <div className='pt-5 pb-5'>
                     <EarningBar />
                 </div>
             </div>

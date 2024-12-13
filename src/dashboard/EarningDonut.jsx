@@ -64,7 +64,9 @@ function EarningDonut ({ deals }) {
   };
 
   return(
-        <Doughnut data={data} options={options} className='!h-[24rem] !w-[24rem]'/>
+        <Doughnut 
+          data={data} options={options} 
+          className='!h-[16rem] !w-[16rem] sm:!h-[16rem] sm:!w-[16rem] md:!h-[24rem] md:!w-[24rem] lg:!h-[24rem] lg:!w-[24rem]'/>
   )
 }
 

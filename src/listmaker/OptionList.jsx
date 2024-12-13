@@ -3,12 +3,10 @@ import { Divider, List, Popup } from "semantic-ui-react";
 import { connect } from "react-redux";
 import UpdateOption from "./UpdateOption";
 import { load_options, update_options_order } from "../actions/listmaker";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import DeleteOption from "./DeleteOption";
 
-
-function OptionList({ options, load_options, list, update_options_order }) {
-
+function OptionList({ options, load_options, list, update_options_order, isReorderMode }) {
     const formatDate = (datetimeStr) => {
         const dateObj = new Date(datetimeStr);
         return dateObj.toLocaleString('default', {
@@ -29,102 +27,115 @@ function OptionList({ options, load_options, list, update_options_order }) {
         return result;
     };
 
-    const getItemStyle = (isDragging, draggableStyle) => ({
-        userSelect: "none",      
-        background: isDragging ? "lightblue" : "white",
-        position: isDragging ? "fixed" : "static",
-        top: isDragging ? draggableStyle?.transform?.split(",")[1] : "auto",
-        left: isDragging ? draggableStyle?.transform?.split(",")[0] : "auto",
+    const grid = 8;
 
-        transform: isDragging ? draggableStyle?.transform : "none",
+    const getItemStyle = (isDragging, draggableStyle) => ({
+        userSelect: "none",
+        height: "4rem",
+        margin: `0 0 ${grid}px 0`,
+        padding: "1rem",
+        background: isDragging ? "#5F85DB" : "#90B8F8",
+        // border: "solid .25rem",
+        borderRadius: "1rem", 
         ...draggableStyle
     });
 
-    const getListStyle = isDraggingOver => ({
-        background: isDraggingOver ? "lightgrey" : "white",
+    const getListStyle = (isDraggingOver) => ({
+        background: isDraggingOver ? "white" : "white",
+        padding: grid,
+        height: "12rem"
     });
 
     const onDragEnd = useCallback((result) => {
-        if (!result.destination) {
-          return;
-        }
-    
+        if (!result.destination) return;
+
         const reorderedItems = reorder(
-          options,
-          result.source.index,
-          result.destination.index
+            options,
+            result.source.index,
+            result.destination.index
         );
-    
+
         update_options_order(reorderedItems);
-      }, [options, update_options_order]);
+    }, [options, update_options_order]);
+
+    const renderOption = (option) => (
+        <div key={option.id} className="flex justify-between items-center">
+            <div className="flex flex-row items-center justify-center">
+                <Popup
+                    content={
+                        <List>
+                            {option.price === null ? (
+                                <p>No details added yet.</p>
+                            ) : (
+                                <>
+                                    <List.Item>${option.price}</List.Item>
+                                    <List.Item>Unit {option.unit_number}</List.Item>
+                                    <List.Item>{option.layout}; {option.sq_ft} sq. ft.</List.Item>
+                                    <List.Item>Available: {formatDate(option.available)}</List.Item>
+                                    <List.Item>{option.notes}</List.Item>
+                                </>
+                            )}
+                        </List>
+                    }
+                    trigger={<i className="ellipsis horizontal icon text-center"></i>}
+                />
+                <h4 className="pl-2 mt-1">{option.prop_name}</h4>
+            </div>
+            <div className="flex justify-center">
+                <UpdateOption option={option} />
+                <DeleteOption option={option} />
+            </div>
+        </div>
+    );
 
     return (
-        <>
+        <div className="h-[19rem] overflow-y-auto">
             {options.length > 0 ? (
-                <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="options">
-                    {(provided, snapshot) => (
-                        <div
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}
-                            style={getListStyle(snapshot.isDraggingOver)}
-                        >
-                        {options.map((option, index) => (
-                            <Draggable key={option.id} draggableId={String(option.id)} index={index} className="mt-4 mb-4">
-                                {(provided, snapshot) => (
-                                    <div
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                        style={getItemStyle(
-                                            snapshot.isDragging,
-                                            provided.draggableProps.style
-                                        )}
-                                    >
-                                        <div className="flex justify-between items-center">
-                                            <div className="flex flex-row items-center justify-center">
-                                                <Popup
-                                                    content={
-                                                        <List>
-                                                            {option.price === null ? (
-                                                                <p>No details added yet.</p>
-                                                            ) : (
-                                                                <>
-                                                                    <List.Item>${option.price}</List.Item>
-                                                                    <List.Item>Unit {option.unit_number}</List.Item>
-                                                                    <List.Item>{option.layout}; {option.sq_ft} sq. ft.</List.Item>
-                                                                    <List.Item>Available: {formatDate(option.available)}</List.Item>
-                                                                    <List.Item>{option.notes}</List.Item>
-                                                                </>
-                                                            )}
-                                                        </List>
-                                                    }
-                                                    trigger={<i className="ellipsis horizontal icon text-center"></i>}
-                                                />
-                                                <h4 className="pl-2 mt-1">{option.prop_name}</h4>
-                                            </div>
-                                            <div className="flex">
-                                                <UpdateOption option={option} />
-                                                <DeleteOption option={option} />
-                                            </div>
-                                        </div>
-                                        <Divider />
-                                    </div>
-                                )}
-                            </Draggable>
+                isReorderMode ? (
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        <Droppable droppableId="options" >
+                            {(provided, snapshot) => (
+                                <div
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                    style={getListStyle(snapshot.isDraggingOver)}
+                                >
+                                    {options.map((option, index) => (
+                                        <Draggable key={option.id} draggableId={String(option.id)} index={index}>
+                                            {(provided, snapshot) => (
+                                                <div
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
+                                                >
+                                                    {renderOption(option)}
+                                                    <Divider />
+                                                </div>
+                                            )}
+                                        </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
+                ) : (
+                    <div className="h-[19rem] overflow-y-scroll">
+                        {options.map((option) => (
+                            <div key={option.id} className="p-1">
+                                {renderOption(option)}
+                                <Divider />
+                            </div>
                         ))}
-                        {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
-                </DragDropContext>
-
+                    </div>
+                )
             ) : (
                 <div className="container text-center">
                     <p>No options added yet.</p>
                 </div>
             )}
-        </>
+        </div>
     );
 }
 
@@ -133,6 +144,7 @@ const mapStateToProps = (state) => ({
     error: state.auth.error,
     options: state.listmaker.options,
     list: state.listmaker.list,
+    isReorderMode: state.ui.isReorderMode
 });
 
 export default connect(mapStateToProps, { load_options, update_options_order })(OptionList);
