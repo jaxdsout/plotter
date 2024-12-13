@@ -69,7 +69,7 @@ function Login ({ login, isAuthenticated, error, message }) {
                         />
                     </FormField>
                     <div className="flex justify-center mt-8 mb-5">
-                        <Button type="submit" className="button_bg">LOGIN</Button>   
+                        <Button type="submit" className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">LOGIN</Button>   
                     </div>
                 </Form>
                 <Divider className="mt-4 mb-4" />

@@ -111,7 +111,7 @@ function Signup ({ signup, error, message }) {
                         />
                     </FormField>
                     <div className="flex justify-center mt-8 mb-5">
-                        <Button className="button_bg">SIGN UP</Button>   
+                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">SIGN UP</Button>   
                     </div>
                 </Form>
                 <Divider className="mt-4 mb-4" />

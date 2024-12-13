@@ -31,7 +31,7 @@ function DealDetail ({ deal, handleCloseModal, update_deal_status, load_deals, u
                     <p><b>Date Deal Created: </b>{formatDate(deal.deal_date)}</p>
                     <Divider />
                 </div>
-                <div className="d-flex flex-row justify-content-evenly">
+                <div className="flex flex-row justify-evenly">
                     <div>
                         <p><b>Client: </b>{deal.client_name}</p>
                         <p><b>Property: </b>{deal.prop_name}</p>
@@ -46,7 +46,7 @@ function DealDetail ({ deal, handleCloseModal, update_deal_status, load_deals, u
                         )}
                         <p><b>Commission: </b>${deal.commission}</p>
                     </div>
-                    <div className="d-flex flex-column justify-content-between">
+                    <div className="flex flex-col justify-between">
                         <div>
                             <p><b>Lease End Date: </b>{deal.lease_end_date}</p>
                             <p><b>Invoice Date: </b>{deal.invoice_date}</p>

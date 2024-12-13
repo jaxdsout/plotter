@@ -48,7 +48,7 @@ function NewClient({ user, load_clients, new_client }) {
                 <Button color="blue" onClick={handleOpenModal} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">+</Button>
             </div>
             <div>
-                <Modal open={showModal} onClose={handleCloseModal}>
+                <Modal open={showModal} onClose={handleCloseModal} className="!w-[500px]">
                     <Modal.Header className="text-center">Add New Client</Modal.Header>
                     <Modal.Content>
                         <Form onSubmit={handleSubmit}>
