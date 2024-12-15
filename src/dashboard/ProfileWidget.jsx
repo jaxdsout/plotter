@@ -47,7 +47,7 @@ function ProfileWidget ({ user, update_profile, update_avatar }) {
 
     return (
         <>
-            <Card>
+            <Card className='!drop-shadow-xl'>
                 <Image src={profile.avatar} wrapped ui={false} />
                 <CardContent>
                     <CardHeader>{profile.full_name}</CardHeader>

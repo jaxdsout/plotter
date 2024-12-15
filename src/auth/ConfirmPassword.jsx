@@ -31,7 +31,7 @@ function ConfirmPassword ({ reset_password_confirm }) {
     return (
         <div className="flex flex-col items-center justify-evenly">
             <div className="w-3/4 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-inner shadow-md">
-                <h6 className="mont text-white text-3xl md:text-4xl text-nowrap mb-8 text-center"> save a new password </h6>
+                <h6 className="mont text-white text-2xl md:text-4xl mt-3 text-center"> save a new password </h6>
                 <Form onSubmit={handleSubmit} className="p-5">
                     <FormField>
                         <label className="!text-white" htmlFor='password'>Password:</label>

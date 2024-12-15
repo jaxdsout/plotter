@@ -89,7 +89,7 @@ function OptionList({ options, load_options, list, update_options_order, isReord
     );
 
     return (
-        <div className="h-[19rem] overflow-y-auto">
+        <div className="overflow-y-auto">
             {options.length > 0 ? (
                 isReorderMode ? (
                     <DragDropContext onDragEnd={onDragEnd}>

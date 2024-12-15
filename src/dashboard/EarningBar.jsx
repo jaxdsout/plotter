@@ -31,7 +31,7 @@ function EarningBar ({ deals }) {
   }, [deals])
 
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets: [
       {
         label: '',
@@ -54,16 +54,36 @@ function EarningBar ({ deals }) {
         text: 'Monthly Sales Revenue',
         color: 'white'
       },
+      
     },
     scales: {
       y: {
         beginAtZero: true,
+        grid: {
+          color: 'rgba(255, 255, 255, 0.2)', // Adjust gridline color
+          borderColor: 'rgba(255, 255, 255, 0.5)', // Adjust the axis line color
+          borderDash: [5, 5], // Make gridlines dashed [lineLength, gapLength]
+        },
+        ticks: {
+          color: 'white', // Adjust tick color
+        },
+        
+      },
+      x: {
+        grid: {
+          color: 'rgba(255, 255, 255, 0.2)', // Adjust gridline color
+          drawOnChartArea: false, // Disable gridlines across the chart area
+        },
+        ticks: {
+          color: 'white', // Adjust tick color
+        },
       },
     },
   };
 
   return (
-        <Bar data={data} options={options} className='!h-[12rem] !w-[24rem] sm:!h-[12rem] sm:!w-[24rem] md:!h-[12rem] md:!w-[24rem] lg:!h-[18rem] lg:!w-[36rem]'/>
+        <Bar data={data} options={options} 
+        className='!h-[12rem] !w-[24rem] sm:!h-[12rem] sm:!w-[24rem] md:!h-[12rem] md:!w-[24rem] lg:!h-[18rem] lg:!w-[36rem]'/>
   )
 
 

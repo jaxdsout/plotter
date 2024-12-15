@@ -75,7 +75,7 @@ function ClientDetail ({ client, update_client, user, load_clients, message, cle
                     />
                 </FormField>
                 <div className="flex justify-center items-center">
-                    <Button type="submit" color="green">UPDATE CLIENT</Button>   
+                    <Button className="drop-shadow" type="submit" color="green">UPDATE CLIENT</Button>   
                     {message && (
                         <Message positive size="mini">
                             <Message.Header>{message}</Message.Header>
