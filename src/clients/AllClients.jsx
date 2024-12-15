@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ClientDetail from "./ClientDetail";
-import { Modal, Button, Divider } from "semantic-ui-react";
+import { Modal, Button, Divider, Loader } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { load_clients } from "../actions/agent";
 import DeleteClient from "./DeleteClient";
@@ -97,13 +97,13 @@ function AllClients ({ load_clients, clients, user }) {
                                         </div>
                                     </div>
                                     <Divider />
-                                    <>
+                                    <div>
                                         {clientTab === "info" && (
                                             <ClientDetail client={client} />
                                         )}
                                         {clientTab === "lists" && (
                                             <>
-                                                <div className="overflow-y-auto h-[300px] min-h-[300px]">
+                                                <div className="overflow-y-auto flex justify-center min-h-96">
                                                     {client.lists.length > 0 ? (
                                                         <ul>
                                                             {client.lists.map(list => (
@@ -117,7 +117,7 @@ function AllClients ({ load_clients, clients, user }) {
                                                         </ul>
                                                     ) : (
                                                         <div className="text-center">
-                                                            <p>No lists to load.</p>
+                                                            <Loader />
                                                         </div>
                                                     )}
                                                 </div>
@@ -125,7 +125,7 @@ function AllClients ({ load_clients, clients, user }) {
                                         )}
                                         {clientTab === "deals" && (
                                             <>
-                                                <div className="overflow-y-auto h-[300px] min-h-[300px]">
+                                                <div className="overflow-y-auto flex justify-center min-h-96">
                                                     {client.deals.length > 0 ? (
                                                         <ul>
                                                             {client.deals.map(deal => (
@@ -139,13 +139,13 @@ function AllClients ({ load_clients, clients, user }) {
                                                         </ul>
                                                 ) : (
                                                     <div className="text-center">
-                                                        <p>No deals to display.</p>
+                                                        <Loader />
                                                     </div>
                                                 )}
                                                 </div>
                                             </>
                                         )}
-                                    </>
+                                    </div>
                                 </Modal.Content>
                                 <Modal.Actions className="flex justify-end">
                                     <Button className="drop-shadow-sm" onClick={handleCloseModal}>CLOSE</Button>
@@ -158,7 +158,7 @@ function AllClients ({ load_clients, clients, user }) {
                 
                 ) : (
                     <div className="text-center text-white">
-                        <p>No clients to display</p>
+                        <Loader />
                     </div>
                 )
             }
