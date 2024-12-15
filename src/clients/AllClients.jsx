@@ -5,11 +5,17 @@ import { Modal, Button, Divider } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { load_clients } from "../actions/agent";
 import DeleteClient from "./DeleteClient";
+import ListDetail from "../lists/ListDetail";
+import DealDetail from "../deals/DealDetail"
 
 function AllClients ({ load_clients, clients, user }) {
     const [showClientDetail, setShowClientDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [clientTab, setClientTab] = useState("info");
+    const [showListModal, setShowListModal] = useState(null);
+    const [selectedList, setSelectedList] = useState(null);
+    const [showDealModal, setShowDealModal] = useState(null);
+    const [selectedDeal, setSelectedDeal] = useState(null);
 
     const handleOpenModal = (id) => {
         setShowClientDetail(showClientDetail === id ? null : id)
@@ -21,6 +27,38 @@ function AllClients ({ load_clients, clients, user }) {
 
     const handleTabChange = (tab) => {
         setClientTab(tab);
+    };
+
+    const handleOpenListModal = (list) => {
+        setSelectedList(list);
+        setShowListModal(true);
+    };
+    
+    const handleCloseListModal = () => {
+        setShowListModal(false);
+        setSelectedList(null);
+    };
+
+    const handleOpenDealModal = (deal) => {
+        setSelectedDeal(deal);
+        setShowDealModal(true);
+    };
+    
+    const handleCloseDealModal = () => {
+        setShowDealModal(false);
+        setSelectedDeal(null);
+    };
+
+    const formatDate = (datetimeStr) => {
+        const dateObj = new Date(datetimeStr);
+        return dateObj.toLocaleString('default', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+        }).replace(',', '');
     };
 
     useEffect(() => {
@@ -65,11 +103,16 @@ function AllClients ({ load_clients, clients, user }) {
                                         )}
                                         {clientTab === "lists" && (
                                             <>
-                                                <div className="overflow-y-scroll h-[300px] min-h-[300px]">
+                                                <div className="overflow-y-auto h-[300px] min-h-[300px]">
                                                     {client.lists.length > 0 ? (
                                                         <ul>
                                                             {client.lists.map(list => (
-                                                                <li key={list.id}>{list.date}</li>
+                                                                <li className="mt-2" key={list.id}>
+                                                                    <Button 
+                                                                        onClick={() => handleOpenListModal(list)}>
+                                                                            {formatDate(list.date)}
+                                                                    </Button>
+                                                                </li>
                                                             ))}
                                                         </ul>
                                                     ) : (
@@ -82,11 +125,16 @@ function AllClients ({ load_clients, clients, user }) {
                                         )}
                                         {clientTab === "deals" && (
                                             <>
-                                                <div className="overflow-y-scroll h-[300px] min-h-[300px]">
+                                                <div className="overflow-y-auto h-[300px] min-h-[300px]">
                                                     {client.deals.length > 0 ? (
                                                         <ul>
                                                             {client.deals.map(deal => (
-                                                                <li key={deal.id}>{deal.prop_name} {deal.move_date}</li>
+                                                                <li className="mt-2" key={deal.id}>
+                                                                    <Button 
+                                                                        onClick={() => handleOpenDealModal(deal)}>
+                                                                            {deal.prop_name} {deal.move_date}
+                                                                        </Button>
+                                                                </li>
                                                             ))}
                                                         </ul>
                                                 ) : (
@@ -107,6 +155,7 @@ function AllClients ({ load_clients, clients, user }) {
                         </li>
                     ))}
                 </ul>
+                
                 ) : (
                     <div className="text-center text-white">
                         <p>No clients to display</p>
@@ -114,6 +163,28 @@ function AllClients ({ load_clients, clients, user }) {
                 )
             }
             </div>
+            {showListModal && selectedList && (
+                <Modal className="!w-11/12 sm:!w-[500px]" open={showListModal} onClose={handleCloseListModal}>
+                    <Modal.Header>List Details</Modal.Header>
+                    <Modal.Content>
+                        <ListDetail list={selectedList} />
+                    </Modal.Content>
+                    <Modal.Actions className="flex justify-end">
+                        <Button className="drop-shadow-sm" onClick={handleCloseListModal}>CLOSE</Button>
+                    </Modal.Actions>
+                </Modal>
+            )}
+            {showDealModal && selectedDeal && (
+                <Modal className="!w-11/12 sm:!w-[500px]" open={showDealModal} onClose={handleCloseDealModal}>
+                    <Modal.Header>Deal Details</Modal.Header>
+                    <Modal.Content>
+                        <DealDetail deal={selectedDeal} />
+                    </Modal.Content>
+                    <Modal.Actions className="flex justify-end">
+                        <Button className="drop-shadow-sm" onClick={handleCloseDealModal}>CLOSE</Button>
+                    </Modal.Actions>
+                </Modal>
+            )}
         </>
     )
 }

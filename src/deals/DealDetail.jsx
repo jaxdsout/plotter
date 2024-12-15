@@ -69,7 +69,7 @@ function DealDetail ({ deal, handleCloseModal, update_deal_status, load_deals, u
                             <>
                             </>
                         )}
-                        <Button>EDIT DEAL</Button>
+                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB]">EDIT DEAL</Button>
                         <DeleteDeal deal={deal} handleCloseModal={handleCloseModal}/>
                     </div>  
                 </div>
