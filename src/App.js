@@ -17,7 +17,7 @@ import Deals from './deals/Deals';
 
 function App() {
   return (
-    <div className='root'>
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={ <Landing /> }/>
@@ -36,7 +36,7 @@ function App() {
         {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
       </Routes>
       {/* <Footer /> */}
-    </div>
+    </>
   );
 }
 

@@ -90,7 +90,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                 <Button color="blue" onClick={handleOpenModal} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">+</Button>
             </div>
             <div>
-                <Modal open={showModal} onClose={handleCloseModal}>
+                <Modal className='!w-11/12 md:!w-[800px]' open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>
                         {isListMode ? (
                             <p>New List: {client.name}</p>
@@ -103,9 +103,9 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                     <Modal.Content>
                         <>
                             {isListMode ? (
-                                <div className="flex flex-col lg:flex-row justify-evenly items-start h-[30rem]">
+                                <div className="flex flex-col sm:flex-row justify-evenly items-start md:items-center">
                                     <div className="flex flex-col">
-                                        <div className="flex flex-col lg:flex-row items-center">
+                                        <div className="flex flex-col md:flex-row">
                                             <PropertySearch />
                                             <Form onSubmit={() => handlePropertyAdd(list, property)} className="p-3">
                                                 <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold" type="submit">ADD PROPERTY</Button>
@@ -119,15 +119,17 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                                     </div>
                                 </div>
                             ) : isSendMode ? (
-                                <div className="flex flex-row justify-center items-center h-[30rem]">
+                                <div className="flex flex-row justify-center items-center h-[20rem]">
                                        <ShareURL />
                                 </div>
                             ) : (
-                                <div className="flex flex-col justify-center items-center h-[30rem]">
-                                    <div className="flex flex-col lg:flex-row items-center">
+                                <div className="flex flex-col justify-center items-center h-[20rem]">
+                                    <div className="flex flex-col lg:flex-row items-center justify-between">
                                         <ClientSearch />
                                         <Form onSubmit={handleCreateList} className="p-3">
-                                            <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold" type="submit">START LIST</Button>
+                                            <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold drop-shadow" type="submit">
+                                                START LIST
+                                            </Button>
                                         </Form>
                                     </div>
                                     {error === "client" && (
@@ -145,22 +147,24 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                     <Modal.Actions>
                         <>
                         {isListMode ? (
-                            <div className="flex justify-between pb-2">
-                                <Button onClick={handleOpenResetModal}>BACK</Button>
-                                <Button color='vk' onClick={handleReorder}>REORDER</Button>
-                                <div>
+                            <div className="flex justify-between items-center pb-2">
+                                <Button className="drop-shadow-sm" onClick={handleOpenResetModal}>BACK</Button>
+                                <div className="flex flex-col sm:flex-row">
+                                    <Button className="drop-shadow-sm !mb-5 sm:!mb-0" color='vk' onClick={handleReorder}>
+                                        REORDER
+                                    </Button>
                                     <ClearOptions />
                                     <SendList />
                                 </div>
                             </div>
                         ) : isSendMode ? (
                             <div className="flex justify-between pb-2">
-                                <Button onClick={handleEditList}>BACK</Button>
-                                <Button color="green" onClick={handleCloseModal}>DONE</Button>
+                                <Button className="drop-shadow-sm" onClick={handleEditList}>BACK</Button>
+                                <Button className="drop-shadow-sm" color="green" onClick={handleCloseModal}>DONE</Button>
                             </div>
                         ) : (
                             <div className="flex justify-end pb-2">
-                            <Button onClick={handleCloseModal}>CLOSE</Button>
+                            <Button className="drop-shadow-sm" onClick={handleCloseModal}>CLOSE</Button>
                             </div>
                         )}
                         </>

@@ -33,12 +33,12 @@ function Navbar ({ logout, isAuthenticated, isClientView, reset_client_view }) {
                 <h1 className='mont text-[#5F85DB] p-5 text-6xl hover:text-[#4d6ebb]' onClick={logo_click}>atlas</h1>
             </nav>
         ) : (
-            <nav className='bg-white shadow-inner p-5 flex flex-row justify-between items-center'>
-                <h1 className='mont text-[#5F85DB] p-5 text-6xl hover:text-[#4d6ebb]' onClick={logo_click}>atlas</h1>
+            <nav className='bg-white shadow-inner p-10 flex flex-row justify-between items-center'>
+                <h1 className='mont text-[#5F85DB] text-6xl hover:text-[#4d6ebb] drop-shadow' onClick={logo_click}>atlas</h1>
                 {isAuthenticated ? 
-                    <Button className="p-5" onClick={logout_user}>LOGOUT</Button> 
+                    <Button className="drop-shadow-sm -mt-3" onClick={logout_user}>LOGOUT</Button> 
                     : 
-                    <Link className='p-5' to={"/login/"}><Button>LOGIN</Button></Link>
+                    <Link className='drop-shadow-sm -mt-3' to={"/login/"}><Button>LOGIN</Button></Link>
                 }
             </nav>          
         )}

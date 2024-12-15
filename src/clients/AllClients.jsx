@@ -45,14 +45,14 @@ function AllClients ({ load_clients, clients, user }) {
                                 {client.first_name} {client.last_name}
                             </Link>
                             {showClientDetail === client.id && (
-                            <Modal className='!w-[500px]' open={showModal} onClose={handleCloseModal}>
+                            <Modal className='!w-10/12 sm:!w-[500px]' open={showModal} onClose={handleCloseModal}>
                                 <Modal.Header>Client Details</Modal.Header>
                                 <Modal.Content>
                                     <div className="flex pt-1 justify-between">
                                         <div>
-                                            <Button color="blue" onClick={() => handleTabChange("info")} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">INFO</Button>
-                                            <Button color="blue" onClick={() => handleTabChange("lists")} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">LISTS</Button>
-                                            <Button color="blue" onClick={() => handleTabChange("deals")} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">DEALS</Button>
+                                            <Button color="blue" onClick={() => handleTabChange("info")} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold drop-shadow-sm">INFO</Button>
+                                            <Button color="blue" onClick={() => handleTabChange("lists")} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold drop-shadow-sm">LISTS</Button>
+                                            <Button color="blue" onClick={() => handleTabChange("deals")} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold drop-shadow-sm">DEALS</Button>
                                         </div>
                                         <div className="text-center">
                                             <DeleteClient client={client} handleCloseModal={handleCloseModal}/>
@@ -100,7 +100,7 @@ function AllClients ({ load_clients, clients, user }) {
                                     </>
                                 </Modal.Content>
                                 <Modal.Actions className="flex justify-end">
-                                    <Button onClick={handleCloseModal}>CLOSE</Button>
+                                    <Button className="drop-shadow-sm" onClick={handleCloseModal}>CLOSE</Button>
                                 </Modal.Actions>
                             </Modal>
                         )}

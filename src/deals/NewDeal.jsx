@@ -110,7 +110,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                 <Button color="blue" onClick={handleOpenModal} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">+</Button>
             </div>
             <div>
-                <Modal open={showModal} onClose={handleCloseModal} className="!w-[500px]">
+                <Modal open={showModal} onClose={handleCloseModal} className='!w-11/12 sm:!w-[500px] mb-10'>
                     <Modal.Header>Add New Deal</Modal.Header>
                     <Modal.Content>
                         <div className="flex flex-col justify-between items-start mb-4">

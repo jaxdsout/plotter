@@ -40,7 +40,7 @@ function AllDeals ({ load_deals, deals, user }) {
                                 </Link>
                             </div>
                             {showDealDetail === deal.id && (
-                            <Modal className='!w-[500px]' open={showModal} onClose={handleCloseModal}>
+                            <Modal className='!w-10/12 sm:!w-[500px]' open={showModal} onClose={handleCloseModal}>
                                 <Modal.Header>Deal Info</Modal.Header>
                                 <Modal.Content>
                                     <DealDetail deal={deal} handleCloseModal={handleCloseModal}/>

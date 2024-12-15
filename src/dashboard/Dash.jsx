@@ -50,7 +50,7 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
 
     return (
         <div>
-            <div className='flex flex-col lg:flex-row justify-evenly items-center p-5'>
+            <div className='flex flex-col xl:flex-row justify-evenly items-center p-5'>
                 <div className='pt-5 pb-5'>
                     <EarningDonut />
                 </div>
@@ -58,7 +58,7 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
                     <EarningBar />
                 </div>
             </div>
-            <Divider />
+            <Divider/>
             <div className="flex flex-col md:flex-row justify-evenly">
                 <div className='p-5 w-full md:w-1/2'>
                     <h4 className='text-center text-white'>Upcoming Renewals</h4>
