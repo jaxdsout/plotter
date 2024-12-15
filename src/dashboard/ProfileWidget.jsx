@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { update_profile, update_avatar } from '../actions/agent';
 import { connect } from 'react-redux';
 import { useState } from 'react';
+import { Divider } from 'semantic-ui-react'
 
 function ProfileWidget ({ user, update_profile, update_avatar }) {
     const [formData, setFormData] = useState({
@@ -69,63 +70,68 @@ function ProfileWidget ({ user, update_profile, update_avatar }) {
                 </CardContent>
             </Card>
             <div>
-                <Modal open={showModal} onClose={handleCloseModal}>
+                <Modal className='!w-9/12 sm:!w-[500px]' open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>Edit Profile</Modal.Header>
                     <Modal.Content>
-                        <div className='flex flex-row justify-evenly '>
-                        <div>                    
-                            <Form onSubmit={handleProfileSubmit}>
-                                <FormField>
-                                    <label className="noto-sans-upper label" htmlFor="trec">TREC ID:</label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        name="trec"
-                                        value={trec}
-                                        onChange={handleProfileChange}
-                                        required
-                                    />
-                                </FormField>
-                                <FormField>
-                                    <label className="noto-sans-upper label" htmlFor="website">Website:</label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        name="website"
-                                        value={website}
-                                        onChange={handleProfileChange}
-                                        required
-                                    />
-                                </FormField>
-                                <FormField>
-                                    <label className="noto-sans-upper label" htmlFor="phone_number">Phone:</label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        name="phone_number"
-                                        value={phone_number}
-                                        onChange={handleProfileChange}
-                                        required
-                                    />
-                                </FormField>
-                                <Button type="submit">SAVE PROFILE UPDATES</Button>
-                            </Form>
-                        </div>  
-                        <div>
-                            <Form onSubmit={handleAvatarSubmit}>
-                                <FormField>
-                                    <label className="noto-sans-upper label" htmlFor="avatar">Profile Picture:</label>
-                                    <input
-                                        className="form-control"
-                                        type="file"
-                                        name="avatar"
-                                        accept="image/*"
-                                        onChange={handleAvatarChange}
-                                    />
-                                </FormField>
-                                <Button type="submit">UPLOAD</Button>
-                            </Form>
-                        </div>
+                        <div className='flex flex-col justify-evenly'>
+                            <div>                    
+                                <Form onSubmit={handleProfileSubmit}>
+                                    <FormField>
+                                        <label className="noto-sans-upper label" htmlFor="trec">TREC ID:</label>
+                                        <input
+                                            className="form-control"
+                                            type="text"
+                                            name="trec"
+                                            value={trec}
+                                            onChange={handleProfileChange}
+                                            required
+                                        />
+                                    </FormField>
+                                    <FormField>
+                                        <label className="noto-sans-upper label" htmlFor="website">Website:</label>
+                                        <input
+                                            className="form-control"
+                                            type="text"
+                                            name="website"
+                                            value={website}
+                                            onChange={handleProfileChange}
+                                            required
+                                        />
+                                    </FormField>
+                                    <FormField>
+                                        <label className="noto-sans-upper label" htmlFor="phone_number">Phone:</label>
+                                        <input
+                                            className="form-control"
+                                            type="text"
+                                            name="phone_number"
+                                            value={phone_number}
+                                            onChange={handleProfileChange}
+                                            required
+                                        />
+                                    </FormField>
+                                    <div className='flex justify-center mb-5'>
+                                        <Button color="green" type="submit">SAVE PROFILE UPDATES</Button>
+                                    </div>
+                                </Form>
+                            </div>  
+                            <Divider />
+                            <div className='mt-4'>
+                                <Form onSubmit={handleAvatarSubmit}>
+                                    <FormField>
+                                        <label className="noto-sans-upper label" htmlFor="avatar">Profile Picture:</label>
+                                        <input
+                                            className="rounded-lg"
+                                            type="file"
+                                            name="avatar"
+                                            accept="image/*"
+                                            onChange={handleAvatarChange}
+                                        />
+                                    </FormField>
+                                    <div className='flex justify-center'>
+                                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB]" type="submit">UPLOAD</Button>
+                                    </div>
+                                </Form>
+                            </div>
                         </div>
                         </Modal.Content>
                     <Modal.Actions>

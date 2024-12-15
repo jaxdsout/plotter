@@ -109,16 +109,16 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                         <Divider />
                         <div className="flex flex-col justify-center items-center">
                             <h4 className="text-lg font-semibold mb-4">Options</h4>
-                            <div className="overflow-x-auto pb-10 w-11/12">
+                            <div className="overflow-x-auto pb-10">
                                 <table className="table-auto border border-gray-300 rounded-lg">
                                     <thead className="bg-gray-300 border border-none rounded-lg">
                                         <tr>
-                                            <th className="px-3 py-2 text-left font-bold text-gray-700">Property Name</th>
-                                            <th className="px-3 py-2 text-left font-bold text-gray-700">Rate</th>
-                                            <th className="px-3 py-2 text-left font-bold text-gray-700">Unit</th>
-                                            <th className="px-3 py-2 text-left font-bold text-gray-700">Layout</th>
-                                            <th className="px-3 py-2 text-left text-nowrap font-bold text-gray-700">Sq Ft</th>
-                                            <th className="px-3 py-2 text-left font-bold text-gray-700">Notes </th>
+                                            <th className="px-3 py-2 text-left text-sm font-bold text-gray-700">Property Name</th>
+                                            <th className="px-3 py-2 text-left text-sm font-bold text-gray-700">Rate</th>
+                                            <th className="px-3 py-2 text-left text-sm font-bold text-gray-700">Unit</th>
+                                            <th className="px-3 py-2 text-left text-sm font-bold text-gray-700">Layout</th>
+                                            <th className="px-3 py-2 text-left text-sm text-nowrap font-bold text-gray-700">Sq Ft</th>
+                                            <th className="px-3 py-2 text-left text-sm font-bold text-gray-700">Notes </th>
                                         </tr>
                                     </thead>
                                     <tbody>
