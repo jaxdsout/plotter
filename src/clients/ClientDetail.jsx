@@ -33,7 +33,7 @@ function ClientDetail ({ client, update_client, user, load_clients, message, cle
 
     return (
         <>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} className="min-h-96">
                 <FormField>
                     <label className="noto-sans" htmlFor='first_name'>First Name:</label>
                     <input 

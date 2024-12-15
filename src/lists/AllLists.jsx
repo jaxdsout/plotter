@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Modal, Button } from "semantic-ui-react";
+import { Modal, Button, Loader } from "semantic-ui-react";
 import ListDetail from "./ListDetail";
 import { load_lists } from "../actions/agent";
 import { connect } from "react-redux";
@@ -79,7 +79,7 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
                 </ul>
                 ) : (
                     <div className="text-center text-white">
-                        <p>No lists to display.</p>
+                        <Loader />
                     </div>
                 )}
             </div>

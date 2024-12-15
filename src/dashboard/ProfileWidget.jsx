@@ -56,17 +56,15 @@ function ProfileWidget ({ user, update_profile, update_avatar }) {
                         <span className='date'>TREC ID: {profile.trec}</span>
                     </CardMeta>
                     <CardDescription>
+                    <Link onClick={handleOpenModal} className='flex justify-end -mt-11 pb-3'>
+                        <Icon name='setting' size='large'/>
+                    </Link>
                     </CardDescription>
                 </CardContent>
                 <CardContent extra>
                     <p>Phone: {profile.phone_number}</p>
                     <p>Email: {profile.email}</p>
                     <p>Website: {profile.website}</p>
-                </CardContent>
-                <CardContent>
-                    <Link onClick={handleOpenModal}>
-                        <Icon name='setting' size='large'/>
-                    </Link>
                 </CardContent>
             </Card>
             <div>
@@ -109,13 +107,13 @@ function ProfileWidget ({ user, update_profile, update_avatar }) {
                                             required
                                         />
                                     </FormField>
-                                    <div className='flex justify-center mb-5'>
+                                    <div className='flex justify-center mt-5 mb-5'>
                                         <Button color="green" type="submit">SAVE PROFILE UPDATES</Button>
                                     </div>
                                 </Form>
                             </div>  
                             <Divider />
-                            <div className='mt-4'>
+                            <div className='mt-4 mb-5'>
                                 <Form onSubmit={handleAvatarSubmit}>
                                     <FormField>
                                         <label className="noto-sans-upper label" htmlFor="avatar">Profile Picture:</label>

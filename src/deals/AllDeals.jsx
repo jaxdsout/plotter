@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DealDetail from "./DealDetail";
-import { Modal, Button } from "semantic-ui-react";
+import { Modal, Button, Loader } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { load_deals } from "../actions/agent";
 
@@ -55,7 +55,7 @@ function AllDeals ({ load_deals, deals, user }) {
                 </ul>
                 ) : (
                     <div className="text-center text-white">
-                        <p>No deals to display.</p>
+                        <Loader />
                     </div>
                 )}
             </div>
