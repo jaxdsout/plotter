@@ -38,7 +38,7 @@ function UpdateOption ({ option, list, update_option, load_options }) {
             <i className="edit icon !-mr-1"></i>
         </Button>
         <div>
-            <Modal open={showModal} onClose={handleCloseModal} className="!w-[500px]">
+            <Modal open={showModal} onClose={handleCloseModal} className="!w-5/6 sm:!w-[500px]">
                 <Modal.Header className="text-center">Update Option: {option.prop_name}</Modal.Header>
                 <Modal.Content className="bg-dark-subtle">
                     <Form onSubmit={handleSubmit}>
@@ -98,11 +98,14 @@ function UpdateOption ({ option, list, update_option, load_options }) {
                                 onChange={handleChange}
                             />
                         </FormField>
-                        <Button type="submit" color="green">UPDATE OPTION</Button>
+                        <div className="flex justify-center">
+                            <Button className="drop-shadow-sm" type="submit" color="green">UPDATE OPTION</Button>
+
+                        </div>
                     </Form>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Button onClick={handleCloseModal} color="red">CANCEL</Button>
+                        <Button className="drop-shadow-sm" onClick={handleCloseModal} color="red">CANCEL</Button>
                     </Modal.Actions>
                 </Modal>
             </div>

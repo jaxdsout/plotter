@@ -110,7 +110,7 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                 <Button color="blue" onClick={handleOpenModal} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">+</Button>
             </div>
             <div>
-                <Modal open={showModal} onClose={handleCloseModal} className='!w-11/12 sm:!w-[500px] mb-10'>
+                <Modal open={showModal} onClose={handleCloseModal} className='!w-11/12 sm:!w-[500px]'>
                     <Modal.Header>Add New Deal</Modal.Header>
                     <Modal.Content>
                         <div className="flex flex-col justify-between items-start mb-4">
@@ -118,9 +118,9 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                                 <ClientSearch />
                                 <Form onSubmit={handleClientSelect}>
                                     {clientSel && client !== null ? (
-                                        <Button color="black">CLIENT SELECTED</Button>
+                                        <Button className="drop-shadow-sm" color="black">CLIENT SELECTED</Button>
                                     ): (
-                                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold" type="submit">SELECT CLIENT</Button>
+                                        <Button className="drop-shadow-sm !bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold" type="submit">SELECT CLIENT</Button>
                                     )}
                                 </Form>
                             </div>
@@ -128,9 +128,9 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                                 <PropertySearch />
                                 <Form onSubmit={handlePropSelect}>
                                     {propSel && property !== null ? (
-                                        <Button color="black">PROPERTY SELECTED</Button>
+                                        <Button className="drop-shadow-sm" color="black">PROPERTY SELECTED</Button>
                                     ): (
-                                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold" type="submit">SELECT PROPERTY</Button>
+                                        <Button className="drop-shadow-sm !bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold" type="submit">SELECT PROPERTY</Button>
                                     )}
                                 </Form>
                             </div>
@@ -231,14 +231,14 @@ function NewDeal({ user, load_deals, new_deal, q_client, q_property, reset_deal_
                                 />
                             </FormField>
                             <div className="flex justify-center">
-                                <Button type="submit" color="green">SUBMIT DEAL</Button>
+                                <Button className="drop-shadow-sm" type="submit" color="green">SUBMIT DEAL</Button>
                             </div>
                         </Form>
                     </Modal.Content>
                     <Modal.Actions>
-                        <div className="flex justify-between">
-                            <Button color="red" onClick={handleResetDeal}>RESET</Button>
-                            <Button onClick={handleCloseModal}>CLOSE</Button>
+                        <div className="flex justify-between mb-3">
+                            <Button className="drop-shadow-sm" color="red" onClick={handleResetDeal}>RESET</Button>
+                            <Button className="drop-shadow-sm" onClick={handleCloseModal}>CLOSE</Button>
                         </div>
                     </Modal.Actions>
                 </Modal>

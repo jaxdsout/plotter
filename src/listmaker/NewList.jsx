@@ -8,8 +8,9 @@ import ClearOptions from "./ClearOptions";
 import ClientSearch from "./ClientSearch";
 import SendList from "./SendList";
 import ShareURL from "./ShareURL";
+import ReorderList from "./ReorderList";
 import { new_list, reset_client, delete_list, new_option, reset_prop_results, reset_prop, load_options } from "../actions/listmaker";
-import { reset_list_mode, reset_reorder_mode, reset_send_mode, set_list_mode, set_reorder_mode } from "../actions/ui"
+import { reset_list_mode, reset_send_mode, set_list_mode, } from "../actions/ui"
 
 
 function NewList({ new_option, reset_prop_results, property, list, reset_prop, load_options, user, new_list, client, isSendMode, isListMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode, reset_client, isReorderMode, set_reorder_mode, reset_reorder_mode }) {
@@ -72,16 +73,6 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
         reset_send_mode();
         await reset_client()
         setShowModal(false);
-    }
-
-    const handleReorder = () => {
-        if (isReorderMode) {
-            reset_reorder_mode()
-            console.log("re order mode disabled")
-        } else {
-            set_reorder_mode();
-        }
-        console.log("re order mode activated")
     }
 
     return (
@@ -150,9 +141,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                             <div className="flex justify-between items-center pb-2">
                                 <Button className="drop-shadow-sm" onClick={handleOpenResetModal}>BACK</Button>
                                 <div className="flex flex-col sm:flex-row">
-                                    <Button className="drop-shadow-sm !mb-5 sm:!mb-0" color='vk' onClick={handleReorder}>
-                                        REORDER
-                                    </Button>
+                                    <ReorderList />
                                     <ClearOptions />
                                     <SendList />
                                 </div>
@@ -201,4 +190,4 @@ const mapStateToProps = state => ({
     isReorderMode: state.ui.isReorderMode
 });
 
-export default connect(mapStateToProps, { new_option, reset_prop_results, new_list, reset_list_mode, reset_send_mode, delete_list, set_list_mode, reset_client, reset_prop, load_options, set_reorder_mode, reset_reorder_mode })(NewList);
+export default connect(mapStateToProps, { new_option, reset_prop_results, new_list, reset_list_mode, reset_send_mode, delete_list, set_list_mode, reset_client, reset_prop, load_options })(NewList);

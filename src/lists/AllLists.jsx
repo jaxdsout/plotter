@@ -49,7 +49,7 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
 
     return (
         <>
-            <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
+            <div className="overflow-y-auto mt-3 pt-5">
                 {lists.length > 0 ? ( 
                 <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                     {lists.map(list => (
@@ -60,7 +60,7 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
                                 </Link>
                             </div>                 
                         {showListDetail === list.id && (
-                            <Modal className='' open={showModal} onClose={handleCloseModal}>
+                            <Modal className='!w-11/12 sm:!w-[500px] !mb-10' open={showModal} onClose={handleCloseModal}>
                                 <Modal.Header>List Info</Modal.Header>
                                 <Modal.Content>
                                     <ListDetail list={list} handleCloseModal={handleCloseModal}/>
