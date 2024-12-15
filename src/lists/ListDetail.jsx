@@ -8,6 +8,7 @@ import OptionList from "../listmaker/OptionList";
 import MapBox from "../listmaker/MapBox";
 import ClearOptions from "../listmaker/ClearOptions";
 import DeleteList from "./DeleteList";
+import ReorderList from "../listmaker/ReorderList";
 
 function ListDetail({ list, property, set_list_mode, user, new_option, 
     reset_prop, reset_prop_results, set_search_client, set_list_edit, load_options, handleCloseModal, load_lists, 
@@ -42,7 +43,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
         if (list && isListMode && client && options) {
             await update_list(user.id, client.id, list, options)
             await reset_list_mode()
-            await load_lists()
+            await load_options(list.id)
         }
     }
 
@@ -60,9 +61,9 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
       
             {isListMode ? (
                 <>
-                  <div className="flex justify-evenly">
+                  <div className="flex flex-col justify-evenly">
                     <div className="">
-                        <div className="flex flex-row">
+                        <div className="flex flex-row items-center justify-center">
                             <PropertySearch />
                             <Form onSubmit={() => handlePropertyAdd(list, property)}>
                                 <Button color="blue" type="submit">ADD PROPERTY</Button>
@@ -71,12 +72,15 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                         <Divider />
                         <OptionList list={list} />
                     </div>
-                    <div className="">
-                        <MapBox />
+                    <div>
+                        <div className="flex items-center justify-center pt-7 pb-3">
+                            <MapBox />
+                        </div>
                         <Divider />
-                        <div className="flex justify-between">
+                        <div className="flex justify-between items-start">
                             <ClearOptions />
-                            <Button color="green" type="submit" onClick={handleSaveList}>
+                            <ReorderList />
+                            <Button className="drop-shadow-sm" color="green" type="submit" onClick={handleSaveList}>
                                 SAVE LIST
                             </Button>
                         </div>
@@ -86,37 +90,53 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
             ) : (
                 <>
                     <div className="flex flex-col justify-evenly items-center">
-                        <div className="flex flex-row justify-evenly mb-1 w-[500px]">
-                            <div>
+                        <div className="flex flex-row justify-evenly mb-1">
+                            <div className="p-2 mr-2">
                                 <p><b>Client: </b>{list.client_name}</p>
                                 <p><b>Date Created: </b>{formatDate(list.date)}</p>
                                 <p><b>Last Updated: </b></p>
                                 <p>
                                     <b>URL: </b>
-                                    <Input value={link} readOnly className="ml-3 w-[20rem]"/>
+                                    <Input value={link} readOnly className="ml-3 w-[10rem]"/>
                                 </p>
                             </div>
-                            <div className="flex flex-col justify-between">
+                            <div className="flex flex-col justify-evenly items-center">
                                 <DeleteList list={list} handleCloseModal={handleCloseModal}/>
-                                <Button type="submit" onClick={handleEditList}>EDIT LIST</Button>
+                                <Button className="drop-shadow-sm text-nowrap !bg-[#90B8F8] hover:!bg-[#5F85DB]" type="submit" onClick={handleEditList}>EDIT LIST</Button>
 
                             </div>
                         </div>
                         <Divider />
                         <div className="flex flex-col justify-center items-center">
-                            <h4>Options</h4>
-                            <div className="overflow-y-auto pb-10">
-                                <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
-                                    {list.options.map(option => (
-                                        <li className='p-3 font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-[#26282B] even:bg-[#232425]' key={option.id}>
-                                            <div className="flex flex-row justify-between items-start w-[400px]">
-                                                <b className="text-wrap">{option.prop_name}</b>
-                                                <p>Rate: ${option.price} | Unit: {option.unit} | Layout: {option.layout} | Sq Ft: {option.sq_ft}<br></br>
-                                                    Available: {option.available} | Notes / Specials: {option.notes}</p>
-                                            </div>
-                                        </li>
-                                    ))}
-                                </ul>
+                            <h4 className="text-lg font-semibold mb-4">Options</h4>
+                            <div className="overflow-x-auto pb-10 w-11/12">
+                                <table className="table-auto border border-gray-300 rounded-lg">
+                                    <thead className="bg-gray-300 border border-none rounded-lg">
+                                        <tr>
+                                            <th className="px-3 py-2 text-left font-bold text-gray-700">Property Name</th>
+                                            <th className="px-3 py-2 text-left font-bold text-gray-700">Rate</th>
+                                            <th className="px-3 py-2 text-left font-bold text-gray-700">Unit</th>
+                                            <th className="px-3 py-2 text-left font-bold text-gray-700">Layout</th>
+                                            <th className="px-3 py-2 text-left text-nowrap font-bold text-gray-700">Sq Ft</th>
+                                            <th className="px-3 py-2 text-left font-bold text-gray-700">Notes </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {list.options.map((option, index) => (
+                                            <tr
+                                                key={option.id}
+                                                className={`${index % 2 === 0 ? 'bg-[#232425]' : 'bg-[#26282B]'} text-white hover:bg-gray-100 hover:text-black transition`}
+                                            >
+                                                <td className="px-3 py-2 whitespace-nowrap text-sm">{option.prop_name}</td>
+                                                <td className="px-3 py-2 text-sm">${option.price}</td>
+                                                <td className="px-3 py-2 text-sm">{option.unit}</td>
+                                                <td className="px-3 py-2 text-sm">{option.layout}</td>
+                                                <td className="px-3 py-2 text-sm">{option.sq_ft}</td>
+                                                <td className="px-3 py-2 text-sm">{option.notes}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

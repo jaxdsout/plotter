@@ -48,7 +48,7 @@ function NewClient({ user, load_clients, new_client }) {
                 <Button color="blue" onClick={handleOpenModal} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">+</Button>
             </div>
             <div>
-                <Modal open={showModal} onClose={handleCloseModal} className="!w-[500px]">
+                <Modal open={showModal} onClose={handleCloseModal} className='!w-11/12 sm:!w-[500px]'>
                     <Modal.Header className="text-center">Add New Client</Modal.Header>
                     <Modal.Content>
                         <Form onSubmit={handleSubmit}>
@@ -93,12 +93,12 @@ function NewClient({ user, load_clients, new_client }) {
                                 />
                             </FormField>
                             <div className="flex justify-center">
-                                <Button type="submit" color="green" >CREATE CLIENT</Button>
+                                <Button className="drop-shadow-sm" type="submit" color="green" >CREATE CLIENT</Button>
                             </div>
                         </Form>
                     </Modal.Content>
                     <Modal.Actions>
-                        <Button onClick={handleCloseModal}>CLOSE</Button>
+                        <Button className="drop-shadow-sm" onClick={handleCloseModal}>CLOSE</Button>
                     </Modal.Actions>
                 </Modal>
             </div>

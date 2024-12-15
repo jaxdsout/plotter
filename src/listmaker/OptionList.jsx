@@ -34,8 +34,8 @@ function OptionList({ options, load_options, list, update_options_order, isReord
         height: "4rem",
         margin: `0 0 ${grid}px 0`,
         padding: "1rem",
-        background: isDragging ? "#5F85DB" : "#90B8F8",
-        // border: "solid .25rem",
+        background: isDragging ? "teal" : "teal",
+        color: "white",
         borderRadius: "1rem", 
         ...draggableStyle
     });
@@ -43,7 +43,7 @@ function OptionList({ options, load_options, list, update_options_order, isReord
     const getListStyle = (isDraggingOver) => ({
         background: isDraggingOver ? "white" : "white",
         padding: grid,
-        height: "12rem"
+        height: "24rem"
     });
 
     const onDragEnd = useCallback((result) => {

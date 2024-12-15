@@ -45,7 +45,7 @@ function AllClients ({ load_clients, clients, user }) {
                                 {client.first_name} {client.last_name}
                             </Link>
                             {showClientDetail === client.id && (
-                            <Modal className='!w-10/12 sm:!w-[500px]' open={showModal} onClose={handleCloseModal}>
+                            <Modal className='!w-11/12 sm:!w-[500px]' open={showModal} onClose={handleCloseModal}>
                                 <Modal.Header>Client Details</Modal.Header>
                                 <Modal.Content>
                                     <div className="flex pt-1 justify-between">
