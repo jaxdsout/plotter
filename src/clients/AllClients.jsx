@@ -7,8 +7,9 @@ import { load_clients } from "../actions/agent";
 import DeleteClient from "./DeleteClient";
 import ListDetail from "../lists/ListDetail";
 import DealDetail from "../deals/DealDetail"
+import { reset_list_mode } from "../actions/ui";
 
-function AllClients ({ load_clients, clients, user }) {
+function AllClients ({ load_clients, clients, user, isListMode, reset_list_mode, }) {
     const [showClientDetail, setShowClientDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [clientTab, setClientTab] = useState("info");
@@ -37,6 +38,7 @@ function AllClients ({ load_clients, clients, user }) {
     const handleCloseListModal = () => {
         setShowListModal(false);
         setSelectedList(null);
+        reset_list_mode();
     };
 
     const handleOpenDealModal = (deal) => {
@@ -48,6 +50,10 @@ function AllClients ({ load_clients, clients, user }) {
         setShowDealModal(false);
         setSelectedDeal(null);
     };
+
+    const handleCancelEdit = async () => {
+        reset_list_mode();
+    }
 
     const formatDate = (datetimeStr) => {
         const dateObj = new Date(datetimeStr);
@@ -170,7 +176,11 @@ function AllClients ({ load_clients, clients, user }) {
                         <ListDetail list={selectedList} />
                     </Modal.Content>
                     <Modal.Actions className="flex justify-end">
-                        <Button className="drop-shadow-sm" onClick={handleCloseListModal}>CLOSE</Button>
+                        {isListMode ? (
+                            <Button onClick={handleCancelEdit}>CANCEL</Button>
+                        ) : (
+                            <Button onClick={handleCloseModal}>CLOSE</Button>
+                        )}
                     </Modal.Actions>
                 </Modal>
             )}
@@ -194,6 +204,7 @@ const mapStateToProps = state => ({
     error: state.auth.error,
     clients: state.agent.clients,
     user: state.auth.user,
+    isListMode: state.ui.isListMode
 });
 
-export default connect(mapStateToProps, { load_clients })(AllClients);
+export default connect(mapStateToProps, { load_clients, reset_list_mode })(AllClients);

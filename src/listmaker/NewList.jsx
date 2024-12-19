@@ -10,10 +10,10 @@ import SendList from "./SendList";
 import ShareURL from "./ShareURL";
 import ReorderList from "./ReorderList";
 import { new_list, reset_client, delete_list, new_option, reset_prop_results, reset_prop, load_options } from "../actions/listmaker";
-import { reset_list_mode, reset_send_mode, set_list_mode, } from "../actions/ui"
+import { reset_list_mode, reset_send_mode, set_list_mode, reset_reorder_mode } from "../actions/ui"
 
 
-function NewList({ new_option, reset_prop_results, property, list, reset_prop, load_options, user, new_list, client, isSendMode, isListMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode, reset_client, isReorderMode, set_reorder_mode, reset_reorder_mode }) {
+function NewList({ new_option, reset_prop_results, reset_reorder_mode, property, list, reset_prop, load_options, user, new_list, client, isSendMode, isListMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode, reset_client, isReorderMode, set_reorder_mode }) {
     const [showModal, setShowModal] = useState(false);
     const [showResetModal, setShowResetModal] = useState(false);
     const [error, setError] = useState(null);
@@ -71,6 +71,7 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
     const handleCloseModal = async () => {
         reset_list_mode();
         reset_send_mode();
+        reset_reorder_mode();
         await reset_client()
         setShowModal(false);
     }
@@ -94,18 +95,18 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                     <Modal.Content>
                         <>
                             {isListMode ? (
-                                <div className="flex flex-col sm:flex-row justify-evenly items-start md:items-center">
-                                    <div className="flex flex-col">
-                                        <div className="flex flex-col md:flex-row">
-                                            <PropertySearch />
+                                <div className="flex flex-col sm:flex-row justify-evenly items-center md:items-start">
+                                    <div className="flex flex-col justify-start pb-5">
+                                        <div className="flex flex-row items-center">
+                                            <PropertySearch/>
                                             <Form onSubmit={() => handlePropertyAdd(list, property)} className="p-3">
-                                                <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold" type="submit">ADD PROPERTY</Button>
+                                                <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !text-xs" type="submit">ADD PROPERTY</Button>
                                             </Form>
                                         </div>
                                         <Divider />
                                         <OptionList />
                                     </div>
-                                    <div className="flex justify-center items-center">
+                                    <div className="flex justify-center items-center pb-5">
                                         <MapBox />                                                      
                                     </div>
                                 </div>
@@ -138,21 +139,22 @@ function NewList({ new_option, reset_prop_results, property, list, reset_prop, l
                     <Modal.Actions>
                         <>
                         {isListMode ? (
-                            <div className="flex justify-between items-center pb-2">
+                            <div className="flex justify-between items-center pb-5">
                                 <Button className="drop-shadow-sm" onClick={handleOpenResetModal}>BACK</Button>
-                                <div className="flex flex-col sm:flex-row">
+                                <div className="flex">
                                     <ReorderList />
                                     <ClearOptions />
                                     <SendList />
                                 </div>
+                            
                             </div>
                         ) : isSendMode ? (
-                            <div className="flex justify-between pb-2">
+                            <div className="flex justify-between pb-5">
                                 <Button className="drop-shadow-sm" onClick={handleEditList}>BACK</Button>
                                 <Button className="drop-shadow-sm" color="green" onClick={handleCloseModal}>DONE</Button>
                             </div>
                         ) : (
-                            <div className="flex justify-end pb-2">
+                            <div className="flex justify-end pb-5">
                             <Button className="drop-shadow-sm" onClick={handleCloseModal}>CLOSE</Button>
                             </div>
                         )}
@@ -190,4 +192,4 @@ const mapStateToProps = state => ({
     isReorderMode: state.ui.isReorderMode
 });
 
-export default connect(mapStateToProps, { new_option, reset_prop_results, new_list, reset_list_mode, reset_send_mode, delete_list, set_list_mode, reset_client, reset_prop, load_options })(NewList);
+export default connect(mapStateToProps, { new_option, reset_prop_results, reset_reorder_mode, new_list, reset_list_mode, reset_send_mode, delete_list, set_list_mode, reset_client, reset_prop, load_options })(NewList);

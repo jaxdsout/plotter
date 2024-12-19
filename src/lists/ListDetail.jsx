@@ -1,4 +1,4 @@
-import { Button, Input, Divider, Form } from "semantic-ui-react";
+import { Button, Input, Divider, Form, Popup } from "semantic-ui-react";
 import { reset_list_mode, set_list_mode } from "../actions/ui";
 import { connect } from "react-redux";
 import { set_search_client, update_list, reset_prop, reset_prop_results, load_options, new_option, set_list_edit} from "../actions/listmaker";
@@ -9,6 +9,7 @@ import MapBox from "../listmaker/MapBox";
 import ClearOptions from "../listmaker/ClearOptions";
 import DeleteList from "./DeleteList";
 import ReorderList from "../listmaker/ReorderList";
+import ShareURL from "../listmaker/ShareURL";
 
 function ListDetail({ list, property, set_list_mode, user, new_option, 
     reset_prop, reset_prop_results, set_search_client, set_list_edit, load_options, handleCloseModal, load_lists, 
@@ -33,7 +34,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
             const userID = user.id;
             const name = user.full_name;
             await set_search_client(userID, name)
-            await set_list_edit(list)
+            set_list_edit(list)
             set_list_mode()
         }
     }
@@ -53,6 +54,13 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
             await reset_prop_results()
             await reset_prop()
             load_options(list.id)
+        }
+    };
+
+    const handleOpenURL = () => {
+        if (list.uuid) {
+            const fullURL = `${window.location.origin}/list/${list.uuid}`;
+            window.open(fullURL, '_blank');
         }
     };
 
@@ -96,8 +104,10 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                                 <p><b>Date Created: </b>{formatDate(list.date)}</p>
                                 <p><b>Last Updated: </b></p>
                                 <p>
-                                    <b>URL: </b>
-                                    <Input value={link} readOnly className="ml-3 w-[10rem]"/>
+                                    <b className="pr-3">URL: </b>
+                                    <Button onClick={handleOpenURL}>
+                                        <i className="external alternate icon !-mr-1"></i>
+                                    </Button>
                                 </p>
                             </div>
                             <div className="flex flex-col justify-evenly items-center">
@@ -107,37 +117,45 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                             </div>
                         </div>
                         <Divider />
-                        <div className="flex flex-col justify-center items-center">
+                        <div className="flex flex-col justify-center items-center pb-5">
                             <h4 className="text-lg font-semibold mb-4">Options</h4>
-                            <div className="overflow-x-auto pb-10">
-                                <table className="table-auto border border-gray-300 rounded-lg">
-                                    <thead className="bg-gray-300 border border-none rounded-lg">
-                                        <tr>
-                                            <th className="px-3 py-2 text-left text-sm font-bold text-gray-700">Property Name</th>
-                                            <th className="px-3 py-2 text-left text-sm font-bold text-gray-700">Rate</th>
-                                            <th className="px-3 py-2 text-left text-sm font-bold text-gray-700">Unit</th>
-                                            <th className="px-3 py-2 text-left text-sm font-bold text-gray-700">Layout</th>
-                                            <th className="px-3 py-2 text-left text-sm text-nowrap font-bold text-gray-700">Sq Ft</th>
-                                            <th className="px-3 py-2 text-left text-sm font-bold text-gray-700">Notes </th>
+                        </div>
+                        <div className="w-11/12 md:w-full flex justify-center">
+                            <table className="table-auto border rounded-lg">
+                                <thead className="bg-[#d9dadb] border rounded-lg">
+                                    <tr>
+                                        <th className="px-2 py-2 text-left text-sm font-bold text-gray-700">Property Name</th>
+                                        <th className="px-2 py-2 text-left text-sm font-bold text-gray-700">Rate</th>
+                                        <th className="px-2 py-2 text-left text-sm font-bold text-gray-700">Unit</th>
+                                        <th className="px-2 py-2 text-left text-sm font-bold text-gray-700">Layout</th>
+                                        <th className="px-2 py-2 text-left text-sm text-nowrap font-bold text-gray-700">Sq Ft</th>
+                                        <th className="px-2 py-2 text-left text-sm font-bold text-gray-700">Notes </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {list.options.map((option, index) => (
+                                        <tr
+                                            key={option.id}
+                                            className={`${index % 2 === 0 ? 'bg-[#232425]' : 'bg-[#26282B]'} text-white hover:bg-gray-100 hover:text-black transition`}
+                                        >
+                                            <td className="px-2 py-2 whitespace-nowrap text-sm">{option.prop_name}</td>
+                                            <td className="px-2 py-2 text-xs">${option.price}</td>
+                                            <td className="px-2 py-2 text-xs">{option.unit}</td>
+                                            <td className="px-2 py-2 text-xs">{option.layout}</td>
+                                            <td className="px-2 py-2 text-xs">{option.sq_ft}</td>
+                                            <td className="px-2 py-2 text-xs text-center">
+                                                {option.notes && option.notes.length > 1 ? (
+                                                    <Popup
+                                                    content={option.notes}
+                                                    trigger={<i className="ellipsis horizontal icon"></i>}
+                                                    />
+                                                ) : ( <></>)}
+                                                
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {list.options.map((option, index) => (
-                                            <tr
-                                                key={option.id}
-                                                className={`${index % 2 === 0 ? 'bg-[#232425]' : 'bg-[#26282B]'} text-white hover:bg-gray-100 hover:text-black transition`}
-                                            >
-                                                <td className="px-3 py-2 whitespace-nowrap text-sm">{option.prop_name}</td>
-                                                <td className="px-3 py-2 text-sm">${option.price}</td>
-                                                <td className="px-3 py-2 text-sm">{option.unit}</td>
-                                                <td className="px-3 py-2 text-sm">{option.layout}</td>
-                                                <td className="px-3 py-2 text-sm">{option.sq_ft}</td>
-                                                <td className="px-3 py-2 text-sm">{option.notes}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </>

@@ -13,7 +13,7 @@ function SendList ({ user, client, list, update_list, set_send_mode, options }) 
 
     return (
         <>
-            <Button className="!mb-5 sm:!mb-0" type='submit' color='green' onClick={handleSendList}>SEND LIST</Button>
+            <Button className="drop-shadow" type='submit' color='green' onClick={handleSendList}>SEND LIST</Button>
         </>
     )
 }

@@ -31,7 +31,7 @@ function PropertySearch({ userID, search_properties, set_search_prop, prop_resul
                 }))}
                 icon="none"
                 size="large"
-                className="me-3"
+                className=""
                 placeholder="Search for property..."
                 />
         </div>
