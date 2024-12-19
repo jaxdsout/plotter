@@ -26,9 +26,9 @@ function ClearOptions ({ clear_options, list }) {
     return (
         <>
             {clearConfirm ? (
-                <Button className="!mb-5 sm:!mb-0 drop-shadow-sm" type='submit' color='red' onClick={handleClearOptions}>CONFIRM CLEAR LIST</Button>
+                <Button className="drop-shadow-sm" type='submit' color='red' onClick={handleClearOptions}>CONFIRM CLEAR LIST</Button>
             ) : (
-                <Button className="!mb-5 sm:!mb-0 drop-shadow-sm" type='submit' color='black' onClick={handleConfirmClear}>CLEAR LIST</Button>
+                <Button className="drop-shadow-sm" type='submit' color='black' onClick={handleConfirmClear}>CLEAR LIST</Button>
             )}
         </>
     )

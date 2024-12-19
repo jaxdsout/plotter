@@ -41,13 +41,13 @@ function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user })
                             color="red"
                             onClick={() => handleDelete(list.id, user.id)}
                         >
-                            <i class="trash alternate icon"></i>
+                            <i class="trash alternate icon !-mr-1"></i>
                         </Button>
                     }
                 />
             ) : (
                 <Button type="submit" color="red" onClick={() => handleDeleteConfirm(list.id)}>
-                    <i class="trash alternate icon"></i>
+                    <i class="trash alternate icon !-mr-1"></i>
                 </Button>
             )
         }

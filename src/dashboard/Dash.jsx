@@ -50,7 +50,7 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
 
     return (
         <div>
-            <div className='flex flex-col xl:flex-row justify-evenly items-center p-5'>
+            <div className='flex flex-col xl:flex-row justify-evenly items-center pl-5 pr-5 pb-5'>
                 <div className='pt-5 pb-5'>
                     <EarningDonut />
                 </div>
@@ -66,9 +66,8 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
                         {renewals.length ? (
                             renewals.map(deal => (
                                 <li key={deal.id}>
-                                    <div className='p-2 flex flex-row justify-evenly items-start text-white hover:text-black hover:bg-gray-100 transition'>
-                                        <p><b>Client:</b> {deal.client_name} </p>
-                                        <p><b>Lease End Date:</b> {deal.lease_end_date.toLocaleDateString()} </p>
+                                    <div className='p-4 flex flex-row justify-center text-center items-center text-white hover:text-black hover:bg-gray-100 transition'>
+                                        <p><b>Client:</b> {deal.client_name} <span className='pr-2 pl-2'>|</span> <b>Lease End Date:</b> {deal.lease_end_date.toLocaleDateString()} </p>
                                     </div>
                                 </li>
                             ))
@@ -82,9 +81,10 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
                     <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                         {move_ins.length ? (
                             move_ins.map(deal => (
-                                <li key={deal.id} className='p-4 flex justify-between items-center text-white hover:text-black hover:bg-gray-100 transition'>
-                                    <b>Client:</b> {deal.client_name} | 
-                                    <b>Move Date:</b> {deal.move_date.toLocaleDateString()}
+                                <li key={deal.id}>
+                                    <div className='p-4 flex flex-row justify-center text-center items-center text-white hover:text-black hover:bg-gray-100 transition'>
+                                        <p><b>Client:</b> {deal.client_name} <span className='pr-2 pl-2'>|</span> <b>Move-In Date:</b> {deal.move_date.toLocaleDateString()} </p>
+                                    </div>
                                 </li>
                             ))
                         ) : (
@@ -94,7 +94,7 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
                 </div>
             </div>
             <Divider />
-            <div className='flex items-center justify-center'>
+            <div className='flex items-center justify-center pt-5'>
                 <GuestCard />
             </div>
         </div>

@@ -31,11 +31,13 @@ function OptionList({ options, load_options, list, update_options_order, isReord
 
     const getItemStyle = (isDragging, draggableStyle) => ({
         userSelect: "none",
-        height: "4rem",
+        height: "5rem",
         margin: `0 0 ${grid}px 0`,
         padding: "1rem",
         background: isDragging ? "teal" : "teal",
         color: "white",
+        boxShadow: isDragging ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "0 2px 4px rgba(0, 0, 0, 0.1)",
+        position: "static",
         borderRadius: "1rem", 
         ...draggableStyle
     });
@@ -43,7 +45,8 @@ function OptionList({ options, load_options, list, update_options_order, isReord
     const getListStyle = (isDraggingOver) => ({
         background: isDraggingOver ? "white" : "white",
         padding: grid,
-        height: "24rem"
+        height: "24rem",
+        position: "relative"
     });
 
     const onDragEnd = useCallback((result) => {
@@ -110,7 +113,6 @@ function OptionList({ options, load_options, list, update_options_order, isReord
                                                     style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                                                 >
                                                     {renderOption(option)}
-                                                    <Divider />
                                                 </div>
                                             )}
                                         </Draggable>
@@ -121,7 +123,7 @@ function OptionList({ options, load_options, list, update_options_order, isReord
                         </Droppable>
                     </DragDropContext>
                 ) : (
-                    <div className="h-[19rem] overflow-y-scroll">
+                    <div className="h-[19rem] overflow-y-auto">
                         {options.map((option) => (
                             <div key={option.id} className="p-1">
                                 {renderOption(option)}

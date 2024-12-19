@@ -42,7 +42,7 @@ function Dashboard ({ load_user, auth_user, refresh_token, access, isAuthenticat
 
     return (    
         <div className='flex flex-col items-center justify-evenly'>
-            <div className="w-11/12 md:w-3/4 max-w-[1200px] max-h-[80rem] p-5 mt-5 bg-[#26282B] shadow-inner shadow-md rounded-lg mb-10 pb-10">
+            <div className="w-11/12 md:w-3/4 max-w-[900px] max-h-[80rem] p-5 mt-5 bg-[#26282B] shadow-inner shadow-md rounded-lg mb-10 pb-10">
                 <div className='z-0 pr-5 pl-5 flex flex-row items-center justify-center'>
                     <Link className='mont drop-shadow-md text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' to="/dashboard/home">
                         <i className="home icon"></i>

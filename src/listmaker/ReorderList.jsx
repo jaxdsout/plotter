@@ -17,11 +17,11 @@ function ReorderList ({ reset_reorder_mode, set_reorder_mode, isReorderMode }) {
     return (
         <>
         <Button 
-            className="drop-shadow-sm !mb-5 sm:!mb-0" 
+            className="drop-shadow-sm" 
             onClick={handleReorder}
             color={isReorderMode ? "red" : "teal"}
         >
-            {isReorderMode ? "SET ORDER" : "REORDER"}
+            {isReorderMode ? "CONFIRM" : "REORDER"}
         </Button>
         </>
     )
