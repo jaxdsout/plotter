@@ -1,7 +1,15 @@
 import { Link } from "react-router-dom";
 import { Image, Button } from "semantic-ui-react";
+import { useEffect } from "react";
+import { reset_client_view } from "../actions/ui";
+import { connect } from "react-redux";
 
 function Landing() {
+
+      useEffect(() => {
+            reset_client_view()
+        }, [])
+
     return (
         <div className="flex flex-col items-center justify-evenly">  
             <div className="w-3/4 max-w-[800px] p-5 mt-5 flex flex-col bg-[#26282B] shadow-inner shadow-md rounded-lg">
@@ -37,4 +45,8 @@ function Landing() {
     );
 }
 
-export default Landing;
+const mapStateToProps = state => ({
+    isClientView: state.ui.isClientView
+});
+
+export default connect(mapStateToProps, { })(Landing);

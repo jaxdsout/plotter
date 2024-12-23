@@ -33,35 +33,33 @@ function PublicList({ retrieve_list, retrlist, isClientView, set_client_view }) 
                     <div className="w-3/4 max-w-[800px] p-5 mt-5 bg-[#26282B] shadow-inner shadow-md rounded-lg">
                         <h2 className="text-center text-white">{retrlist.client_name}</h2>
                     </div>
-                    <div className="flex flex-col md:flex-row sm:flex-col p-3 items-center md:items-start">
+                    <div className="w-11/12 max-w-[800px] p-5 mt-5 bg-white flex flex-col md:flex-row sm:flex-col items-center md:items-start shadow-inner shadow-md rounded-lg">
                         <div className="p-3">
                             <MapBox retr_options={retrlist.options}/>
                         </div>
-                        <div className="p-3 overflow-y-auto max-w-[40rem] h-[37rem]">  
-                            <ul className='divide-y'>
+                        <div className="p-3 overflow-y-auto w-full">  
+                            <ul>
                                 {retrlist.options.map(option => (
-                                    <li className='p-3 w-[26rem] md:w-[18rem] flex flex-col rounded-md shadow-inner shadow-md mb-1 justify-evenly items-start font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-[#26282B] even:bg-[#232425]' key={option.id}>   
-                                        <div>
-                                            <div className="flex flex-row items-start justify-start">
-                                                <h4 className="pr-3">{option.prop_name}</h4>
-                                                <a href={`https://${option.website}`} target="_blank" rel="noopener noreferrer">
-                                                    <Icon name="external alternate" />
-                                                </a>
+                                    <li className='p-5 mb-1 rounded-md shadow-inner shadow-md font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-[#26282B] even:bg-[#232425]' key={option.id}>   
+                                            <div className="flex flex-row items-start justify-between -mb-2">
+                                                <p className="text-xl mr-3">{option.prop_name}</p>
+                                                <p className="text-xl">${option.price}</p>
                                             </div>
-                                            <ul>
-                                                <li className="text-xl mb-3">${option.price}</li>
-                                                <li>Unit {option.unit_number}</li>
-                                                <li>{option.layout} | {option.sq_ft} sq. ft.</li>
-                                                <li>Available: {option.available}</li>
+                                            <div>
+                                                <p className="-mb-1">Unit {option.unit_number}</p>
+                                                <p className="-mb-1">{option.layout} | {option.sq_ft} sq. ft.</p>
+                                                <p className="mb-0">Available: {option.available}</p>
                                                 {!option.notes ? (
                                                     <></>
                                                 ) :(
-                                                    <li className="mt-2">{option.notes}</li>
+                                                    <p>{option.notes}</p>
                                                 )}
-                                            </ul>
-                                        </div>
-                                    
-                                        
+                                            </div>
+                                            <div className="flex justify-center mt-5">
+                                                <a href={`https://${option.website}`} target="_blank" rel="noopener noreferrer">
+                                                    <Icon name="info circle icon" />
+                                                </a>
+                                            </div>
                                     </li>
                                 ))}
                             </ul>

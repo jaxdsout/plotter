@@ -2,9 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { logout } from '../actions/auth';
 import { Button } from 'semantic-ui-react';
-import { reset_client_view } from '../actions/ui';
 
-function Navbar ({ logout, isAuthenticated, isClientView, reset_client_view }) {
+function Navbar ({ logout, isAuthenticated, isClientView }) {
     const navigate = useNavigate()
 
     const logout_user = () => {
@@ -13,25 +12,18 @@ function Navbar ({ logout, isAuthenticated, isClientView, reset_client_view }) {
     }
 
     const logo_click =  () => {
-        if (isClientView) {
-            reset_client_view();
-            navigate("/")
+        if (isAuthenticated) {
+            navigate("/dashboard/home")
         } else {
             navigate("/")
         }
-
-        if (isAuthenticated) {
-            navigate("/dashboard/home")
-        } 
-
     }
 
     return (
         <>
         {isClientView ? (
-            <nav className='bg-white text-center p-5'>
-                <h1 className='mont text-[#5F85DB] p-5 text-6xl hover:text-[#4d6ebb]' onClick={logo_click}>atlas</h1>
-            </nav>
+            <>
+            </>
         ) : (
             <nav className='bg-white shadow-inner pl-8 pr-8 pt-8 pb-6 flex flex-row justify-between items-center'>
                 <h1 className='mont text-[#5F85DB] text-6xl hover:text-[#4d6ebb] drop-shadow' onClick={logo_click}>atlas</h1>
@@ -51,5 +43,5 @@ const mapStateToProps = state => ({
     isClientView: state.ui.isClientView
 });
 
-export default connect(mapStateToProps, { logout, reset_client_view })(Navbar);
+export default connect(mapStateToProps, { logout })(Navbar);
 
