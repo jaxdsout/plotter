@@ -22,7 +22,8 @@ const initialState = {
     access: localStorage.getItem('access'),
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: null,
-    user: null
+    user: null,
+    signupSuccess: null,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -33,11 +34,14 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 isAuthenticated: false,
                 message: 'Please check provided email address to activate account.',
+                signupSuccess: true
             }
         case AUTHENTICATE_SUCCESS:
             return {
                 ...state,
-                isAuthenticated: true
+                isAuthenticated: true,
+                message: '',
+                signupSuccess: null
             }
         case LOGIN_SUCCESS:
             localStorage.setItem('access', payload.access);

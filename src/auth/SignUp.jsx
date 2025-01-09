@@ -5,7 +5,7 @@ import { signup } from "../actions/auth";
 import { Button, Divider, Form, FormField, Message, Image } from "semantic-ui-react";
 import { useEffect } from "react";
 
-function Signup ({ signup, error, message }) {
+function Signup ({ signup, error, message, signupSuccess }) {
     const navigate = useNavigate()
     const [account, setAccount] = useState(false)
 
@@ -26,9 +26,9 @@ function Signup ({ signup, error, message }) {
         if (password === re_password) {
             await signup(first_name, last_name, email, password, re_password)
             setAccount(true)
-            if (account && !error) {
-                return navigate('/login/')
-            }
+        }
+        if (signupSuccess & account) {
+            return navigate('/login/')
         }
     }
 
@@ -126,7 +126,8 @@ function Signup ({ signup, error, message }) {
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
-    message: state.auth.message
+    message: state.auth.message,
+    signupSuccess: state.auth.signupSuccess
 });
 
 export default connect(mapStateToProps, { signup })( Signup );
