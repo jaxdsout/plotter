@@ -17,7 +17,7 @@ function Activate ({ activate, message }) {
     }
 
     if (verify) {
-        setTimeout(() => { navigate('/login/') }, 2000)
+        setTimeout(() => { navigate('/login/') }, 500)
     }
 
     return (
