@@ -26,14 +26,12 @@ function Signup ({ signup, error, message }) {
         if (password === re_password) {
             await signup(first_name, last_name, email, password, re_password)
             setAccount(true)
+            if (account && !error) {
+                return navigate('/login/')
+            }
         }
-        
     }
-    useEffect(() => {
-        if (account && !error) {
-            return navigate('/login/')
-        }
-    })
+
   
     return (
         <div className="flex flex-col items-center justify-evenly">
