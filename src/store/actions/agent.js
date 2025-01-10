@@ -385,6 +385,7 @@ export const new_task = (user, description, is_active) => async dispatch => {
             }
         }; 
         const body = JSON.stringify({ user, description, is_active });
+        console.log(body, 'body before new_task')
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/tasks/`, body, config);
             dispatch({
