@@ -20,7 +20,13 @@ import {
     DELETE_CLIENT_FAIL,
     DELETE_CLIENT_SUCCESS,
     NEW_CARD_SUCCESS,
-    NEW_CARD_FAIL
+    NEW_CARD_FAIL,
+    NEW_TASK_SUCCESS,
+    NEW_TASK_FAIL,
+    LOAD_TASKS_FAIL,
+    LOAD_TASKS_SUCCESS,
+    UPDATE_TASK_FAIL,
+    UPDATE_TASK_SUCCESS
 } from './types';
 
 import axios from 'axios';
@@ -365,6 +371,88 @@ export const new_guest_card = (property, agent, client, interested, move_by) => 
     } else {
         dispatch({
             type: NEW_CARD_FAIL
+        });
+    }
+};
+
+
+export const new_task = (user, description, is_active) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        const body = JSON.stringify({ user, description, is_active });
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/tasks/`, body, config);
+            dispatch({
+                type: NEW_TASK_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: NEW_TASK_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: NEW_TASK_FAIL
+        });
+    }
+};
+
+export const load_tasks = (userID) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/tasks/?user=${userID}`, config);
+            dispatch({
+                type: LOAD_TASKS_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: LOAD_TASKS_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: LOAD_TASKS_FAIL
+        });
+    }
+};
+
+export const update_task = (taskID, user, is_active) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        const body = JSON.stringify({ taskID, user, is_active });
+        console.log(body)
+        try {
+            const res = await axios.put(`${process.env.REACT_APP_API_URL}/tasks/${taskID}/`, body, config);
+            dispatch({
+                type: UPDATE_TASK_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: UPDATE_TASK_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: UPDATE_TASK_FAIL
         });
     }
 };
