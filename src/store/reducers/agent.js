@@ -23,6 +23,10 @@ import {
     DELETE_CLIENT_SUCCESS,
     NEW_CARD_FAIL,
     NEW_CARD_SUCCESS,
+    NEW_TASK_FAIL,
+    NEW_TASK_SUCCESS,
+    LOAD_TASKS_FAIL,
+    LOAD_TASKS_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -31,6 +35,7 @@ const initialState = {
     clients: [],
     deals: [],
     lists: [],
+    tasks: []
 };
 
 export default function agentReducer(state = initialState, action) {
@@ -50,6 +55,11 @@ export default function agentReducer(state = initialState, action) {
             return {
                 ...state,
                 lists: payload
+            }
+        case LOAD_TASKS_SUCCESS:
+            return {
+                ...state,
+                tasks: payload
             }
         case UPDATE_CLIENT_SUCCESS:
             return {
@@ -76,6 +86,9 @@ export default function agentReducer(state = initialState, action) {
         case DELETE_CLIENT_SUCCESS:
         case NEW_CARD_FAIL:
         case NEW_CARD_SUCCESS:
+        case NEW_TASK_FAIL:
+        case NEW_TASK_SUCCESS:
+        case LOAD_TASKS_FAIL:
             return {
                 ...state
             }

@@ -11,7 +11,7 @@ import Todos from './Todos';
 
 function Dash ({ isAuthenticated, user, load_deals, deals }) {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState("to-do's")
+    const [activeTab, setActiveTab] = useState("to-do")
 
     const get_renewals = () => {
         if (!deals) return [];
@@ -98,9 +98,22 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
             </div>
             <Divider />
             <div className='z-0 flex flex-row items-center justify-center bg-[#26282B] bg-blend-color-burn rounded'>
-                <Link className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' onClick={() => setActiveTab("to-do")}>to do's</Link>
-                <Link className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' onClick={() => setActiveTab("guest card")}>guest card</Link>
-                <Link className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' onClick={() => setActiveTab("calculator")}>calculator</Link>
+                <Link 
+                    className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' 
+                    onClick={() => setActiveTab("to-do")}>
+                        <i class="tasks icon"></i>
+
+                </Link>
+                <Link 
+                    className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' 
+                    onClick={() => setActiveTab("guest card")}>
+                        <i class="address card icon"></i>
+                </Link>
+                <Link 
+                    className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' 
+                    onClick={() => setActiveTab("calculator")}>
+                        <i class="calculator icon"></i>
+                </Link>
             </div>
             <Divider />
             <div className='flex items-center justify-center bg-[#1f2124] rounded'>

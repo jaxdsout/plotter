@@ -71,17 +71,17 @@ function GuestCard ({ client, property, user, new_guest_card }) {
                 <div className="flex flex-row items-center me-5">
                     <ClientSearch />
                     {clientSel && client !== null ? (
-                        <Button color="black" disabled>CLIENT SELECTED</Button>
+                        <Button size="tiny" color="black" disabled>CLIENT SELECTED</Button>
                     ) : (
-                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB]" type="submit">SELECT CLIENT</Button>
+                        <Button size="tiny" className="!bg-[#90B8F8] hover:!bg-[#5F85DB]" type="submit">SELECT CLIENT</Button>
                     )}
                 </div>
                 <div className="flex flex-row items-center">
                     <PropertySearch />
                     {propSel && property !== null ? (
-                        <Button color="black" disabled>PROPERTY SELECTED</Button>
+                        <Button size="tiny" color="black" disabled>PROPERTY SELECTED</Button>
                     ) : (
-                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB]" type="submit">SELECT PROPERTY</Button>
+                        <Button size="tiny" className="!bg-[#90B8F8] hover:!bg-[#5F85DB]" type="submit">SELECT PROPERTY</Button>
                     )}
                 </div>
             </div>
