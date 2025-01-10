@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Modal, Button, Loader } from "semantic-ui-react";
 import ListDetail from "./ListDetail";
-import { load_lists } from "../actions/agent";
+import { load_lists } from "../store/actions/agent";
 import { connect } from "react-redux";
-import { reset_list_mode, reset_send_mode } from "../actions/ui";
+import { reset_list_mode, reset_send_mode } from "../store/actions/ui";
 
 
 function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, isListMode }) {
@@ -49,7 +49,7 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
 
     return (
         <>
-            <div className="overflow-y-auto mt-3 pt-5">
+            <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
                 {lists.length > 0 ? ( 
                 <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                     {lists.map(list => (

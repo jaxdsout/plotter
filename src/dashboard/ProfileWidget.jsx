@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardDescription, CardMeta, Image, Form, FormField, Button, Icon, Modal } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { update_profile, update_avatar } from '../actions/agent';
+import { update_profile, update_avatar } from '../store/actions/agent';
 import { connect } from 'react-redux';
 import { useState } from 'react';
 import { Divider } from 'semantic-ui-react'

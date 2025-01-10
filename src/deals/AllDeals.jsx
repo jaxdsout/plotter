@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import DealDetail from "./DealDetail";
 import { Modal, Button, Loader } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { load_deals } from "../actions/agent";
+import { load_deals } from "../store/actions/agent";
 
 function AllDeals ({ load_deals, deals, user }) {
     const [showDealDetail, setShowDealDetail] = useState(null);

@@ -1,6 +1,6 @@
 import { Button, Popup } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
-import { delete_deal, load_deals } from '../actions/agent';
+import { delete_deal, load_deals } from '../store/actions/agent';
 import { connect } from 'react-redux';
 
 function DeleteDeal({ delete_deal, load_deals, deal, handleCloseModal, user }) {

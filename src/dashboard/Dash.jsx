@@ -3,12 +3,15 @@ import EarningDonut from './EarningDonut';
 import EarningBar from './EarningBar';
 import { connect } from "react-redux";
 import { Divider } from 'semantic-ui-react';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { load_deals } from '../actions/agent';
+import { useNavigate, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { load_deals } from '../store/actions/agent';
+import Calculator from './Calculator';
+import Todos from './Todos';
 
 function Dash ({ isAuthenticated, user, load_deals, deals }) {
     const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState("to-do's")
 
     const get_renewals = () => {
         if (!deals) return [];
@@ -94,8 +97,16 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
                 </div>
             </div>
             <Divider />
-            <div className='flex items-center justify-center pt-5'>
-                <GuestCard />
+            <div className='z-0 flex flex-row items-center justify-center bg-[#26282B] bg-blend-color-burn rounded'>
+                <Link className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' onClick={() => setActiveTab("to-do")}>to do's</Link>
+                <Link className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' onClick={() => setActiveTab("guest card")}>guest card</Link>
+                <Link className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' onClick={() => setActiveTab("calculator")}>calculator</Link>
+            </div>
+            <Divider />
+            <div className='flex items-center justify-center bg-[#1f2124] rounded'>
+                {activeTab === `to-do` && <Todos />}
+                {activeTab === 'guest card' && <GuestCard />}
+                {activeTab === 'calculator' && <Calculator />}
             </div>
         </div>
     )

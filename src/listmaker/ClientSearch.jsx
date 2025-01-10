@@ -1,5 +1,5 @@
 import { Search } from "semantic-ui-react";
-import { search_clients, set_search_client, reset_client_results } from "../actions/listmaker";
+import { search_clients, set_search_client, reset_client_results } from "../store/actions/listmaker";
 import { connect } from "react-redux";
 
 function ClientSearch ({ client_results, search_clients, userID, set_search_client, reset_client_results }) {

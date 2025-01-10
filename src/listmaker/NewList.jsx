@@ -9,8 +9,8 @@ import ClientSearch from "./ClientSearch";
 import SendList from "./SendList";
 import ShareURL from "./ShareURL";
 import ReorderList from "./ReorderList";
-import { new_list, reset_client, delete_list, new_option, reset_prop_results, reset_prop, load_options } from "../actions/listmaker";
-import { reset_list_mode, reset_send_mode, set_list_mode, reset_reorder_mode } from "../actions/ui"
+import { new_list, reset_client, delete_list, new_option, reset_prop_results, reset_prop, load_options } from "../store/actions/listmaker";
+import { reset_list_mode, reset_send_mode, set_list_mode, reset_reorder_mode } from "../store/actions/ui"
 
 
 function NewList({ new_option, reset_prop_results, reset_reorder_mode, property, list, reset_prop, load_options, user, new_list, client, isSendMode, isListMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode, reset_client, isReorderMode, set_reorder_mode }) {

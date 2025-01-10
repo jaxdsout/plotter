@@ -1,4 +1,4 @@
-import { reset_reorder_mode, set_reorder_mode } from "../actions/ui";
+import { reset_reorder_mode, set_reorder_mode } from "../store/actions/ui";
 import { Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 

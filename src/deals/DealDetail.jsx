@@ -1,7 +1,7 @@
 import { Divider, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import DeleteDeal from "./DeleteDeal.jsx";
-import { load_deals, update_deal_status } from "../actions/agent.js";
+import { load_deals, update_deal_status } from "../store/actions/agent.js";
 
 function DealDetail ({ deal, handleCloseModal, update_deal_status, load_deals, user }) {
 

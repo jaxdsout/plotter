@@ -1,13 +1,12 @@
 import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
-import { signup } from "../actions/auth";
+import { signup } from "../store/actions/auth";
 import { Button, Divider, Form, FormField, Message, Image } from "semantic-ui-react";
 import { useEffect } from "react";
 
 function Signup ({ signup, error, message, signupSuccess }) {
     const navigate = useNavigate()
-    const [account, setAccount] = useState(false)
 
     const [formData, setFormData] = useState({
         email: '',
@@ -25,11 +24,11 @@ function Signup ({ signup, error, message, signupSuccess }) {
         e.preventDefault();
         if (password === re_password) {
             await signup(first_name, last_name, email, password, re_password)
-            setAccount(true)
+            if (signupSuccess) {
+                setTimeout(() => { navigate('/login/') }, 3500)
+            }
         }
-        if (signupSuccess & account) {
-            return navigate('/login/')
-        }
+      
     }
 
   

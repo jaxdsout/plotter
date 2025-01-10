@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { logout } from '../actions/auth';
+import { logout } from '../store/actions/auth';
 import { Button } from 'semantic-ui-react';
 
 function Navbar ({ logout, isAuthenticated, isClientView }) {

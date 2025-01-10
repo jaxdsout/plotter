@@ -1,7 +1,7 @@
 import { Button, Popup } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
-import { delete_list } from '../actions/listmaker';
-import { load_lists } from '../actions/agent';
+import { delete_list } from '../store/actions/listmaker';
+import { load_lists } from '../store/actions/agent';
 import { connect } from 'react-redux';
 
 function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user }) {

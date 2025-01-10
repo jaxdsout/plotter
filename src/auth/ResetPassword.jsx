@@ -1,13 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
-import { reset_password } from "../actions/auth";
-import { Button, FormField, Form, Image } from "semantic-ui-react";
+import { reset_password } from "../store/actions/auth";
+import { Button, FormField, Form, Image, Message } from "semantic-ui-react";
 
-function ResetPassword ({ reset_password }) {
+function ResetPassword ({ reset_password, message, resetSuccess }) {
     const navigate = useNavigate()
-
-    const [requestSent, setRequestSent] = useState(false)
 
     const [formData, setFormData] = useState({
         email: '',
@@ -20,12 +18,12 @@ function ResetPassword ({ reset_password }) {
     const handleSubmit = e => {
         e.preventDefault();
         reset_password(email)
-        setRequestSent(true);
+        if (resetSuccess) {
+            setTimeout(() => { navigate('/login/') }, 3500)
+        }
     }
 
-    if (requestSent) {
-        return navigate('/login/');
-    }
+   
 
     return (
         <div className="flex flex-col items-center justify-evenly">
@@ -34,6 +32,11 @@ function ResetPassword ({ reset_password }) {
                     <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1010.png"/>
                     <h6 className="mont text-white text-2xl md:text-4xl -mt-2"> reset your password </h6>
                 </div>
+                {message && (
+                        <Message positive>
+                            <Message.Header>{message}</Message.Header>
+                        </Message>
+                )}
                 <Form onSubmit={handleSubmit} className="p-5">
                     <FormField>
                         <label className="!text-white" htmlFor='email'>Email:</label>
@@ -55,5 +58,11 @@ function ResetPassword ({ reset_password }) {
     )
 }
 
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.auth.error,
+    message: state.auth.message,
+    resetSuccess: state.auth.resetSuccess
+});
 
-export default connect(null, { reset_password })( ResetPassword );
+export default connect(mapStateToProps, { reset_password })( ResetPassword );

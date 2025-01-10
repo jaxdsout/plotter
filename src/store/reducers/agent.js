@@ -23,7 +23,6 @@ import {
     DELETE_CLIENT_SUCCESS,
     NEW_CARD_FAIL,
     NEW_CARD_SUCCESS,
-    CLEAR_MESSAGE
 } from '../actions/types';
 
 const initialState = {
@@ -57,11 +56,6 @@ export default function agentReducer(state = initialState, action) {
                 ...state,
                 message: 'Client updated successfully'
             }
-        case CLEAR_MESSAGE:
-            return {
-            ...state,
-            message: null
-        };
         case NEW_CLIENT_SUCCESS:
         case NEW_LIST_SUCCESS:
         case NEW_DEAL_SUCCESS:
