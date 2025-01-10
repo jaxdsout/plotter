@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { auth_user, load_user, logout, refresh_token } from '../actions/auth';
+import { auth_user, load_user, logout, refresh_token } from '../store/actions/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Clients from '../clients/Clients';
@@ -42,7 +42,7 @@ function Dashboard ({ load_user, auth_user, refresh_token, access, isAuthenticat
 
     return (    
         <div className='flex flex-col items-center justify-evenly'>
-            <div className="w-11/12 md:w-3/4 max-w-[900px] max-h-[80rem] p-5 mt-5 bg-[#26282B] shadow-inner shadow-md rounded-lg mb-10 pb-10">
+            <div className="w-11/12 md:w-3/4 max-w-[900px] p-5 mt-5 bg-gradient-to-b from-[#26282B] to-[#1f2124] shadow-inner shadow-md rounded-lg mb-10 pb-10">
                 <div className='z-0 pr-5 pl-5 flex flex-row items-center justify-center'>
                     <Link className='mont drop-shadow-md text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' to="/dashboard/home">
                         <i className="home icon"></i>

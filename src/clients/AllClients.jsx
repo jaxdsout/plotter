@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import ClientDetail from "./ClientDetail";
 import { Modal, Button, Divider, Loader } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { load_clients } from "../actions/agent";
+import { load_clients } from "../store/actions/agent";
 import DeleteClient from "./DeleteClient";
 import ListDetail from "../lists/ListDetail";
 import DealDetail from "../deals/DealDetail"
-import { reset_list_mode } from "../actions/ui";
+import { reset_list_mode } from "../store/actions/ui";
 
 function AllClients ({ load_clients, clients, user, isListMode, reset_list_mode, }) {
     const [showClientDetail, setShowClientDetail] = useState(null);

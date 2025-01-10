@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { Button } from "semantic-ui-react";
-import { clear_options } from "../actions/listmaker";
+import { clear_options } from "../store/actions/listmaker";
 import { useState } from "react";
 
 function ClearOptions ({ clear_options, list }) {

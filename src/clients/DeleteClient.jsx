@@ -1,6 +1,6 @@
 import { Button, Popup } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
-import { delete_client, load_clients } from '../actions/agent'; 
+import { delete_client, load_clients } from '../store/actions/agent'; 
 import { connect } from 'react-redux';
 
 function DeleteClient({ delete_client, load_clients, client, handleCloseModal, user }) {

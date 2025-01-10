@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { connect } from 'react-redux';
 import { Modal, Button, Form, FormField } from "semantic-ui-react";
-import { load_clients, new_client } from "../actions/agent";
+import { load_clients, new_client } from "../store/actions/agent";
 
 function NewClient({ user, load_clients, new_client }) {
     const [showModal, setShowModal] = useState(false);

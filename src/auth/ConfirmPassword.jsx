@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState } from "react"
-import { reset_password_confirm } from "../actions/auth";
+import { reset_password_confirm } from "../store/actions/auth";
 import { Button, Form, FormField } from "semantic-ui-react";
 
 function ConfirmPassword ({ reset_password_confirm }) {

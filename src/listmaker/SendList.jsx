@@ -1,7 +1,7 @@
 import { Button } from "semantic-ui-react"
 import { connect } from "react-redux";
-import { update_list } from "../actions/listmaker";
-import { set_send_mode } from "../actions/ui";
+import { update_list } from "../store/actions/listmaker";
+import { set_send_mode } from "../store/actions/ui";
 
 function SendList ({ user, client, list, update_list, set_send_mode, options }) {
 

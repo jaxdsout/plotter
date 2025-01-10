@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Image, Button } from "semantic-ui-react";
 import { useEffect } from "react";
-import { reset_client_view } from "../actions/ui";
+import { reset_client_view } from "../store/actions/ui";
 import { connect } from "react-redux";
 
 function Landing() {

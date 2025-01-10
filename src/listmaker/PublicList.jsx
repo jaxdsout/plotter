@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import MapBox from "./MapBox";
 import { useParams } from "react-router-dom";
-import { retrieve_list } from "../actions/listmaker";
-import { set_client_view } from "../actions/ui"
+import { retrieve_list } from "../store/actions/listmaker";
+import { set_client_view } from "../store/actions/ui"
 import { Icon } from "semantic-ui-react";
 
 function PublicList({ retrieve_list, retrlist, isClientView, set_client_view }) {

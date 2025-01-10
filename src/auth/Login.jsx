@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState, useEffect } from "react"
-import { login } from "../actions/auth";
-import { Button, Divider, Form, FormField, Message, Image } from "semantic-ui-react";
+import { login } from "../store/actions/auth";
+import { Button, Divider, Form, FormField, Message, Image, Popup } from "semantic-ui-react";
 
 function Login ({ login, isAuthenticated, error, message }) {
     const navigate = useNavigate()
@@ -14,11 +14,14 @@ function Login ({ login, isAuthenticated, error, message }) {
     
     const { email, password } = formData;
 
+    const normalizeEmail = (email) => email.trim().toLowerCase();
+
     const handleChange = e => setFormData({ ...formData, [e.target.name]: e.target.value});
 
     const handleSubmit = e => {
         e.preventDefault();
-        login(email, password)
+        const normalizedEmail = normalizeEmail(email);
+        login(normalizedEmail, password)
     }
 
     useEffect(() => {
@@ -26,6 +29,7 @@ function Login ({ login, isAuthenticated, error, message }) {
             navigate('/dashboard/home');
         }
     }, [isAuthenticated, navigate]);
+    
 
     return (
         <div className="flex flex-col items-center justify-evenly">
@@ -42,9 +46,9 @@ function Login ({ login, isAuthenticated, error, message }) {
                         </Message>
                     )}
                     {message && (
-                    <Message positive>
-                        <Message.Header>{message}</Message.Header>
-                    </Message>
+                        <Message positive>
+                            <Message.Header>{message}</Message.Header>
+                        </Message>
                     )}
                     <FormField>
                     <label className="!text-white" htmlFor='email'>Email:</label>
@@ -81,6 +85,21 @@ function Login ({ login, isAuthenticated, error, message }) {
                     <div className="mb-5">
                         <h6 className="noto-sans text-white mb-4">forgot your password?</h6>          
                         <Link to={"/reset-password/"}><Button inverted>RESET</Button></Link>
+                    </div>
+                </div>
+                <Divider className="mt-4 mb-4" />
+                <div className="flex flex-col sm:flex-col md:flex-row justify-evenly text-center mt-5">            
+                    <div className="mb-5">
+                        <h6 className="noto-sans text-white mb-4">here for portfolio purposes?</h6>
+                        <Popup
+                            content={
+                                <div>
+                                    <p><b>Email:</b> aptatlas.test@gmail.com</p>
+                                    <p><b>PW:</b> example123</p>
+                                </div>    
+                            }
+                            trigger={<Button size="tiny" inverted>TEST ACCOUNT</Button>}
+                        />  
                     </div>
                 </div>
             </div>

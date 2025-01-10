@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Button, Form, FormField, Message } from "semantic-ui-react";
-import { load_clients, update_client } from "../actions/agent";
-import { clear_message } from "../actions/ui";
+import { load_clients, update_client } from "../store/actions/agent";
 
-function ClientDetail ({ client, update_client, user, load_clients, message, clear_message }) {
+function ClientDetail ({ client, update_client, user, load_clients, message }) {
     const [formData, setFormData] = useState({
         agent: user.id,
         first_name: client.first_name || '',
@@ -25,10 +24,6 @@ function ClientDetail ({ client, update_client, user, load_clients, message, cle
         e.preventDefault();
         await update_client(clientID, agent, first_name, last_name, email, phone_number);
         await load_clients(user.id)
-
-        setTimeout(() => {
-            clear_message();
-        }, 3000);
     }
 
     return (
@@ -92,4 +87,4 @@ const mapStateToProps = state => ({
     message: state.agent.message
 });
 
-export default connect(mapStateToProps, { update_client, load_clients, clear_message })(ClientDetail);
+export default connect(mapStateToProps, { update_client, load_clients })(ClientDetail);

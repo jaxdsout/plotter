@@ -1,23 +1,17 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { connect } from "react-redux"
-import { useState } from "react"
-import { activate } from "../actions/auth";
+import { activate } from "../store/actions/auth";
 import { Button, Image, Message } from "semantic-ui-react";
 
-function Activate ({ activate, message }) {
+function Activate ({ activate, message, activateSuccess, error }) {
     const navigate = useNavigate()
     const { uid, token } = useParams();
-    console.log(uid, "uid", token, "token")
-
-    const [verify, setVerify] = useState(false);
 
     const activate_account = async () => {
         await activate(uid, token)
-        setVerify(true)
-    }
-
-    if (verify) {
-        setTimeout(() => { navigate('/login/') }, 500)
+        if (activateSuccess) {
+            setTimeout(() => { navigate('/login/') }, 3500)
+        }
     }
 
     return (
@@ -31,6 +25,16 @@ function Activate ({ activate, message }) {
                 <div className="flex flex-col items-center justify-evenly">
                     <Button onClick={activate_account} type='button' className="!bg-[#90B8F8] hover:!bg-[#5F85DB]">ACTIVATE</Button>
                 </div>
+                {message && (
+                    <Message positive size="mini">
+                        <p>{message}</p>
+                    </Message>
+                )}
+                {error && (
+                    <Message negative size="mini">
+                        <p>{error}</p>
+                    </Message>
+                )}
             </div>
         </div>
           
@@ -39,7 +43,8 @@ function Activate ({ activate, message }) {
 
 const mapStateToProps = state => ({
     error: state.auth.error,
-    message: state.auth.message
+    message: state.auth.message,
+    activateSuccess: state.auth.activateSuccess
 });
 
 export default connect(mapStateToProps, { activate })( Activate );

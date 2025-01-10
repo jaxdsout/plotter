@@ -1,7 +1,7 @@
 import { Form, FormField, Button, Modal } from "semantic-ui-react";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { load_options, update_option } from "../actions/listmaker";
+import { load_options, update_option } from "../store/actions/listmaker";
 
 function UpdateOption ({ option, list, update_option, load_options }) {
     const [showModal, setShowModal] = useState(false);

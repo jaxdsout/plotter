@@ -1,8 +1,8 @@
 import { Button, Input, Divider, Form, Popup } from "semantic-ui-react";
-import { reset_list_mode, set_list_mode } from "../actions/ui";
+import { reset_list_mode, set_list_mode } from "../store/actions/ui";
 import { connect } from "react-redux";
-import { set_search_client, update_list, reset_prop, reset_prop_results, load_options, new_option, set_list_edit} from "../actions/listmaker";
-import { load_lists } from "../actions/agent";
+import { set_search_client, update_list, reset_prop, reset_prop_results, load_options, new_option, set_list_edit} from "../store/actions/listmaker";
+import { load_lists } from "../store/actions/agent";
 import PropertySearch from "../listmaker/PropertySearch";
 import OptionList from "../listmaker/OptionList";
 import MapBox from "../listmaker/MapBox";

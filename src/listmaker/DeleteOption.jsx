@@ -1,6 +1,6 @@
 import { Button, Popup } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
-import { delete_option, load_options } from '../actions/listmaker';
+import { delete_option, load_options } from '../store/actions/listmaker';
 import { connect } from 'react-redux';
 
 function DeleteOption ( { delete_option, load_options, option, list}) {

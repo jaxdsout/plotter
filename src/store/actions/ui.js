@@ -6,11 +6,17 @@ import {
     SET_LIST_MODE,
     SET_CLIENT_VIEW,
     RESET_DEAL_FORM,
-    CLEAR_MESSAGE,
     SET_REORDER_MODE,
-    RESET_REORDER_MODE
+    RESET_REORDER_MODE,
+    CLEAR_MESSAGE
 } from "./types"
 
+export const clear_message = () => dispatch => {
+    dispatch({
+        type: CLEAR_MESSAGE,
+    });
+    return Promise.resolve();
+};
 
 export const set_client_view = () => dispatch => {
     dispatch({
@@ -61,12 +67,6 @@ export const reset_deal_form = () => dispatch => {
     return Promise.resolve();
 };
 
-export const clear_message = () => dispatch => {
-    dispatch({
-        type: CLEAR_MESSAGE,
-    });
-    return Promise.resolve();
-};
 
 export const set_reorder_mode = () => dispatch => {
     dispatch({
