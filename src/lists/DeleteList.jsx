@@ -14,8 +14,8 @@ function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user })
     const handleDelete = async (listID, userID) => {
         console.log(listID, "listID")
         await delete_list(listID)
-        await load_lists(userID)
         setDeleteConfirm(null);
+        load_lists(userID);
         handleCloseModal()
     }
 
