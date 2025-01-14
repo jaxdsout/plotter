@@ -67,6 +67,9 @@ function GuestCard ({ client, property, user, new_guest_card }) {
 
     return (
         <div className="flex flex-col"> 
+            <div className="mt-4 mb-2 flex flex-col items-center">
+                <h4 className='text-center text-white'>Send Guest Card</h4>
+            </div>
             <div className="flex flex-col lg:flex-row justify-center items-start">
                 <div className="flex flex-row items-center me-5 mb-4 mt-6">
                     <ClientSearch />

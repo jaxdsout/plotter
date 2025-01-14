@@ -38,7 +38,7 @@ function Landing() {
             </div>
             <div className="w-3/4 max-w-[800px] p-5 mt-8 flex flex-col items-center bg-[#26282B] shadow-inner shadow-md rounded-lg mb-10">        
                 <h1 className="mont text-white text-2xl md:text-3xl text-center text-wrap">ready to join atlas?</h1>
-                <Link to={"/signup/"}><Button className="mt-4 !bg-[#90B8F8] hover:!bg-[#5F85DB] drop-shadow">SIGN UP</Button></Link>
+                <Link to={"/signup/"}><Button className="mt-4 !bg-[#90B8F8] hover:!bg-[#5F85DB] drop-shadow active:translate-y-0.5">SIGN UP</Button></Link>
             </div>
         </div>
         

@@ -73,18 +73,18 @@ function Login ({ login, isAuthenticated, error, message }) {
                         />
                     </FormField>
                     <div className="flex justify-center mt-8 mb-5">
-                        <Button type="submit" className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">LOGIN</Button>   
+                        <Button type="submit" className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold active:translate-y-0.5">LOGIN</Button>   
                     </div>
                 </Form>
                 <Divider className="mt-4 mb-4" />
                 <div className="flex flex-col sm:flex-col md:flex-row justify-evenly text-center mt-5">            
                     <div className="mb-5">
                         <h6 className="noto-sans text-white mb-4">don't have an account?</h6>
-                        <Link to={"/signup/"}><Button inverted>SIGN UP</Button></Link>
+                        <Link to={"/signup/"}><Button inverted className="active:translate-y-0.5">SIGN UP</Button></Link>
                     </div>
                     <div className="mb-5">
                         <h6 className="noto-sans text-white mb-4">forgot your password?</h6>          
-                        <Link to={"/reset-password/"}><Button inverted>RESET</Button></Link>
+                        <Link to={"/reset-password/"}><Button inverted className="active:translate-y-0.5">RESET</Button></Link>
                     </div>
                 </div>
                 <Divider className="mt-4 mb-4" />

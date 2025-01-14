@@ -46,7 +46,7 @@ function Calculator () {
             <div className="mb-2 mt-2">
                     <h4 className='text-center text-white'>Net Effective Calculator</h4>
             </div>
-            <div className="w-11/12 max-w-[500px] p-5 mt-5 mb-10 flex flex-col lg:flex-row bg-[#26282B] rounded-lg shadow-md shadow-inner">  
+            <div className="w-11/12 max-w-[500px] p-5 mt-5 mb-10 flex flex-row bg-[#26282B] rounded-lg shadow-md shadow-inner">  
                 <Form className="p-5">
                     <div>
                         <FormField>

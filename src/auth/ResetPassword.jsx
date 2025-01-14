@@ -50,7 +50,7 @@ function ResetPassword ({ reset_password, message, resetSuccess }) {
                         />
                     </FormField>
                     <div className="flex flex-col items-center justify-evenly mt-8">            
-                        <Button type="submit" className="!bg-[#90B8F8] hover:!bg-[#5F85DB]">REQUEST NEW PASSWORD</Button>   
+                        <Button type="submit" className="!bg-[#90B8F8] hover:!bg-[#5F85DB] active:translate-y-0.5">REQUEST NEW PASSWORD</Button>   
                     </div>            
                 </Form>
             </div>

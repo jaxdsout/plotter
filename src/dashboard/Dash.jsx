@@ -52,7 +52,7 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
     const move_ins = get_move_ins();
 
     return (
-        <div>
+        <div className='transition ease-in-out delay-150'>
             <div className='flex flex-col xl:flex-row justify-evenly items-center pl-5 pr-5 pb-5'>
                 <div className='pt-5 pb-5'>
                     <EarningDonut />
@@ -99,18 +99,18 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
             <Divider />
             <div className='z-0 flex flex-row items-center justify-center bg-[#26282B] bg-blend-color-burn rounded'>
                 <Link 
-                    className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' 
+                    className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' 
                     onClick={() => setActiveTab("to-do")}>
                         <i class="tasks icon"></i>
 
                 </Link>
                 <Link 
-                    className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' 
+                    className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' 
                     onClick={() => setActiveTab("guest card")}>
                         <i class="address card icon"></i>
                 </Link>
                 <Link 
-                    className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1]' 
+                    className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' 
                     onClick={() => setActiveTab("calculator")}>
                         <i class="calculator icon"></i>
                 </Link>
