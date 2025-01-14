@@ -108,13 +108,13 @@ function Signup ({ signup, error, message, signupSuccess }) {
                         />
                     </FormField>
                     <div className="flex justify-center mt-8 mb-5">
-                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">SIGN UP</Button>   
+                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold active:translate-y-0.5">SIGN UP</Button>   
                     </div>
                 </Form>
                 <Divider className="mt-4 mb-4" />
                 <div className="flex flex-col items-center justify-evenly mt-5 mb-5">            
                     <h6 className="noto-sans !text-white mb-4">already have an account?</h6>
-                    <Link to={"/login/"}><Button inverted>LOGIN</Button></Link>
+                    <Link to={"/login/"}><Button inverted className="active:translate-y-0.5">LOGIN</Button></Link>
                 </div>
 
             </div>

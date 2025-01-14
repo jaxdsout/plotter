@@ -129,7 +129,7 @@ function Todos ({ user, load_tasks, tasks, new_task, update_task}) {
                 )}
             </div>
             <div className="mb-6 flex flex-col items-center">
-                <Button size="tiny" inverted className="!mb-3" onClick={toggleComplete}>
+                <Button size="tiny" inverted className="!mb-3 active:translate-y-0.5" onClick={toggleComplete}>
                     Completed Tasks
                 </Button>
                 {showCompleted ? (

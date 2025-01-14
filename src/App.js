@@ -17,8 +17,11 @@ import Deals from './deals/Deals';
 
 function App() {
   return (
-    <>
-      <Navbar />
+    <div className='flex flex-col h-screen justify-between'>
+      <header>
+        <Navbar />
+      </header>
+      <main className='mb-auto'>
       <Routes>
         <Route path="/" element={ <Landing /> }/>
         <Route path="/signup/" element={ <SignUpForm /> } />
@@ -35,8 +38,11 @@ function App() {
         <Route path="/list/:uuid/" element={ <ClientList /> } />
         {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
       </Routes>
-      <Footer />
-    </>
+      </main>
+      <footer>
+        <Footer />
+      </footer>
+    </div>
   );
 }
 
