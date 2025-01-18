@@ -20,25 +20,21 @@ function GuestCard ({ client, property, user, new_guest_card }) {
     const { interested, move_by } = formData;
 
     useEffect(() => {
-        if (client) {
-            setClientSel(client);
-        }
-    }, [client]);
-
-    useEffect(() => {
-        if (property) {
-            setPropSel(property);
-        }
-    }, [property]);
-
-    useEffect(() => {
         if (user) {
             setFormData(prevFormData => ({
                 ...prevFormData,
                 agent: user.id
             }));
         }
-    }, [user]);
+
+        if (property) {
+            setPropSel(property);
+        }
+
+        if (client) {
+            setClientSel(client);
+        }
+    }, [user, property, client]);
 
 
     const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -66,32 +62,38 @@ function GuestCard ({ client, property, user, new_guest_card }) {
     };
 
     return (
-        <div className="flex flex-col"> 
+        <div className="w-11/12 mt-5 mb-10 flex flex-col items-center justify-center bg-[#26282B] rounded-lg shadow-md shadow-inner">
             <div className="mt-4 mb-2 flex flex-col items-center">
                 <h4 className='text-center text-white'>Send Guest Card</h4>
             </div>
-            <div className="flex flex-col lg:flex-row justify-center items-start">
-                <div className="flex flex-row items-center me-5 mb-4 mt-6">
+            <div className="flex flex-col lg:flex-row justify-center">
+                <div className="p-3 text-center">
                     <ClientSearch />
-                    {clientSel && client !== null ? (
-                        <Button size="tiny" color="black" disabled>CLIENT SELECTED</Button>
-                    ) : (
-                        <Button size="tiny" className="!bg-[#90B8F8] hover:!bg-[#5F85DB]" type="submit">SELECT CLIENT</Button>
-                    )}
+                    <div className="mt-5">
+                        {clientSel && client !== null ? (
+                            <Button size="tiny" color="black" disabled>CLIENT SELECTED</Button>
+                        ) : (
+                            <>
+                            </>
+                        )}
+                    </div>
                 </div>
-                <div className="flex flex-row items-center me-5 mb-4 mt-6">
+                <div className="p-3 text-center">
                     <PropertySearch />
-                    {propSel && property !== null ? (
-                        <Button size="tiny" color="black" disabled>PROPERTY SELECTED</Button>
-                    ) : (
-                        <Button size="tiny" className="!bg-[#90B8F8] hover:!bg-[#5F85DB]" type="submit">SELECT PROPERTY</Button>
-                    )}
+                    <div className="mt-5">
+                        {propSel && property !== null ? (
+                            <Button size="tiny" color="black" disabled>PROPERTY SELECTED</Button>
+                        ) : (
+                            <>
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
             <Divider />
             {clientSel && propSel ? (
                 <>
-                    <div>
+                    <div className="text-white">
                         <p>Hey team,</p>
                         <p>Below is the guest card info for my client {clientSel.first_name}. Please let me know if there are any issues.</p>
                         <ul>

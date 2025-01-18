@@ -1,6 +1,6 @@
 import { Search } from "semantic-ui-react"
 import { connect } from "react-redux";
-import { load_options, search_properties, reset_prop_results, set_search_prop } from "../store/actions/listmaker";
+import { load_options, search_properties, reset_prop_results, set_search_prop, reset_prop } from "../store/actions/listmaker";
 
 function PropertySearch({ userID, search_properties, set_search_prop, prop_results, reset_prop_results}) {
 
@@ -11,19 +11,22 @@ function PropertySearch({ userID, search_properties, set_search_prop, prop_resul
     };
 
     const handleResultSelect = (e, { result }) => {
-        set_search_prop(result.id, result.title);
+        const selectedProperty = prop_results.find(property => property.id === result.id);
+        set_search_prop(selectedProperty);
     };
 
     const handleBlur =  () => {
         reset_prop_results()
+        reset_prop()
     }
 
     return(
-        <div className="flex flex-row justify-evenly items-center">
+        <>
             <Search
                 onSearchChange={handleSearchChange}
                 onResultSelect={handleResultSelect}
                 onBlur={handleBlur}
+                defaultOpen={null}
                 results={prop_results.map(property => ({
                     title: `${property.name}`,
                     subtitle: `${property.address}`,
@@ -31,10 +34,10 @@ function PropertySearch({ userID, search_properties, set_search_prop, prop_resul
                 }))}
                 icon="none"
                 size="large"
-                className="me-3"
+                className=""
                 placeholder="Search for property..."
                 />
-        </div>
+        </>
     )
 }
 
@@ -48,4 +51,4 @@ const mapStateToProps = state => ({
     isListMode: state.ui.isListMode,
 });
 
-export default connect(mapStateToProps, { set_search_prop, search_properties, load_options, reset_prop_results })(PropertySearch);
+export default connect(mapStateToProps, { set_search_prop, search_properties, load_options, reset_prop_results, reset_prop })(PropertySearch);

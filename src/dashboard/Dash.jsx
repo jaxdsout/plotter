@@ -8,8 +8,10 @@ import { useEffect, useState } from 'react';
 import { load_deals } from '../store/actions/agent';
 import Calculator from './Calculator';
 import Todos from './Todos';
+import Commission from './Commission';
+import { reset_prop_results, reset_prop, reset_client, reset_client_results } from '../store/actions/listmaker';
 
-function Dash ({ isAuthenticated, user, load_deals, deals }) {
+function Dash ({ isAuthenticated, user, load_deals, deals, reset_prop, reset_prop_results, reset_client, reset_client_results }) {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("to-do")
 
@@ -35,6 +37,20 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
             .filter(deal => deal.move_date >= now) 
             .slice(0, 5);
     };
+
+    const handleCommissionTab = () => {
+        reset_prop();
+        reset_prop_results();
+        setActiveTab("commission")
+    }
+
+    const handleGuestCardTab = () => {
+        reset_prop();
+        reset_prop_results();
+        reset_client();
+        reset_client_results();
+        setActiveTab("guest card")
+    }
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -100,13 +116,19 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
             <div className='z-0 flex flex-row items-center justify-center bg-[#26282B] bg-blend-color-burn rounded'>
                 <Link 
                     className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' 
-                    onClick={() => setActiveTab("to-do")}>
+                    onClick={() => {setActiveTab("to-do")}}>
                         <i class="tasks icon"></i>
 
                 </Link>
                 <Link 
+                    className='mont drop-shadow-md text-xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' 
+                    onClick={handleCommissionTab}>
+                        <i class="percent icon"></i>
+
+                </Link>
+                <Link 
                     className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' 
-                    onClick={() => setActiveTab("guest card")}>
+                    onClick={handleGuestCardTab}>
                         <i class="address card icon"></i>
                 </Link>
                 <Link 
@@ -118,6 +140,7 @@ function Dash ({ isAuthenticated, user, load_deals, deals }) {
             <Divider />
             <div className='flex items-center justify-center bg-[#1f2124] rounded'>
                 {activeTab === `to-do` && <Todos />}
+                {activeTab === 'commission' && <Commission />}
                 {activeTab === 'guest card' && <GuestCard />}
                 {activeTab === 'calculator' && <Calculator />}
             </div>
@@ -132,4 +155,4 @@ const mapStateToProps = state => ({
     deals: state.agent.deals
 });
 
-export default connect(mapStateToProps, { load_deals })(Dash);
+export default connect(mapStateToProps, { load_deals, reset_prop, reset_prop_results, reset_client, reset_client_results })(Dash);

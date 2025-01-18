@@ -26,7 +26,9 @@ import {
     LOAD_TASKS_FAIL,
     LOAD_TASKS_SUCCESS,
     UPDATE_TASK_FAIL,
-    UPDATE_TASK_SUCCESS
+    UPDATE_TASK_SUCCESS,
+    LOAD_PROPERTIES_FAIL,
+    LOAD_PROPERTIES_SUCCESS,
 } from './types';
 
 import axios from 'axios';
@@ -457,3 +459,33 @@ export const update_task = (taskID, user, is_active) => async dispatch => {
         });
     }
 };
+
+
+export const load_properties = () => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/properties/`, config);
+            dispatch({
+                type: LOAD_PROPERTIES_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: LOAD_PROPERTIES_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: LOAD_PROPERTIES_FAIL
+        });
+    }
+};
+
+
+
