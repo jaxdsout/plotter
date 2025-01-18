@@ -29,14 +29,17 @@ function Dashboard ({ load_user, auth_user, refresh_token, access, isAuthenticat
     useEffect(() => {
         if (!access) {
             refresh_token();
-        }
-    }, [access, refresh_token]);
-
-    useEffect(() => {
-        if (!isAuthenticated && !access) {
+        } else if (!isAuthenticated && !access) {
             navigate('/login/');
         }
-    }, [isAuthenticated, navigate, access]);
+
+    }, [access, refresh_token, isAuthenticated, navigate,]);
+
+    // useEffect(() => {
+    //     if (!isAuthenticated && !access) {
+    //         navigate('/login/');
+    //     }
+    // }, [isAuthenticated, navigate, access]);
 
     const basePath = location.pathname.split('/').pop();
 

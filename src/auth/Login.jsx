@@ -98,7 +98,7 @@ function Login ({ login, isAuthenticated, error, message }) {
                                     <p><b>PW:</b> example123</p>
                                 </div>    
                             }
-                            trigger={<Button size="tiny" inverted>TEST ACCOUNT</Button>}
+                            trigger={<Button size="tiny" inverted>SANDBOX</Button>}
                         />  
                     </div>
                 </div>
