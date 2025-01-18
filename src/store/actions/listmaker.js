@@ -88,32 +88,69 @@ export const delete_list = (listID) => async dispatch => {
 };
 
 
-export const search_clients = (query, userID) => async dispatch => {
+export const update_list = (agent, client, list, options) => async dispatch => {
     if (localStorage.getItem('access')) {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('access')}`,
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        const uuid = list.uuid === null ? uuidv4() : list.uuid;
+        const body = JSON.stringify({ agent, client, uuid, options });
+        try {
+            const res = await axios.put(`${process.env.REACT_APP_API_URL}/lists/${list.id}/`, body, config);
+            dispatch({
+                type: NEW_LIST_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: NEW_LIST_FAIL
+            });
         }
-    }; 
-    try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/clients/?agent=${userID}&search=${query}`, config);
-        dispatch({
-            type: SEARCH_CLIENT_SUCCESS,
-            payload: res.data
-        });
-    } catch (err) {
-        dispatch({
-            type: SEARCH_CLIENT_FAIL
-        });
-    }
     } else {
-    dispatch({
-        type: SEARCH_CLIENT_FAIL
-    });
+        console.error("No access token found.");
+        dispatch({
+            type: NEW_LIST_FAIL
+        });
     }
 };
 
+
+
+export const retrieve_list = (uuid) => async dispatch => {
+    if (uuid) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }; 
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/client-list/${uuid}/`, config);
+            dispatch({
+                type: RETRIEVE_LIST_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: RETRIEVE_LIST_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: RETRIEVE_LIST_FAIL
+        });
+    }
+};
+
+
+export const set_list_edit = (list) => dispatch => {
+    dispatch({
+        type: SET_LIST_FOR_EDIT,
+        payload: list,
+    });
+};
 
 export const new_option = (property, list, client) => async dispatch => {
     if (localStorage.getItem('access')) {
@@ -225,31 +262,11 @@ export const update_option = (option, price, unit_number, layout, sq_ft, availab
     }
 };
 
-
-export const search_properties = (query) => async dispatch => {
-    if (localStorage.getItem('access')) {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('access')}`,
-        }
-    }; 
-    try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/properties/?search=${query}`, config);
-        dispatch({
-            type: SEARCH_PROPERTY_SUCCESS,
-            payload: res.data
-        });
-    } catch (err) {
-        dispatch({
-            type: SEARCH_PROPERTY_FAIL
-        });
-    }
-    } else {
+export const update_options_order = (newOrder) => dispatch => {
     dispatch({
-        type: SEARCH_PROPERTY_FAIL
+        type: UPDATE_OPTIONS_ORDER,
+        payload: newOrder,
     });
-    }
 };
 
 
@@ -279,6 +296,92 @@ export const clear_options = (listID) => async dispatch => {
 };
 
 
+export const search_properties = (query) => async dispatch => {
+    if (localStorage.getItem('access')) {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`,
+        }
+    }; 
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/properties/?search=${query}`, config);
+        dispatch({
+            type: SEARCH_PROPERTY_SUCCESS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: SEARCH_PROPERTY_FAIL
+        });
+    }
+    } else {
+    dispatch({
+        type: SEARCH_PROPERTY_FAIL
+    });
+    }
+};
+
+export const set_search_prop = (property) => dispatch => {
+    if (localStorage.getItem('access')) {
+        try {
+            dispatch({
+                type: SET_SEARCH_PROP_SUCCESS,
+                payload: property
+            });
+            console.log(property, "search_prop")
+        } catch (err) {
+            dispatch({
+                type: SET_SEARCH_PROP_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: SET_SEARCH_PROP_FAIL
+        });
+    }
+}
+
+export const reset_prop = () => (dispatch) => {
+    dispatch({
+        type: RESET_PROP,
+    });
+};
+
+export const reset_prop_results = () => (dispatch) => {
+    dispatch({
+        type: RESET_PROPERTY_RESULTS,
+    });
+};
+
+
+export const search_clients = (query, userID) => async dispatch => {
+    if (localStorage.getItem('access')) {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`,
+        }
+    }; 
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/clients/?agent=${userID}&search=${query}`, config);
+        dispatch({
+            type: SEARCH_CLIENT_SUCCESS,
+            payload: res.data
+        });
+    } catch (err) {
+        dispatch({
+            type: SEARCH_CLIENT_FAIL
+        });
+    }
+    } else {
+    dispatch({
+        type: SEARCH_CLIENT_FAIL
+    });
+    }
+};
+
+
 export const set_search_client = (id, name, phone_number, email) => dispatch => {
     if (localStorage.getItem('access')) {
         const client = { id, name, phone_number, email };
@@ -299,99 +402,6 @@ export const set_search_client = (id, name, phone_number, email) => dispatch => 
     }
 }
 
-
-export const set_search_prop = (id, name) => dispatch => {
-    if (localStorage.getItem('access')) {
-        const property = { id, name } ;
-        try {
-            dispatch({
-                type: SET_SEARCH_PROP_SUCCESS,
-                payload: property
-            });
-        } catch (err) {
-            dispatch({
-                type: SET_SEARCH_PROP_FAIL
-            });
-        }
-    } else {
-        dispatch({
-            type: SET_SEARCH_PROP_FAIL
-        });
-    }
-}
-
-export const update_list = (agent, client, list, options) => async dispatch => {
-    if (localStorage.getItem('access')) {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('access')}`,
-            }
-        }; 
-        const uuid = list.uuid === null ? uuidv4() : list.uuid;
-        const body = JSON.stringify({ agent, client, uuid, options });
-        try {
-            const res = await axios.put(`${process.env.REACT_APP_API_URL}/lists/${list.id}/`, body, config);
-            dispatch({
-                type: NEW_LIST_SUCCESS,
-                payload: res.data
-            });
-        } catch (err) {
-            dispatch({
-                type: NEW_LIST_FAIL
-            });
-        }
-    } else {
-        console.error("No access token found.");
-        dispatch({
-            type: NEW_LIST_FAIL
-        });
-    }
-};
-
-
-
-export const retrieve_list = (uuid) => async dispatch => {
-    if (uuid) {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }; 
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/client-list/${uuid}/`, config);
-            dispatch({
-                type: RETRIEVE_LIST_SUCCESS,
-                payload: res.data
-            });
-        } catch (err) {
-            dispatch({
-                type: RETRIEVE_LIST_FAIL
-            });
-        }
-    } else {
-        dispatch({
-            type: RETRIEVE_LIST_FAIL
-        });
-    }
-};
-
-
-export const set_list_edit = (list) => dispatch => {
-    dispatch({
-        type: SET_LIST_FOR_EDIT,
-        payload: list,
-    });
-};
-
-export const update_options_order = (newOrder) => dispatch => {
-    dispatch({
-        type: UPDATE_OPTIONS_ORDER,
-        payload: newOrder,
-    });
-};
-
-
 export const reset_client_results = () => (dispatch) => {
     dispatch({
         type: RESET_CLIENT_RESULTS,
@@ -404,14 +414,3 @@ export const reset_client = () => (dispatch) => {
     });
 };
 
-export const reset_prop = () => (dispatch) => {
-    dispatch({
-        type: RESET_PROP,
-    });
-};
-
-export const reset_prop_results = () => (dispatch) => {
-    dispatch({
-        type: RESET_PROPERTY_RESULTS,
-    });
-};

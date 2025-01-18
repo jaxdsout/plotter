@@ -27,6 +27,10 @@ import {
     NEW_TASK_SUCCESS,
     LOAD_TASKS_FAIL,
     LOAD_TASKS_SUCCESS,
+    LOAD_PROPERTIES_FAIL,
+    LOAD_PROPERTIES_SUCCESS,
+    SET_COMMISSION_PROP_SUCCESS,
+    SET_COMMISSION_PROP_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -35,7 +39,8 @@ const initialState = {
     clients: [],
     deals: [],
     lists: [],
-    tasks: []
+    tasks: [],
+    properties: [],
 };
 
 export default function agentReducer(state = initialState, action) {
@@ -60,6 +65,11 @@ export default function agentReducer(state = initialState, action) {
             return {
                 ...state,
                 tasks: payload
+            }
+        case LOAD_PROPERTIES_SUCCESS:
+            return {
+                ...state,
+                properties: payload
             }
         case UPDATE_CLIENT_SUCCESS:
             return {
@@ -89,6 +99,7 @@ export default function agentReducer(state = initialState, action) {
         case NEW_TASK_FAIL:
         case NEW_TASK_SUCCESS:
         case LOAD_TASKS_FAIL:
+        case LOAD_PROPERTIES_FAIL:
             return {
                 ...state
             }

@@ -68,7 +68,7 @@ export default function listmakerReducer(state = initialState, action) {
         case SET_SEARCH_PROP_SUCCESS:
             return {
                 ...state,
-                property: payload
+                property: payload,
             }
         case LOAD_OPTIONS_SUCCESS:
             return {

@@ -42,11 +42,11 @@ function Calculator () {
     };
 
     return (
-        <div className="flex flex-col items-center justify-evenly">
-            <div className="mb-2 mt-2">
-                    <h4 className='text-center text-white'>Net Effective Calculator</h4>
+        <div className="w-11/12 max-w-[500px] mt-5 mb-10 flex flex-col items-center justify-center bg-[#26282B] rounded-lg shadow-md shadow-inner">
+            <div className="mt-4 mb-2 flex flex-col items-center">
+                <h4 className='text-center text-white'>Net Effective Rent Calculator</h4>
             </div>
-            <div className="w-11/12 max-w-[500px] p-5 mt-5 mb-10 flex flex-row bg-[#26282B] rounded-lg shadow-md shadow-inner">  
+            <div className="">  
                 <Form className="p-5">
                     <div>
                         <FormField>

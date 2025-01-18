@@ -23,30 +23,24 @@ function ClientSearch ({ client_results, search_clients, userID, set_search_clie
 
     return (
         <>
-       
-            <div>
-                <Search
-                    onSearchChange={handleSearchChange}
-                    onResultSelect={handleResultSelect}
-                    onBlur={handleBlur}
-                    results={client_results.map(result => ({
-                        title: `${result.first_name} ${result.last_name}`,
-                        id: result.id,
-                        phone_number: result.phone_number,
-                        email: result.email
-                    }))}
-                    on
-                    id='client_start_list'
-                    placeholder="Search for client..."
-                    size="large"
-                    icon="none"
-                    className="me-3"
-                    showNoResults={false}
-                />
-            </div>
-    
-       
-                        
+            <Search
+                onSearchChange={handleSearchChange}
+                onResultSelect={handleResultSelect}
+                onBlur={handleBlur}
+                results={client_results.map(result => ({
+                    title: `${result.first_name} ${result.last_name}`,
+                    id: result.id,
+                    phone_number: result.phone_number,
+                    email: result.email
+                }))}
+                on
+                id='client_start_list'
+                placeholder="Search for client..."
+                size="large"
+                icon="none"
+                className=""
+                showNoResults={false}
+            />            
         </>
     )
 }
