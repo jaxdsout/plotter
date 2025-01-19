@@ -53,12 +53,6 @@ function Dash ({ isAuthenticated, user, load_deals, deals, reset_prop, reset_pro
     }
 
     useEffect(() => {
-        if (!isAuthenticated) {
-            navigate('/login/');
-        }
-    }, [isAuthenticated, navigate]);
-
-    useEffect(() => {
         if (user) {
             load_deals(user.id)
         }

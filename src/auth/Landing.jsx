@@ -1,14 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Image, Button } from "semantic-ui-react";
 import { useEffect } from "react";
 import { reset_client_view } from "../store/actions/ui";
 import { connect } from "react-redux";
 
-function Landing() {
+function Landing({ access, refresh }) {
+    const navigate = useNavigate();
 
-      useEffect(() => {
-            reset_client_view()
-        }, [])
+    useEffect(() => {
+        reset_client_view()
+
+        if (access && refresh) {
+            navigate('/dashboard/home')
+        }
+    }, [access, refresh, navigate])
 
     return (
         <div className="flex flex-col items-center justify-evenly">  
@@ -34,7 +39,6 @@ function Landing() {
                         <p className="text-white">Atlas is 100% free for licensed real estate agents. Simply sign up, provide your TREC details after activating your account, and a member of our team will confirm everything afterward. </p>
                     </div>
                 </div>
-           
             </div>
             <div className="w-3/4 max-w-[800px] p-5 mt-8 flex flex-col items-center bg-[#26282B] shadow-inner shadow-md rounded-lg mb-10">        
                 <h1 className="mont text-white text-2xl md:text-3xl text-center text-wrap">ready to join atlas?</h1>
@@ -46,7 +50,9 @@ function Landing() {
 }
 
 const mapStateToProps = state => ({
-    isClientView: state.ui.isClientView
+    isClientView: state.ui.isClientView,
+    access: state.auth.access,
+    refresh: state.auth.refresh
 });
 
 export default connect(mapStateToProps, { })(Landing);

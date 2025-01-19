@@ -15,7 +15,10 @@ import {
     PASSWORD_RESET_CONFIRM_SUCCESS,
     PASSWORD_RESET_SUCCESS,
     REFRESH_TOKEN_SUCCESS,
-    REFRESH_TOKEN_FAIL
+    REFRESH_TOKEN_FAIL,
+    SET_RESET_SUCCESS,
+    SET_ACTIVATE_SUCCESS,
+    SET_SIGNUP_SUCCESS
 } from './types';
 
 import axios from 'axios';
@@ -217,6 +220,23 @@ export const logout = () => dispatch => {
     dispatch({
         type: LOGOUT
     });
+}
+
+export const set_reset_success = () => dispatch => {
+    dispatch({
+        type: SET_RESET_SUCCESS
+    })
+}
+
+export const set_activate_success = () => dispatch => {
+    dispatch({
+        type: SET_ACTIVATE_SUCCESS
+    })
+}
+export const set_signup_success = () => dispatch => {
+    dispatch({
+        type: SET_SIGNUP_SUCCESS
+    })
 }
 
 export const refresh_token = () => async dispatch => {

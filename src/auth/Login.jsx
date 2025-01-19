@@ -21,7 +21,7 @@ function Login ({ login, isAuthenticated, error, message }) {
     const handleSubmit = e => {
         e.preventDefault();
         const normalizedEmail = normalizeEmail(email);
-        login(normalizedEmail, password)
+        login(normalizedEmail, password);
     }
 
     useEffect(() => {

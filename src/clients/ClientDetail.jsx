@@ -12,8 +12,6 @@ function ClientDetail ({ client, update_client, user, load_clients, message }) {
         phone_number: client.phone_number || '',
     });
 
-
-
     const clientID = client.id;
     
     const { agent, first_name, last_name, email, phone_number } = formData;

@@ -62,8 +62,6 @@ function ConfirmPassword ({ reset_password_confirm }) {
                     </div>  
                 </Form>
             </div>
-         
-    
         </div>
     )
 }
