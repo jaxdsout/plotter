@@ -1,11 +1,10 @@
 import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
-import { useState } from "react"
-import { signup } from "../store/actions/auth";
+import { useState, useEffect } from "react"
+import { set_signup_success, signup } from "../store/actions/auth";
 import { Button, Divider, Form, FormField, Message, Image } from "semantic-ui-react";
-import { useEffect } from "react";
 
-function Signup ({ signup, error, message, signupSuccess }) {
+function Signup ({ signup, error, message, signupSuccess, set_signup_success }) {
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
@@ -23,13 +22,20 @@ function Signup ({ signup, error, message, signupSuccess }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password === re_password) {
-            await signup(first_name, last_name, email, password, re_password)
+            await signup(first_name, last_name, email, password, re_password);
             if (signupSuccess) {
-                setTimeout(() => { navigate('/login/') }, 3500)
+               navigate('/login/');
             }
         }
       
     }
+
+    useEffect(() => {
+        if (signupSuccess) {
+            set_signup_success();
+            setTimeout(() => navigate('/login/'), 3000);
+        }
+    }, [signupSuccess])
 
   
     return (
@@ -116,7 +122,6 @@ function Signup ({ signup, error, message, signupSuccess }) {
                     <h6 className="noto-sans !text-white mb-4">already have an account?</h6>
                     <Link to={"/login/"}><Button inverted className="active:translate-y-0.5">LOGIN</Button></Link>
                 </div>
-
             </div>
         </div>
     )
@@ -129,4 +134,4 @@ const mapStateToProps = state => ({
     signupSuccess: state.auth.signupSuccess
 });
 
-export default connect(mapStateToProps, { signup })( Signup );
+export default connect(mapStateToProps, { signup, set_signup_success })( Signup );

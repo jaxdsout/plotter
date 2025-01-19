@@ -11,7 +11,7 @@ import ProfileWidget from './ProfileWidget';
 import { Divider } from 'semantic-ui-react';
 
 
-function Dashboard ({ load_user, auth_user, refresh_token, access, isAuthenticated }) {
+function Dashboard ({ load_user, auth_user, refresh_token, refresh, access, isAuthenticated }) {
     const [profileHover, setProfileHover] = useState(false);
     const location = useLocation(); 
     const navigate = useNavigate();
@@ -24,22 +24,16 @@ function Dashboard ({ load_user, auth_user, refresh_token, access, isAuthenticat
     useEffect(() => {
         auth_user();
         load_user();
-    }, [load_user, auth_user]);
 
-    useEffect(() => {
-        if (!access) {
-            refresh_token();
-        } else if (!isAuthenticated && !access) {
-            navigate('/login/');
+        if (!refresh) {
+            navigate('/login/')
         }
 
-    }, [access, refresh_token, isAuthenticated, navigate,]);
+        if (!access && refresh) {
+            refresh_token();
+        }
 
-    // useEffect(() => {
-    //     if (!isAuthenticated && !access) {
-    //         navigate('/login/');
-    //     }
-    // }, [isAuthenticated, navigate, access]);
+    }, [load_user, auth_user, access, refresh, refresh_token, navigate]);
 
     const basePath = location.pathname.split('/').pop();
 
@@ -78,7 +72,8 @@ function Dashboard ({ load_user, auth_user, refresh_token, access, isAuthenticat
 const mapStateToProps = state => ({
     error: state.auth.error,
     user: state.auth.user,
-    access: state.auth.access
+    access: state.auth.access,
+    refresh: state.auth.refresh
 });
 
 export default connect(mapStateToProps, { load_user, auth_user, refresh_token, logout })(Dashboard);

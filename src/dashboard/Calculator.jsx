@@ -13,7 +13,6 @@ function Calculator () {
             net_effective: 0
     });
 
-
     const { lease_term, rent_free, cash_allowance, monthly_rent, net_effective } = formData;
 
     const calculateNER = (data) => {
@@ -26,7 +25,6 @@ function Calculator () {
           }
           return 0;
     };
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;

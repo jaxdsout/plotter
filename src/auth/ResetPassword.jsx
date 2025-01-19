@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
-import { useState } from "react"
-import { reset_password } from "../store/actions/auth";
+import { useEffect, useState } from "react"
+import { reset_password, set_reset_success } from "../store/actions/auth";
 import { Button, FormField, Form, Image, Message } from "semantic-ui-react";
 
-function ResetPassword ({ reset_password, message, resetSuccess }) {
+function ResetPassword ({ reset_password, message, resetSuccess, set_reset_success }) {
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
@@ -18,12 +18,14 @@ function ResetPassword ({ reset_password, message, resetSuccess }) {
     const handleSubmit = e => {
         e.preventDefault();
         reset_password(email)
-        if (resetSuccess) {
-            setTimeout(() => { navigate('/login/') }, 3500)
-        }
     }
 
-   
+    useEffect(() => {
+        if (resetSuccess) {
+            set_reset_success();
+            setTimeout(() => navigate('/login/'), 3000);
+        }
+    }, [resetSuccess])
 
     return (
         <div className="flex flex-col items-center justify-evenly">
@@ -65,4 +67,4 @@ const mapStateToProps = state => ({
     resetSuccess: state.auth.resetSuccess
 });
 
-export default connect(mapStateToProps, { reset_password })( ResetPassword );
+export default connect(mapStateToProps, { reset_password, set_reset_success })( ResetPassword );

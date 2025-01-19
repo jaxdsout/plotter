@@ -16,7 +16,10 @@ import {
     PASSWORD_RESET_SUCCESS,
     REFRESH_TOKEN_FAIL, 
     REFRESH_TOKEN_SUCCESS,
-    CLEAR_MESSAGE
+    CLEAR_MESSAGE,
+    SET_RESET_SUCCESS,
+    SET_ACTIVATE_SUCCESS,
+    SET_SIGNUP_SUCCESS
 } from '../actions/types';
 
 
@@ -45,7 +48,6 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 message: '',
-                signupSuccess: null
             }
         case LOGIN_SUCCESS:
             localStorage.setItem('access', payload.access);
@@ -136,6 +138,21 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 error: 'Account already activated',
                 activateSuccess: null
+            }
+        case SET_RESET_SUCCESS:
+            return {
+                ...state,
+                resetSuccess: null,
+            }
+        case SET_ACTIVATE_SUCCESS:
+            return {
+                ...state,
+                activateSuccess: null,
+            }
+        case SET_SIGNUP_SUCCESS:
+            return {
+                ...state,
+                signupSuccess: null,
             }
         case PASSWORD_RESET_CONFIRM_FAIL:
         case PASSWORD_RESET_FAIL:

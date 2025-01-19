@@ -1,23 +1,27 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { connect } from "react-redux"
-import { activate } from "../store/actions/auth";
+import { activate, set_activate_success } from "../store/actions/auth";
 import { Button, Image, Message } from "semantic-ui-react";
+import { useEffect } from "react";
 
-function Activate ({ activate, message, activateSuccess, error }) {
+function Activate ({ activate, message, activateSuccess, error, set_activate_success }) {
     const navigate = useNavigate()
     const { uid, token } = useParams();
 
     const activate_account = async () => {
-        await activate(uid, token)
-        if (activateSuccess) {
-            setTimeout(() => { navigate('/login/') }, 3500)
-        }
+        activate(uid, token)
     }
+
+    useEffect(() => {
+            if (activateSuccess) {
+                set_activate_success();
+                setTimeout(() => navigate('/login/'), 3000);
+            }
+        }, [activateSuccess])
 
     return (
         <div className="flex flex-col items-center justify-evenly">
             <div className="w-3/4 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
-
                 <div className="mb-3 flex flex-col items-center">
                     <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1007.jpg"/>
                     <p className="mont text-white text-2xl md:text-4xl mt-4"> activate your account </p>
@@ -47,4 +51,4 @@ const mapStateToProps = state => ({
     activateSuccess: state.auth.activateSuccess
 });
 
-export default connect(mapStateToProps, { activate })( Activate );
+export default connect(mapStateToProps, { activate, set_activate_success })( Activate );
