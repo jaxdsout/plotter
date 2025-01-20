@@ -22,13 +22,16 @@ import {
     RETRIEVE_LIST_FAIL,
     RETRIEVE_LIST_SUCCESS,
     RESET_CLIENT_RESULTS,
-    UPDATE_OPTIONS_ORDER,
     RESET_CLIENT,
     RESET_PROP,
     RESET_PROPERTY_RESULTS,
     DELETE_LIST_FAIL,
     DELETE_LIST_SUCCESS,
-    SET_LIST_FOR_EDIT
+    SET_LIST_FOR_EDIT,
+    UPDATE_OPTION_ORDER_FAIL,
+    UPDATE_OPTION_ORDER_SUCCESS,
+    UPDATE_LIST_OPTIONS_FAIL,
+    UPDATE_LIST_OPTIONS_SUCCESS
 } from "./types"
 
 import axios from "axios";
@@ -110,9 +113,36 @@ export const update_list = (agent, client, list, options) => async dispatch => {
             });
         }
     } else {
-        console.error("No access token found.");
         dispatch({
             type: NEW_LIST_FAIL
+        });
+    }
+};
+
+export const update_list_options = (agent, client, list, options) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        const uuid = list.uuid === null ? uuidv4() : list.uuid;
+        const body = JSON.stringify({ agent, client, uuid, options });
+        try {
+            const res = await axios.put(`${process.env.REACT_APP_API_URL}/lists/${list.id}/update-options/`, body, config);
+            dispatch({
+                type: UPDATE_LIST_OPTIONS_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: UPDATE_LIST_OPTIONS_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: UPDATE_LIST_OPTIONS_FAIL
         });
     }
 };
@@ -262,11 +292,23 @@ export const update_option = (option, price, unit_number, layout, sq_ft, availab
     }
 };
 
-export const update_options_order = (newOrder) => dispatch => {
-    dispatch({
-        type: UPDATE_OPTIONS_ORDER,
-        payload: newOrder,
-    });
+export const update_options_order = (options) =>  dispatch => {
+    if (localStorage.getItem('access')) {
+        try {
+            dispatch({
+                type: UPDATE_OPTION_ORDER_SUCCESS,
+                payload: options
+            });
+        } catch (err) {
+            dispatch({
+                type: UPDATE_OPTION_ORDER_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: UPDATE_OPTION_ORDER_FAIL
+        });
+    }
 };
 
 

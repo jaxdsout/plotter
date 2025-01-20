@@ -21,13 +21,16 @@ import {
     SET_SEARCH_PROP_SUCCESS,
     RETRIEVE_LIST_FAIL,
     RETRIEVE_LIST_SUCCESS,
-    UPDATE_OPTIONS_ORDER,
     RESET_CLIENT_RESULTS,
     RESET_CLIENT,
     RESET_PROP,
     RESET_PROPERTY_RESULTS,
     SET_LIST_FOR_EDIT,
-    RESET_DEAL_FORM
+    RESET_DEAL_FORM,
+    UPDATE_OPTION_ORDER_SUCCESS,
+    UPDATE_OPTION_ORDER_FAIL,
+    UPDATE_LIST_OPTIONS_FAIL,
+    UPDATE_LIST_OPTIONS_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -85,11 +88,6 @@ export default function listmakerReducer(state = initialState, action) {
                 ...state,
                 retrlist: payload,
             }
-        case UPDATE_OPTIONS_ORDER:
-            return {
-                ...state,
-                options: payload,
-            }
         case RESET_CLIENT_RESULTS:
             return {
                 ...state,
@@ -123,6 +121,22 @@ export default function listmakerReducer(state = initialState, action) {
                 prop_results: [],
                 client_results: []
             }
+        // case RESET_LIST_MODE:
+        //     return {
+        //         ...state,
+        //         options: null,
+        //         list: null
+        //     }
+        case UPDATE_OPTION_ORDER_SUCCESS:
+            return {
+                ...state,
+                options: payload,
+            }
+        case UPDATE_LIST_OPTIONS_SUCCESS:
+            return {
+                ...state,
+                options: payload,
+            }
         case NEW_OPTION_FAIL:
         case NEW_OPTION_SUCCESS:
         case NEW_LIST_FAIL:
@@ -137,6 +151,8 @@ export default function listmakerReducer(state = initialState, action) {
         case SET_SEARCH_CLIENT_FAIL:
         case SET_SEARCH_PROP_FAIL:
         case RETRIEVE_LIST_FAIL:
+        case UPDATE_OPTION_ORDER_FAIL:
+        case UPDATE_LIST_OPTIONS_FAIL:
             return {
                 ...state
             }

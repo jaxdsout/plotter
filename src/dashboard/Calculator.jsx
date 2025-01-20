@@ -29,14 +29,16 @@ function Calculator () {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        const numericValue = parseFloat(value) || 0;
-        const updatedFormData = { ...formData, [name]: numericValue };
-        const updatedNetEffective = calculateNER(updatedFormData);
+        // if (value === "" || /^-?\d*\.?\d*$/.test(value)) {
+            const numericValue = value === "" ? "" : parseFloat(value);
+            const updatedFormData = { ...formData, [name]: numericValue };
+            const updatedNetEffective = calculateNER(updatedFormData);
 
-        setFormData({
-        ...updatedFormData,
-        net_effective: updatedNetEffective,
-        });
+            setFormData({
+                ...updatedFormData,
+                net_effective: updatedNetEffective,
+            });
+        // }
     };
 
     return (
@@ -47,16 +49,15 @@ function Calculator () {
             <div className="">  
                 <Form className="p-5">
                     <div>
-                        <FormField>
+                        <FormField type="number">
                             <label className="!text-white" htmlFor='lease_term'>Lease Term:</label>
                             <div className="relative">
                                 <span className="absolute inset-y-0 left-0 pl-32 flex items-center text-[1rem] font-bold text-white pointer-events-none">mos</span>
                                 <input 
                                     className="!bg-black !bg-opacity-30 !text-white pl-12"
-                                    type='text'
+                                    type='number'
                                     name='lease_term'
-                                    value={0 || lease_term}
-                                    placeholder="0"
+                                    value={lease_term || 0}
                                     autoComplete="off"
                                     onChange={e => handleChange(e)}
                                 />
@@ -69,10 +70,10 @@ function Calculator () {
                                 <span className="absolute inset-y-0 left-0 pl-32 flex items-center text-[1rem] font-bold text-white pointer-events-none">/ mo</span>
                                 <input 
                                     className="!bg-black !bg-opacity-30 !text-white pl-12 indent-4"
-                                    type='text'
+                                    type='number'
+                                    step='any'
                                     name='monthly_rent'
-                                    value={0 || monthly_rent}
-                                    placeholder="0"
+                                    value={monthly_rent}
                                     autoComplete="off"
                                     onChange={e => handleChange(e)}
                                 />
@@ -87,10 +88,10 @@ function Calculator () {
                                 <span className="absolute inset-y-0 left-0 pl-32 flex items-center text-[1rem] font-bold text-white pointer-events-none">mos</span>
                                 <input 
                                     className="!bg-black !bg-opacity-30 !text-white pl-12"
-                                    type='text'
+                                    type='number'
+                                    step='any'
                                     name='rent_free'
-                                    value={0 || rent_free}
-                                    placeholder="0"
+                                    value={rent_free}
                                     autoComplete="off"
                                     onChange={e => handleChange(e)}
                                 />
@@ -102,10 +103,9 @@ function Calculator () {
                                 <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] font-bold text-white pointer-events-none">$</span>
                                 <input 
                                     className="!bg-black !bg-opacity-30 !text-white indent-4"
-                                    type='text'
+                                    type='number'
                                     name='cash_allowance'
-                                    value={0 || cash_allowance}
-                                    placeholder="0"
+                                    value={cash_allowance}
                                     autoComplete="off"
                                     onChange={e => handleChange(e)}
                                 />
