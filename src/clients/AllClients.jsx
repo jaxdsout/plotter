@@ -179,7 +179,7 @@ function AllClients ({ load_clients, clients, user, isListMode, reset_list_mode,
                         {isListMode ? (
                             <Button onClick={handleCancelEdit}>CANCEL</Button>
                         ) : (
-                            <Button onClick={handleCloseModal}>CLOSE</Button>
+                            <Button onClick={handleCloseListModal}>CLOSE</Button>
                         )}
                     </Modal.Actions>
                 </Modal>

@@ -1,7 +1,7 @@
 import { Button, Input, Divider, Form, Popup } from "semantic-ui-react";
 import { reset_list_mode, set_list_mode } from "../store/actions/ui";
 import { connect } from "react-redux";
-import { set_search_client, update_list, reset_prop, reset_prop_results, load_options, new_option, set_list_edit} from "../store/actions/listmaker";
+import { set_search_client, update_list_options, reset_prop, reset_prop_results, load_options, new_option, set_list_edit} from "../store/actions/listmaker";
 import { load_lists } from "../store/actions/agent";
 import PropertySearch from "../listmaker/PropertySearch";
 import OptionList from "../listmaker/OptionList";
@@ -12,8 +12,8 @@ import ReorderList from "../listmaker/ReorderList";
 import ShareURL from "../listmaker/ShareURL";
 
 function ListDetail({ list, property, set_list_mode, user, new_option, 
-    reset_prop, reset_prop_results, set_search_client, set_list_edit, load_options, handleCloseModal, load_lists, 
-    isListMode, client, options, update_list, reset_list_mode }) {
+    reset_prop, reset_prop_results, set_search_client, set_list_edit, load_options, handleCloseModal, 
+    isListMode, client, options, update_list_options, reset_list_mode, isReorderMode }) {
 
     const link = `${window.origin}/list/${list.uuid}`
 
@@ -42,7 +42,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
 
     const handleSaveList = async () => {
         if (list && isListMode && client && options) {
-            await update_list(user.id, client.id, list, options)
+            await update_list_options(user.id, client.id, list, options)
             await reset_list_mode()
             await load_options(list.id)
         }
@@ -88,9 +88,14 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                         <div className="flex justify-between items-start">
                             <ClearOptions />
                             <ReorderList />
-                            <Button className="drop-shadow-sm" color="green" type="submit" onClick={handleSaveList}>
-                                SAVE LIST
-                            </Button>
+                            {isReorderMode ? (
+                                <>
+                                </>
+                            ) :(
+                                <Button className="drop-shadow-sm" color="green" type="submit" onClick={handleSaveList}>
+                                    SAVE LIST
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -133,7 +138,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {list.options.map((option, index) => (
+                                    {options.map((option, index) => (
                                         <tr
                                             key={option.id}
                                             className={`${index % 2 === 0 ? 'bg-[#232425]' : 'bg-[#26282B]'} text-white hover:bg-gray-100 hover:text-black transition`}
@@ -171,8 +176,9 @@ const mapStateToProps = state => ({
     error: state.auth.error,
     client: state.listmaker.client,
     isListMode: state.ui.isListMode,
+    isReorderMode: state.ui.isReorderMode,
     options: state.listmaker.options,
     property: state.listmaker.property
 });
 
-export default connect(mapStateToProps, { set_list_mode, set_search_client, load_lists, new_option, set_list_edit, update_list, load_options, reset_list_mode, reset_prop, reset_prop_results })(ListDetail);
+export default connect(mapStateToProps, { set_list_mode, set_search_client, load_lists, new_option, set_list_edit, update_list_options, load_options, reset_list_mode, reset_prop, reset_prop_results })(ListDetail);
