@@ -27,7 +27,8 @@ import {
     UPDATE_LIST_OPTIONS_FAIL,
     UPDATE_LIST_OPTIONS_SUCCESS,
     LOAD_LIST_SUCCESS,
-    LOAD_LIST_FAIL
+    LOAD_LIST_FAIL,
+    SET_OPTION_ORDER
 } from "./types"
 
 import axios from "axios";
@@ -102,7 +103,10 @@ export const update_list = (agent, client, list, options) => async dispatch => {
             dispatch({
                 type: NEW_LIST_SUCCESS,
                 payload: res.data
-            });
+            });            
+
+            dispatch(update_list_options(agent, client, list, options));
+
         } catch (err) {
             dispatch({
                 type: NEW_LIST_FAIL
@@ -115,6 +119,7 @@ export const update_list = (agent, client, list, options) => async dispatch => {
     }
 };
 
+
 export const update_list_options = (agent, client, list, options) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
@@ -123,8 +128,7 @@ export const update_list_options = (agent, client, list, options) => async dispa
                 'Authorization': `Bearer ${localStorage.getItem('access')}`,
             }
         }; 
-        const uuid = list.uuid === null ? uuidv4() : list.uuid;
-        const body = JSON.stringify({ agent, client, uuid, options });
+        const body = JSON.stringify({ agent, client, list, options });
         try {
             const res = await axios.put(`${process.env.REACT_APP_API_URL}/lists/${list.id}/update-options/`, body, config);
             dispatch({
@@ -312,6 +316,13 @@ export const clear_options = (listID) => async dispatch => {
         });
     }
 };
+
+export const set_option_order = (options) => dispatch => {
+    dispatch({
+        type: SET_OPTION_ORDER,
+        payload: options
+    });
+}
 
 
 export const search_properties = (query) => async dispatch => {

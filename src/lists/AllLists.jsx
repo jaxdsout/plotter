@@ -57,7 +57,7 @@ function AllLists ({ lists, reset_list_mode, reset_send_mode, isListMode }) {
                             <Modal className='!w-11/12 sm:!w-[500px] !mb-10' open={showModal} onClose={handleCloseModal}>
                                 <Modal.Header>List Info</Modal.Header>
                                 <Modal.Content>
-                                    <ListDetail list={list} handleCloseModal={handleCloseModal}/>
+                                    <ListDetail listID={list.id} handleCloseModal={handleCloseModal}/>
                                 </Modal.Content>
                                 <Modal.Actions className="flex justify-end">
                                     {isListMode ? (

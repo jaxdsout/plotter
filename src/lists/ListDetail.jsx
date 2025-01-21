@@ -9,11 +9,10 @@ import ClearOptions from "../listmaker/ClearOptions";
 import DeleteList from "./DeleteList";
 import ReorderList from "../listmaker/ReorderList";
 import ShareURL from "../listmaker/ShareURL";
+import { useEffect } from "react";
 
-function ListDetail({ list, property, client, user, set_list_mode, new_option, set_search_client, set_list_edit, handleCloseModal, 
+function ListDetail({ listID, list, options, property, client, user, set_list_mode, new_option, set_search_client, set_list_edit, handleCloseModal, 
     update_list_options, reset_list_mode, load_list, isReorderMode, isListMode }) {
-
-    const link = `${window.origin}/list/${list.uuid}`
 
     const formatDate = (datetimeStr) => {
         const dateObj = new Date(datetimeStr);
@@ -40,25 +39,30 @@ function ListDetail({ list, property, client, user, set_list_mode, new_option, s
 
     const handleSaveList = async () => {
         if (list && isListMode && client) {
-            await update_list_options(user.id, client.id, list, list.options)
+            await update_list_options(user.id, client.id, list, options)
             await reset_list_mode()
-            load_list(list.id)
+            load_list(listID)
         }
     }
 
     const handlePropertyAdd = async (list, property) => {
         if (property && list) {
             await new_option(property.id, list.id, client.id);
-            load_list(list.id);
+            load_list(listID);
         }
     };
 
     const handleOpenURL = () => {
         if (list.uuid) {
-            const fullURL = `${window.location.origin}/list/${list.uuid}`;
+            const fullURL = `${window.location.origin}/list/${list?.uuid}`;
             window.open(fullURL, '_blank');
         }
     };
+
+    useEffect(() => {
+        console.log(listID)
+        load_list(listID)
+    }, [listID, load_list])
 
     return(
         <>   
@@ -68,13 +72,13 @@ function ListDetail({ list, property, client, user, set_list_mode, new_option, s
                     <div className="">
                         <div className="flex flex-row items-center justify-center">
                             <PropertySearch />
-                            <Form onSubmit={() => handlePropertyAdd(list, property)}>
+                            <Form onSubmit={() => handlePropertyAdd(list, property)} className="!ml-5">
                                 <Button color="blue" type="submit">ADD PROPERTY</Button>
                             </Form>
                         </div>
                         <Divider />
                         <div>
-                            <OptionList options={list.options} />
+                            <OptionList />
                         </div>
                     </div>
                     <div>
@@ -82,16 +86,24 @@ function ListDetail({ list, property, client, user, set_list_mode, new_option, s
                             <MapBox />
                         </div>
                         <Divider />
-                        <div className="flex justify-between items-start">
-                            <ClearOptions />
-                            <ReorderList />
+                        <div className="flex justify-center items-center">
                             {isReorderMode ? (
                                 <>
+                                    <ReorderList />
                                 </>
-                            ) :(
-                                <Button className="drop-shadow-sm" color="green" type="submit" onClick={handleSaveList}>
-                                    SAVE LIST
-                                </Button>
+                            ) : (
+                                <>
+                                    <div>
+                                        <ClearOptions />
+                                    </div>
+                                    <div className="pr-2 pl-2">
+                                        <ReorderList />
+                                    </div>
+                                    <Button className="drop-shadow-sm" color="green" type="submit" onClick={handleSaveList}>
+                                        SAVE LIST
+                                    </Button>
+                                </>
+                                
                             )}
                         </div>
                     </div>
@@ -102,8 +114,8 @@ function ListDetail({ list, property, client, user, set_list_mode, new_option, s
                     <div className="flex flex-col justify-evenly items-center">
                         <div className="flex flex-row justify-evenly mb-1">
                             <div className="p-2 mr-2">
-                                <p><b>Client: </b>{list.client_name}</p>
-                                <p><b>Date Created: </b>{formatDate(list.date)}</p>
+                                <p><b>Client: </b>{list?.client_name}</p>
+                                <p><b>Date Created: </b>{formatDate(list?.date)}</p>
                                 <p><b>Last Updated: </b></p>
                                 <p>
                                     <b className="pr-3">URL: </b>
@@ -135,18 +147,18 @@ function ListDetail({ list, property, client, user, set_list_mode, new_option, s
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {list.options.map((option, index) => (
+                                    {list?.options.map((option, index) => (
                                         <tr
                                             key={option.id}
                                             className={`${index % 2 === 0 ? 'bg-[#232425]' : 'bg-[#26282B]'} text-white hover:bg-gray-100 hover:text-black transition`}
                                         >
-                                            <td className="px-2 py-2 whitespace-nowrap text-sm">{option.prop_name}</td>
-                                            <td className="px-2 py-2 text-xs">${option.price}</td>
-                                            <td className="px-2 py-2 text-xs">{option.unit}</td>
-                                            <td className="px-2 py-2 text-xs">{option.layout}</td>
-                                            <td className="px-2 py-2 text-xs">{option.sq_ft}</td>
+                                            <td className="px-2 py-2 whitespace-nowrap text-sm">{option?.prop_name}</td>
+                                            <td className="px-2 py-2 text-xs">${option?.price}</td>
+                                            <td className="px-2 py-2 text-xs">{option?.unit}</td>
+                                            <td className="px-2 py-2 text-xs">{option?.layout}</td>
+                                            <td className="px-2 py-2 text-xs">{option?.sq_ft}</td>
                                             <td className="px-2 py-2 text-xs text-center">
-                                                {option.notes ? (
+                                                {option?.notes ? (
                                                     <Popup
                                                     content={option.notes}
                                                     trigger={<i className="ellipsis horizontal icon"></i>}
@@ -173,7 +185,9 @@ const mapStateToProps = state => ({
     client: state.listmaker.client,
     isListMode: state.ui.isListMode,
     isReorderMode: state.ui.isReorderMode,
-    property: state.listmaker.property
+    property: state.listmaker.property,
+    list: state.listmaker.list,
+    options: state.listmaker.options
 });
 
 export default connect(mapStateToProps, { set_list_mode, set_search_client, load_list, new_option, set_list_edit, update_list_options, reset_list_mode })(ListDetail);

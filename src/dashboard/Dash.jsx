@@ -9,12 +9,11 @@ import { useEffect, useState } from 'react';
 import Calculator from './Calculator';
 import Todos from './Todos';
 import Commission from './Commission';
-import { refresh_token, load_user, auth_user } from '../store/actions/auth';
 import { load_deals, load_properties } from '../store/actions/agent';
 import { tab_switch } from '../store/actions/ui';
 import Upcoming from './Upcoming';
 
-function Dash ({ user, load_deals, deals, tab_switch, load_user, refresh_token, auth_user, access, properties, refresh, load_properties }) {
+function Dash ({ user, load_deals, tab_switch, access, properties, refresh, load_properties }) {
     const [activeTab, setActiveTab] = useState("to-do");
 
     const navigate = useNavigate();
@@ -32,24 +31,20 @@ function Dash ({ user, load_deals, deals, tab_switch, load_user, refresh_token, 
     useEffect(() => {
         if (!access && !refresh) {
             navigate('/login/');
-        } else if (refresh && !access) {
-            refresh_token();
-        } else if (!user) {
-            load_user();
-        }
-    }, [access, refresh, user, load_user, navigate, refresh_token]);
-    
+        } 
+    }, [access, refresh, navigate]);
+
     useEffect(() => {
         if (user !== null) {
-            load_deals(user.id);
-        } 
+            load_deals(user.id);            
+        }
     }, [user, load_deals]);
 
     useEffect(() => {
-        if (properties?.length === 0) {
+        if (user !== null && properties?.length === 0) {
             load_properties();
         }
-    }, [properties, load_properties]);
+    }, [properties, load_properties, user]);
 
     return (
         <div className='transition ease-in-out delay-150'>
@@ -109,4 +104,4 @@ const mapStateToProps = state => ({
 
 });
 
-export default connect(mapStateToProps, { load_deals, tab_switch, load_user, refresh_token, auth_user, load_properties })(Dash);
+export default connect(mapStateToProps, { load_deals, tab_switch, load_properties })(Dash);

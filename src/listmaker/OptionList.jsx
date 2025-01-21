@@ -2,8 +2,9 @@ import { Divider } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import OptionDetail from "./OptionDetail";
+import { set_option_order } from "../store/actions/listmaker";
 
-function OptionList({ options, isReorderMode }) {
+function OptionList({ options, isReorderMode, set_option_order }) {
     const grid = 8;
 
     const getItemStyle = (isDragging, draggableStyle) => ({
@@ -11,7 +12,7 @@ function OptionList({ options, isReorderMode }) {
         height: "5rem",
         margin: `0 0 ${grid}px 0`,
         padding: "1rem",
-        background: isDragging ? "teal" : "teal",
+        background: isDragging ? "rgb(53, 162, 195)" : "rgb(53, 162, 195)",
         color: "white",
         boxShadow: isDragging ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "0 2px 4px rgba(0, 0, 0, 0.1)",
         position: "static",
@@ -22,7 +23,7 @@ function OptionList({ options, isReorderMode }) {
     const getListStyle = (isDraggingOver) => ({
         background: isDraggingOver ? "white" : "white",
         padding: grid,
-        height: "24rem",
+        height: "full",
         position: "relative"
     });
 
@@ -32,12 +33,13 @@ function OptionList({ options, isReorderMode }) {
         const updatedOptions = Array.from(options);
         const [movedOption] = updatedOptions.splice(result.source.index, 1);
         updatedOptions.splice(result.destination.index, 0, movedOption);
-    
+
+        set_option_order(updatedOptions);
     };
 
     return (
         <div className="overflow-y-auto">
-            {options.length > 0 ? (
+            {options?.length > 0 ? (
                 isReorderMode ? (
                     <DragDropContext onDragEnd={handleDragEnd}>
                         <Droppable droppableId="options" >
@@ -81,7 +83,7 @@ function OptionList({ options, isReorderMode }) {
 const mapStateToProps = (state) => ({
     error: state.auth.error,
     isReorderMode: state.ui.isReorderMode,
-    options: state.listmaker.list.options
+    options: state.listmaker.options
 });
 
-export default connect(mapStateToProps, { })(OptionList);
+export default connect(mapStateToProps, { set_option_order })(OptionList);

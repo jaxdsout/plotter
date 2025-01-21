@@ -12,12 +12,8 @@ function Deals ({ access, refresh, refresh_token, user, load_user, load_deals, d
     useEffect(() => {
         if (!access && !refresh) {
             navigate('/login/');
-        } else if (refresh && !access) {
-            refresh_token();
-        } else if (!user) {
-            load_user();
-        }
-    }, [access, refresh, user, load_user, navigate, refresh_token]);
+        } 
+    }, [access, refresh, navigate]);
     
     useEffect(() => {
         if (user && deals?.length === 0) {

@@ -23,7 +23,6 @@ import {
     RESET_PROPERTY_RESULTS,
     SET_LIST_FOR_EDIT,
     RESET_DEAL_FORM,
-    UPDATE_OPTION_ORDER_FAIL,
     UPDATE_LIST_OPTIONS_FAIL,
     UPDATE_LIST_OPTIONS_SUCCESS,
     RESET_LIST_MODE,
@@ -33,7 +32,9 @@ import {
     NEW_CARD_SUCCESS,
     RESET_CARD_FORM,
     TAB_SWITCH_CLEAR,
-    RESET_COMMISSION_SEARCH
+    RESET_COMMISSION_SEARCH,
+    SET_OPTION_ORDER,
+    LOGOUT
 } from '../actions/types';
 
 const initialState = {
@@ -42,6 +43,7 @@ const initialState = {
     client_results: [],
     client: null,
     list: null,
+    options: [],
     property: null,
     prop_results: [],
     retrlist: null,
@@ -99,13 +101,23 @@ export default function listmakerReducer(state = initialState, action) {
                 prop_results: []
             }
         case SET_LIST_FOR_EDIT:
-        case NEW_LIST_SUCCESS:
         case CLEAR_OPTIONS_SUCCESS:
-        case LOAD_LIST_SUCCESS:
-        case UPDATE_LIST_OPTIONS_SUCCESS:
             return {
                 ...state,
                 list: payload,
+            }
+        case NEW_LIST_SUCCESS:
+        case UPDATE_LIST_OPTIONS_SUCCESS:
+        case LOAD_LIST_SUCCESS:
+            return {
+                ...state,
+                list: payload,
+                options: payload.options
+            }
+        case SET_OPTION_ORDER:
+            return {
+                ...state,
+                options: payload
             }
         case NEW_CARD_SUCCESS:
         case NEW_CARD_FAIL:
@@ -129,6 +141,17 @@ export default function listmakerReducer(state = initialState, action) {
                 ...state,
                 property: null
             }
+        case LOGOUT:
+            return {
+                ...state,
+                client_results: [],
+                client: null,
+                list: null,
+                options: [],
+                property: null,
+                prop_results: [],
+                retrlist: null,
+            }
         case NEW_OPTION_FAIL:
         case NEW_LIST_FAIL:
         case UPDATE_OPTION_FAIL:
@@ -142,7 +165,6 @@ export default function listmakerReducer(state = initialState, action) {
         case SET_SEARCH_CLIENT_FAIL:
         case SET_SEARCH_PROP_FAIL:
         case RETRIEVE_LIST_FAIL:
-        case UPDATE_OPTION_ORDER_FAIL:
         case UPDATE_LIST_OPTIONS_FAIL:
             return {
                 ...state
