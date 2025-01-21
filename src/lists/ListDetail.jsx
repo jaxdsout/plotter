@@ -1,7 +1,7 @@
 import { Button, Input, Divider, Form, Popup } from "semantic-ui-react";
 import { reset_list_mode, set_list_mode } from "../store/actions/ui";
 import { connect } from "react-redux";
-import { set_search_client, update_list_options, reset_prop, reset_prop_results, new_option, set_list_edit, load_list} from "../store/actions/listmaker";
+import { set_search_client, update_list_options, new_option, set_list_edit, load_list} from "../store/actions/listmaker";
 import PropertySearch from "../listmaker/PropertySearch";
 import OptionList from "../listmaker/OptionList";
 import MapBox from "../listmaker/MapBox";
@@ -10,8 +10,7 @@ import DeleteList from "./DeleteList";
 import ReorderList from "../listmaker/ReorderList";
 import ShareURL from "../listmaker/ShareURL";
 
-function ListDetail({ list, property, client, user, set_list_mode, new_option, 
-    reset_prop, reset_prop_results, set_search_client, set_list_edit, handleCloseModal, 
+function ListDetail({ list, property, client, user, set_list_mode, new_option, set_search_client, set_list_edit, handleCloseModal, 
     update_list_options, reset_list_mode, load_list, isReorderMode, isListMode }) {
 
     const link = `${window.origin}/list/${list.uuid}`
@@ -50,9 +49,7 @@ function ListDetail({ list, property, client, user, set_list_mode, new_option,
     const handlePropertyAdd = async (list, property) => {
         if (property && list) {
             await new_option(property.id, list.id, client.id);
-            await reset_prop_results()
-            await reset_prop()
-            load_list(list.id)
+            load_list(list.id);
         }
     };
 
@@ -179,4 +176,4 @@ const mapStateToProps = state => ({
     property: state.listmaker.property
 });
 
-export default connect(mapStateToProps, { set_list_mode, set_search_client, load_list, new_option, set_list_edit, update_list_options, reset_list_mode, reset_prop, reset_prop_results })(ListDetail);
+export default connect(mapStateToProps, { set_list_mode, set_search_client, load_list, new_option, set_list_edit, update_list_options, reset_list_mode })(ListDetail);

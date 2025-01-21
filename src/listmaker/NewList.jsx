@@ -9,11 +9,11 @@ import ClientSearch from "./ClientSearch";
 import SendList from "./SendList";
 import ShareURL from "./ShareURL";
 import ReorderList from "./ReorderList";
-import { new_list, reset_client, delete_list, new_option, reset_prop_results, reset_prop, load_list } from "../store/actions/listmaker";
+import { new_list, delete_list, new_option, load_list } from "../store/actions/listmaker";
 import { reset_list_mode, reset_send_mode, set_list_mode, reset_reorder_mode } from "../store/actions/ui"
 
 
-function NewList({ new_option, reset_prop_results, reset_reorder_mode, property, list, reset_prop, load_list, user, new_list, client, isSendMode, isListMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode, reset_client, isReorderMode, set_reorder_mode }) {
+function NewList({ new_option, reset_reorder_mode, property, list, load_list, user, new_list, client, isSendMode, isListMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode }) {
     const [showModal, setShowModal] = useState(false);
     const [showResetModal, setShowResetModal] = useState(false);
     const [error, setError] = useState(null);
@@ -34,9 +34,7 @@ function NewList({ new_option, reset_prop_results, reset_reorder_mode, property,
     const handlePropertyAdd = async (list, property) => {
         if (property && list) {
             await new_option(property.id, list.id, client.id);
-            await reset_prop_results()
-            await reset_prop()
-            load_list(list.id)
+            await load_list(list.id);
         }
     };
 
@@ -45,7 +43,6 @@ function NewList({ new_option, reset_prop_results, reset_reorder_mode, property,
             const listID = list.id
             await delete_list(listID);
             await reset_list_mode();
-            await reset_client();
         }
         setShowResetModal(false);
     };
@@ -69,11 +66,10 @@ function NewList({ new_option, reset_prop_results, reset_reorder_mode, property,
     }
 
     const handleCloseModal = async () => {
-        reset_list_mode();
+        setShowModal(false);
+        await reset_list_mode();
         reset_send_mode();
         reset_reorder_mode();
-        await reset_client()
-        setShowModal(false);
     }
 
     return (
@@ -85,9 +81,9 @@ function NewList({ new_option, reset_prop_results, reset_reorder_mode, property,
                 <Modal className='!w-11/12 md:!w-[800px]' open={showModal} onClose={handleCloseModal}>
                     <Modal.Header>
                         {isListMode ? (
-                            <p>New List: {client.name}</p>
+                            <p>New List: {client?.name}</p>
                         ) : isSendMode ? (
-                            <p>Send List: {client.name}</p>
+                            <p>Send List: {client?.name}</p>
                         ) : (
                             <p>Create New List</p>
                         )}
@@ -191,4 +187,4 @@ const mapStateToProps = state => ({
     isReorderMode: state.ui.isReorderMode
 });
 
-export default connect(mapStateToProps, { new_option, reset_prop_results, reset_reorder_mode, new_list, reset_list_mode, reset_send_mode, delete_list, set_list_mode, reset_client, reset_prop, load_list })(NewList);
+export default connect(mapStateToProps, { new_option, reset_reorder_mode, new_list, reset_list_mode, reset_send_mode, delete_list, set_list_mode, load_list })(NewList);

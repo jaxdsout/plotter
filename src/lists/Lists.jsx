@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { refresh_token, load_user } from "../store/actions/auth";
 import { load_lists } from "../store/actions/agent";
 
-function Lists ({ access, refresh, refresh_token, user, load_user, load_lists }) {
+function Lists ({ access, refresh, refresh_token, user, load_user, load_lists, lists }) {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,10 +20,10 @@ function Lists ({ access, refresh, refresh_token, user, load_user, load_lists })
     }, [access, refresh, user, load_user, navigate, refresh_token]);
     
     useEffect(() => {
-        if (user) {
+        if (user && lists?.length === 0) {
             load_lists(user.id);
         }
-    }, [user, load_lists]);
+    }, [user, load_lists, lists]);
 
     return (
         <>
@@ -37,7 +37,8 @@ const mapStateToProps = state => ({
     error: state.auth.error,
     access: state.auth.access,
     refresh: state.auth.refresh,
-    user: state.auth.user
+    user: state.auth.user,
+    lists: state.agent.lists
 });
 
 export default connect(mapStateToProps, { refresh_token, load_user, load_lists })(Lists);

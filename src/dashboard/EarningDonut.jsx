@@ -5,17 +5,18 @@ import { connect } from 'react-redux';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+const statusMap = {
+  'not': 0,
+  'pend': 1,
+  'over': 2,
+  'paid': 3
+};
+
 function EarningDonut ({ deals }) {
   const [statusEarnings, setStatusEarnings] = useState(Array(4).fill(0)); 
-  const statusMap = {
-    'not': 0,
-    'pend': 1,
-    'over': 2,
-    'paid': 3
-  };
 
   useEffect(() => {
-    if (deals) {
+    if (deals?.length > 0) {
       const earningsByStatus = Array(4).fill(0);
 
       deals.forEach(deal => {

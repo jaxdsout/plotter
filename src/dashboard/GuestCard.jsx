@@ -4,15 +4,14 @@ import PropertySearch from "../listmaker/PropertySearch";
 import ClientSearch from "../listmaker/ClientSearch";
 import { connect } from "react-redux";
 import { new_guest_card } from "../store/actions/agent";
+import { reset_guest_card } from "../store/actions/ui";
 
-function GuestCard ({ client, property, user, new_guest_card }) {
-    const [clientSel, setClientSel] = useState(null);
-    const [propSel, setPropSel] = useState(null);
+function GuestCard ({ client, property, user, new_guest_card, reset_guest_card }) {
 
     const [formData, setFormData] = useState({
         agent: null,
         client: null,
-        prop: null,
+        property: null,
         interested: '',
         move_by: ''
     });
@@ -28,11 +27,17 @@ function GuestCard ({ client, property, user, new_guest_card }) {
         }
 
         if (property) {
-            setPropSel(property);
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                property: property.id
+            }));
         }
 
         if (client) {
-            setClientSel(client);
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                client: client.id
+            }));
         }
     }, [user, property, client]);
 
@@ -43,13 +48,13 @@ function GuestCard ({ client, property, user, new_guest_card }) {
         e.preventDefault();
         if (client && property) {
             await new_guest_card(property.id, user.id, client.id, interested, move_by);
-            handleResetDeal();
+            handleResetCard();
         } else {
             console.error("Client or property not selected.");
         }
     };
 
-    const handleResetDeal = () => {
+    const handleResetCard = () => {
         setFormData({
             agent: user.id,
             property: null,
@@ -57,8 +62,8 @@ function GuestCard ({ client, property, user, new_guest_card }) {
             interested: '',
             move_by: ''
         });
-        setClientSel(false);
-        setPropSel(false);
+        reset_guest_card();
+
     };
 
     return (
@@ -70,7 +75,7 @@ function GuestCard ({ client, property, user, new_guest_card }) {
                 <div className="p-3 text-center">
                     <ClientSearch />
                     <div className="mt-5">
-                        {clientSel && client !== null ? (
+                        {formData.client !== null && client !== null ? (
                             <Button size="tiny" color="black" disabled>CLIENT SELECTED</Button>
                         ) : (
                             <>
@@ -81,7 +86,7 @@ function GuestCard ({ client, property, user, new_guest_card }) {
                 <div className="p-3 text-center">
                     <PropertySearch />
                     <div className="mt-5">
-                        {propSel && property !== null ? (
+                        {formData.property !== null && property !== null ? (
                             <Button size="tiny" color="black" disabled>PROPERTY SELECTED</Button>
                         ) : (
                             <>
@@ -91,42 +96,51 @@ function GuestCard ({ client, property, user, new_guest_card }) {
                 </div>
             </div>
             <Divider />
-            {clientSel && propSel ? (
+            {formData.property && formData.client ? (
                 <>
                     <div className="text-white">
-                        <p>Hey team,</p>
-                        <p>Below is the guest card info for my client {clientSel.first_name}. Please let me know if there are any issues.</p>
-                        <ul>
-                            <li className="mt-3"><strong>Name:</strong> {clientSel.name} </li>
-                            <li className="mt-3"><strong>Phone:</strong> {clientSel.phone_number}</li>
-                            <li className="mt-3"><strong>Email:</strong> {client.email}</li>
-                            <li className="mt-3">
-                                <label htmlFor="interested"><strong>Interested In:</strong></label>
-                                <Input
-                                    name="interested"
-                                    value={interested}
-                                    onChange={handleChange}
-                                    size="small"
-                                    className="ms-3"
-                                />
-                            </li>
-                            <li className="mt-3">
-                                <label htmlFor="move_by"><strong>Move By:</strong></label>
-                                <Input
-                                    name="move_by"
-                                    value={move_by}
-                                    onChange={handleChange}
-                                    size="small"
-                                    className="ms-3"
-                                />
-                            </li>
-                        </ul>
-                        <p>Best,</p>
-                        <p>{user?.first_name} {user?.last_name}</p>
-                        <p>{user?.profile?.phone_number}</p>
+                        <div className="text-black p-7 rounded-lg bg-gradient-to-b from-[#FFFFFF] to-[#fbfbfb] shadow-inner shadow-md">
+                            <p>Hey team,</p>
+                            <p>Below is the guest card info for my client {client?.first_name}. Please let me know if there are any issues.</p>
+                            <div className="indent-5">
+                                <ul>
+                                    <li className="mt-3"><strong>Name:</strong> {client?.name} </li>
+                                    <li className="mt-3"><strong>Phone:</strong> {client?.phone_number}</li>
+                                    <li className="mt-3"><strong>Email:</strong> {client?.email}</li>
+                                    <li className="mt-3">
+                                        <label htmlFor="interested"><strong>Interested In:</strong></label>
+                                        <Input
+                                            name="interested"
+                                            value={interested}
+                                            onChange={handleChange}
+                                            size="small"
+                                            className="ms-3 !w-[100px]"
+                                        />
+                                    </li>
+                                    <li className="mt-3">
+                                        <label htmlFor="move_by"><strong>Move By:</strong></label>
+                                        <Input
+                                            name="move_by"
+                                            value={move_by}
+                                            onChange={handleChange}
+                                            size="small"
+                                            className="ms-3 !w-[125px]"
+                                        />
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className="mt-5">
+                                <p>Best,</p>
+                                <p>{user?.first_name} {user?.last_name}</p>
+                                <p>{user?.profile?.phone_number}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex justify-end mt-3">
-                        <Button color="green" onClick={handleSubmit}>SEND</Button>
+                    <div className="flex justify-end mt-6 mb-3">
+                        <Button color="green" onClick={handleSubmit}>SEND TO {property?.name.toUpperCase()}</Button>
+                    </div>
+                    <div className="flex justify-end mt-3 mb-6">
+                        <Button color="red" onClick={handleResetCard} size="tiny" inverted>RESET</Button>
                     </div>
                 </>
             ) : (
@@ -146,4 +160,4 @@ const mapStateToProps = state => ({
     client: state.listmaker.client
 });
 
-export default connect(mapStateToProps, { new_guest_card })(GuestCard);
+export default connect(mapStateToProps, { new_guest_card, reset_guest_card })(GuestCard);

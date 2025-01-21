@@ -1,19 +1,18 @@
 import { Button, Loader, Icon, Popup } from "semantic-ui-react"
 import { connect } from "react-redux";
-import { load_properties } from "../store/actions/agent";
 import { useEffect } from "react";
 import PropertySearch from "../listmaker/PropertySearch";
 import { useState } from "react";
-import { reset_prop } from "../store/actions/listmaker";
+import { reset_commission } from "../store/actions/ui";
 
 
-function Commission ({load_properties, properties, user, property, reset_prop}) {
+function Commission ({ properties, property, reset_commission}) {
     const [propSel, setPropSel] = useState(null);
     const [sortConfig, setSortConfig] = useState({ key: 'send', direction: 'desc' });
     const [sortedProperties, setSortedProperties] = useState(properties);
 
     const handleCommSearchReset = () => {
-        reset_prop();
+        reset_commission();
         setPropSel(null)
     }
 
@@ -23,27 +22,21 @@ function Commission ({load_properties, properties, user, property, reset_prop}) 
     };
 
     useEffect(() => {
-        if (property) {
-            setPropSel(true);
-        }
-
-        const sortedArray = properties.sort((a, b) => {
+        const sortedArray = [...properties].sort((a, b) => {
             if (a.commission[sortConfig.key] < b.commission[sortConfig.key]) return sortConfig.direction === 'asc' ? -1 : 1;
             if (a.commission[sortConfig.key] > b.commission[sortConfig.key]) return sortConfig.direction === 'asc' ? 1 : -1;
             return 0;
         });
         setSortedProperties(sortedArray);
-
-    }, [property, properties, sortConfig])
-
+    }, [properties, sortConfig]);
 
     useEffect(() => {
-        if(user) {
-            load_properties();
+        if (property) {
+            setPropSel(true);
         }
-    }, [user, load_properties])
-    
-    console.log(property, "search prop 2")
+    }, [property])
+
+
     return (
         <div className="w-11/12 max-w-[500px] mt-5 mb-10 flex flex-col items-center justify-center bg-[#26282B] rounded-lg shadow-md shadow-inner">
             <div className="mt-4 mb-2 flex flex-col items-center">
@@ -136,4 +129,4 @@ const mapStateToProps = state => ({
     property: state.listmaker.property
 })
 
-export default connect(mapStateToProps, { load_properties, reset_prop })(Commission);
+export default connect(mapStateToProps, { reset_commission })(Commission);

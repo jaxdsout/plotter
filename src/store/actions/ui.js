@@ -8,7 +8,10 @@ import {
     RESET_DEAL_FORM,
     SET_REORDER_MODE,
     RESET_REORDER_MODE,
-    CLEAR_MESSAGE
+    CLEAR_MESSAGE,
+    RESET_CARD_FORM,
+    TAB_SWITCH_CLEAR,
+    RESET_COMMISSION_SEARCH
 } from "./types"
 
 export const clear_message = () => dispatch => {
@@ -35,6 +38,13 @@ export const reset_client_view = () => dispatch => {
 export const set_send_mode = () => dispatch => {
     dispatch({
         type: SET_SEND_MODE
+    });
+    return Promise.resolve();
+};
+
+export const reset_commission = () => dispatch => {
+    dispatch({
+        type: RESET_COMMISSION_SEARCH
     });
     return Promise.resolve();
 };
@@ -68,6 +78,14 @@ export const reset_deal_form = () => dispatch => {
 };
 
 
+export const reset_guest_card = () => dispatch => {
+    dispatch({
+        type: RESET_CARD_FORM
+    });
+    return Promise.resolve();
+};
+
+
 export const set_reorder_mode = () => dispatch => {
     dispatch({
         type: SET_REORDER_MODE
@@ -81,3 +99,12 @@ export const reset_reorder_mode = () => dispatch => {
     });
     return Promise.resolve();
 };
+
+export const tab_switch = () => dispatch => {
+    dispatch({
+        type: TAB_SWITCH_CLEAR
+    });
+    return Promise.resolve();
+};
+
+

@@ -55,7 +55,8 @@ export const auth_user = () => async dispatch => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`
             }
         };
         const body = JSON.stringify({ token: localStorage.getItem('access') })
