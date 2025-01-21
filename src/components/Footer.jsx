@@ -1,8 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux'
 
 function Footer ({ isClientView }) {
-    // const navigate = useNavigate()
 
     const logo_click =  () => {
         if (isClientView) {

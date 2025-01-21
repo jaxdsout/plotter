@@ -35,7 +35,6 @@ function ClearOptions ({ clear_options, list }) {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     userID: state.auth.user.id,
     error: state.auth.error,
     client_results: state.listmaker.client_results,

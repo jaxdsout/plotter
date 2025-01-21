@@ -11,8 +11,6 @@ import {
     SEARCH_CLIENT_SUCCESS,
     SEARCH_PROPERTY_SUCCESS,
     SEARCH_PROPERTY_FAIL,
-    LOAD_OPTIONS_SUCCESS,
-    LOAD_OPTIONS_FAIL,
     CLEAR_OPTIONS_SUCCESS,
     CLEAR_OPTIONS_FAIL,
     SET_SEARCH_CLIENT_FAIL,
@@ -27,10 +25,12 @@ import {
     RESET_PROPERTY_RESULTS,
     SET_LIST_FOR_EDIT,
     RESET_DEAL_FORM,
-    UPDATE_OPTION_ORDER_SUCCESS,
     UPDATE_OPTION_ORDER_FAIL,
     UPDATE_LIST_OPTIONS_FAIL,
-    UPDATE_LIST_OPTIONS_SUCCESS
+    UPDATE_LIST_OPTIONS_SUCCESS,
+    RESET_LIST_MODE,
+    LOAD_LIST_FAIL,
+    LOAD_LIST_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -41,7 +41,6 @@ const initialState = {
     list: null,
     property: null,
     prop_results: [],
-    options: [],  
     retrlist: null,
 };
 
@@ -53,65 +52,76 @@ export default function listmakerReducer(state = initialState, action) {
                 ...state,
                 client_results: payload
             }
-        case SET_SEARCH_CLIENT_SUCCESS:
-            return {
-                ...state,
-                client: payload
-            }
-        case NEW_LIST_SUCCESS:
-            return {
-                ...state,
-                list: payload,
-            }
-        case SEARCH_PROPERTY_SUCCESS:
-            return {
-                ...state,
-                prop_results: payload
-            }
-        case SET_SEARCH_PROP_SUCCESS:
-            return {
-                ...state,
-                property: payload,
-            }
-        case LOAD_OPTIONS_SUCCESS:
-            return {
-                ...state,
-                options: payload.options
-            }
-        case CLEAR_OPTIONS_SUCCESS:
-            return {
-                ...state,
-                options: payload.options
-            }
-        case RETRIEVE_LIST_SUCCESS:
-            return {
-                ...state,
-                retrlist: payload,
-            }
         case RESET_CLIENT_RESULTS:
             return {
                 ...state,
                 client_results: [],
             }
-        case RESET_PROPERTY_RESULTS:
+        case SET_SEARCH_CLIENT_SUCCESS:
             return {
                 ...state,
-                prop_results: [],
+                client: payload
             }
         case RESET_CLIENT:
             return {
                 ...state,
                 client: null
             }
-        case RESET_PROP:
+        case NEW_LIST_SUCCESS:
             return {
                 ...state,
-                property: null
+                list: payload,
+            }
+        case RETRIEVE_LIST_SUCCESS:
+            return {
+                ...state,
+                retrlist: payload,
             }
         case SET_LIST_FOR_EDIT:
             return {
                 ...state,
                 list: payload
+            }
+        case RESET_LIST_MODE:
+            return {
+                ...state,
+                options: null,
+                list: null
+            }
+        case SEARCH_PROPERTY_SUCCESS:
+            return {
+                ...state,
+                prop_results: payload
+            }
+        case RESET_PROPERTY_RESULTS:
+            return {
+                ...state,
+                prop_results: [],
+            }
+        case SET_SEARCH_PROP_SUCCESS:
+            return {
+                ...state,
+                property: payload,
+            }
+        case RESET_PROP:
+            return {
+                ...state,
+                property: null
+            }
+        case LOAD_LIST_SUCCESS:
+            return {
+                ...state,
+                list: payload
+            }
+        case CLEAR_OPTIONS_SUCCESS:
+            return {
+                ...state,
+                list: payload
+            }
+        case UPDATE_LIST_OPTIONS_SUCCESS:
+            return {
+                ...state,
+                list: payload,
             }
         case RESET_DEAL_FORM:
             return {
@@ -120,22 +130,6 @@ export default function listmakerReducer(state = initialState, action) {
                 client: null,
                 prop_results: [],
                 client_results: []
-            }
-        // case RESET_LIST_MODE:
-        //     return {
-        //         ...state,
-        //         options: null,
-        //         list: null
-        //     }
-        case UPDATE_OPTION_ORDER_SUCCESS:
-            return {
-                ...state,
-                options: payload,
-            }
-        case UPDATE_LIST_OPTIONS_SUCCESS:
-            return {
-                ...state,
-                options: payload,
             }
         case NEW_OPTION_FAIL:
         case NEW_OPTION_SUCCESS:
@@ -146,7 +140,7 @@ export default function listmakerReducer(state = initialState, action) {
         case DELETE_OPTION_SUCCESS:
         case SEARCH_CLIENT_FAIL:
         case SEARCH_PROPERTY_FAIL:
-        case LOAD_OPTIONS_FAIL:
+        case LOAD_LIST_FAIL:
         case CLEAR_OPTIONS_FAIL:
         case SET_SEARCH_CLIENT_FAIL:
         case SET_SEARCH_PROP_FAIL:

@@ -142,7 +142,6 @@ function ProfileWidget ({ user, update_profile, update_avatar }) {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
     user: state.auth.user,
 });

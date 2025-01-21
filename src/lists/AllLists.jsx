@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Modal, Button, Loader } from "semantic-ui-react";
 import ListDetail from "./ListDetail";
@@ -8,15 +8,9 @@ import { connect } from "react-redux";
 import { reset_list_mode, reset_send_mode } from "../store/actions/ui";
 
 
-function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, isListMode }) {
+function AllLists ({ lists, reset_list_mode, reset_send_mode, isListMode }) {
     const [showListDetail, setShowListDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
-
-    useEffect(() => {
-        if (user){
-            load_lists(user.id);
-        }
-    }, [load_lists, user])
     
 
     const handleOpenModal = (id) => {
@@ -88,8 +82,6 @@ function AllLists ({ user, load_lists, lists, reset_list_mode, reset_send_mode, 
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    user: state.auth.user,
     error: state.auth.error,
     lists: state.agent.lists,
     isListMode: state.ui.isListMode

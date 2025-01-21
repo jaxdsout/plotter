@@ -107,7 +107,6 @@ function NewClient({ user, load_clients, new_client }) {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
     error: state.auth.error,
 });

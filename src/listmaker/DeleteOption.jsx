@@ -1,9 +1,9 @@
 import { Button, Popup } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
-import { delete_option, load_options } from '../store/actions/listmaker';
+import { delete_option, load_list } from '../store/actions/listmaker';
 import { connect } from 'react-redux';
 
-function DeleteOption ( { delete_option, load_options, option, list}) {
+function DeleteOption ( { delete_option, load_list, option, list}) {
     const [deleteConfirm, setDeleteConfirm] = useState(null);
 
     const handleDeleteConfirm = (optionID) => {
@@ -12,7 +12,7 @@ function DeleteOption ( { delete_option, load_options, option, list}) {
 
     const handleDelete = async (optionID, list) => {
         await delete_option(optionID, list.id);
-        load_options(list.id);
+        load_list(list.id);
         setDeleteConfirm(null);
     };
 
@@ -54,10 +54,9 @@ function DeleteOption ( { delete_option, load_options, option, list}) {
 }
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
     options: state.listmaker.options,
     list: state.listmaker.list,
 });
 
-export default connect(mapStateToProps, { delete_option, load_options })(DeleteOption);
+export default connect(mapStateToProps, { delete_option, load_list })(DeleteOption);

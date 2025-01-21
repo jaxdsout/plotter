@@ -23,7 +23,6 @@ function DealDetail ({ deal, handleCloseModal, update_deal_status, load_deals, u
         }
     }
 
-
     return(
         <>
             <div className="flex flex-col mb-4">

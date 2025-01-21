@@ -1,6 +1,6 @@
 import { Search } from "semantic-ui-react"
 import { connect } from "react-redux";
-import { load_options, search_properties, reset_prop_results, set_search_prop, reset_prop } from "../store/actions/listmaker";
+import { search_properties, reset_prop_results, set_search_prop, reset_prop } from "../store/actions/listmaker";
 
 function PropertySearch({ userID, search_properties, set_search_prop, prop_results, reset_prop_results}) {
 
@@ -42,7 +42,6 @@ function PropertySearch({ userID, search_properties, set_search_prop, prop_resul
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     userID: state.auth.user.id,
     error: state.auth.error,
     prop_results: state.listmaker.prop_results,
@@ -51,4 +50,4 @@ const mapStateToProps = state => ({
     isListMode: state.ui.isListMode,
 });
 
-export default connect(mapStateToProps, { set_search_prop, search_properties, load_options, reset_prop_results, reset_prop })(PropertySearch);
+export default connect(mapStateToProps, { set_search_prop, search_properties, reset_prop_results, reset_prop })(PropertySearch);

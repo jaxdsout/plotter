@@ -19,7 +19,6 @@ function SendList ({ user, client, list, update_list, set_send_mode, options }) 
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
     error: state.auth.error,
     client: state.listmaker.client,

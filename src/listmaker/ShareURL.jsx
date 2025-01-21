@@ -51,7 +51,6 @@ function ShareURL ({ list, isSendMode }) {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
     error: state.auth.error,
     list: state.listmaker.list,

@@ -3,17 +3,19 @@ import EarningDonut from './EarningDonut';
 import EarningBar from './EarningBar';
 import { connect } from "react-redux";
 import { Divider } from 'semantic-ui-react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { load_deals } from '../store/actions/agent';
 import Calculator from './Calculator';
 import Todos from './Todos';
 import Commission from './Commission';
 import { reset_prop_results, reset_prop, reset_client, reset_client_results } from '../store/actions/listmaker';
+import { refresh_token, load_user, auth_user } from '../store/actions/auth';
 
-function Dash ({ isAuthenticated, user, load_deals, deals, reset_prop, reset_prop_results, reset_client, reset_client_results }) {
+function Dash ({ user, load_deals, deals, reset_prop, reset_prop_results, reset_client, reset_client_results, load_user, refresh_token, auth_user, access, refresh }) {
+    const [activeTab, setActiveTab] = useState("to-do");
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState("to-do")
 
     const get_renewals = () => {
         if (!deals) return [];
@@ -38,6 +40,9 @@ function Dash ({ isAuthenticated, user, load_deals, deals, reset_prop, reset_pro
             .slice(0, 5);
     };
 
+    const renewals = get_renewals();
+    const move_ins = get_move_ins();
+
     const handleCommissionTab = () => {
         reset_prop();
         reset_prop_results();
@@ -53,13 +58,20 @@ function Dash ({ isAuthenticated, user, load_deals, deals, reset_prop, reset_pro
     }
 
     useEffect(() => {
-        if (user) {
-            load_deals(user.id)
+        if (!access && !refresh) {
+            navigate('/login/');
+        } else if (refresh && !access) {
+            refresh_token();
+        } else if (!user) {
+            load_user();
         }
-    }, [user, load_deals])
-
-    const renewals = get_renewals();
-    const move_ins = get_move_ins();
+    }, [access, refresh, user, load_user, navigate, refresh_token]);
+    
+    useEffect(() => {
+        if (user) {
+            load_deals(user.id);
+        }
+    }, [user, load_deals]);
 
     return (
         <div className='transition ease-in-out delay-150'>
@@ -144,9 +156,11 @@ function Dash ({ isAuthenticated, user, load_deals, deals, reset_prop, reset_pro
 
 const mapStateToProps = state => ({
     error: state.auth.error,
-    isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
-    deals: state.agent.deals
+    deals: state.agent.deals,
+    access: state.auth.access,
+    refresh: state.auth.refresh,
+
 });
 
-export default connect(mapStateToProps, { load_deals, reset_prop, reset_prop_results, reset_client, reset_client_results })(Dash);
+export default connect(mapStateToProps, { load_deals, reset_prop, reset_prop_results, reset_client, reset_client_results, load_user, refresh_token, auth_user })(Dash);

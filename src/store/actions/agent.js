@@ -230,7 +230,7 @@ export const load_deals = (userID) => async dispatch => {
 };
 
 
-export const new_deal = (property, unit_no, move_date, lease_term, rent, rate, flat_fee, commission, agent, client) => async dispatch => {
+export const new_deal = (property, agent, client, unit_no, move_date, lease_term, rent, rate, flat_fee, commission) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
             headers: {

@@ -1,9 +1,9 @@
 import { Form, FormField, Button, Modal } from "semantic-ui-react";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { load_options, update_option } from "../store/actions/listmaker";
+import { load_list, update_option } from "../store/actions/listmaker";
 
-function UpdateOption ({ option, list, update_option, load_options }) {
+function UpdateOption ({ option, list, update_option, load_list }) {
     const [showModal, setShowModal] = useState(false);
     const [optionForm, setOptionForm] = useState({
         price: option.price ||'',
@@ -25,7 +25,7 @@ function UpdateOption ({ option, list, update_option, load_options }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await update_option(optionID, price, unit_number, layout, sq_ft, available, notes, property, listID);
-        await load_options(listID);
+        await load_list(listID);
         setShowModal(false);
     };
 
@@ -114,9 +114,8 @@ function UpdateOption ({ option, list, update_option, load_options }) {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     list: state.listmaker.list,
     error: state.auth.error,
 });
 
-export default connect(mapStateToProps, { update_option, load_options })(UpdateOption);
+export default connect(mapStateToProps, { update_option, load_list })(UpdateOption);

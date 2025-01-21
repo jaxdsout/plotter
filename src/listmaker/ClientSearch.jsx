@@ -18,9 +18,6 @@ function ClientSearch ({ client_results, search_clients, userID, set_search_clie
         reset_client_results()
     };
 
-
-
-
     return (
         <>
             <Search
@@ -46,7 +43,6 @@ function ClientSearch ({ client_results, search_clients, userID, set_search_clie
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     userID: state.auth.user.id,
     error: state.auth.error,
     client_results: state.listmaker.client_results,

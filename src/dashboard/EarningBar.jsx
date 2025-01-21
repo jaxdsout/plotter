@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { connect } from 'react-redux';
-import { readUsedSize } from 'chart.js/helpers';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 function EarningBar ({ deals }) {
   const [monthlyEarnings, setMonthlyEarnings] = useState(Array(12).fill(0)); 
 
-  const monthify_deals = () => {
+  useEffect(() => {
     if (deals) {
       const earningsByMonth = Array(12).fill(0);
 
@@ -21,12 +20,6 @@ function EarningBar ({ deals }) {
       });
 
       setMonthlyEarnings(earningsByMonth);
-    }
-  }
-
-  useEffect(() => {
-    if (deals) {
-      monthify_deals();
     }
   }, [deals])
 
@@ -90,7 +83,6 @@ function EarningBar ({ deals }) {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
   error: state.auth.error,
   deals: state.agent.deals,
   user: state.auth.user

@@ -58,7 +58,6 @@ function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user })
 }
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
     options: state.listmaker.options,
     user: state.auth.user

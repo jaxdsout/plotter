@@ -211,7 +211,7 @@ export const new_option = (property, list, client) => async dispatch => {
 
 
 
-export const load_options = (listID) => async dispatch => {
+export const load_list = (listID) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
             headers: {
