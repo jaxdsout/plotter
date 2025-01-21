@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import DealDetail from "./DealDetail";
 import { Modal, Button, Loader } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { load_deals } from "../store/actions/agent";
 
-function AllDeals ({ load_deals, deals, user }) {
+function AllDeals ({ deals }) {
     const [showDealDetail, setShowDealDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
@@ -16,13 +15,6 @@ function AllDeals ({ load_deals, deals, user }) {
     };
 
     const handleCloseModal = () => setShowModal(false);
-
-    useEffect(() => {
-        if (user){
-            load_deals(user.id);
-        }
-        console.log("all_deals useffect")
-    }, [load_deals, user])
 
     return (
         <>
@@ -70,4 +62,4 @@ const mapStateToProps = state => ({
     user: state.auth.user
 });
 
-export default connect(mapStateToProps, { load_deals })(AllDeals);
+export default connect(mapStateToProps, { })(AllDeals);

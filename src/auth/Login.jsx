@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState, useEffect } from "react"
-import { login } from "../store/actions/auth";
+import { auth_user, login } from "../store/actions/auth";
 import { Button, Divider, Form, FormField, Message, Image, Popup } from "semantic-ui-react";
 
-function Login ({ login, isAuthenticated, error, message }) {
+function Login ({ login, isAuthenticated, error, message, auth_user }) {
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ function Login ({ login, isAuthenticated, error, message }) {
         if (isAuthenticated) {
             navigate('/dashboard/home');
         }
-    }, [isAuthenticated, navigate]);
+    }, [isAuthenticated]);
     
 
     return (
@@ -113,4 +113,4 @@ const mapStateToProps = state => ({
     message: state.auth.message
 });
 
-export default connect(mapStateToProps, { login })( Login );
+export default connect(mapStateToProps, { login, auth_user })( Login );

@@ -57,10 +57,10 @@ function Todos ({ user, load_tasks, tasks, new_task, update_task}) {
     }
 
     useEffect(() => {
-            if (user){
+            if (user && !tasks){
                 load_tasks(user.id);
             }
-    }, [load_tasks, user])
+    }, [tasks, user])
 
     
     return (
@@ -173,7 +173,6 @@ function Todos ({ user, load_tasks, tasks, new_task, update_task}) {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
     error: state.auth.error,
     tasks: state.agent.tasks,

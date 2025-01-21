@@ -55,7 +55,6 @@ function DeleteClient({ delete_client, load_clients, client, handleCloseModal, u
 }
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
     user: state.auth.user,
 });

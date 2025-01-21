@@ -14,7 +14,7 @@ function EarningDonut ({ deals }) {
     'paid': 3
   };
 
-  const statusfy_deals = () => {
+  useEffect(() => {
     if (deals) {
       const earningsByStatus = Array(4).fill(0);
 
@@ -29,13 +29,7 @@ function EarningDonut ({ deals }) {
 
       setStatusEarnings(earningsByStatus);
     }
-  }
-
-  useEffect(() => {
-    if (deals) {
-      statusfy_deals();
-    }
-  }, [deals, ])
+  }, [deals])
 
   const data = {
     labels: ['Not Invoiced', 'Pending', 'Overdue', 'Paid'],

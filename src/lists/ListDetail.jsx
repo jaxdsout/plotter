@@ -1,8 +1,7 @@
 import { Button, Input, Divider, Form, Popup } from "semantic-ui-react";
 import { reset_list_mode, set_list_mode } from "../store/actions/ui";
 import { connect } from "react-redux";
-import { set_search_client, update_list_options, reset_prop, reset_prop_results, load_options, new_option, set_list_edit} from "../store/actions/listmaker";
-import { load_lists } from "../store/actions/agent";
+import { set_search_client, update_list_options, reset_prop, reset_prop_results, new_option, set_list_edit, load_list} from "../store/actions/listmaker";
 import PropertySearch from "../listmaker/PropertySearch";
 import OptionList from "../listmaker/OptionList";
 import MapBox from "../listmaker/MapBox";
@@ -11,9 +10,9 @@ import DeleteList from "./DeleteList";
 import ReorderList from "../listmaker/ReorderList";
 import ShareURL from "../listmaker/ShareURL";
 
-function ListDetail({ list, property, set_list_mode, user, new_option, 
-    reset_prop, reset_prop_results, set_search_client, set_list_edit, load_options, handleCloseModal, 
-    isListMode, client, options, update_list_options, reset_list_mode, isReorderMode }) {
+function ListDetail({ list, property, client, user, set_list_mode, new_option, 
+    reset_prop, reset_prop_results, set_search_client, set_list_edit, handleCloseModal, 
+    update_list_options, reset_list_mode, load_list, isReorderMode, isListMode }) {
 
     const link = `${window.origin}/list/${list.uuid}`
 
@@ -41,10 +40,10 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
 
 
     const handleSaveList = async () => {
-        if (list && isListMode && client && options) {
-            await update_list_options(user.id, client.id, list, options)
+        if (list && isListMode && client) {
+            await update_list_options(user.id, client.id, list, list.options)
             await reset_list_mode()
-            await load_options(list.id)
+            load_list(list.id)
         }
     }
 
@@ -53,7 +52,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
             await new_option(property.id, list.id, client.id);
             await reset_prop_results()
             await reset_prop()
-            load_options(list.id)
+            load_list(list.id)
         }
     };
 
@@ -65,8 +64,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
     };
 
     return(
-        <> 
-      
+        <>   
             {isListMode ? (
                 <>
                   <div className="flex flex-col justify-evenly">
@@ -78,7 +76,9 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                             </Form>
                         </div>
                         <Divider />
-                        <OptionList list={list} />
+                        <div>
+                            <OptionList options={list.options} />
+                        </div>
                     </div>
                     <div>
                         <div className="flex items-center justify-center pt-7 pb-3">
@@ -138,7 +138,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {options.map((option, index) => (
+                                    {list.options.map((option, index) => (
                                         <tr
                                             key={option.id}
                                             className={`${index % 2 === 0 ? 'bg-[#232425]' : 'bg-[#26282B]'} text-white hover:bg-gray-100 hover:text-black transition`}
@@ -149,7 +149,7 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
                                             <td className="px-2 py-2 text-xs">{option.layout}</td>
                                             <td className="px-2 py-2 text-xs">{option.sq_ft}</td>
                                             <td className="px-2 py-2 text-xs text-center">
-                                                {option.notes && option.notes.length > 1 ? (
+                                                {option.notes ? (
                                                     <Popup
                                                     content={option.notes}
                                                     trigger={<i className="ellipsis horizontal icon"></i>}
@@ -171,14 +171,12 @@ function ListDetail({ list, property, set_list_mode, user, new_option,
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
     error: state.auth.error,
     client: state.listmaker.client,
     isListMode: state.ui.isListMode,
     isReorderMode: state.ui.isReorderMode,
-    options: state.listmaker.options,
     property: state.listmaker.property
 });
 
-export default connect(mapStateToProps, { set_list_mode, set_search_client, load_lists, new_option, set_list_edit, update_list_options, load_options, reset_list_mode, reset_prop, reset_prop_results })(ListDetail);
+export default connect(mapStateToProps, { set_list_mode, set_search_client, load_list, new_option, set_list_edit, update_list_options, reset_list_mode, reset_prop, reset_prop_results })(ListDetail);

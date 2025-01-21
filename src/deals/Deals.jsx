@@ -3,15 +3,28 @@ import NewDeal from "./NewDeal";
 import { connect } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
+import { refresh_token, load_user } from "../store/actions/auth";
+import { load_deals } from "../store/actions/agent";
 
-function Deals ({ isAuthenticated }) {
+function Deals ({ access, refresh, refresh_token, user, load_user, load_deals }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAuthenticated) {
+        if (!access && !refresh) {
             navigate('/login/');
+        } else if (refresh && !access) {
+            refresh_token();
+        } else if (!user) {
+            load_user();
         }
-    }, [isAuthenticated, navigate]);
+    }, [access, refresh, user, load_user, navigate, refresh_token]);
+    
+    useEffect(() => {
+        if (user) {
+            load_deals(user.id);
+        }
+    }, [user, load_deals]);
+
     
     return (
         <>
@@ -23,7 +36,10 @@ function Deals ({ isAuthenticated }) {
 
 const mapStateToProps = state => ({
     error: state.auth.error,
-    isAuthenticated: state.auth.isAuthenticated
+    access: state.auth.access,
+    refresh: state.auth.refresh,
+    user: state.auth.user
+
 });
 
-export default connect(mapStateToProps, {})(Deals);
+export default connect(mapStateToProps, { refresh_token, load_user, load_deals })(Deals);

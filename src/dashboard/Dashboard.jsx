@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { auth_user, load_user, logout, refresh_token } from '../store/actions/auth';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Clients from '../clients/Clients';
 import Lists from '../lists/Lists';
@@ -9,33 +7,23 @@ import Deals from '../deals/Deals';
 import Dash from './Dash'
 import ProfileWidget from './ProfileWidget';
 import { Divider } from 'semantic-ui-react';
+import { auth_user } from '../store/actions/auth';
+import { connect } from 'react-redux';
 
 
-function Dashboard ({ load_user, auth_user, refresh_token, refresh, access, isAuthenticated }) {
+function Dashboard ({ auth_user }) {
     const [profileHover, setProfileHover] = useState(false);
     const location = useLocation(); 
-    const navigate = useNavigate();
-
 
     const handleProfileWidget = () => {
         setProfileHover(prev => !prev);
     };
 
+    const basePath = location.pathname.split('/').pop();
+
     useEffect(() => {
         auth_user();
-        load_user();
-
-        if (!refresh) {
-            navigate('/login/')
-        }
-
-        if (!access && refresh) {
-            refresh_token();
-        }
-
-    }, [load_user, auth_user, access, refresh, refresh_token, navigate]);
-
-    const basePath = location.pathname.split('/').pop();
+    }, [auth_user])
 
     return (    
         <div className='flex flex-col items-center justify-evenly'>
@@ -68,12 +56,12 @@ function Dashboard ({ load_user, auth_user, refresh_token, refresh, access, isAu
     )
 }
 
-
 const mapStateToProps = state => ({
     error: state.auth.error,
-    user: state.auth.user,
     access: state.auth.access,
-    refresh: state.auth.refresh
+    refresh: state.auth.refresh,
+    user: state.auth.user
+
 });
 
-export default connect(mapStateToProps, { load_user, auth_user, refresh_token, logout })(Dashboard);
+export default connect(mapStateToProps, { auth_user })(Dashboard);

@@ -3,15 +3,27 @@ import AllClients from "./AllClients";
 import { connect } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from "react";
+import { refresh_token, load_user } from "../store/actions/auth";
+import { load_clients } from "../store/actions/agent";
 
-function Clients({ isAuthenticated }) {
+function Clients({ refresh, access, refresh_token, user, load_user, load_clients }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!isAuthenticated) {
+        if (!access && !refresh) {
             navigate('/login/');
+        } else if (refresh && !access) {
+            refresh_token();
+        } else if (!user) {
+            load_user();
         }
-    }, [isAuthenticated, navigate]);
+    }, [access, refresh, user, load_user, navigate, refresh_token]);
+    
+    useEffect(() => {
+        if (user) {
+            load_clients(user.id);
+        }
+    }, [user, load_clients]);
 
     return (
         <>
@@ -23,7 +35,9 @@ function Clients({ isAuthenticated }) {
 
 const mapStateToProps = state => ({
     error: state.auth.error,
-    isAuthenticated: state.auth.isAuthenticated
+    access: state.auth.access,
+    refresh: state.auth.refresh,
+    user: state.auth.user
 });
 
-export default connect(mapStateToProps, {})(Clients);
+export default connect(mapStateToProps, { refresh_token, load_user, load_clients })(Clients);

@@ -13,6 +13,7 @@ function Landing({ access, refresh }) {
         if (access && refresh) {
             navigate('/dashboard/home')
         }
+        
     }, [access, refresh, navigate])
 
     return (

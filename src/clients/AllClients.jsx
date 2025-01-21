@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import ClientDetail from "./ClientDetail";
 import { Modal, Button, Divider, Loader } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { load_clients } from "../store/actions/agent";
 import DeleteClient from "./DeleteClient";
 import ListDetail from "../lists/ListDetail";
 import DealDetail from "../deals/DealDetail"
 import { reset_list_mode } from "../store/actions/ui";
 
-function AllClients ({ load_clients, clients, user, isListMode, reset_list_mode, }) {
+function AllClients ({ clients, isListMode, reset_list_mode, }) {
     const [showClientDetail, setShowClientDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [clientTab, setClientTab] = useState("info");
@@ -66,14 +65,6 @@ function AllClients ({ load_clients, clients, user, isListMode, reset_list_mode,
             hour12: true,
         }).replace(',', '');
     };
-
-    useEffect(() => {
-        if (user){
-            load_clients(user.id);
-        }
-        console.log("all_clients useffect")
-    }, [load_clients, user])
-
 
     return (
         <>
@@ -200,11 +191,9 @@ function AllClients ({ load_clients, clients, user, isListMode, reset_list_mode,
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
     clients: state.agent.clients,
-    user: state.auth.user,
     isListMode: state.ui.isListMode
 });
 
-export default connect(mapStateToProps, { load_clients, reset_list_mode })(AllClients);
+export default connect(mapStateToProps, { reset_list_mode })(AllClients);

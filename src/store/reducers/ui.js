@@ -5,7 +5,6 @@ import {
     RESET_LIST_MODE,
     SET_LIST_MODE,
     SET_CLIENT_VIEW,
-    RESET_DEAL_FORM,
     SET_REORDER_MODE, 
     RESET_REORDER_MODE
 } from '../actions/types';
@@ -59,11 +58,6 @@ export default function uiReducer(state = initialState, action) {
             return { 
             ...state, 
             isSendMode: false, 
-            }
-        case RESET_DEAL_FORM:
-            return {
-                ...state,
-                resetDealForm: true
             }
         case RESET_REORDER_MODE:
             return {

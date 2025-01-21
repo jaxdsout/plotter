@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 function DeleteDeal({ delete_deal, load_deals, deal, handleCloseModal, user }) {
     const [deleteConfirm, setDeleteConfirm] = useState(null);
 
-    console.log(deal, "deal")
-    console.log(deal.id, "dealID")
     const handleDeleteConfirm = (dealID) => {
         setDeleteConfirm(dealID);
     };
@@ -57,7 +55,6 @@ function DeleteDeal({ delete_deal, load_deals, deal, handleCloseModal, user }) {
 }
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
     user: state.auth.user,
 });

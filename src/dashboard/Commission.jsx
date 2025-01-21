@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { load_properties } from "../store/actions/agent";
 import { useEffect } from "react";
 import PropertySearch from "../listmaker/PropertySearch";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { reset_prop } from "../store/actions/listmaker";
 
@@ -24,10 +23,6 @@ function Commission ({load_properties, properties, user, property, reset_prop}) 
     };
 
     useEffect(() => {
-        if(user) {
-            load_properties();
-        }
-
         if (property) {
             setPropSel(true);
         }
@@ -39,7 +34,14 @@ function Commission ({load_properties, properties, user, property, reset_prop}) 
         });
         setSortedProperties(sortedArray);
 
-    }, [load_properties, user, property, properties])
+    }, [property, properties, sortConfig])
+
+
+    useEffect(() => {
+        if(user) {
+            load_properties();
+        }
+    }, [user, load_properties])
     
     console.log(property, "search prop 2")
     return (
@@ -128,7 +130,6 @@ function Commission ({load_properties, properties, user, property, reset_prop}) 
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     user: state.auth.user,
     error: state.auth.error,
     properties: state.agent.properties,

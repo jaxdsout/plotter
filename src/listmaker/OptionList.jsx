@@ -1,11 +1,11 @@
 import { useEffect, useCallback } from "react";
 import { Divider } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { load_options, update_options_order } from "../store/actions/listmaker";
+import { update_options_order } from "../store/actions/listmaker";
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import OptionDetail from "./OptionDetail";
 
-function OptionList({ options, load_options, list, update_options_order, isReorderMode }) {
+function OptionList({ options, update_options_order, isReorderMode }) {
     const grid = 8;
 
     const getItemStyle = (isDragging, draggableStyle) => ({
@@ -37,10 +37,6 @@ function OptionList({ options, load_options, list, update_options_order, isReord
     
         update_options_order(updatedOptions);
     };
-
-    useEffect(() => {
-        load_options(list.id);
-    }, [load_options, list]);
 
     return (
         <div className="overflow-y-auto">
@@ -86,11 +82,8 @@ function OptionList({ options, load_options, list, update_options_order, isReord
 }
 
 const mapStateToProps = (state) => ({
-    isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
-    options: state.listmaker.options,
-    list: state.listmaker.list,
     isReorderMode: state.ui.isReorderMode
 });
 
-export default connect(mapStateToProps, { load_options, update_options_order })(OptionList);
+export default connect(mapStateToProps, { update_options_order })(OptionList);

@@ -28,17 +28,14 @@ function Calculator () {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        const numericValue = value === "" ? "" : parseFloat(value);
+        const updatedFormData = { ...formData, [name]: numericValue };
+        const updatedNetEffective = calculateNER(updatedFormData);
 
-        // if (value === "" || /^-?\d*\.?\d*$/.test(value)) {
-            const numericValue = value === "" ? "" : parseFloat(value);
-            const updatedFormData = { ...formData, [name]: numericValue };
-            const updatedNetEffective = calculateNER(updatedFormData);
-
-            setFormData({
-                ...updatedFormData,
-                net_effective: updatedNetEffective,
-            });
-        // }
+        setFormData({
+            ...updatedFormData,
+            net_effective: updatedNetEffective,
+        });
     };
 
     return (
@@ -138,7 +135,6 @@ function Calculator () {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { })(Calculator);
