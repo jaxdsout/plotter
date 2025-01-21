@@ -19,7 +19,7 @@ function ReorderList ({ reset_reorder_mode, set_reorder_mode, isReorderMode }) {
         <Button 
             className="drop-shadow-sm" 
             onClick={handleReorder}
-            color={isReorderMode ? "red" : "teal"}
+            style={{ backgroundColor: isReorderMode ? "red" : "#35a2c3", color: "white" }}
         >
             {isReorderMode ? "CONFIRM" : "REORDER"}
         </Button>

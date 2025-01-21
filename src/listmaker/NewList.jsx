@@ -13,7 +13,7 @@ import { new_list, delete_list, new_option, load_list } from "../store/actions/l
 import { reset_list_mode, reset_send_mode, set_list_mode, reset_reorder_mode } from "../store/actions/ui"
 
 
-function NewList({ new_option, reset_reorder_mode, property, list, load_list, user, new_list, client, isSendMode, isListMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode }) {
+function NewList({ new_option, reset_reorder_mode, property, list, load_list, user, new_list, client, isSendMode, isListMode, isReorderMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode }) {
     const [showModal, setShowModal] = useState(false);
     const [showResetModal, setShowResetModal] = useState(false);
     const [error, setError] = useState(null);
@@ -137,12 +137,19 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, us
                         {isListMode ? (
                             <div className="flex justify-between items-center pb-5">
                                 <Button className="drop-shadow-sm" onClick={handleOpenResetModal}>BACK</Button>
-                                <div className="flex">
-                                    <ReorderList />
-                                    <ClearOptions />
-                                    <SendList />
+                                <div className="flex flex-row">
+                                    {isReorderMode ? (
+                                        <>
+                                            <ReorderList />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <ReorderList />
+                                            <ClearOptions />
+                                            <SendList />
+                                        </>
+                                    )}
                                 </div>
-                            
                             </div>
                         ) : isSendMode ? (
                             <div className="flex justify-between pb-5">

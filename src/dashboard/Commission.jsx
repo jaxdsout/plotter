@@ -46,7 +46,7 @@ function Commission ({ properties, property, reset_commission}) {
                 <div className="flex flex-row justify-center items-center p-3">
                     <PropertySearch />
                     {propSel && property !== null ? (
-                        <Button size="tiny" color="black" onClick={handleCommSearchReset} className="!ml-5">RESET</Button>
+                        <Button size="tiny" color="red" inverted onClick={handleCommSearchReset} className="!ml-5">RESET</Button>
                     ) : (
                         <>
                         </>

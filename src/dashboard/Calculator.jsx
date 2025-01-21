@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { Form, FormField, Divider } from "semantic-ui-react";
+import { Form, FormField, Divider, Button } from "semantic-ui-react";
 import { useState } from "react";
 
 
@@ -38,12 +38,22 @@ function Calculator () {
         });
     };
 
+    const handleReset = () => {
+        setFormData({
+            lease_term: 0,
+            rent_free: 0,
+            cash_allowance: 0,
+            monthly_rent: 0,
+            net_effective: 0
+        })
+    }
+
     return (
         <div className="w-11/12 max-w-[500px] mt-5 mb-10 flex flex-col items-center justify-center bg-[#26282B] rounded-lg shadow-md shadow-inner">
             <div className="mt-4 mb-2 flex flex-col items-center">
                 <h4 className='text-center text-white'>Net Effective Rent Calculator</h4>
             </div>
-            <div className="">  
+            <div className="mb-2">  
                 <Form className="p-5">
                     <div>
                         <FormField type="number">
@@ -54,7 +64,7 @@ function Calculator () {
                                     className="!bg-black !bg-opacity-30 !text-white pl-12"
                                     type='number'
                                     name='lease_term'
-                                    value={lease_term || 0}
+                                    value={lease_term}
                                     autoComplete="off"
                                     onChange={e => handleChange(e)}
                                 />
@@ -129,6 +139,14 @@ function Calculator () {
                         </FormField>
                     </div>
                 </Form>
+            </div>
+            <div className="mb-6">
+                {net_effective > 0 ? (
+                    <Button size="tiny" color="red" inverted onClick={handleReset}>RESET</Button>
+                ) : (
+                    <>
+                    </>
+                )}  
             </div>
         </div>
     )

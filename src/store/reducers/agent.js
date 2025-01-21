@@ -28,7 +28,8 @@ import {
     LOAD_PROPERTIES_FAIL,
     LOAD_PROPERTIES_SUCCESS,
     SET_COMMISSION_PROP_SUCCESS,
-    SET_COMMISSION_PROP_FAIL
+    SET_COMMISSION_PROP_FAIL,
+    LOGOUT
 } from '../actions/types';
 
 const initialState = {
@@ -73,6 +74,15 @@ export default function agentReducer(state = initialState, action) {
             return {
                 ...state,
                 message: 'Client updated successfully'
+            }
+        case LOGOUT:
+            return {
+                ...state,
+                clients: [],
+                deals: [],
+                lists: [],
+                tasks: [],
+                properties: [],
             }
         case NEW_CLIENT_SUCCESS:
         case NEW_LIST_SUCCESS:

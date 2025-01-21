@@ -10,6 +10,8 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
     const [clientSel, setClientSel] = useState(false);
     const [propSel, setPropSel] = useState(false);
     const [flatFee, setFlatFee] = useState(false);
+    const [commission, setCommission] = useState(0);
+    const [manualCommission, setManualCommission] = useState(false);
 
     const handleOpenModal = () => setShowModal(true);
 
@@ -24,7 +26,7 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
         client: null, 
         rent: '',
         rate: '',
-        commission: '',
+        commission: commission,
         flat_fee: '',
         move_date: '',
         unit_no: '',
@@ -32,13 +34,19 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
     
     });
 
-    const { unit_no, move_date, lease_term, rent, rate, flat_fee, commission } = formData;
+    const { unit_no, move_date, lease_term, rent, rate, flat_fee } = formData;
 
     const handleFlatFee = () => {
         if (flatFee) { setFlatFee(false) } else { setFlatFee(true) }
     }
 
     const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const handleCommissionChange = (e) => {
+        const userValue = parseFloat(e.target.value) || 0;
+        setManualCommission(true);
+        setCommission(userValue);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -82,6 +90,25 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
             setClientSel(client);
         }
     }, [user, property, client]);
+
+
+    useEffect(() => {
+        if (!manualCommission) {
+            if (flatFee) {
+                setCommission(flat_fee ? parseFloat(flat_fee) : 0);
+                setFormData(prevFormData => ({
+                    ...prevFormData,
+                    rate: ''
+                }))
+            } else {
+                setCommission(rate && rent ? parseFloat(rate/100) * parseFloat(rent) : 0);
+                setFormData(prevFormData => ({
+                    ...prevFormData,
+                    flat_fee: ''
+                }))
+            }
+        }
+    }, [flatFee, rate, rent, flat_fee, manualCommission]);
 
     return (
         <>
@@ -145,23 +172,33 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
                             </FormField>
                             <FormField>
                                 <label htmlFor='lease_term'>Lease Term:</label>
-                                <input
-                                    type='text'
-                                    name='lease_term'
-                                    value={lease_term}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <div className="relative">
+                                    <span className="absolute inset-y-0 right-0 pr-4 flex items-center text-[1rem] font-bold pointer-events-none">mos</span>
+                                    <input
+                                        type='text'
+                                        name='lease_term'
+                                        value={lease_term}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+                               
                             </FormField>
+                            <div>
+                            </div>
                             <FormField>
                                 <label htmlFor='rent'>Rent:</label>
-                                <input
-                                    type='number'
-                                    name='rent'
-                                    value={rent}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <div className="relative">
+                                    <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] font-bold pointer-events-none">$</span>
+                                    <input
+                                        className="indent-4"
+                                        type='number'
+                                        name='rent'
+                                        value={rent}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
                             </FormField>
                             <FormField>
                                 <label htmlFor='rate'>Commission Rate:</label>
@@ -173,13 +210,18 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
                                         disabled
                                     />
                                 ) : (
-                                    <input
-                                        type='number'
-                                        name='rate'
-                                        value={rate}
-                                        onChange={handleChange}
-                                        required
-                                    />
+                                    <div className="relative">
+                                        <span className="absolute inset-y-0 right-0 pr-7 flex items-center text-[1rem] font-bold pointer-events-none">%</span>
+                                        <input
+                                            type='number'
+                                            name='rate'
+                                            value={rate}
+                                            onChange={handleChange}
+                                            className=""
+                                            required
+                                        />
+                                    </div>
+                                    
                                 )}
                                 
                             </FormField>
@@ -191,13 +233,18 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
                                     </div>
                                 </label>
                                 {flatFee ? (
-                                    <input
-                                        type='number'
-                                        name='flat_fee'
-                                        value={flat_fee}
-                                        onChange={handleChange}
-                                        required
-                                    />
+                                    <div className="relative">
+                                        <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] font-bold pointer-events-none">$</span>
+                                        <input
+                                            type='number'
+                                            name='flat_fee'
+                                            value={flat_fee}
+                                            className="indent-4"
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                 
                                 ) : (
                                     <input
                                         type='number'
@@ -209,13 +256,17 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
                             </FormField>
                             <FormField>
                                 <label htmlFor='commission'>Total Commission:</label>
-                                <input
-                                    type='number'
-                                    name='commission'
-                                    value={commission}
-                                    onChange={handleChange}
-                                    required
-                                />
+                                <div className="relative">
+                                    <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] font-bold pointer-events-none">$</span>
+                                    <input
+                                        type='number'
+                                        name='commission'
+                                        value={commission}
+                                        onChange={handleCommissionChange}
+                                        className="indent-4"
+                                        required
+                                    />
+                                </div>
                             </FormField>
                             <div className="flex justify-center">
                                 <Button className="drop-shadow-sm" type="submit" color="green">SUBMIT DEAL</Button>

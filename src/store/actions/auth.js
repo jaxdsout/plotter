@@ -24,6 +24,29 @@ import {
 import axios from 'axios';
 import { Base64 } from 'js-base64';
 
+export const reload = () => async dispatch => {
+    if (localStorage.getItem('access')) {}
+}
+
+export const refresh_token = () => async dispatch => {
+    const refresh = localStorage.getItem('refresh');
+    if (refresh) {
+        try {
+            const res = await axios.post('/jwt/refresh/', { refresh });
+            const { access } = res.data;            
+            localStorage.setItem('access', access);
+            dispatch({
+                type: REFRESH_TOKEN_SUCCESS,
+                payload: access
+            });
+        } catch (error) {
+            dispatch({
+                type: REFRESH_TOKEN_FAIL
+            });
+        }
+    }
+};
+
 export const load_user = () => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
@@ -240,22 +263,5 @@ export const set_signup_success = () => dispatch => {
     })
 }
 
-export const refresh_token = () => async dispatch => {
-    const refresh = localStorage.getItem('refresh');
-    if (refresh) {
-        try {
-            const res = await axios.post('/jwt/refresh/', { refresh });
-            const { access } = res.data;            
-            localStorage.setItem('access', access);
-            dispatch({
-                type: REFRESH_TOKEN_SUCCESS,
-                payload: access
-            });
-        } catch (error) {
-            dispatch({
-                type: REFRESH_TOKEN_FAIL
-            });
-        }
-    }
-};
+
 

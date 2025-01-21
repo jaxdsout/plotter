@@ -1,13 +1,14 @@
 import { Button } from "semantic-ui-react"
 import { connect } from "react-redux";
-import { update_list } from "../store/actions/listmaker";
+import { update_list, load_list } from "../store/actions/listmaker";
 import { set_send_mode } from "../store/actions/ui";
 
-function SendList ({ user, client, list, update_list, set_send_mode, options }) {
+function SendList ({ user, client, list, update_list, set_send_mode, options, load_list }) {
 
     const handleSendList = async (e) => {
         e.preventDefault();
         await update_list(user.id, client.id, list, options);
+        await load_list(list.id)
         set_send_mode();
     }
 
@@ -26,4 +27,4 @@ const mapStateToProps = state => ({
     options: state.listmaker.options,
 });
 
-export default connect(mapStateToProps, { update_list, set_send_mode })(SendList);
+export default connect(mapStateToProps, { update_list, set_send_mode, load_list })(SendList);

@@ -7,11 +7,11 @@ import Deals from '../deals/Deals';
 import Dash from './Dash'
 import ProfileWidget from './ProfileWidget';
 import { Divider } from 'semantic-ui-react';
-import { auth_user } from '../store/actions/auth';
+import { auth_user, load_user, refresh_token } from '../store/actions/auth';
 import { connect } from 'react-redux';
 
 
-function Dashboard ({ auth_user }) {
+function Dashboard ({ auth_user, refresh_token, load_user, user }) {
     const [profileHover, setProfileHover] = useState(false);
     const location = useLocation(); 
 
@@ -24,6 +24,13 @@ function Dashboard ({ auth_user }) {
     useEffect(() => {
         auth_user();
     }, [auth_user])
+
+    useEffect(() => {
+        if (!user) {
+            refresh_token();
+            load_user();
+        }
+    }, [user, refresh_token, load_user])
 
     return (    
         <div className='flex flex-col items-center justify-evenly'>
@@ -64,4 +71,4 @@ const mapStateToProps = state => ({
 
 });
 
-export default connect(mapStateToProps, { auth_user })(Dashboard);
+export default connect(mapStateToProps, { auth_user, refresh_token, load_user })(Dashboard);

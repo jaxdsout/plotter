@@ -28,7 +28,7 @@ function Login ({ login, isAuthenticated, error, message, auth_user }) {
         if (isAuthenticated) {
             navigate('/dashboard/home');
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, navigate]);
     
 
     return (

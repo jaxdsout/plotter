@@ -28,7 +28,7 @@ function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user })
 
     return (
         <>
-            {deleteConfirm === list.id ? (
+            {deleteConfirm === list?.id ? (
                 <Popup
                     content="CONFIRM DELETE"
                     open
