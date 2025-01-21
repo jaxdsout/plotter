@@ -8,8 +8,9 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 function EarningBar ({ deals }) {
   const [monthlyEarnings, setMonthlyEarnings] = useState(Array(12).fill(0)); 
 
+
   useEffect(() => {
-    if (deals) {
+    if (deals?.length > 0) {
       const earningsByMonth = Array(12).fill(0);
 
       deals.forEach(deal => {

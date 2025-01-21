@@ -359,11 +359,11 @@ export const new_guest_card = (property, agent, client, interested, move_by) => 
             }
         }; 
         const body = JSON.stringify({ property, agent, client, interested, move_by });
+        console.log(body, "guest card body")
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/cards/`, body, config);
             dispatch({
                 type: NEW_CARD_SUCCESS,
-                payload: res.data
             });
         } catch (err) {
             dispatch({

@@ -1,11 +1,9 @@
-import { useEffect, useCallback } from "react";
 import { Divider } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { update_options_order } from "../store/actions/listmaker";
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import OptionDetail from "./OptionDetail";
 
-function OptionList({ options, update_options_order, isReorderMode }) {
+function OptionList({ options, isReorderMode }) {
     const grid = 8;
 
     const getItemStyle = (isDragging, draggableStyle) => ({
@@ -35,7 +33,6 @@ function OptionList({ options, update_options_order, isReorderMode }) {
         const [movedOption] = updatedOptions.splice(result.source.index, 1);
         updatedOptions.splice(result.destination.index, 0, movedOption);
     
-        update_options_order(updatedOptions);
     };
 
     return (
@@ -83,7 +80,8 @@ function OptionList({ options, update_options_order, isReorderMode }) {
 
 const mapStateToProps = (state) => ({
     error: state.auth.error,
-    isReorderMode: state.ui.isReorderMode
+    isReorderMode: state.ui.isReorderMode,
+    options: state.listmaker.list.options
 });
 
-export default connect(mapStateToProps, { update_options_order })(OptionList);
+export default connect(mapStateToProps, { })(OptionList);

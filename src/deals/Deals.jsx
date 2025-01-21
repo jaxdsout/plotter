@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { refresh_token, load_user } from "../store/actions/auth";
 import { load_deals } from "../store/actions/agent";
 
-function Deals ({ access, refresh, refresh_token, user, load_user, load_deals }) {
+function Deals ({ access, refresh, refresh_token, user, load_user, load_deals, deals }) {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,7 +20,7 @@ function Deals ({ access, refresh, refresh_token, user, load_user, load_deals })
     }, [access, refresh, user, load_user, navigate, refresh_token]);
     
     useEffect(() => {
-        if (user) {
+        if (user && deals?.length === 0) {
             load_deals(user.id);
         }
     }, [user, load_deals]);
@@ -38,7 +38,8 @@ const mapStateToProps = state => ({
     error: state.auth.error,
     access: state.auth.access,
     refresh: state.auth.refresh,
-    user: state.auth.user
+    user: state.auth.user,
+    deals: state.agent.deals
 
 });
 

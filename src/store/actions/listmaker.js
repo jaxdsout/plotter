@@ -5,8 +5,6 @@ import {
     UPDATE_OPTION_SUCCESS,
     NEW_OPTION_FAIL,
     NEW_OPTION_SUCCESS,
-    LOAD_OPTIONS_FAIL,
-    LOAD_OPTIONS_SUCCESS,
     DELETE_OPTION_FAIL,
     DELETE_OPTION_SUCCESS,
     SEARCH_CLIENT_FAIL,
@@ -22,16 +20,14 @@ import {
     RETRIEVE_LIST_FAIL,
     RETRIEVE_LIST_SUCCESS,
     RESET_CLIENT_RESULTS,
-    RESET_CLIENT,
-    RESET_PROP,
     RESET_PROPERTY_RESULTS,
     DELETE_LIST_FAIL,
     DELETE_LIST_SUCCESS,
     SET_LIST_FOR_EDIT,
-    UPDATE_OPTION_ORDER_FAIL,
-    UPDATE_OPTION_ORDER_SUCCESS,
     UPDATE_LIST_OPTIONS_FAIL,
-    UPDATE_LIST_OPTIONS_SUCCESS
+    UPDATE_LIST_OPTIONS_SUCCESS,
+    LOAD_LIST_SUCCESS,
+    LOAD_LIST_FAIL
 } from "./types"
 
 import axios from "axios";
@@ -222,17 +218,17 @@ export const load_list = (listID) => async dispatch => {
         try {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/lists/${listID}/`, config);
             dispatch({
-                type: LOAD_OPTIONS_SUCCESS,
+                type: LOAD_LIST_SUCCESS,
                 payload: res.data
             });
         } catch (err) {
             dispatch({
-                type: LOAD_OPTIONS_FAIL
+                type: LOAD_LIST_FAIL
             });
         }
     } else {
         dispatch({
-            type: LOAD_OPTIONS_FAIL
+            type: LOAD_LIST_FAIL
         });
     }
 };
@@ -291,26 +287,6 @@ export const update_option = (option, price, unit_number, layout, sq_ft, availab
         });
     }
 };
-
-export const update_options_order = (options) =>  dispatch => {
-    if (localStorage.getItem('access')) {
-        try {
-            dispatch({
-                type: UPDATE_OPTION_ORDER_SUCCESS,
-                payload: options
-            });
-        } catch (err) {
-            dispatch({
-                type: UPDATE_OPTION_ORDER_FAIL
-            });
-        }
-    } else {
-        dispatch({
-            type: UPDATE_OPTION_ORDER_FAIL
-        });
-    }
-};
-
 
 export const clear_options = (listID) => async dispatch => {
     if (localStorage.getItem('access')) {
@@ -384,11 +360,6 @@ export const set_search_prop = (property) => dispatch => {
     }
 }
 
-export const reset_prop = () => (dispatch) => {
-    dispatch({
-        type: RESET_PROP,
-    });
-};
 
 export const reset_prop_results = () => (dispatch) => {
     dispatch({
@@ -450,9 +421,4 @@ export const reset_client_results = () => (dispatch) => {
     });
 };
 
-export const reset_client = () => (dispatch) => {
-    dispatch({
-        type: RESET_CLIENT,
-    });
-};
 

@@ -21,8 +21,6 @@ import {
     UPDATE_STATUS_SUCCESS,
     DELETE_CLIENT_FAIL,
     DELETE_CLIENT_SUCCESS,
-    NEW_CARD_FAIL,
-    NEW_CARD_SUCCESS,
     NEW_TASK_FAIL,
     NEW_TASK_SUCCESS,
     LOAD_TASKS_FAIL,
@@ -94,8 +92,6 @@ export default function agentReducer(state = initialState, action) {
         case UPDATE_STATUS_SUCCESS:
         case DELETE_CLIENT_FAIL:
         case DELETE_CLIENT_SUCCESS:
-        case NEW_CARD_FAIL:
-        case NEW_CARD_SUCCESS:
         case NEW_TASK_FAIL:
         case NEW_TASK_SUCCESS:
         case LOAD_TASKS_FAIL:

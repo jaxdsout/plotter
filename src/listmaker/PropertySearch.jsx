@@ -1,10 +1,17 @@
 import { Search } from "semantic-ui-react"
 import { connect } from "react-redux";
 import { search_properties, reset_prop_results, set_search_prop, reset_prop } from "../store/actions/listmaker";
+import { useEffect, useState } from "react";
 
-function PropertySearch({ userID, search_properties, set_search_prop, prop_results, reset_prop_results}) {
+function PropertySearch({ userID, search_properties, set_search_prop, prop_results, reset_prop_results, property }) {
+    const [searchValue, setSearchValue] = useState("");
+    
+    useEffect(() => {
+        setSearchValue(property?.name || "");
+    }, [property]);
 
     const handleSearchChange = (e, { value }) => {
+        setSearchValue(value);
         if (value.length > 1) {
             search_properties(value, userID);
         }
@@ -15,10 +22,10 @@ function PropertySearch({ userID, search_properties, set_search_prop, prop_resul
         set_search_prop(selectedProperty);
     };
 
-    const handleBlur =  () => {
-        reset_prop_results()
-        reset_prop()
-    }
+    const handleBlur = () => {
+        reset_prop_results();
+    };
+
 
     return(
         <>
@@ -32,6 +39,7 @@ function PropertySearch({ userID, search_properties, set_search_prop, prop_resul
                     subtitle: `${property.address}`,
                     id: property.id,
                 }))}
+                value={searchValue}
                 icon="none"
                 size="large"
                 className=""
@@ -46,8 +54,8 @@ const mapStateToProps = state => ({
     error: state.auth.error,
     prop_results: state.listmaker.prop_results,
     list: state.listmaker.list,
-    client: state.listmaker.client,
     isListMode: state.ui.isListMode,
+    property: state.listmaker.property
 });
 
-export default connect(mapStateToProps, { set_search_prop, search_properties, reset_prop_results, reset_prop })(PropertySearch);
+export default connect(mapStateToProps, { set_search_prop, search_properties, reset_prop_results })(PropertySearch);
