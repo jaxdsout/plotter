@@ -11,7 +11,7 @@ import Commission from './Commission';
 import { load_user_data} from '../store/actions/agent';
 import { tab_switch } from '../store/actions/ui';
 import Upcoming from './Upcoming';
-import { load_user, refresh_token, } from '../store/actions/auth';
+import { load_user, } from '../store/actions/auth';
 
 function Dash ({ tab_switch }) {
     const [activeTab, setActiveTab] = useState("to-do");

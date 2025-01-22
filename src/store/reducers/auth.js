@@ -14,8 +14,8 @@ import {
     REFRESH_TOKEN_FAIL, 
     REFRESH_TOKEN_SUCCESS,
     CLEAR_MESSAGE,
+    LOCK_OUT
 } from '../actions/types';
-
 
 const initialState = {
     access: localStorage.getItem('access'),
@@ -23,6 +23,7 @@ const initialState = {
     isAuthenticated: false,
     user: null,
 };
+
 
 
 export default function authReducer(state = initialState, action) {
@@ -112,6 +113,7 @@ export default function authReducer(state = initialState, action) {
                 message: null,
                 error: null,
             };
+        case LOCK_OUT:
         case PASSWORD_RESET_CONFIRM_FAIL:
         case PASSWORD_RESET_FAIL:
         case PASSWORD_RESET_CONFIRM_SUCCESS:

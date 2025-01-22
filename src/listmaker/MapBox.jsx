@@ -38,6 +38,8 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
           .addTo(map);
 
         bounds.extend([parseFloat(option.longitude), parseFloat(option.latitude)]);
+
+        return marker
       });
 
       map.fitBounds(bounds, {

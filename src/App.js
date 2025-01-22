@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import SignUpForm from './auth/SignUp';
 import Login from './auth/Login';
 import ResetPassword from './auth/ResetPassword';
@@ -36,7 +36,6 @@ function App() {
           <Route path="deals" element={<Deals />} />
         </Route>
         <Route path="/list/:uuid/" element={ <ClientList /> } />
-        {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
       </Routes>
       </main>
       <footer>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Clients from '../clients/Clients';
@@ -7,15 +7,12 @@ import Deals from '../deals/Deals';
 import Dash from './Dash'
 import ProfileWidget from './ProfileWidget';
 import { Divider } from 'semantic-ui-react';
-import { auth_user, refresh_token, load_user } from '../store/actions/auth';
+import { auth_user, refresh_token, load_user, lock_out } from '../store/actions/auth';
 import { connect } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
-
-function Dashboard ({ auth_user, refresh_token, access, refresh, user, load_user }) {
+function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out }) {
     const [profileHover, setProfileHover] = useState(false);
     const location = useLocation();
-    const navigate = useNavigate(); 
 
     const handleProfileWidget = () => {
         setProfileHover(prev => !prev);
@@ -23,25 +20,29 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, user, load_user
 
     const basePath = location.pathname.split('/').pop();
 
-    useEffect(() => {
+    const checkAuth = useCallback(() => {
         if (!access && !refresh) {
-            navigate('/login/');
+            lock_out();
         } else if (!access) {
             try {
                 refresh_token();
             } catch (err) {
                 console.error("Failed to refresh token:", err);
-                navigate('/login/');
+                lock_out();
             }
         } else {
-            auth_user(); 
+            auth_user();
         }
-    }, [access, refresh, navigate, auth_user, refresh_token]);
+    }, [access, refresh, auth_user, refresh_token, lock_out]);
+
+    useEffect(() => {
+        checkAuth();
+    }, [checkAuth]);
 
 
     return (    
         <div className='flex flex-col items-center justify-evenly'>
-            <div className="w-11/12 md:w-3/4 max-w-[900px] p-5 mt-5 bg-gradient-to-b from-[#26282B] to-[#1f2124] shadow-inner shadow-md rounded-lg mb-10 pb-10">
+            <div className="w-11/12 md:w-3/4 max-w-[900px] p-5 mt-10 bg-gradient-to-b from-[#26282B] to-[#1f2124] shadow-inner shadow-md rounded-lg mb-10 pb-10">
                 <div className='z-0 p-5 flex flex-row items-center justify-center bg-[#1f2124] bg-blend-color-burn rounded'>
                     <Link className='mont drop-shadow-md text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/home">
                         <i className="home icon"></i>
@@ -77,4 +78,4 @@ const mapStateToProps = state => ({
     user: state.auth.user
 });
 
-export default connect(mapStateToProps, { auth_user, refresh_token, load_user })(Dashboard);
+export default connect(mapStateToProps, { auth_user, refresh_token, load_user, lock_out })(Dashboard);

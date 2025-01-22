@@ -1,4 +1,3 @@
-import { load_user } from './auth';
 import {
     NEW_CLIENT_SUCCESS,
     NEW_CLIENT_FAIL,
@@ -442,6 +441,7 @@ export const new_guest_card = (property, agent, client, interested, move_by) => 
             dispatch({
                 type: NEW_CARD_SUCCESS,
             });
+            return res.data
         } catch (err) {
             dispatch({
                 type: NEW_CARD_FAIL
@@ -569,16 +569,18 @@ export const load_properties = () => async dispatch => {
 
 export const load_user_data = (userID) => async dispatch => {
     try {
-        const [clients, lists, deals, properties] = await Promise.all([
+        const [clients, lists, deals, tasks, properties] = await Promise.all([
             dispatch(load_clients(userID)), 
             dispatch(load_lists(userID)),
             dispatch(load_deals(userID)),
+            dispatch(load_tasks(userID)),
             dispatch(load_properties())
         ]);
 
         dispatch({ type: 'LOAD_CLIENTS_SUCCESS', payload: clients });
         dispatch({ type: 'LOAD_LISTS_SUCCESS', payload: lists });
         dispatch({ type: 'LOAD_DEALS_SUCCESS', payload: deals });
+        dispatch({ type: 'LOAD_TASKS_SUCCESS', payload: tasks });
         dispatch({ type: 'LOAD_PROPERTIES_SUCCESS', payload: properties });
 
     } catch (error) {

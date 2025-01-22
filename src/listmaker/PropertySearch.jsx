@@ -1,6 +1,6 @@
 import { Search } from "semantic-ui-react"
 import { connect } from "react-redux";
-import { search_properties, reset_prop_results, set_search_prop, reset_prop } from "../store/actions/listmaker";
+import { search_properties, reset_prop_results, set_search_prop } from "../store/actions/listmaker";
 import { useEffect, useState } from "react";
 
 function PropertySearch({ userID, search_properties, set_search_prop, prop_results, reset_prop_results, property }) {

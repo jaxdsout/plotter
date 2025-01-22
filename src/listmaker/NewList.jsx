@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { Modal, Button, Form, Divider, FormField, Message } from "semantic-ui-react";
+import { Modal, Button, Form, Divider, Message } from "semantic-ui-react";
 import MapBox from "./MapBox";
 import PropertySearch from "./PropertySearch";
 import OptionList from "./OptionList";

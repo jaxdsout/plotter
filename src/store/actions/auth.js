@@ -15,7 +15,8 @@ import {
     PASSWORD_RESET_CONFIRM_SUCCESS,
     PASSWORD_RESET_SUCCESS,
     REFRESH_TOKEN_FAIL,
-    REFRESH_TOKEN_SUCCESS
+    REFRESH_TOKEN_SUCCESS,
+    LOCK_OUT
 } from './types';
 
 import axios from 'axios';
@@ -56,7 +57,9 @@ export const auth_user = () => async (dispatch) => {
     }
 
     const config = {
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${access}`
+                },
     };
 
     const body = JSON.stringify({ token: access });
@@ -72,7 +75,6 @@ export const auth_user = () => async (dispatch) => {
             try {
                 const res = await axios.post(`${process.env.REACT_APP_API_URL}/jwt/refresh/`, { refresh }, config);
                 
-                // Update tokens in localStorage
                 localStorage.setItem('access', res.data.access);
 
                 dispatch({ type: AUTHENTICATE_SUCCESS });
@@ -259,6 +261,11 @@ export const logout = () => dispatch => {
         type: LOGOUT
     });
 }
+
+export const lock_out = () => dispatch => {
+    dispatch({ type: LOCK_OUT });
+    window.location.href = '/login/'; 
+};
 
 
 
