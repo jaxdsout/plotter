@@ -7,12 +7,12 @@ import Deals from '../deals/Deals';
 import Dash from './Dash'
 import ProfileWidget from './ProfileWidget';
 import { Divider } from 'semantic-ui-react';
-import { auth_user, load_user, refresh_token } from '../store/actions/auth';
+import { auth_user, refresh_token, load_user } from '../store/actions/auth';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
-function Dashboard ({ auth_user, refresh_token, access, refresh }) {
+function Dashboard ({ auth_user, refresh_token, access, refresh, user, load_user }) {
     const [profileHover, setProfileHover] = useState(false);
     const location = useLocation();
     const navigate = useNavigate(); 
@@ -24,17 +24,20 @@ function Dashboard ({ auth_user, refresh_token, access, refresh }) {
     const basePath = location.pathname.split('/').pop();
 
     useEffect(() => {
-        auth_user();
-    }, [auth_user])
+        if (!access && !refresh) {
+            navigate('/login/');
+        } else if (!access) {
+            try {
+                refresh_token();
+            } catch (err) {
+                console.error("Failed to refresh token:", err);
+                navigate('/login/');
+            }
+        } else {
+            auth_user(); 
+        }
+    }, [access, refresh, navigate, auth_user, refresh_token]);
 
-    useEffect(() => {
-        if (!access & !refresh) {
-            navigate('/login/')
-        }
-        if (!access) {
-            refresh_token();
-        }
-    }, [access, refresh, navigate, refresh_token])
 
     return (    
         <div className='flex flex-col items-center justify-evenly'>
@@ -72,7 +75,6 @@ const mapStateToProps = state => ({
     access: state.auth.access,
     refresh: state.auth.refresh,
     user: state.auth.user
-
 });
 
 export default connect(mapStateToProps, { auth_user, refresh_token, load_user })(Dashboard);

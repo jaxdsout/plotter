@@ -27,18 +27,17 @@ import {
     LOAD_TASKS_SUCCESS,
     LOAD_PROPERTIES_FAIL,
     LOAD_PROPERTIES_SUCCESS,
-    SET_COMMISSION_PROP_SUCCESS,
-    SET_COMMISSION_PROP_FAIL,
+    LOAD_DEAL_SUCCESS, 
+    LOAD_DEAL_FAIL,
     LOGOUT
 } from '../actions/types';
 
 const initialState = {
-    access: localStorage.getItem('access'),
-    refresh: localStorage.getItem('refresh'),
     clients: [],
     deals: [],
     lists: [],
     tasks: [],
+    deal: null,
     properties: [],
 };
 
@@ -54,6 +53,11 @@ export default function agentReducer(state = initialState, action) {
             return {
                 ...state,
                 deals: payload
+            }
+        case LOAD_DEAL_SUCCESS:
+            return {
+                ...state,
+                deal: payload
             }
         case LOAD_LISTS_SUCCESS:
             return {
@@ -84,6 +88,7 @@ export default function agentReducer(state = initialState, action) {
                 tasks: [],
                 properties: [],
             }
+        case LOAD_DEAL_FAIL:
         case NEW_CLIENT_SUCCESS:
         case NEW_LIST_SUCCESS:
         case NEW_DEAL_SUCCESS:

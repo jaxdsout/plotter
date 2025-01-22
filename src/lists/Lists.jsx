@@ -1,26 +1,9 @@
 import NewList from "../listmaker/NewList"
 import AllLists from "./AllLists";
 import { connect } from "react-redux";
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from "react";
-import { refresh_token, load_user } from "../store/actions/auth";
-import { load_lists } from "../store/actions/agent";
 
-function Lists ({ access, refresh, refresh_token, user, load_user, load_lists, lists }) {
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (!access && !refresh) {
-            navigate('/login/');
-        } 
-    }, [access, refresh, navigate]);
+function Lists () {
     
-    useEffect(() => {
-        if (user && lists?.length === 0) {
-            load_lists(user.id);
-        }
-    }, [user, load_lists, lists]);
-
     return (
         <>
             <NewList />
@@ -37,4 +20,4 @@ const mapStateToProps = state => ({
     lists: state.agent.lists
 });
 
-export default connect(mapStateToProps, { refresh_token, load_user, load_lists })(Lists);
+export default connect(mapStateToProps, {})(Lists);

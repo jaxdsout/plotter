@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { connect } from "react-redux"
-import { activate, set_activate_success } from "../store/actions/auth";
+import { activate } from "../store/actions/auth";
+import { set_activate_success } from "../store/actions/ui";
 import { Button, Image, Message } from "semantic-ui-react";
 import { useEffect } from "react";
 
@@ -13,11 +14,11 @@ function Activate ({ activate, message, activateSuccess, error, set_activate_suc
     }
 
     useEffect(() => {
-            if (activateSuccess) {
-                set_activate_success();
-                setTimeout(() => navigate('/login/'), 3000);
-            }
-        }, [activateSuccess])
+        if (activateSuccess) {
+            set_activate_success();
+            setTimeout(() => navigate('/login/'), 3000);
+        }
+    }, [activateSuccess])
 
     return (
         <div className="flex flex-col items-center justify-evenly">

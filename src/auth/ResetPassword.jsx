@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useEffect, useState } from "react"
-import { reset_password, set_reset_success } from "../store/actions/auth";
+import { reset_password } from "../store/actions/auth";
+import { set_reset_success } from "../store/actions/ui";
 import { Button, FormField, Form, Image, Message } from "semantic-ui-react";
 
 function ResetPassword ({ reset_password, message, resetSuccess, set_reset_success }) {

@@ -13,7 +13,7 @@ function EarningBar ({ deals }) {
     if (deals?.length > 0) {
       const earningsByMonth = Array(12).fill(0);
 
-      deals.forEach(deal => {
+      deals?.forEach(deal => {
         const dealDate = new Date(deal.deal_date);
         const month = dealDate.getMonth(); 
         const commission = parseFloat(deal.commission) || 0; 

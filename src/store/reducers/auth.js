@@ -1,8 +1,6 @@
 import {
     SIGNUP_SUCCESS,
     SIGNUP_FAIL,
-    ACTIVATE_SUCCESS,
-    ACTIVATE_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOAD_USER_SUCCESS,
@@ -13,13 +11,9 @@ import {
     PASSWORD_RESET_CONFIRM_FAIL,
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_CONFIRM_SUCCESS,
-    PASSWORD_RESET_SUCCESS,
     REFRESH_TOKEN_FAIL, 
     REFRESH_TOKEN_SUCCESS,
     CLEAR_MESSAGE,
-    SET_RESET_SUCCESS,
-    SET_ACTIVATE_SUCCESS,
-    SET_SIGNUP_SUCCESS
 } from '../actions/types';
 
 
@@ -28,10 +22,8 @@ const initialState = {
     refresh: localStorage.getItem('refresh'),
     isAuthenticated: false,
     user: null,
-    signupSuccess: null,
-    resetSuccess: null,
-    activateSuccess: null
 };
+
 
 export default function authReducer(state = initialState, action) {
     const { type, payload } = action;
@@ -41,7 +33,6 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 isAuthenticated: false,
                 message: 'Please check provided email address to activate account. Redirecting to login...',
-                signupSuccess: true
             }
         case AUTHENTICATE_SUCCESS:
             return {
@@ -65,7 +56,7 @@ export default function authReducer(state = initialState, action) {
             return {
                 ...state,
                 isAuthenticated: true,
-                access: payload.access,
+                access: payload,
                 error: null,
                 message: 'Refresh successful!',
             };
@@ -121,39 +112,6 @@ export default function authReducer(state = initialState, action) {
                 message: null,
                 error: null,
             };
-        case PASSWORD_RESET_SUCCESS:
-            return {
-                ...state,
-                message: 'An email will be sent to you if address is in our system. Redirecting to login...',
-                resetSuccess: true
-            }
-        case ACTIVATE_SUCCESS:
-            return {
-                ...state,
-                message: 'Account successfully activated. Redirecting to login...',
-                activateSuccess: true
-            }
-        case ACTIVATE_FAIL:
-            return {
-                ...state,
-                error: 'Account already activated',
-                activateSuccess: null
-            }
-        case SET_RESET_SUCCESS:
-            return {
-                ...state,
-                resetSuccess: null,
-            }
-        case SET_ACTIVATE_SUCCESS:
-            return {
-                ...state,
-                activateSuccess: null,
-            }
-        case SET_SIGNUP_SUCCESS:
-            return {
-                ...state,
-                signupSuccess: null,
-            }
         case PASSWORD_RESET_CONFIRM_FAIL:
         case PASSWORD_RESET_FAIL:
         case PASSWORD_RESET_CONFIRM_SUCCESS:

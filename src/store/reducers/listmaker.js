@@ -39,8 +39,6 @@ import {
 } from '../actions/types';
 
 const initialState = {
-    access: localStorage.getItem('access'),
-    refresh: localStorage.getItem('refresh'),
     client_results: [],
     client: null,
     list: null,

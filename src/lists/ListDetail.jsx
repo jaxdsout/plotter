@@ -1,4 +1,4 @@
-import { Button, Input, Divider, Form, Popup } from "semantic-ui-react";
+import { Button, Input, Divider, Form, Popup, Loader, Dimmer } from "semantic-ui-react";
 import { reset_list_mode, set_list_mode } from "../store/actions/ui";
 import { connect } from "react-redux";
 import { set_search_client, update_list_options, new_option, set_list_edit, load_list} from "../store/actions/listmaker";
@@ -60,8 +60,9 @@ function ListDetail({ listID, list, options, property, client, user, set_list_mo
     };
 
     useEffect(() => {
-        console.log(listID)
-        load_list(listID)
+        if (listID) {
+            load_list(listID);
+        }
     }, [listID, load_list])
 
     return(
@@ -111,7 +112,8 @@ function ListDetail({ listID, list, options, property, client, user, set_list_mo
                 </>
             ) : (
                 <>
-                    <div className="flex flex-col justify-evenly items-center">
+                    {list ? (
+                        <div className="flex flex-col justify-evenly items-center">
                         <div className="flex flex-row justify-evenly mb-1">
                             <div className="p-2 mr-2">
                                 <p><b>Client: </b>{list?.client_name}</p>
@@ -171,7 +173,15 @@ function ListDetail({ listID, list, options, property, client, user, set_list_mo
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                        </div>
+                    ) : (
+                        <>
+                            <Dimmer active>
+                                <Loader />
+                            </Dimmer>
+                        </>
+                    )}
+                 
                 </>
             )}
 

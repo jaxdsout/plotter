@@ -29,6 +29,8 @@ import {
     UPDATE_TASK_SUCCESS,
     LOAD_PROPERTIES_FAIL,
     LOAD_PROPERTIES_SUCCESS,
+    LOAD_DEAL_SUCCESS,
+    LOAD_DEAL_FAIL
 } from './types';
 
 import axios from 'axios';
@@ -108,6 +110,7 @@ export const load_clients = (userID) => async dispatch => {
                 type: LOAD_CLIENTS_SUCCESS,
                 payload: res.data
             });
+            return res.data;
         } catch (err) {
             dispatch({
                 type: LOAD_CLIENTS_FAIL
@@ -217,6 +220,7 @@ export const load_deals = (userID) => async dispatch => {
                 type: LOAD_DEALS_SUCCESS,
                 payload: res.data
             });
+            return res.data;
         } catch (err) {
             dispatch({
                 type: LOAD_DEALS_FAIL
@@ -225,6 +229,32 @@ export const load_deals = (userID) => async dispatch => {
     } else {
         dispatch({
             type: LOAD_DEALS_FAIL
+        });
+    }
+};
+
+export const load_deal = (dealID) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/deals/${dealID}/`, config);
+            dispatch({
+                type: LOAD_DEAL_SUCCESS,
+                payload: res.data
+            });
+        } catch (err) {
+            dispatch({
+                type: LOAD_DEAL_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: LOAD_DEAL_FAIL
         });
     }
 };
@@ -336,6 +366,7 @@ export const load_lists = (userID) => async dispatch => {
                 type: LOAD_LISTS_SUCCESS,
                 payload: res.data
             });
+            return res.data;
         } catch (err) {
             dispatch({
                 type: LOAD_LISTS_FAIL
@@ -420,6 +451,7 @@ export const load_tasks = (userID) => async dispatch => {
                 type: LOAD_TASKS_SUCCESS,
                 payload: res.data
             });
+            return res.data;
         } catch (err) {
             dispatch({
                 type: LOAD_TASKS_FAIL
@@ -475,6 +507,7 @@ export const load_properties = () => async dispatch => {
                 type: LOAD_PROPERTIES_SUCCESS,
                 payload: res.data
             });
+            return res.data;
         } catch (err) {
             dispatch({
                 type: LOAD_PROPERTIES_FAIL
@@ -488,4 +521,21 @@ export const load_properties = () => async dispatch => {
 };
 
 
+export const load_user_data = (userID) => async dispatch => {
+    try {
+        const [clients, lists, deals, properties] = await Promise.all([
+            dispatch(load_clients(userID)), 
+            dispatch(load_lists(userID)),
+            dispatch(load_deals(userID)),
+            dispatch(load_properties())
+        ]);
 
+        dispatch({ type: 'LOAD_CLIENTS_SUCCESS', payload: clients });
+        dispatch({ type: 'LOAD_LISTS_SUCCESS', payload: lists });
+        dispatch({ type: 'LOAD_DEALS_SUCCESS', payload: deals });
+        dispatch({ type: 'LOAD_PROPERTIES_SUCCESS', payload: properties });
+
+    } catch (error) {
+        console.error('Error loading data:', error);
+    }
+};
