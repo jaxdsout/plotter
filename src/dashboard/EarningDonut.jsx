@@ -19,7 +19,7 @@ function EarningDonut ({ deals }) {
     if (deals?.length > 0) {
       const earningsByStatus = Array(4).fill(0);
 
-      deals.forEach(deal => {
+      deals?.forEach(deal => {
         const status = deal.status; 
         const commission = parseFloat(deal.commission) || 0;
         const statusIndex = statusMap[status]; 

@@ -11,7 +11,10 @@ import {
     CLEAR_MESSAGE,
     RESET_CARD_FORM,
     TAB_SWITCH_CLEAR,
-    RESET_COMMISSION_SEARCH
+    RESET_COMMISSION_SEARCH,
+    SET_RESET_SUCCESS,
+    SET_ACTIVATE_SUCCESS,
+    SET_SIGNUP_SUCCESS
 } from "./types"
 
 export const clear_message = () => dispatch => {
@@ -106,5 +109,22 @@ export const tab_switch = () => dispatch => {
     });
     return Promise.resolve();
 };
+
+export const set_reset_success = () => dispatch => {
+    dispatch({
+        type: SET_RESET_SUCCESS
+    })
+}
+
+export const set_activate_success = () => dispatch => {
+    dispatch({
+        type: SET_ACTIVATE_SUCCESS
+    })
+}
+export const set_signup_success = () => dispatch => {
+    dispatch({
+        type: SET_SIGNUP_SUCCESS
+    })
+}
 
 

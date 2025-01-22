@@ -3,21 +3,18 @@ import EarningDonut from './EarningDonut';
 import EarningBar from './EarningBar';
 import { connect } from "react-redux";
 import { Divider } from 'semantic-ui-react';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Calculator from './Calculator';
 import Todos from './Todos';
 import Commission from './Commission';
-import { load_deals, load_properties } from '../store/actions/agent';
+import { load_user_data} from '../store/actions/agent';
 import { tab_switch } from '../store/actions/ui';
 import Upcoming from './Upcoming';
-import { load_user, refresh_token } from '../store/actions/auth';
+import { load_user, refresh_token, } from '../store/actions/auth';
 
-function Dash ({ user, load_deals, tab_switch, access, properties, refresh, load_properties, load_user, refresh_token }) {
+function Dash ({ tab_switch }) {
     const [activeTab, setActiveTab] = useState("to-do");
-
-    const navigate = useNavigate();
  
     const handleCommissionTab = () => {
         tab_switch();
@@ -28,31 +25,6 @@ function Dash ({ user, load_deals, tab_switch, access, properties, refresh, load
         tab_switch();
         setActiveTab("guest card")
     }
-
-    useEffect(() => {
-        if (!access && !refresh) {
-            navigate('/login/');
-        } 
-    }, [access, refresh, navigate]);
-
-    useEffect(() => {
-        if (user !== null) {
-            load_deals(user.id);            
-        }
-    }, [user, load_deals]);
-
-    useEffect(() => {
-        if (user !== null && properties?.length === 0) {
-            load_properties();
-        }
-    }, [properties, load_properties, user]);
-
-    useEffect(() => {
-        if (!user) {
-            refresh_token();
-            load_user();
-        }
-    }, [user, refresh_token, load_user])
 
     return (
         <div className='transition ease-in-out delay-150'>
@@ -112,4 +84,4 @@ const mapStateToProps = state => ({
 
 });
 
-export default connect(mapStateToProps, { load_deals, tab_switch, load_properties, refresh_token, load_user })(Dash);
+export default connect(mapStateToProps, { tab_switch, load_user_data, load_user })(Dash);

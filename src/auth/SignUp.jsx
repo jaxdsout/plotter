@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState, useEffect } from "react"
-import { set_signup_success, signup } from "../store/actions/auth";
+import { signup } from "../store/actions/auth";
+import { set_signup_success } from "../store/actions/ui";
 import { Button, Divider, Form, FormField, Message, Image } from "semantic-ui-react";
 
 function Signup ({ signup, error, message, signupSuccess, set_signup_success }) {

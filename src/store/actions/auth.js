@@ -14,98 +14,139 @@ import {
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_CONFIRM_SUCCESS,
     PASSWORD_RESET_SUCCESS,
-    REFRESH_TOKEN_SUCCESS,
     REFRESH_TOKEN_FAIL,
-    SET_RESET_SUCCESS,
-    SET_ACTIVATE_SUCCESS,
-    SET_SIGNUP_SUCCESS
+    REFRESH_TOKEN_SUCCESS
 } from './types';
 
 import axios from 'axios';
 import { Base64 } from 'js-base64';
+import { load_user_data } from './agent';
 
-export const reload = () => async dispatch => {
-    if (localStorage.getItem('access')) {}
-}
+
+
+export const login = (email, password) => async (dispatch) => {
+    const config = {
+        headers: { 'Content-Type': 'application/json' },
+    };
+
+    const body = JSON.stringify({ email, password });
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/jwt/create/`, body, config);
+
+        localStorage.setItem('access', res.data.access);
+        localStorage.setItem('refresh', res.data.refresh);
+
+        dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+        dispatch(auth_user());
+    } catch (error) {
+        dispatch({
+            type: LOGIN_FAIL,
+            payload: error.response?.data?.detail || 'Login failed. Please try again.',
+        });
+    }
+};
+
+export const auth_user = () => async (dispatch) => {
+    const access = localStorage.getItem('access');
+
+    if (!access) {
+        dispatch({ type: AUTHENTICATE_FAIL });
+        return;
+    }
+
+    const config = {
+        headers: { 'Content-Type': 'application/json' },
+    };
+
+    const body = JSON.stringify({ token: access });
+
+    try {
+        await axios.post(`${process.env.REACT_APP_API_URL}/jwt/verify/`, body, config);
+
+        dispatch({ type: AUTHENTICATE_SUCCESS });
+        dispatch(load_user());
+    } catch (err) {
+        const refresh = localStorage.getItem('refresh');
+        if (refresh) {
+            try {
+                const res = await axios.post(`${process.env.REACT_APP_API_URL}/jwt/refresh/`, { refresh }, config);
+                
+                // Update tokens in localStorage
+                localStorage.setItem('access', res.data.access);
+
+                dispatch({ type: AUTHENTICATE_SUCCESS });
+                dispatch(load_user());
+            } catch (refreshErr) {
+                dispatch({ type: AUTHENTICATE_FAIL });
+                localStorage.removeItem('access');
+                localStorage.removeItem('refresh');
+            }
+        } else {
+            dispatch({ type: AUTHENTICATE_FAIL });
+            localStorage.removeItem('access');
+            localStorage.removeItem('refresh');
+        }
+    }
+};
+
+export const load_user = () => async (dispatch) => {
+    const access = localStorage.getItem('access');
+
+    if (!access) {
+        dispatch({ type: LOAD_USER_FAIL });
+        return;
+    }
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${access}`,
+        },
+    };
+
+    try {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/me/`, config);
+        dispatch({ type: LOAD_USER_SUCCESS, payload: res.data });
+        dispatch(load_user_data(res.data.id));
+    } catch (err) {
+        dispatch({ type: LOAD_USER_FAIL });
+    }
+};
 
 export const refresh_token = () => async dispatch => {
     const refresh = localStorage.getItem('refresh');
-    if (refresh) {
-        try {
-            const res = await axios.post('/jwt/refresh/', { refresh });
-            const { access } = res.data;            
-            localStorage.setItem('access', access);
-            dispatch({
-                type: REFRESH_TOKEN_SUCCESS,
-                payload: access
-            });
-        } catch (error) {
-            dispatch({
-                type: REFRESH_TOKEN_FAIL
-            });
-        }
+    if (!refresh) {
+        dispatch({ type: REFRESH_TOKEN_FAIL });
+        return;
     }
-};
 
-export const load_user = () => async dispatch => {
-    if (localStorage.getItem('access')) {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('access')}`,
-            }
-        }; 
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/me/`, config);
-            dispatch({
-                type: LOAD_USER_SUCCESS,
-                payload: res.data
-            });
-        } catch (err) {
-            dispatch({
-                type: LOAD_USER_FAIL
-            });
-        }
-    } else {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    const body = JSON.stringify({ refresh });
+
+    try {
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/jwt/refresh/`, body, config);
+
+        localStorage.setItem('access', res.data.access); // Update the access token in localStorage
+
         dispatch({
-            type: LOAD_USER_FAIL
+            type: REFRESH_TOKEN_SUCCESS,
+            payload: res.data.access,
         });
+    } catch (err) {
+        dispatch({ type: REFRESH_TOKEN_FAIL });
+        localStorage.removeItem('access'); // Clear tokens on failure
+        localStorage.removeItem('refresh');
     }
 };
 
-export const auth_user = () => async dispatch => {
-    if(localStorage.getItem('access')) {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('access')}`
-            }
-        };
-        const body = JSON.stringify({ token: localStorage.getItem('access') })
-        try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/jwt/verify/`, body, config)
 
-            if (res.data.code !== 'token_not_valid') {
-                dispatch({
-                    type: AUTHENTICATE_SUCCESS
-                });
-            } else {
-                dispatch({
-                    type: AUTHENTICATE_FAIL
-                });
-            }
-        } catch (err) {
-            dispatch({
-                type: AUTHENTICATE_FAIL
-            });
-        }
-    } else {
-        dispatch({
-            type: AUTHENTICATE_FAIL
-        });
-    }
-};
+
 
 export const signup = (first_name, last_name, email, password, re_password) => async dispatch => {
     const config = {
@@ -164,33 +205,6 @@ export const activate = (uid, token) => async dispatch => {
     }
 }
 
-export const login = (email, password) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
-
-    const body = JSON.stringify({ email, password });
-    
-    try {
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/jwt/create/`, body, config);
-        dispatch({
-            type: LOGIN_SUCCESS,
-            payload: res.data
-        })
-
-        dispatch(load_user());
-
-    } catch (error) {
-        dispatch({
-            type: LOGIN_FAIL
-        })
-    }
-
-
-}
-
 export const reset_password = (email) => async dispatch => {
     const config = {
         headers: {
@@ -246,22 +260,6 @@ export const logout = () => dispatch => {
     });
 }
 
-export const set_reset_success = () => dispatch => {
-    dispatch({
-        type: SET_RESET_SUCCESS
-    })
-}
-
-export const set_activate_success = () => dispatch => {
-    dispatch({
-        type: SET_ACTIVATE_SUCCESS
-    })
-}
-export const set_signup_success = () => dispatch => {
-    dispatch({
-        type: SET_SIGNUP_SUCCESS
-    })
-}
 
 
 

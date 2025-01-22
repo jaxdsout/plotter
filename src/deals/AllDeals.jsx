@@ -1,8 +1,8 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import DealDetail from "./DealDetail";
-import { Modal, Button, Loader } from "semantic-ui-react";
+import { Modal, Button, Loader, Dimmer } from "semantic-ui-react";
 import { connect } from "react-redux";
 
 function AllDeals ({ deals }) {
@@ -19,36 +19,39 @@ function AllDeals ({ deals }) {
     return (
         <>
             <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
-                {deals.length > 0 ? ( 
-                <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
-                    {deals.map(deal => (
-                        <li 
-                            className='p-3 flex flex-row justify-evenly items-start font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425]' 
-                            key={deal.id}
-                        >
-                            <div className="flex justify-between">
-                                <Link onClick={() => handleOpenModal(deal.id)}>
-                                    <span><b>{deal.client_name}</b> | {deal.prop_name} | Move-in Date: {deal.move_date}</span>
-                                </Link>
-                            </div>
-                            {showDealDetail === deal.id && (
-                            <Modal className='!w-10/12 sm:!w-[500px]' open={showModal} onClose={handleCloseModal}>
-                                <Modal.Header>Deal Info</Modal.Header>
-                                <Modal.Content>
-                                    <DealDetail deal={deal} handleCloseModal={handleCloseModal}/>
-                                </Modal.Content>
-                                <Modal.Actions className="flex justify-end">
-                                    <Button onClick={handleCloseModal}>CLOSE</Button>
-                                </Modal.Actions>
-                            </Modal>
-                        )}
-                        </li>
-                    ))}
-                </ul>
+                {deals ? ( 
+                    <>
+                        {deals?.map(deal => (
+                            <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
+                                <li className='p-3 flex flex-row justify-evenly items-start font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425]' key={deal.id}>
+                                    <div className="flex justify-between">
+                                        <Link onClick={() => handleOpenModal(deal.id)}>
+                                            <span>
+                                                <b>{deal.client_name}</b> | {deal.prop_name} | Move-in Date: {deal.move_date}
+                                            </span>
+                                        </Link>
+                                    </div>
+                                    {showDealDetail === deal.id && (
+                                        <Modal className='!w-10/12 sm:!w-[500px]' open={showModal} onClose={handleCloseModal}>
+                                            <Modal.Header>Deal Info</Modal.Header>
+                                            <Modal.Content>
+                                                <DealDetail dealID={deal.id} handleCloseModal={handleCloseModal}/>
+                                            </Modal.Content>
+                                            <Modal.Actions className="flex justify-end">
+                                                <Button onClick={handleCloseModal}>CLOSE</Button>
+                                            </Modal.Actions>
+                                        </Modal>
+                                    )}
+                                </li>
+                            </ul>
+                        ))}
+                    </>
                 ) : (
-                    <div className="text-center text-white">
-                        <Loader />
-                    </div>
+                    <>
+                        <Dimmer active>
+                            <Loader />
+                        </Dimmer>
+                    </>
                 )}
             </div>
         </>
@@ -56,7 +59,6 @@ function AllDeals ({ deals }) {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
     deals: state.agent.deals,
     user: state.auth.user
