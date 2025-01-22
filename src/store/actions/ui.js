@@ -16,7 +16,8 @@ import {
     SET_ACTIVATE_SUCCESS,
     SET_SIGNUP_SUCCESS,
     RESET_DEAL_MODE,
-    SET_DEAL_MODE
+    SET_DEAL_MODE,
+    RESET_EDIT_LIST
 } from "./types"
 
 export const clear_message = () => dispatch => {
@@ -140,6 +141,11 @@ export const set_activate_success = () => dispatch => {
 export const set_signup_success = () => dispatch => {
     dispatch({
         type: SET_SIGNUP_SUCCESS
+    })
+}
+export const reset_edit_list = () => dispatch => {
+    dispatch({
+        type: RESET_EDIT_LIST
     })
 }
 

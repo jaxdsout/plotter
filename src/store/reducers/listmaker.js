@@ -25,7 +25,7 @@ import {
     RESET_DEAL_FORM,
     UPDATE_LIST_OPTIONS_FAIL,
     UPDATE_LIST_OPTIONS_SUCCESS,
-    RESET_LIST_MODE,
+    RESET_EDIT_LIST,
     LOAD_LIST_FAIL,
     LOAD_LIST_SUCCESS,
     NEW_CARD_FAIL,
@@ -76,7 +76,7 @@ export default function listmakerReducer(state = initialState, action) {
                 ...state,
                 retrlist: payload,
             }
-        case RESET_LIST_MODE:
+        case RESET_EDIT_LIST:
             return {
                 ...state,
                 options: null,
