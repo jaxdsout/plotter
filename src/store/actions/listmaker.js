@@ -98,6 +98,7 @@ export const update_list = (agent, client, list, options) => async dispatch => {
         }; 
         const uuid = list.uuid === null ? uuidv4() : list.uuid;
         const body = JSON.stringify({ agent, client, uuid, options });
+        console.log(body, 'body at update_list')
         try {
             const res = await axios.put(`${process.env.REACT_APP_API_URL}/lists/${list.id}/`, body, config);
             dispatch({
@@ -174,13 +175,6 @@ export const retrieve_list = (uuid) => async dispatch => {
     }
 };
 
-
-export const set_list_edit = (list) => dispatch => {
-    dispatch({
-        type: SET_LIST_FOR_EDIT,
-        payload: list,
-    });
-};
 
 export const new_option = (property, list, client) => async dispatch => {
     if (localStorage.getItem('access')) {
