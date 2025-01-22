@@ -14,12 +14,19 @@ function Deals ({ access, refresh, refresh_token, user, load_user, load_deals, d
             navigate('/login/');
         } 
     }, [access, refresh, navigate]);
+
+    useEffect(() => {
+        if (!user) {
+            refresh_token();
+            load_user();
+        }
+    }, [user, refresh_token, load_user])
     
     useEffect(() => {
         if (user && deals?.length === 0) {
             load_deals(user.id);
         }
-    }, [user, load_deals]);
+    }, [user, load_deals, deals]);
 
     
     return (

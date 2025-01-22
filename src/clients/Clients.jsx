@@ -14,6 +14,13 @@ function Clients({ refresh, access, refresh_token, user, load_user, load_clients
             navigate('/login/');
         } 
     }, [access, refresh, navigate]);
+
+    useEffect(() => {
+        if (!user) {
+            refresh_token();
+            load_user();
+        }
+    }, [user, refresh_token, load_user])
     
     useEffect(() => {
         if (user && clients?.length === 0) {

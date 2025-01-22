@@ -12,8 +12,9 @@ import Commission from './Commission';
 import { load_deals, load_properties } from '../store/actions/agent';
 import { tab_switch } from '../store/actions/ui';
 import Upcoming from './Upcoming';
+import { load_user, refresh_token } from '../store/actions/auth';
 
-function Dash ({ user, load_deals, tab_switch, access, properties, refresh, load_properties }) {
+function Dash ({ user, load_deals, tab_switch, access, properties, refresh, load_properties, load_user, refresh_token }) {
     const [activeTab, setActiveTab] = useState("to-do");
 
     const navigate = useNavigate();
@@ -45,6 +46,13 @@ function Dash ({ user, load_deals, tab_switch, access, properties, refresh, load
             load_properties();
         }
     }, [properties, load_properties, user]);
+
+    useEffect(() => {
+        if (!user) {
+            refresh_token();
+            load_user();
+        }
+    }, [user, refresh_token, load_user])
 
     return (
         <div className='transition ease-in-out delay-150'>
@@ -104,4 +112,4 @@ const mapStateToProps = state => ({
 
 });
 
-export default connect(mapStateToProps, { load_deals, tab_switch, load_properties })(Dash);
+export default connect(mapStateToProps, { load_deals, tab_switch, load_properties, refresh_token, load_user })(Dash);

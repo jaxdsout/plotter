@@ -34,7 +34,8 @@ import {
     TAB_SWITCH_CLEAR,
     RESET_COMMISSION_SEARCH,
     SET_OPTION_ORDER,
-    LOGOUT
+    LOGOUT,
+    NEW_DEAL_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -107,12 +108,16 @@ export default function listmakerReducer(state = initialState, action) {
                 list: payload,
             }
         case NEW_LIST_SUCCESS:
-        case UPDATE_LIST_OPTIONS_SUCCESS:
         case LOAD_LIST_SUCCESS:
             return {
                 ...state,
                 list: payload,
                 options: payload.options
+            }
+        case UPDATE_LIST_OPTIONS_SUCCESS:
+            return {
+                ...state,
+                options: payload
             }
         case SET_OPTION_ORDER:
             return {
@@ -151,6 +156,12 @@ export default function listmakerReducer(state = initialState, action) {
                 property: null,
                 prop_results: [],
                 retrlist: null,
+            }
+        case NEW_DEAL_SUCCESS:
+            return {
+                ...state,
+                client: null,
+                property: null
             }
         case NEW_OPTION_FAIL:
         case NEW_LIST_FAIL:
