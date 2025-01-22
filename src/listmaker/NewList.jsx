@@ -11,9 +11,10 @@ import ShareURL from "./ShareURL";
 import ReorderList from "./ReorderList";
 import { new_list, delete_list, new_option, load_list } from "../store/actions/listmaker";
 import { reset_list_mode, reset_send_mode, set_list_mode, reset_reorder_mode } from "../store/actions/ui"
+import { load_lists } from "../store/actions/agent";
 
 
-function NewList({ new_option, reset_reorder_mode, property, list, load_list, user, new_list, client, isSendMode, isListMode, isReorderMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode }) {
+function NewList({ new_option, reset_reorder_mode, property, list, load_list, load_lists, user, new_list, client, isSendMode, isListMode, isReorderMode, delete_list, reset_list_mode, reset_send_mode, set_list_mode }) {
     const [showModal, setShowModal] = useState(false);
     const [showResetModal, setShowResetModal] = useState(false);
     const [error, setError] = useState(null);
@@ -66,10 +67,11 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, us
     }
 
     const handleCloseModal = async () => {
-        setShowModal(false);
         await reset_list_mode();
+        await load_lists(user.id);
         reset_send_mode();
         reset_reorder_mode();
+        setShowModal(false);
     }
 
     return (
@@ -194,4 +196,4 @@ const mapStateToProps = state => ({
     isReorderMode: state.ui.isReorderMode
 });
 
-export default connect(mapStateToProps, { new_option, reset_reorder_mode, new_list, reset_list_mode, reset_send_mode, delete_list, set_list_mode, load_list })(NewList);
+export default connect(mapStateToProps, { new_option, reset_reorder_mode, new_list, reset_list_mode, reset_send_mode, delete_list, set_list_mode, load_list, load_lists })(NewList);

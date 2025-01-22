@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function ShareURL ({ list, isSendMode }) {
     const [copied, setCopied] = useState(false)
-    const link = `localhost:3000/list/${list.uuid}`
+    const link = `localhost:3000/list/${list?.uuid}`
 
     const handleCopy = () => {
         navigator.clipboard.writeText(link)
@@ -18,7 +18,7 @@ function ShareURL ({ list, isSendMode }) {
     }
 
     const handleOpenURL = () => {
-        if (list.uuid) {
+        if (list?.uuid) {
             const fullURL = `${window.location.origin}/list/${list.uuid}`;
             window.open(fullURL, '_blank');
         }

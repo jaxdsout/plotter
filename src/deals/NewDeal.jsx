@@ -70,8 +70,6 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
             unit_no: '',
             lease_term: '',
         });
-        setPropSel(false);
-        setClientSel(false);
     }
 
     useEffect(() => {

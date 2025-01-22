@@ -25,13 +25,6 @@ function Dashboard ({ auth_user, refresh_token, load_user, user }) {
         auth_user();
     }, [auth_user])
 
-    useEffect(() => {
-        if (!user) {
-            refresh_token();
-            load_user();
-        }
-    }, [user, refresh_token, load_user])
-
     return (    
         <div className='flex flex-col items-center justify-evenly'>
             <div className="w-11/12 md:w-3/4 max-w-[900px] p-5 mt-5 bg-gradient-to-b from-[#26282B] to-[#1f2124] shadow-inner shadow-md rounded-lg mb-10 pb-10">
