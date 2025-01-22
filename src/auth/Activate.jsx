@@ -18,7 +18,7 @@ function Activate ({ activate, message, activateSuccess, error, set_activate_suc
             set_activate_success();
             setTimeout(() => navigate('/login/'), 3000);
         }
-    }, [activateSuccess])
+    }, [activateSuccess, navigate, set_activate_success])
 
     return (
         <div className="flex flex-col items-center justify-evenly">

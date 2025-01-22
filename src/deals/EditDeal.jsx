@@ -49,16 +49,6 @@ function EditDeal ({ dealID, user, load_deal, deal, isDealMode, update_deal, res
     }
 
     useEffect(() => {
-        if (user) {
-            setFormData(prevFormData => ({
-                ...prevFormData,
-                agent: user.id
-            }));
-        }
-    }, [user]);
-
-
-    useEffect(() => {
         if (deal) {
             setFormData({
                 rent: deal.rent || '',
@@ -80,15 +70,6 @@ function EditDeal ({ dealID, user, load_deal, deal, isDealMode, update_deal, res
     }, [dealID, load_deal])
 
 
-    // useEffect(() => {
-    //     if (flatFee) {
-    //         setFormData((prevFormData) => ({ ...prevFormData, rate: '' }));
-    //         setFormData((prevFormData) => ({ ...prevFormData, flat_fee: deal?.flat_fee }));
-    //     } else {
-    //         setFormData((prevFormData) => ({ ...prevFormData, flat_fee: '' }));
-    //         setFormData((prevFormData) => ({ ...prevFormData, rate: deal?.rate }));
-    //     }
-    // }, [flatFee, rate, rent, flat_fee, deal]);
     
     return (
         <div>

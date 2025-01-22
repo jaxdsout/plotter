@@ -26,7 +26,7 @@ function ResetPassword ({ reset_password, message, resetSuccess, set_reset_succe
             set_reset_success();
             setTimeout(() => navigate('/login/'), 3000);
         }
-    }, [resetSuccess])
+    }, [resetSuccess, set_reset_success, navigate])
 
     return (
         <div className="flex flex-col items-center justify-evenly">

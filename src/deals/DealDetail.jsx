@@ -25,8 +25,9 @@ function DealDetail ({ dealID, deal, handleCloseModal, isDealMode, update_deal_s
 
     const changeStatus = async (dealID, status) => {
         if (status) {
-            await update_deal_status(dealID, status)
-            load_deals(user.id)
+            await update_deal_status(dealID, status);
+            await load_deal(dealID);
+            load_deals(user.id);
         }
     }
 
@@ -72,19 +73,19 @@ function DealDetail ({ dealID, deal, handleCloseModal, isDealMode, update_deal_s
                                     </div>
                                     <div className="flex flex-col mt-5">
                                         {deal?.status === 'not' ? (
-                                            <Button onClick={() => changeStatus(deal?.id, 'pend')} color="yellow" className="!mb-4">SET INVOICED</Button>
+                                            <Button onClick={() => changeStatus(deal.id, 'pend')} color="yellow" className="!mb-4">SET INVOICED</Button>
                                         ) : deal.status === 'pend' ? (
-                                            <Button onClick={() => changeStatus(deal?.id, 'paid')} color="green" className="!mb-4">SET PAID</Button>
+                                            <Button onClick={() => changeStatus(deal.id, 'paid')} color="green" className="!mb-4">SET PAID</Button>
                                         ) : deal.status === 'over' ? (
                                             <>
                                                 <Button disabled color="red" className="!mb-4">INVOICE OVERDUE</Button>
-                                                <Button onClick={() => changeStatus(deal?.id, 'paid')} color="green" className="!mb-4">SET PAID</Button>
+                                                <Button onClick={() => changeStatus(deal.id, 'paid')} color="green" className="!mb-4">SET PAID</Button>
                                             </>
                                         ) : (
                                             <>
                                             </>
                                         )}
-                                        {deal?.status === 'paid' ? (
+                                        {deal.status === 'paid' ? (
                                             <Button disabled color="green" className="!mb-4">INVOICE PAID</Button>
                                         ) : (
                                             <>

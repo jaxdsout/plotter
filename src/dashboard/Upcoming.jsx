@@ -5,39 +5,33 @@ function Upcoming ({ deals }) {
     const [renewals, setRenewals] = useState([]);
     const [move_ins, setMoveIns] = useState([])
 
-    const get_renewals = useCallback(() => {
+    const get_upcoming = useCallback(() => {
             if (deals?.length === 0) return [];
             const now = new Date();
+
             const filteredRenewals = deals
                 .filter(deal => deal.lease_end_date)
                 .map(deal => ({ ...deal, lease_end_date: new Date(deal.lease_end_date) }))  
                 .sort((a, b) => a.lease_end_date - b.lease_end_date)  
                 .filter(deal => deal.lease_end_date >= now)  
                 .slice(0, 5);
-    
             setRenewals(filteredRenewals);
-        }, [deals]);
-    
-    const get_move_ins = useCallback(() => {
-        if (deals?.length === 0) return [];
-        const now = new Date();
-        const filteredMoveIns = deals
-            .filter(deal => deal.move_date)  
-            .map(deal => ({ ...deal, move_date: new Date(deal.move_date) }))  
-            .sort((a, b) => a.move_date - b.move_date) 
-            .filter(deal => deal.move_date >= now) 
-            .slice(0, 5);
-    
-        setMoveIns(filteredMoveIns);
+
+            const filteredMoveIns = deals
+                .filter(deal => deal.move_date)  
+                .map(deal => ({ ...deal, move_date: new Date(deal.move_date) }))  
+                .sort((a, b) => a.move_date - b.move_date) 
+                .filter(deal => deal.move_date >= now) 
+                .slice(0, 5);
+            setMoveIns(filteredMoveIns);
     }, [deals]);
 
 
     useEffect(() => {
         if (deals?.length > 0) {
-            get_renewals();
-            get_move_ins();
+            get_upcoming();
         }
-    }, [deals])
+    }, [deals, get_upcoming])
 
 
     return (

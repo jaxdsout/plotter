@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
-import { Loader, Checkbox, Form, FormField, Button } from "semantic-ui-react";
+import { Checkbox, Form, FormField, Button } from "semantic-ui-react";
 
 
 import { load_tasks, new_task, update_task } from "../store/actions/agent";
@@ -36,6 +36,7 @@ function Todos ({ user, load_tasks, tasks, new_task, update_task}) {
     };
 
     const handleFocus = () => setShowSaveButton(true);
+
     const handleBlur = (e) => {
         if (e.relatedTarget && e.relatedTarget.tagName === 'BUTTON') {
             return; 
@@ -48,20 +49,12 @@ function Todos ({ user, load_tasks, tasks, new_task, update_task}) {
         setTaskDescription(e.target.value);
     };
 
-
     const toggleComplete = (e) => {
         setShowCompleted(true)
         if (showCompleted) {
             setShowCompleted(false);
         }
     }
-
-    useEffect(() => {
-            if (user && !tasks){
-                load_tasks(user.id);
-            }
-    }, [tasks, user])
-
     
     return (
         <div className="w-11/12 max-w-[500px] mt-5 mb-10 flex flex-col items-center justify-center bg-[#26282B] rounded-lg shadow-md shadow-inner">

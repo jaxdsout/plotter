@@ -36,7 +36,7 @@ function Signup ({ signup, error, message, signupSuccess, set_signup_success }) 
             set_signup_success();
             setTimeout(() => navigate('/login/'), 3000);
         }
-    }, [signupSuccess])
+    }, [signupSuccess, navigate, set_signup_success])
 
   
     return (

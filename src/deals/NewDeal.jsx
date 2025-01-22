@@ -79,11 +79,9 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
                 agent: user.id
             }));
         }
-
         if (property) {
             setPropSel(property);
         }
-
         if (client) {
             setClientSel(client);
         }
