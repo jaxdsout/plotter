@@ -9,11 +9,13 @@ import ProfileWidget from './ProfileWidget';
 import { Divider } from 'semantic-ui-react';
 import { auth_user, load_user, refresh_token } from '../store/actions/auth';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 
-function Dashboard ({ auth_user, refresh_token, load_user, user }) {
+function Dashboard ({ auth_user, refresh_token, access, refresh }) {
     const [profileHover, setProfileHover] = useState(false);
-    const location = useLocation(); 
+    const location = useLocation();
+    const navigate = useNavigate(); 
 
     const handleProfileWidget = () => {
         setProfileHover(prev => !prev);
@@ -24,6 +26,15 @@ function Dashboard ({ auth_user, refresh_token, load_user, user }) {
     useEffect(() => {
         auth_user();
     }, [auth_user])
+
+    useEffect(() => {
+        if (!access & !refresh) {
+            navigate('/login/')
+        }
+        if (!access) {
+            refresh_token();
+        }
+    }, [access, refresh, navigate, refresh_token])
 
     return (    
         <div className='flex flex-col items-center justify-evenly'>
