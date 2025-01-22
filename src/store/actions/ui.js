@@ -14,7 +14,9 @@ import {
     RESET_COMMISSION_SEARCH,
     SET_RESET_SUCCESS,
     SET_ACTIVATE_SUCCESS,
-    SET_SIGNUP_SUCCESS
+    SET_SIGNUP_SUCCESS,
+    RESET_DEAL_MODE,
+    SET_DEAL_MODE
 } from "./types"
 
 export const clear_message = () => dispatch => {
@@ -59,6 +61,13 @@ export const set_list_mode = () => dispatch => {
     return Promise.resolve();
 };
 
+export const set_deal_mode = () => dispatch => {
+    dispatch({
+        type: SET_DEAL_MODE
+    });
+    return Promise.resolve();
+};
+
 export const reset_send_mode = () => dispatch => {
     dispatch({
         type: RESET_SEND_MODE
@@ -69,6 +78,13 @@ export const reset_send_mode = () => dispatch => {
 export const reset_list_mode = () => dispatch => {
     dispatch({
         type: RESET_LIST_MODE
+    });
+    return Promise.resolve();
+};
+
+export const reset_deal_mode = () => dispatch => {
+    dispatch({
+        type: RESET_DEAL_MODE
     });
     return Promise.resolve();
 };

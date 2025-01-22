@@ -14,7 +14,9 @@ import {
     SET_ACTIVATE_SUCCESS,
     ACTIVATE_SUCCESS,
     ACTIVATE_FAIL,
-    CLEAR_MESSAGE
+    CLEAR_MESSAGE,
+    RESET_DEAL_MODE,
+    SET_DEAL_MODE
 } from '../actions/types';
 
 const initialState = {
@@ -23,6 +25,7 @@ const initialState = {
     isListMode: false,
     resetDealForm: false,
     isReorderMode: false,
+    isDealMode: false,
     signupSuccess: false,
     resetSuccess: false,
     activateSuccess: false
@@ -52,6 +55,11 @@ export default function uiReducer(state = initialState, action) {
             return {
                 ...state,
                 isReorderMode: true
+            }
+        case SET_DEAL_MODE:
+            return {
+                ...state,
+                isDealMode: true
             }
         case RESET_CLIENT_VIEW:
             return { 
@@ -112,12 +120,17 @@ export default function uiReducer(state = initialState, action) {
                 ...state,
                 activateSuccess: null,
             }
-         case CLEAR_MESSAGE:
+        case CLEAR_MESSAGE:
             return {
                 ...state,
                 message: null,
                 error: null,
             };
+        case RESET_DEAL_MODE:
+            return {
+                ...state,
+                isDealMode: false
+            }
         default:
             return state;
     }

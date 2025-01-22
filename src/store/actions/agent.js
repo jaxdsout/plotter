@@ -1,3 +1,4 @@
+import { load_user } from './auth';
 import {
     NEW_CLIENT_SUCCESS,
     NEW_CLIENT_FAIL,
@@ -30,7 +31,9 @@ import {
     LOAD_PROPERTIES_FAIL,
     LOAD_PROPERTIES_SUCCESS,
     LOAD_DEAL_SUCCESS,
-    LOAD_DEAL_FAIL
+    LOAD_DEAL_FAIL,
+    UPDATE_DEAL_FAIL,
+    UPDATE_DEAL_SUCCESS
 } from './types';
 
 import axios from 'axios';
@@ -247,6 +250,7 @@ export const load_deal = (dealID) => async dispatch => {
                 type: LOAD_DEAL_SUCCESS,
                 payload: res.data
             });
+            console.log("loaded deal")
         } catch (err) {
             dispatch({
                 type: LOAD_DEAL_FAIL
@@ -347,6 +351,48 @@ export const update_deal_status = (dealID, status) => async dispatch => {
     } else {
         dispatch({
             type: UPDATE_STATUS_FAIL
+        });
+    }
+};
+
+
+export const update_deal = (dealID, property, agent, client, unit_no, move_date, lease_term, rent, rate, flat_fee, commission) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+
+        const body = {
+            property,   
+            unit_no,
+            move_date,
+            lease_term, 
+            rent: rent ? parseInt(rent) : 0,   
+            rate: rate ? parseInt(rate) : 0, 
+            flat_fee: flat_fee ? parseFloat(flat_fee) : 0, 
+            commission: parseFloat(commission) || 0,  
+            agent,    
+            client   
+        }; 
+
+        try {
+            await axios.put(`${process.env.REACT_APP_API_URL}/deals/${dealID}/`, body, config);
+            dispatch({
+                type: UPDATE_DEAL_SUCCESS,
+            });
+
+            dispatch(load_deal(dealID));
+        } catch (err) {
+            dispatch({
+                type: UPDATE_DEAL_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: UPDATE_DEAL_FAIL
         });
     }
 };

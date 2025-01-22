@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import DeleteClient from "./DeleteClient";
 import ListDetail from "../lists/ListDetail";
 import DealDetail from "../deals/DealDetail"
-import { reset_list_mode } from "../store/actions/ui";
+import { reset_list_mode, reset_deal_mode } from "../store/actions/ui";
 
-function AllClients ({ clients, isListMode, reset_list_mode, }) {
+function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_deal_mode}) {
     const [showClientDetail, setShowClientDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [clientTab, setClientTab] = useState("info");
@@ -56,6 +56,7 @@ function AllClients ({ clients, isListMode, reset_list_mode, }) {
 
     const handleCancelEdit = async () => {
         reset_list_mode();
+        reset_deal_mode();
     }
 
     const formatDate = (datetimeStr) => {
@@ -191,7 +192,11 @@ function AllClients ({ clients, isListMode, reset_list_mode, }) {
                         <DealDetail dealID={selectedDeal} handleCloseModal={handleCloseDealModal}/>
                     </Modal.Content>
                     <Modal.Actions className="flex justify-end">
-                        <Button className="drop-shadow-sm" onClick={handleCloseDealModal}>CLOSE</Button>
+                        {isDealMode ? (
+                            <Button onClick={handleCancelEdit}>CANCEL</Button>
+                        ) : (
+                            <Button onClick={handleCloseDealModal}>CLOSE</Button>
+                        )}
                     </Modal.Actions>
                 </Modal>
             )}
@@ -202,7 +207,8 @@ function AllClients ({ clients, isListMode, reset_list_mode, }) {
 const mapStateToProps = state => ({
     error: state.auth.error,
     clients: state.agent.clients,
-    isListMode: state.ui.isListMode
+    isListMode: state.ui.isListMode,
+    isDealMode: state.ui.isDealMode
 });
 
-export default connect(mapStateToProps, { reset_list_mode })(AllClients);
+export default connect(mapStateToProps, { reset_list_mode, reset_deal_mode })(AllClients);
