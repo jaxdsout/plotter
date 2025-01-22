@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import DeleteClient from "./DeleteClient";
 import ListDetail from "../lists/ListDetail";
 import DealDetail from "../deals/DealDetail"
-import { reset_list_mode, reset_deal_mode } from "../store/actions/ui";
+import { reset_list_mode, reset_deal_mode, reset_edit_list } from "../store/actions/ui";
 
-function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_deal_mode}) {
+function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_edit_list, reset_deal_mode}) {
     const [showClientDetail, setShowClientDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [clientTab, setClientTab] = useState("info");
@@ -23,8 +23,10 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_d
         setClientTab("info");
     };
 
-    const handleCloseModal = () => setShowModal(false);
-
+    const handleCloseModal = async () => {
+        setShowModal(false);
+        await reset_edit_list();
+    }
 
     const handleTabChange = (tab) => {
         setClientTab(tab);
@@ -105,7 +107,7 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_d
                                                     {clientTab === "lists" && (
                                                         <>
                                                             <div className="overflow-y-auto flex justify-center min-h-96">
-                                                                {client.lists.length > 0 ? (
+                                                                {client.lists ? (
                                                                     <ul>
                                                                         {client.lists.map(list => (
                                                                             <li className="mt-2" key={list.id}>
@@ -117,9 +119,11 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_d
                                                                         ))}
                                                                     </ul>
                                                                 ) : (
-                                                                    <div className="text-center">
-                                                                        <Loader />
-                                                                    </div>
+                                                                    <>
+                                                                        <Dimmer active>
+                                                                            <Loader />
+                                                                        </Dimmer>
+                                                                    </>
                                                                 )}
                                                             </div>
                                                         </>
@@ -127,7 +131,7 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_d
                                                     {clientTab === "deals" && (
                                                         <>
                                                             <div className="overflow-y-auto flex justify-center min-h-96">
-                                                                {client.deals.length > 0 ? (
+                                                                {client.deals ? (
                                                                     <ul>
                                                                         {client.deals.map(deal => (
                                                                             <li className="mt-2" key={deal.id}>
@@ -138,11 +142,13 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_d
                                                                             </li>
                                                                         ))}
                                                                     </ul>
-                                                            ) : (
-                                                                <div className="text-center">
-                                                                    <Loader />
-                                                                </div>
-                                                            )}
+                                                                ) : (
+                                                                    <>
+                                                                        <Dimmer active>
+                                                                            <Loader />
+                                                                        </Dimmer>
+                                                                    </>
+                                                                )}
                                                             </div>
                                                         </>
                                                     )}
@@ -211,4 +217,4 @@ const mapStateToProps = state => ({
     isDealMode: state.ui.isDealMode
 });
 
-export default connect(mapStateToProps, { reset_list_mode, reset_deal_mode })(AllClients);
+export default connect(mapStateToProps, { reset_list_mode, reset_deal_mode, reset_edit_list })(AllClients);
