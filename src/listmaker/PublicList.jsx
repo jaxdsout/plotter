@@ -27,14 +27,14 @@ function PublicList({ retrieve_list, retrlist, isClientView, set_client_view }) 
     }, [uuid, retrieve_list, set_client_view])
    
     return (
-        <div className="flex flex-col items-center">
+        <>
             {isClientView && retrlist !== null ? (
-                <>
-                    <div className="w-3/4 max-w-[800px] p-5 mt-5 bg-[#26282B] shadow-inner shadow-md rounded-lg">
+                <div className="flex flex-col items-center">
+                    <div className="w-11/12 max-w-[800px] p-5 mt-5 bg-[#26282B] shadow-inner shadow-md rounded-lg">
                         <h2 className="text-center text-white">{retrlist.client_name}</h2>
                     </div>
                     <div className="w-11/12 max-w-[800px] p-5 mt-5 bg-white flex flex-col md:flex-row sm:flex-col items-center md:items-start shadow-inner shadow-md rounded-lg">
-                        <div className="p-3">
+                        <div className="p-6">
                             <MapBox retr_options={retrlist.options}/>
                         </div>
                         <div className="p-3 overflow-y-auto w-full">  
@@ -69,14 +69,14 @@ function PublicList({ retrieve_list, retrlist, isClientView, set_client_view }) 
                         <p className="text-black">Prepared by {retrlist.agent_name}</p>
                         <p className="text-black">{formatDate(retrlist.date)}</p>
                     </div>
-                </>
+                </div>
             )
             :
             (
                 <>
                 </>
             )}
-        </div>
+        </>
     )
 }
 

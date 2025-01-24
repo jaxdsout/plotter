@@ -61,9 +61,9 @@ function Todos ({ user, load_tasks, tasks, new_task, update_task}) {
             <div className="mt-4 mb-2 flex flex-col items-center">
                 <h4 className='text-center text-white'>Tasks to Complete</h4>
             </div>
-            <div className="">
+            <div className="p-3">
                 {tasks.length > 0 ? (
-                    <ul className='rounded-md'>
+                    <ul className='rounded-md pl-2 pr-2'>
                         {tasks.map(task => (
                             task.is_active ? (
                                 <li className='mb-0 p-2 flex flex-row items-center text-white bg-none' key={task.id}>

@@ -43,16 +43,27 @@ function Commission ({ properties, property, reset_commission}) {
                 <h4 className='text-center text-white'>Commissions</h4>
             </div>
             <div className="p-5">
-                <div className="flex flex-row justify-center items-center p-3">
+                <div className="flex flex-col md:flex-row justify-center items-center p-3">
                     <PropertySearch />
                     {propSel && property !== null ? (
-                        <Button size="tiny" color="red" inverted onClick={handleCommSearchReset} className="!ml-5">RESET</Button>
+                        <div className="mt-3 md:mt-0 ml-0 md:ml-5">
+                        <Button 
+                            size="tiny" 
+                            color="red" 
+                            inverted 
+                            onClick={handleCommSearchReset} 
+                            className=""
+                        >
+                            RESET
+                        </Button>
+                        </div>
+                        
                     ) : (
                         <>
                         </>
                     )}                    
                 </div>
-                <div className="flex flex-col overflow-y-auto min-h-[24rem] max-h-[30rem] text-left max-w-[480px] mt-3 scroll-ml-12 snap-start">
+                <div className="flex flex-col overflow-y-auto min-h-[24rem] max-h-[30rem] text-left max-w-[260px] md:max-w-[480px] mt-3 scroll-ml-12 snap-start">
                     {properties.length > 0 ? (
                         <table className="">
                             <thead className="text-gray-500 bg-[#1f2124] text-xs">

@@ -42,8 +42,13 @@ function Upcoming ({ deals }) {
                     {renewals.length > 0 ? (
                         renewals.map(deal => (
                             <li key={deal.id}>
-                                <div className='p-4 flex flex-row justify-center text-center items-center text-white hover:text-black hover:bg-gray-100 transition'>
-                                    <p><b>Client:</b> {deal.client_name} <span className='pr-2 pl-2'>|</span> <b>Lease End Date:</b> {deal.lease_end_date.toLocaleDateString()} </p>
+                                <div className='p-4 flex flex-col sm:flex-row justify-center text-center items-center md:items-start text-white hover:text-black hover:bg-gray-100 transition'>
+                                    <span className="text-sm md:text-base p-0 md:p-2">
+                                        <b>Client:</b> {deal.client_name}
+                                    </span>
+                                    <span className="text-sm md:text-base p-0 md:p-2">
+                                        <b>Lease End Date:</b> {deal.lease_end_date.toLocaleDateString()}
+                                    </span>
                                 </div>
                             </li>
                         ))
@@ -57,9 +62,14 @@ function Upcoming ({ deals }) {
                 <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                     {move_ins.length > 0 ? (
                         move_ins.map(deal => (
-                            <li key={deal.id}>
-                                <div className='p-4 flex flex-row justify-center text-center items-center text-white hover:text-black hover:bg-gray-100 transition'>
-                                    <p><b>Client:</b> {deal.client_name} <span className='pr-2 pl-2'>|</span> <b>Move-In Date:</b> {deal.move_date.toLocaleDateString()} </p>
+                            <li key={deal.id} className="p-4">
+                                <div className='flex flex-col md:flex-row justify-center text-center items-center md:items-start text-white hover:text-black hover:bg-gray-100 transition'>
+                                    <span className="text-sm md:text-base m-2">
+                                        <b>Client:</b> {deal.client_name}
+                                    </span>
+                                    <span className="text-sm md:text-base m-2">
+                                        <b>Move-In Date:</b> {deal.move_date.toLocaleDateString()}
+                                    </span>
                                 </div>
                             </li>
                         ))

@@ -43,14 +43,14 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out }) {
     return (    
         <div className='flex flex-col items-center justify-evenly'>
             <div className="w-11/12 md:w-3/4 max-w-[900px] p-5 mt-10 bg-gradient-to-b from-[#26282B] to-[#1f2124] shadow-inner shadow-md rounded-lg mb-10 pb-10">
-                <div className='z-0 p-5 flex flex-row items-center justify-center bg-[#1f2124] bg-blend-color-burn rounded'>
-                    <Link className='mont drop-shadow-md text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/home">
+                <div className='z-0 p-5 flex flex-row items-center justify-center bg-[#1f2124] bg-blend-color-burn rounded-md'>
+                    <Link className='mont drop-shadow-md text-2xl p-2 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/home">
                         <i className="home icon"></i>
                     </Link>
-                    <Link className='mont drop-shadow-md text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/clients">clients</Link>
-                    <Link className='mont drop-shadow-md text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/lists">lists</Link>
-                    <Link className='mont drop-shadow-md text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/deals">deals</Link>
-                    <Link className='mont drop-shadow-md text-2xl p-3 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' onClick={handleProfileWidget}>
+                    <Link className='mont drop-shadow-md text-2xl p-2 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/clients">clients</Link>
+                    <Link className='mont drop-shadow-md text-2xl p-2 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/lists">lists</Link>
+                    <Link className='mont drop-shadow-md text-2xl p-2 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/deals">deals</Link>
+                    <Link className='mont drop-shadow-md text-2xl p-2 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' onClick={handleProfileWidget}>
                         <i className="user circle icon"></i>
                     </Link>
                 </div>
