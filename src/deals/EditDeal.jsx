@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { update_deal, load_deal } from "../store/actions/agent";
-import { Button, Form, FormField, Divider, Checkbox } from "semantic-ui-react";
+import { Button, Form, FormField, Divider, Checkbox, FormGroup } from "semantic-ui-react";
 import { reset_deal_mode } from "../store/actions/ui";
 
 function EditDeal ({ dealID, user, load_deal, deal, isDealMode, update_deal, reset_deal_mode }) {
@@ -74,8 +74,8 @@ function EditDeal ({ dealID, user, load_deal, deal, isDealMode, update_deal, res
     return (
         <div>
             <Form>
-                <div className="flex flex-row items-center justify-center">
-                    <FormField className="pr-3">
+                <div className="flex flex-col md:flex-row items-center justify-center">
+                    <FormField className="p-2">
                         <label htmlFor='client'>Client:</label>
                         <input
                             type='text'
@@ -85,7 +85,7 @@ function EditDeal ({ dealID, user, load_deal, deal, isDealMode, update_deal, res
                             disabled
                         />
                     </FormField>
-                    <FormField className="pr-3">
+                    <FormField className="p-2">
                         <label htmlFor='pro'>Property:</label>
                         <input
                             type='text'
@@ -95,13 +95,13 @@ function EditDeal ({ dealID, user, load_deal, deal, isDealMode, update_deal, res
                             disabled
                         />
                     </FormField>
-                    <Button className="drop-shadow-sm !-mb-2 text-nowrap" size="tiny" onClick={handleSubmit} color="green">SAVE DEAL</Button>
+                    <Button className="drop-shadow-sm text-nowrap !p-3 !mt-2" size="tiny" onClick={handleSubmit} color="green">SAVE DEAL</Button>
                 </div>
             </Form>
             <Divider />
             <Form onSubmit={handleSubmit}>
-                <div className="flex flex-row items-start">
-                    <FormField className="pr-3">
+                <FormGroup className="flex flex-row items-end justify-center">
+                    <FormField className="p-2">
                         <label htmlFor='unit_no'>Unit Number:</label>
                         <input
                             type='text'
@@ -111,17 +111,18 @@ function EditDeal ({ dealID, user, load_deal, deal, isDealMode, update_deal, res
                             required
                         />
                     </FormField>
-                    <FormField className="pr-3">
-                        <label htmlFor='move_date'>Move Date:</label>
+                    <FormField className="p-2">
+                        <label htmlFor='move_date' className="!min-w-[180px]">Move Date:</label>
                         <input
                             type='date'
                             name='move_date'
                             value={move_date}
                             onChange={handleChange}
+                            className=""
                             required
                         />
                     </FormField>`
-                    <FormField>
+                    <FormField className="p-2">
                         <label htmlFor='lease_term'>Lease Term:</label>
                         <div className="relative">
                             <span className="absolute inset-y-0 right-0 pr-4 flex items-center text-[1rem] font-bold pointer-events-none">mos</span>
@@ -134,9 +135,9 @@ function EditDeal ({ dealID, user, load_deal, deal, isDealMode, update_deal, res
                             />
                         </div>
                     </FormField>
-                </div>
-                <div className="flex flex-row items-start">
-                    <FormField className="pr-3 pt-1">
+                </FormGroup>
+                <FormGroup className="flex flex-row items-end justify-center">
+                    <FormField className="p-2">
                         <label htmlFor='rent'>Rent:</label>
                         <div className="relative">
                             <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] font-bold pointer-events-none">$</span>
@@ -150,8 +151,8 @@ function EditDeal ({ dealID, user, load_deal, deal, isDealMode, update_deal, res
                             />
                         </div>
                     </FormField>
-                    <FormField className="pr-3 pt-1">
-                        <label htmlFor='rate'>Commission Rate:</label>
+                    <FormField className="p-2">
+                        <label htmlFor='rate' className="text-[2px]">Rate:</label>
                         {flatFee ? (
                             <input
                                 type='number'
@@ -173,7 +174,7 @@ function EditDeal ({ dealID, user, load_deal, deal, isDealMode, update_deal, res
                             
                         )}
                     </FormField>
-                    <FormField className="pr-3 pt-1">
+                    <FormField className="p-2">
                         <label htmlFor='flat_fee' className="!mb-[2px]">
                             <div className="flex flex-row justify-start items-start" >
                                 <span>Flat Fee?:</span> 
@@ -202,21 +203,21 @@ function EditDeal ({ dealID, user, load_deal, deal, isDealMode, update_deal, res
                             />
                         )}
                     </FormField>
-                    <FormField className="pt-1">
+                    <FormField className="p-2">
                         <label htmlFor='commission'>Total:</label>
                         <div className="relative">
-                            <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] font-bold pointer-events-none">$</span>
+                            <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] text-white font-bold pointer-events-none">$</span>
                             <input
                                 type='number'
                                 name='commission'
                                 value={commission}
                                 onChange={handleChange}
-                                className="indent-4"
+                                className="indent-4 !bg-[#474747] !text-white !font-bold"
                                 required
                             />
                         </div>
                     </FormField>
-                </div>
+                </FormGroup>
             </Form>
         </div>
     )

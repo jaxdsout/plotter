@@ -42,11 +42,11 @@ function Upcoming ({ deals }) {
                     {renewals.length > 0 ? (
                         renewals.map(deal => (
                             <li key={deal.id}>
-                                <div className='p-4 flex flex-col sm:flex-row justify-center text-center items-center md:items-start text-white hover:text-black hover:bg-gray-100 transition'>
-                                    <span className="text-sm md:text-base p-0 md:p-2">
+                                <div className='p-4 flex flex-col justify-center text-center text-nowrap items-center text-white hover:text-black hover:bg-gray-100 transition'>
+                                    <span className="text-sm md:text-base p-0">
                                         <b>Client:</b> {deal.client_name}
                                     </span>
-                                    <span className="text-sm md:text-base p-0 md:p-2">
+                                    <span className="text-sm md:text-base p-0">
                                         <b>Lease End Date:</b> {deal.lease_end_date.toLocaleDateString()}
                                     </span>
                                 </div>
