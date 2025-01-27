@@ -4,7 +4,9 @@ import mapboxgl from 'mapbox-gl';
 
 const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
   useEffect(() => {
+
     mapboxgl.accessToken = process.env.REACT_APP_YOUR_MAPBOX_ACCESS_TOKEN;
+    
     const map = new mapboxgl.Map({
       container: 'MAPBOXBOX',
       className: 'mapboxgl-ctrl',
@@ -12,7 +14,8 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
       center: {lng: '-95.36527442209143', lat: '29.76066296068062'}, 
       zoom: 8,
       scrollZoom: false,
-      dragPan: false
+      dragPan: true,
+      
     });
     
     const mapOptions = retr_options || options;
@@ -26,16 +29,15 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
         const marker = new mapboxgl.Marker()
           .setLngLat([parseFloat(option.longitude), parseFloat(option.latitude)])
           .setPopup(new mapboxgl.Popup().setHTML(`
-            <div className="!rounded-md p-3">
-                <img src="${option.prop_image}" alt="option"/>
-                <h4>${option.prop_name}</h4>
+            <div class="rounded-full flex flex-col items-center justify-center">
+                <img class="max-w-[150px]" src="${option.prop_image}" alt="option"/>
+                <p class="mb-1 font-bold">${option.prop_name}</p>
                 <hr>
                 <a href='https://www.google.com/maps/place/${searchAddy}'>${option.address}<a>
-
-
             </div>
           `))
           .addTo(map);
+  
 
         bounds.extend([parseFloat(option.longitude), parseFloat(option.latitude)]);
 
@@ -47,6 +49,12 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
         maxZoom: 15, 
         duration: 1000  
       });
+
+      map.addControl(new mapboxgl.NavigationControl({
+        showCompass: false,
+        
+      }))
+        
     }
 
     return () => {
@@ -57,7 +65,7 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
   return (
     <>
     {isClientView ? (
-      <div id="MAPBOXBOX" className='rounded-md md:h-[33rem] md:w-[33rem] h-[23rem] w-[23rem] shadow-md' />
+      <div id="MAPBOXBOX" className='rounded-md lg:h-[33rem] lg:w-[33rem] h-[23rem] w-[23rem] shadow-md' />
     ) : isListMode ? (
       <div id="MAPBOXBOX" className='rounded-md h-[23rem] w-[23rem] shadow-md' />
     ) : (
