@@ -134,7 +134,7 @@ export const refresh_token = () => async dispatch => {
     try {
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/jwt/refresh/`, body, config);
 
-        localStorage.setItem('access', res.data.access); // Update the access token in localStorage
+        localStorage.setItem('access', res.data.access);
 
         dispatch({
             type: REFRESH_TOKEN_SUCCESS,
@@ -142,7 +142,7 @@ export const refresh_token = () => async dispatch => {
         });
     } catch (err) {
         dispatch({ type: REFRESH_TOKEN_FAIL });
-        localStorage.removeItem('access'); // Clear tokens on failure
+        localStorage.removeItem('access');
         localStorage.removeItem('refresh');
     }
 };

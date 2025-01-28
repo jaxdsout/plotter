@@ -32,7 +32,11 @@ import {
     LOAD_DEAL_SUCCESS,
     LOAD_DEAL_FAIL,
     UPDATE_DEAL_FAIL,
-    UPDATE_DEAL_SUCCESS
+    UPDATE_DEAL_SUCCESS,
+    LOAD_USER_DATA_FAIL,
+    LOAD_USER_DATA_SUCCESS,
+    LOAD_PROFILE_SUCCESS,
+    LOAD_PROFILE_FAIL
 } from './types';
 
 import axios from 'axios';
@@ -62,6 +66,33 @@ export const update_profile = (userObj, trec, website, phone_number) => async di
     } else {
         dispatch({
             type: UPDATE_PROFILE_FAIL
+        });
+    }
+};
+
+export const load_profile = (userID) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/profiles/?agent=${userID}`, config);
+            dispatch({
+                type: LOAD_PROFILE_SUCCESS,
+                payload: res.data
+            });
+            return res.data;
+        } catch (err) {
+            dispatch({
+                type: LOAD_PROFILE_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: LOAD_PROFILE_FAIL
         });
     }
 };
@@ -577,13 +608,16 @@ export const load_user_data = (userID) => async dispatch => {
             dispatch(load_properties())
         ]);
 
-        dispatch({ type: 'LOAD_CLIENTS_SUCCESS', payload: clients });
-        dispatch({ type: 'LOAD_LISTS_SUCCESS', payload: lists });
-        dispatch({ type: 'LOAD_DEALS_SUCCESS', payload: deals });
-        dispatch({ type: 'LOAD_TASKS_SUCCESS', payload: tasks });
-        dispatch({ type: 'LOAD_PROPERTIES_SUCCESS', payload: properties });
+        dispatch({ type: LOAD_CLIENTS_SUCCESS, payload: clients });
+        dispatch({ type: LOAD_LISTS_SUCCESS, payload: lists });
+        dispatch({ type: LOAD_DEALS_SUCCESS, payload: deals });
+        dispatch({ type: LOAD_TASKS_SUCCESS, payload: tasks });
+        dispatch({ type: LOAD_PROPERTIES_SUCCESS, payload: properties });
+        dispatch({ type: LOAD_USER_DATA_SUCCESS });
 
     } catch (error) {
-        console.error('Error loading data:', error);
+        dispatch({
+            type: LOAD_USER_DATA_FAIL
+        });
     }
 };

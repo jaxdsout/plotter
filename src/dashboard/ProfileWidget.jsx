@@ -1,122 +1,154 @@
-import { Card, CardContent, CardHeader, CardDescription, CardMeta, Image, Form, FormField, Button, Icon, Modal } from 'semantic-ui-react';
+import { Card, CardContent, CardHeader, Image, Form, FormField, Button, Icon, Loader } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { update_profile, update_avatar } from '../store/actions/agent';
+import { load_user } from '../store/actions/auth';
 import { connect } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Divider } from 'semantic-ui-react'
 
-function ProfileWidget ({ user, update_profile, update_avatar }) {
+function ProfileWidget ({ user, update_profile, update_avatar, load_user }) {
     const [formData, setFormData] = useState({
         trec: '',
         website: '',
         phone_number: '',
     });
-    const [avatar, setAvatar] = useState(null);
     const { trec, website, phone_number } = formData;
-    const profile = user.profile
+    const [avatar, setAvatar] = useState(null);
+    const [profileEdit, setProfileEdit] = useState(false);
+    const [isLoading, setLoading] = useState(false);
 
-    const [showModal, setShowModal] = useState(false);
+    const toggleEditProfile = () => {
+        if (profileEdit) {
+            setProfileEdit(false);
+        } else {
+            setProfileEdit(true);
+
+        }
+    };
 
     const handleProfileChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    const handleAvatarChange = e => setAvatar(e.target.files[0]);
 
     const handleProfileSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true);
             await update_profile(user, trec, website, phone_number);
+            setProfileEdit(false);
+            setLoading(false);
+            await load_user();
         } catch (err) {
             console.error('Error updating profile:', err);
         }
     };
 
+
+    const handleAvatarChange = e => setAvatar(e.target.files[0]);
+
     const handleAvatarSubmit = async (e) => {
         e.preventDefault();
         if (avatar) {
             try {
+                setLoading(true);
                 await update_avatar(user, avatar);
+                setProfileEdit(false);
+                setLoading(false);
+                await load_user();
             } catch (err) {
                 console.error('Error updating avatar:', err);
             }
         }
     };
 
-    const handleOpenModal = () => setShowModal(true);
 
-    const handleCloseModal = () => setShowModal(false);
+    useEffect(() => {
+            if (user) {
+                setFormData({
+                    trec: user.profile.trec || '',
+                    website: user.profile.website || '',
+                    phone_number: user.profile.phone_number || '',
+                });
+            }
+        }, [user]);
 
 
     return (
         <>
-            <Card className='!drop-shadow-xl'>
-                <Image src={profile.avatar} wrapped ui={false} />
+            <Card className='!drop-shadow-xl !w-[250px]'>
                 <CardContent>
-                    <CardHeader>{profile.full_name}</CardHeader>
-                    <CardMeta>
-                        <span className='date'>TREC ID: {profile.trec}</span>
-                    </CardMeta>
-                    <CardDescription>
-                    <Link onClick={handleOpenModal} className='flex justify-end -mt-11 pb-3'>
-                        <Icon name='setting' size='large'/>
-                    </Link>
-                    </CardDescription>
+                    <div className='flex flex-col items-center'>
+                        <img src={user.profile.avatar} className="rounded-full w-32 h-32 object-cover" alt="avatar"/>
+                    </div>
+                </CardContent>
+                <CardContent>
+                    <CardHeader>
+                        <div className='flex flex-row justify-between items-center'>
+                            {profileEdit ? (
+                                <span>Edit Profile</span>
+                            ) : (
+                                <span>{user.profile.full_name}</span>
+                            )}
+                        
+                            <Link onClick={toggleEditProfile}>
+                                <Icon name='setting' size='large'/>
+                            </Link>
+                        </div>
+                    </CardHeader>
                 </CardContent>
                 <CardContent extra>
-                    <p>Phone: {profile.phone_number}</p>
-                    <p>Email: {profile.email}</p>
-                    <p>Website: {profile.website}</p>
-                </CardContent>
-            </Card>
-            <div>
-                <Modal className='!w-9/12 sm:!w-[500px]' open={showModal} onClose={handleCloseModal}>
-                    <Modal.Header>Edit Profile</Modal.Header>
-                    <Modal.Content>
-                        <div className='flex flex-col justify-evenly'>
+                    {profileEdit ? (
+                        <div className='flex flex-col justify-evenly bg-gray-200 rounded-md p-3'>
                             <div>                    
                                 <Form onSubmit={handleProfileSubmit}>
                                     <FormField>
-                                        <label className="noto-sans-upper label" htmlFor="trec">TREC ID:</label>
+                                        <label htmlFor="phone_number">Phone:</label>
                                         <input
-                                            className="form-control"
-                                            type="text"
-                                            name="trec"
-                                            value={trec}
-                                            onChange={handleProfileChange}
-                                            required
-                                        />
-                                    </FormField>
-                                    <FormField>
-                                        <label className="noto-sans-upper label" htmlFor="website">Website:</label>
-                                        <input
-                                            className="form-control"
-                                            type="text"
-                                            name="website"
-                                            value={website}
-                                            onChange={handleProfileChange}
-                                            required
-                                        />
-                                    </FormField>
-                                    <FormField>
-                                        <label className="noto-sans-upper label" htmlFor="phone_number">Phone:</label>
-                                        <input
-                                            className="form-control"
+                                            className="h-[2.5rem]"
                                             type="text"
                                             name="phone_number"
                                             value={phone_number}
                                             onChange={handleProfileChange}
-                                            required
                                         />
                                     </FormField>
-                                    <div className='flex justify-center mt-5 mb-5'>
-                                        <Button color="green" type="submit">SAVE PROFILE UPDATES</Button>
+                                    <FormField className='!-mt-2'>
+                                        <label htmlFor="website">Website:</label>
+                                        <input
+                                            className="h-[2.5rem]"
+                                            type="text"
+                                            name="website"
+                                            value={website}
+                                            onChange={handleProfileChange}
+                                            
+                                        />
+                                    </FormField>
+                                    <FormField className='!-mt-2'>
+                                        <label htmlFor="trec">TREC ID:</label>
+                                        <input
+                                            className="h-[2.5rem]"
+                                            type="text"
+                                            name="trec"
+                                            value={trec}
+                                            onChange={handleProfileChange}
+                                            
+                                        />
+                                    </FormField>
+                                    <div className='flex justify-center mt-2'>
+                                        <Button color="green" type="submit" size='tiny'>
+                                            {isLoading ? (
+                                                <>
+                                                    <Loader active inline inverted size='mini'/>
+                                                </>
+                                            ) : (
+                                                <span>SAVE PROFILE UPDATES</span>
+                                            )}
+                                        </Button>
                                     </div>
                                 </Form>
                             </div>  
                             <Divider />
-                            <div className='mt-4 mb-5'>
-                                <Form onSubmit={handleAvatarSubmit}>
+                            <div>
+                                <Form onSubmit={handleAvatarSubmit} className='flex flex-col items-center justify-center'>
                                     <FormField>
-                                        <label className="noto-sans-upper label" htmlFor="avatar">Profile Picture:</label>
+                                        <label className="label" htmlFor="avatar">Profile Picture:</label>
                                         <input
                                             className="rounded-lg"
                                             type="file"
@@ -126,17 +158,30 @@ function ProfileWidget ({ user, update_profile, update_avatar }) {
                                         />
                                     </FormField>
                                     <div className='flex justify-center'>
-                                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB]" type="submit">UPLOAD</Button>
+                                        <Button color="green" type="submit" size='tiny'>
+                                            {isLoading ? (
+                                                <>
+                                                    <Loader active inline inverted size='mini'/>
+                                                    </>
+                                            ) : (
+                                                <span>UPLOAD</span>
+                                            )}
+
+                                        </Button>
                                     </div>
                                 </Form>
                             </div>
                         </div>
-                        </Modal.Content>
-                    <Modal.Actions>
-                        <Button onClick={handleCloseModal}>CLOSE</Button>
-                    </Modal.Actions>
-                </Modal>
-            </div>
+                    ) : (
+                        <div>
+                            <p><b>Phone:</b> {user.profile.phone_number}</p>
+                            <p><b>Email:</b> {user.profile.email}</p>
+                            <p><b>Website:</b> {user.profile.website}</p>
+                            <p><b>TREC ID:</b> {user.profile.trec}</p>
+                        </div>
+                    )}
+                </CardContent>
+            </Card>
         </>
     )
 }
@@ -146,4 +191,4 @@ const mapStateToProps = state => ({
     user: state.auth.user,
 });
 
-export default connect(mapStateToProps, { update_profile, update_avatar })(ProfileWidget);
+export default connect(mapStateToProps, { update_profile, update_avatar, load_user })(ProfileWidget);

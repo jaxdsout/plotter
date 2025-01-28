@@ -29,7 +29,11 @@ import {
     LOAD_PROPERTIES_SUCCESS,
     LOAD_DEAL_SUCCESS, 
     LOAD_DEAL_FAIL,
-    LOGOUT
+    LOGOUT,
+    LOAD_USER_DATA_SUCCESS,
+    LOAD_USER_DATA_FAIL,
+    LOAD_PROFILE_FAIL,
+    LOAD_PROFILE_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -39,6 +43,7 @@ const initialState = {
     tasks: [],
     deal: null,
     properties: [],
+    isLoaded: null
 };
 
 export default function agentReducer(state = initialState, action) {
@@ -87,6 +92,16 @@ export default function agentReducer(state = initialState, action) {
                 lists: [],
                 tasks: [],
                 properties: [],
+            }
+        case LOAD_USER_DATA_SUCCESS:
+            return {
+                ...state,
+                isLoaded: true
+            }
+        case LOAD_USER_DATA_FAIL:
+            return {
+                ...state,
+                isLoaded: false
             }
         case LOAD_DEAL_FAIL:
         case NEW_CLIENT_SUCCESS:

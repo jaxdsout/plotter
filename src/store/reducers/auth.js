@@ -114,10 +114,16 @@ export default function authReducer(state = initialState, action) {
                 error: null,
             };
         case LOCK_OUT:
+        case REFRESH_TOKEN_FAIL:
+            return {
+                ...state,
+                isAuthenticated: false,
+                access: null,
+                refresh: null
+            }
         case PASSWORD_RESET_CONFIRM_FAIL:
         case PASSWORD_RESET_FAIL:
         case PASSWORD_RESET_CONFIRM_SUCCESS:
-        case REFRESH_TOKEN_FAIL:
             return {
                 ...state
             }
