@@ -17,7 +17,7 @@ function Landing({ access, refresh }) {
     }, [access, refresh, navigate])
 
     return (
-        <div className="flex flex-col items-center justify-evenly">  
+        <div className="flex flex-col items-center justify-evenly animator">  
             <div className="w-3/4 max-w-[800px] p-5 mt-5 flex flex-col bg-[#26282B] shadow-inner shadow-md rounded-lg">
                 <div className="mb-3 mt-4">                
                         <Image className="plotter-banner" src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1006.png" />

@@ -6,7 +6,7 @@ import { Divider } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Calculator from './Calculator';
-import Todos from './Todos';
+import Tasks from './Tasks';
 import Commission from './Commission';
 import { load_user_data} from '../store/actions/agent';
 import { tab_switch } from '../store/actions/ui';
@@ -65,7 +65,7 @@ function Dash ({ tab_switch }) {
             </div>
             <Divider />
             <div className='flex items-center justify-center bg-[#1f2124] rounded'>
-                {activeTab === `to-do` && <Todos />}
+                {activeTab === `to-do` && <Tasks />}
                 {activeTab === 'commission' && <Commission />}
                 {activeTab === 'guest card' && <GuestCard />}
                 {activeTab === 'calculator' && <Calculator />}

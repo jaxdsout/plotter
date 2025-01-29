@@ -3,10 +3,11 @@ import { connect } from "react-redux"
 import { useEffect, useState } from "react"
 import { reset_password } from "../store/actions/auth";
 import { set_reset_success } from "../store/actions/ui";
-import { Button, FormField, Form, Image, Message } from "semantic-ui-react";
+import { Button, FormField, Form, Image, Message, Loader } from "semantic-ui-react";
 
 function ResetPassword ({ reset_password, message, resetSuccess, set_reset_success }) {
     const navigate = useNavigate()
+    const [isLoading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -18,12 +19,14 @@ function ResetPassword ({ reset_password, message, resetSuccess, set_reset_succe
 
     const handleSubmit = e => {
         e.preventDefault();
+        setLoading(true);
         reset_password(email)
     }
 
     useEffect(() => {
         if (resetSuccess) {
             set_reset_success();
+            setLoading(false);
             setTimeout(() => navigate('/login/'), 3000);
         }
     }, [resetSuccess, set_reset_success, navigate])
@@ -52,8 +55,14 @@ function ResetPassword ({ reset_password, message, resetSuccess, set_reset_succe
                             required
                         />
                     </FormField>
-                    <div className="flex flex-col items-center justify-evenly mt-8">            
-                        <Button type="submit" className="!bg-[#90B8F8] hover:!bg-[#5F85DB] active:translate-y-0.5">REQUEST NEW PASSWORD</Button>   
+                    <div className="flex flex-col items-center justify-evenly mt-8">       
+                            <Button type="submit" className="!bg-[#90B8F8] hover:!bg-[#5F85DB] active:translate-y-0.5">
+                                {isLoading ? (
+                                    <Loader active inline inverted size='mini'/>
+                                ) : (
+                                    <span>REQUEST NEW PASSWORD</span>
+                                )}
+                            </Button>   
                     </div>            
                 </Form>
             </div>
@@ -64,8 +73,8 @@ function ResetPassword ({ reset_password, message, resetSuccess, set_reset_succe
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
-    message: state.auth.message,
-    resetSuccess: state.auth.resetSuccess
+    message: state.ui.message,
+    resetSuccess: state.ui.resetSuccess
 });
 
 export default connect(mapStateToProps, { reset_password, set_reset_success })( ResetPassword );

@@ -16,7 +16,13 @@ import {
     ACTIVATE_FAIL,
     CLEAR_MESSAGE,
     RESET_DEAL_MODE,
-    SET_DEAL_MODE
+    SET_DEAL_MODE,
+    LOGIN_SUCCESS,
+    SIGNUP_FAIL,
+    LOGIN_FAIL,
+    LOGOUT,
+    CLIENT_FOUND_SOMEWHERE,
+    CLIENT_NOT_FOUND
 } from '../actions/types';
 
 const initialState = {
@@ -28,7 +34,9 @@ const initialState = {
     isDealMode: false,
     signupSuccess: false,
     resetSuccess: false,
-    activateSuccess: false
+    activateSuccess: false,
+    message: null,
+    clientTaken: null
 };
 
 export default function uiReducer(state = initialState, action) {
@@ -84,8 +92,8 @@ export default function uiReducer(state = initialState, action) {
         case SIGNUP_SUCCESS:
             return {
                 ...state,
-                signupSuccess: true
-
+                signupSuccess: true,
+                message: 'Please check provided email address to activate account. Redirecting to login...',
             }
         case SET_SIGNUP_SUCCESS:
             return {
@@ -102,6 +110,11 @@ export default function uiReducer(state = initialState, action) {
             return {
                 ...state,
                 resetSuccess: null,
+            }
+        case LOGIN_SUCCESS:
+            return {
+                ...state,
+                message: 'Login successful.',
             }
         case ACTIVATE_SUCCESS:
             return {
@@ -126,10 +139,35 @@ export default function uiReducer(state = initialState, action) {
                 message: null,
                 error: null,
             };
+        case SIGNUP_FAIL:
+            return {
+                ...state,
+                error: 'Invalid signup credentials provided. Please review and adjust.',
+            };
+        case LOGIN_FAIL:
+            return {
+                ...state,
+                error: 'Invalid email or password',
+            };
+        case LOGOUT:
+            return {
+                ...state,
+                message: 'Logout successful.'
+            }
         case RESET_DEAL_MODE:
             return {
                 ...state,
                 isDealMode: false
+            }
+        case CLIENT_FOUND_SOMEWHERE:
+            return {
+                ...state,
+                clientTaken: true
+            }
+        case CLIENT_NOT_FOUND:
+            return {
+                ...state,
+                clientTaken: false
             }
         default:
             return state;

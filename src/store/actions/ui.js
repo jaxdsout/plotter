@@ -17,8 +17,46 @@ import {
     SET_SIGNUP_SUCCESS,
     RESET_DEAL_MODE,
     SET_DEAL_MODE,
-    RESET_EDIT_LIST
+    RESET_EDIT_LIST,
+    CLIENT_FOUND_SOMEWHERE,
+    CLIENT_NOT_FOUND
 } from "./types"
+
+import axios from "axios";
+
+export const verify_client_status = (client) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            const encodeSearch = encodeURIComponent(`${client.first_name} ${client.last_name} ${client.email} ${client.phone_number}`)
+
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/clients/?search=${encodeSearch}`, config);
+            if (res.data.length > 1) {
+                dispatch({
+                    type: CLIENT_FOUND_SOMEWHERE,
+                    payload: res.data
+                });
+            } else {
+                dispatch({
+                    type: CLIENT_NOT_FOUND
+                }); 
+            }
+        } catch (err) {
+            dispatch({
+                type: CLIENT_NOT_FOUND
+            });
+        }
+    } else {
+        dispatch({
+            type: CLIENT_NOT_FOUND
+        });
+    }
+};
 
 export const clear_message = () => dispatch => {
     dispatch({

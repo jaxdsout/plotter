@@ -24,8 +24,6 @@ const initialState = {
     user: null,
 };
 
-
-
 export default function authReducer(state = initialState, action) {
     const { type, payload } = action;
     switch(type) {
@@ -33,7 +31,6 @@ export default function authReducer(state = initialState, action) {
             return {
                 ...state,
                 isAuthenticated: false,
-                message: 'Please check provided email address to activate account. Redirecting to login...',
             }
         case AUTHENTICATE_SUCCESS:
             return {
@@ -49,8 +46,6 @@ export default function authReducer(state = initialState, action) {
                 isAuthenticated: true,
                 access: payload.access,
                 refresh: payload.refresh,
-                error: null,
-                message: 'Login successful.',
             };
         case REFRESH_TOKEN_SUCCESS:
             localStorage.setItem('access', payload.access);
@@ -58,8 +53,6 @@ export default function authReducer(state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 access: payload,
-                error: null,
-                message: 'Refresh successful!',
             };
         case LOAD_USER_SUCCESS:
             return {
@@ -78,7 +71,6 @@ export default function authReducer(state = initialState, action) {
             };
         case SIGNUP_FAIL:
             return {
-                error: 'Invalid signup credentials provided. Please review and adjust.',
                 ...state,
                 access: null,
                 refresh: null,
@@ -88,7 +80,6 @@ export default function authReducer(state = initialState, action) {
         case LOGIN_FAIL:
             return {
                 ...state,
-                error: 'Invalid email or password',
                 access: null,
                 refresh: null,
                 isAuthenticated: false,
@@ -103,15 +94,11 @@ export default function authReducer(state = initialState, action) {
                 refresh: null,
                 isAuthenticated: false,
                 user: null,
-                error: null,
-                message: 'Logout successful.'
-
             };
         case CLEAR_MESSAGE:
             return {
                 ...state,
                 message: null,
-                error: null,
             };
         case LOCK_OUT:
         case REFRESH_TOKEN_FAIL:

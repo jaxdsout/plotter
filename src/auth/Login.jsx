@@ -32,17 +32,17 @@ function Login ({ login, isAuthenticated, error, message, auth_user }) {
     
 
     return (
-        <div className="flex flex-col items-center justify-evenly">
+        <div className="flex flex-col items-center justify-evenly animator">
             <div className="w-3/4 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
                 <div className="mb-2 flex flex-col items-center">
                     <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.png"/>
                     <h6 className="mont text-white text-2xl md:text-4xl -mt-5"> sign into the platform </h6>
                 </div>
                 <Form onSubmit={handleSubmit} className="p-5">
-                    {error && (
+                    {message && (
                         <Message negative>
                             <Message.Header>Login Failed</Message.Header>
-                            <p>{error}</p>
+                            <p>{message}</p>
                         </Message>
                     )}
                     {message && (
@@ -109,8 +109,8 @@ function Login ({ login, isAuthenticated, error, message, auth_user }) {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    error: state.auth.error,
-    message: state.auth.message
+    error: state.ui.error,
+    message: state.ui.message
 });
 
 export default connect(mapStateToProps, { login, auth_user })( Login );

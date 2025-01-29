@@ -39,11 +39,11 @@ import {
 } from '../actions/types';
 
 const initialState = {
-    client_results: [],
     client: null,
     list: null,
     options: [],
     property: null,
+    client_results: [],
     prop_results: [],
     retrlist: null,
 };

@@ -42,14 +42,18 @@ function UpdateOption ({ option, list, update_option, load_list }) {
                 <Modal.Header className="text-center">Update Option: {option.prop_name}</Modal.Header>
                 <Modal.Content className="bg-dark-subtle">
                     <Form onSubmit={handleSubmit}>
-                        <FormField>
+                        <FormField>                          
                             <label className="noto-sans" htmlFor='price'>Price:</label>
-                            <input
-                                type='number'
-                                name='price'
-                                value={price || option.price}
-                                onChange={handleChange}
-                            />
+                            <div className="relative">
+                                <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] font-bold pointer-events-none">$</span>
+                                <input
+                                    type='number'
+                                    className="indent-4"
+                                    name='price'
+                                    value={price || option.price}
+                                    onChange={handleChange}
+                                />
+                            </div>
                         </FormField>
                         <FormField>
                             <label className="noto-sans" htmlFor='unit_number'>Unit Number:</label>

@@ -6,7 +6,7 @@ import { Checkbox, Form, FormField, Button } from "semantic-ui-react";
 import { load_tasks, new_task, update_task } from "../store/actions/agent";
 
 
-function Todos ({ user, load_tasks, tasks, new_task, update_task}) {
+function Tasks ({ user, load_tasks, tasks, new_task, update_task}) {
     const [taskDescription, setTaskDescription] = useState('');
     const [showSaveButton, setShowSaveButton] = useState(false);
     const [showCompleted, setShowCompleted] = useState(false);
@@ -122,11 +122,18 @@ function Todos ({ user, load_tasks, tasks, new_task, update_task}) {
                 )}
             </div>
             <div className="mb-6 flex flex-col items-center">
-                <Button size="tiny" inverted className="!mb-3 active:translate-y-0.5" onClick={toggleComplete}>
-                    Completed Tasks
-                </Button>
                 {showCompleted ? (
-                    <>
+                    <Button size="tiny" className="!mb-3 active:translate-y-0.5 !bg-[#3f5647] !text-white" onClick={toggleComplete}>
+                        Completed Tasks
+                    </Button>
+                ) : (
+                    <Button size="tiny" inverted className="!mb-3 active:translate-y-0.5" onClick={toggleComplete}>
+                        Completed Tasks
+                    </Button>
+                )}
+               
+                {showCompleted ? (
+                    <div className="rounded-md bg-[#3f5647] p-3">
                         {tasks.map(task => (
                             !task.is_active ? (
                                 <li className='mb-0 p-2 flex flex-row items-center text-white bg-none' key={task.id}>
@@ -155,7 +162,7 @@ function Todos ({ user, load_tasks, tasks, new_task, update_task}) {
                                 </>
                             )
                         ))}
-                    </>
+                    </div>
                 ) : (
                     <>
                     </>
@@ -171,4 +178,4 @@ const mapStateToProps = state => ({
     tasks: state.agent.tasks,
 });
 
-export default connect(mapStateToProps, { load_tasks, new_task, update_task })(Todos);
+export default connect(mapStateToProps, { load_tasks, new_task, update_task })(Tasks);

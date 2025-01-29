@@ -2,6 +2,7 @@ import { useState } from "react";
 import { connect } from 'react-redux';
 import { Modal, Button, Form, FormField } from "semantic-ui-react";
 import { load_clients, new_client } from "../store/actions/agent";
+import { verify_client_status } from "../store/actions/ui";
 
 function NewClient({ user, load_clients, new_client }) {
     const [showModal, setShowModal] = useState(false);
@@ -13,7 +14,13 @@ function NewClient({ user, load_clients, new_client }) {
     });
     const { first_name, last_name, email, phone_number } = formData;
 
-    const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleChange = (e) => {
+        if (formData !== '') {
+            verify_client_status(formData)
+        } else {
+            setFormData({ ...formData, [e.target.name]: e.target.value })
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
