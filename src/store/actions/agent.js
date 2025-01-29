@@ -41,7 +41,7 @@ import {
 
 import axios from 'axios';
 
-export const update_profile = (userObj, trec, website, phone_number) => async dispatch => {
+export const update_profile = (user, trec, website, phone_number) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
             headers: {
@@ -49,11 +49,11 @@ export const update_profile = (userObj, trec, website, phone_number) => async di
                 'Authorization': `Bearer ${localStorage.getItem('access')}`,
             }
         }; 
-        const user = userObj.id
-        const body = JSON.stringify({ user, trec, website, phone_number });
+        const userID = user.id;
+        const body = JSON.stringify({ userID, trec, website, phone_number });
         console.log(body)
         try {
-            const res = await axios.put(`${process.env.REACT_APP_API_URL}/profiles/${userObj.id}/`, body, config);
+            const res = await axios.put(`${process.env.REACT_APP_API_URL}/profiles/${user.profile.id}/`, body, config);
             dispatch({
                 type: UPDATE_PROFILE_SUCCESS,
                 payload: res.data
