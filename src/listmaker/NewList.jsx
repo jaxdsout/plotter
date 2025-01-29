@@ -93,13 +93,18 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, lo
                     <Modal.Content>
                         <>
                             {isListMode ? (
-                                <div className="flex flex-col sm:flex-row justify-evenly items-center md:items-start">
+                                <div className="flex flex-col md:flex-row justify-evenly items-center md:items-start">
                                     <div className="flex flex-col justify-start pb-5">
-                                        <div className="flex flex-row items-center">
+                                        <div className="flex flex-row items-center justify-between">
                                             <PropertySearch/>
-                                            <Form onSubmit={() => handlePropertyAdd(list, property)} className="p-3">
-                                                <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !text-xs" type="submit">ADD PROPERTY</Button>
-                                            </Form>
+                                            <div className="!ml-2">
+                                                <Button 
+                                                    className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !text-xs" 
+                                                    onClick={() => handlePropertyAdd(list, property)}
+                                                >
+                                                    ADD PROPERTY
+                                                </Button>
+                                            </div>
                                         </div>
                                         <Divider />
                                         <OptionList />
@@ -137,30 +142,32 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, lo
                     <Modal.Actions>
                         <>
                         {isListMode ? (
-                            <div className="flex justify-between items-center pb-5">
-                                <Button className="drop-shadow-sm" onClick={handleOpenResetModal}>BACK</Button>
+                            <div className="flex flex-col-reverse sm:flex-row justify-between items-center sm:items-start pb-5">
+                                <div>
+                                    <Button size='tiny' className="drop-shadow-sm" onClick={handleOpenResetModal}>BACK</Button>
+                                </div>
                                 <div className="flex flex-row">
                                     {isReorderMode ? (
                                         <>
                                             <ReorderList />
                                         </>
                                     ) : (
-                                        <>
+                                        <div className="flex flex-row mb-6 sm:mb-0">
                                             <ReorderList />
                                             <ClearOptions />
                                             <SendList />
-                                        </>
+                                        </div>
                                     )}
                                 </div>
                             </div>
                         ) : isSendMode ? (
                             <div className="flex justify-between pb-5">
-                                <Button className="drop-shadow-sm" onClick={handleEditList}>BACK</Button>
-                                <Button className="drop-shadow-sm" color="green" onClick={handleCloseModal}>DONE</Button>
+                                <Button size='tiny' className="drop-shadow-sm" onClick={handleEditList}>BACK</Button>
+                                <Button size='tiny' className="drop-shadow-sm" color="green" onClick={handleCloseModal}>DONE</Button>
                             </div>
                         ) : (
                             <div className="flex justify-end pb-5">
-                            <Button className="drop-shadow-sm" onClick={handleCloseModal}>CLOSE</Button>
+                            <Button size='tiny' className="drop-shadow-sm" onClick={handleCloseModal}>CLOSE</Button>
                             </div>
                         )}
                         </>

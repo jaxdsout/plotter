@@ -1,4 +1,4 @@
-import { Button, Popup } from 'semantic-ui-react';
+import { Button, Popup, Icon } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { delete_option, load_list } from '../store/actions/listmaker';
 import { connect } from 'react-redux';
@@ -29,7 +29,7 @@ function DeleteOption ( { delete_option, load_list, option, list}) {
                 <Popup
                     content="CONFIRM DELETE"
                     open
-                    position="top center"
+                    position="left center"
                     size="tiny"
                     className='!text-red-700 !font-black'
                     trigger={
@@ -38,13 +38,17 @@ function DeleteOption ( { delete_option, load_list, option, list}) {
                             color="red"
                             onClick={() => handleDelete(option.id, list)}
                         >
-                            <i className="trash alternate icon"></i>
+                            <Icon name='trash alternate icon' className='!-mr-1' />
                         </Button>
                     }
                 />
             ) : (
-                <Button type="submit" onClick={() => handleDeleteConfirm(option.id)}>
-                    <i className="trash alternate icon !-mr-1"></i>
+                <Button 
+                    type="submit" 
+                    onClick={() => handleDeleteConfirm(option.id)} 
+                >
+                    <Icon name='trash alternate icon' className='!-mr-1'
+ />
                 </Button>
             )}
         </>

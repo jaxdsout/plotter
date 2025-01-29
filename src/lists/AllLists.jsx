@@ -45,7 +45,7 @@ function AllLists ({ lists, reset_list_mode, isListMode, load_list }) {
             <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
                 {lists ? ( 
                     <>
-                        {lists > 0 ? (
+                        {lists.length > 0 ? (
                             <>
                                 <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                                     {lists?.map(list => (

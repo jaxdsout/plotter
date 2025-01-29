@@ -15,15 +15,14 @@ function ReorderList ({ reset_reorder_mode, set_reorder_mode, isReorderMode }) {
     }
     
     return (
-        <>
         <Button 
             className="drop-shadow-sm" 
             onClick={handleReorder}
             style={{ backgroundColor: isReorderMode ? "red" : "#35a2c3", color: "white" }}
+            size='tiny'
         >
             {isReorderMode ? "CONFIRM" : "REORDER"}
         </Button>
-        </>
     )
 }
 

@@ -97,7 +97,7 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
                     rate: ''
                 }))
             } else {
-                setCommission(rate && rent ? parseFloat(rate/100) * parseFloat(rent) : 0);
+                setCommission(rate && rent ? (parseFloat(rate/100) * parseFloat(rent)).toFixed(2) : 0);
                 setFormData(prevFormData => ({
                     ...prevFormData,
                     flat_fee: ''

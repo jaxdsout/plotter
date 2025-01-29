@@ -48,28 +48,39 @@ function EarningBar ({ deals }) {
         text: 'Monthly Sales Revenue',
         color: 'white'
       },
-      
+      tooltip: {
+        callbacks: {
+          label: function (tooltipItem) {
+            let value = tooltipItem.raw || 0;
+            return `$${value.toLocaleString()}`;
+          }
+        }
+      }
     },
     scales: {
       y: {
         beginAtZero: true,
         grid: {
-          color: 'rgba(255, 255, 255, 0.2)', // Adjust gridline color
-          borderColor: 'rgba(255, 255, 255, 0.5)', // Adjust the axis line color
-          borderDash: [5, 5], // Make gridlines dashed [lineLength, gapLength]
+          color: 'rgba(255, 255, 255, 0.2)',
+          borderColor: 'rgba(255, 255, 255, 0.5)', 
+          borderDash: [5, 5], 
         },
         ticks: {
-          color: 'white', // Adjust tick color
+          color: 'white', 
+          callback: function(value, index, ticks) {
+            return '$' + value;
+          }
         },
+      
         
       },
       x: {
         grid: {
-          color: 'rgba(255, 255, 255, 0.2)', // Adjust gridline color
-          drawOnChartArea: false, // Disable gridlines across the chart area
+          color: 'rgba(255, 255, 255, 0.2)', 
+          drawOnChartArea: false, 
         },
         ticks: {
-          color: 'white', // Adjust tick color
+          color: 'white', 
         },
       },
     },

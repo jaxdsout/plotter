@@ -32,12 +32,12 @@ function DeleteDeal({ delete_deal, load_deals, deal, handleCloseModal, user }) {
                 content="CONFIRM DELETE"
                 open
                 position="top center"
-                size="tiny"
                 className='!text-red-700 !font-black'
                 trigger={
                     <Button
                         type="submit"
                         color="red"
+                        size="tiny"
                         onClick={() => handleDelete(deal.id, user.id)}
                     >
                         <i class="trash alternate icon"></i>
@@ -45,7 +45,7 @@ function DeleteDeal({ delete_deal, load_deals, deal, handleCloseModal, user }) {
                 }
             />
         ) : (
-            <Button type="submit" color="red" onClick={() => handleDeleteConfirm(deal.id)}>
+            <Button size='tiny' type="submit" color="red" onClick={() => handleDeleteConfirm(deal.id)}>
                 <i class="trash alternate icon"></i>
             </Button>
         )

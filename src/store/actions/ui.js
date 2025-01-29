@@ -58,6 +58,48 @@ export const verify_client_status = (client) => async dispatch => {
     }
 };
 
+
+export const verify_client_initial = (client) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            const encodeSearch = encodeURIComponent(`${client.first_name} ${client.last_name} ${client.email} ${client.phone_number}`)
+
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/clients/?search=${encodeSearch}`, config);
+            if (res.data.length >= 1) {
+                dispatch({
+                    type: CLIENT_FOUND_SOMEWHERE,
+                    payload: res.data
+                });
+            } else {
+                dispatch({
+                    type: CLIENT_NOT_FOUND
+                }); 
+            }
+        } catch (err) {
+            dispatch({
+                type: CLIENT_NOT_FOUND
+            });
+        }
+    } else {
+        dispatch({
+            type: CLIENT_NOT_FOUND
+        });
+    }
+};
+
+export const reset_client_taken = () => dispatch => {
+    dispatch({
+        type: CLIENT_NOT_FOUND
+    })
+}
+
+
 export const clear_message = () => dispatch => {
     dispatch({
         type: CLEAR_MESSAGE,
@@ -181,6 +223,7 @@ export const set_signup_success = () => dispatch => {
         type: SET_SIGNUP_SUCCESS
     })
 }
+
 export const reset_edit_list = () => dispatch => {
     dispatch({
         type: RESET_EDIT_LIST

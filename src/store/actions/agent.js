@@ -457,7 +457,7 @@ export const load_lists = (userID) => async dispatch => {
 
 
 
-export const new_guest_card = (property, agent, client, interested, move_by) => async dispatch => {
+export const new_guest_card = (property, agent, client, msg, interested, move_by) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
             headers: {
@@ -465,7 +465,7 @@ export const new_guest_card = (property, agent, client, interested, move_by) => 
                 'Authorization': `Bearer ${localStorage.getItem('access')}`,
             }
         }; 
-        const body = JSON.stringify({ property, agent, client, interested, move_by });
+        const body = JSON.stringify({ property, agent, client, msg, interested, move_by });
         console.log(body, "guest card body")
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/cards/`, body, config);

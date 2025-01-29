@@ -62,7 +62,7 @@ function OptionList({ options, isReorderMode, set_option_order }) {
                         </Droppable>
                     </DragDropContext>
                 ) : (
-                    <div className="h-[19rem] overflow-y-auto">
+                    <div className="overflow-y-auto">
                         {options.map((option) => (
                             <div key={option.id} className="p-1">
                                 <OptionDetail option={option}/>

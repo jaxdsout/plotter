@@ -14,7 +14,7 @@ function Upcoming ({ deals }) {
                 .map(deal => ({ ...deal, lease_end_date: new Date(deal.lease_end_date) }))  
                 .sort((a, b) => a.lease_end_date - b.lease_end_date)  
                 .filter(deal => deal.lease_end_date >= now)  
-                .slice(0, 5);
+                .slice(0, 3);
             setRenewals(filteredRenewals);
 
             const filteredMoveIns = deals
@@ -22,7 +22,7 @@ function Upcoming ({ deals }) {
                 .map(deal => ({ ...deal, move_date: new Date(deal.move_date) }))  
                 .sort((a, b) => a.move_date - b.move_date) 
                 .filter(deal => deal.move_date >= now) 
-                .slice(0, 5);
+                .slice(0, 3);
             setMoveIns(filteredMoveIns);
     }, [deals]);
 
@@ -35,25 +35,25 @@ function Upcoming ({ deals }) {
 
 
     return (
-        <div className="flex flex-col md:flex-row justify-evenly">
+        <div className="flex flex-col-reverse md:flex-row justify-evenly">
             <div className='p-5 w-full md:w-1/2'>
                 <h4 className='text-center text-white'>Upcoming Renewals</h4>
                 <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                     {renewals.length > 0 ? (
                         renewals.map(deal => (
-                            <li key={deal.id}>
-                                <div className='p-4 flex flex-col justify-center text-center text-nowrap items-center text-white hover:text-black hover:bg-gray-100 transition'>
-                                    <span className="text-sm md:text-base p-0">
+                            <li key={deal.id} className="p-2">
+                                <div className='flex flex-col md:flex-row justify-center text-center items-center md:items-start text-white hover:text-black hover:bg-gray-100 transition'>
+                                    <span className="text-sm md:text-base m-1">
                                         <b>Client:</b> {deal.client_name}
                                     </span>
-                                    <span className="text-sm md:text-base p-0">
+                                    <span className="text-sm md:text-base m-1">
                                         <b>Lease End Date:</b> {deal.lease_end_date.toLocaleDateString()}
                                     </span>
                                 </div>
                             </li>
                         ))
                     ) : (
-                        <li className='p-4 text-center text-white'>No upcoming renewals...</li>
+                        <li className='p-2 text-center text-white'>No upcoming renewals...</li>
                     )}
                 </ul>
             </div>
@@ -62,19 +62,19 @@ function Upcoming ({ deals }) {
                 <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                     {move_ins.length > 0 ? (
                         move_ins.map(deal => (
-                            <li key={deal.id} className="p-4">
+                            <li key={deal.id} className="p-2">
                                 <div className='flex flex-col md:flex-row justify-center text-center items-center md:items-start text-white hover:text-black hover:bg-gray-100 transition'>
-                                    <span className="text-sm md:text-base m-2">
+                                    <span className="text-sm md:text-base m-1">
                                         <b>Client:</b> {deal.client_name}
                                     </span>
-                                    <span className="text-sm md:text-base m-2">
+                                    <span className="text-sm md:text-base m-1">
                                         <b>Move-In Date:</b> {deal.move_date.toLocaleDateString()}
                                     </span>
                                 </div>
                             </li>
                         ))
                     ) : (
-                        <li className='p-4 text-center text-white'>No upcoming move-ins...</li>
+                        <li className='p-2 text-center text-white'>No upcoming move-ins...</li>
                     )}
                 </ul>
             </div>

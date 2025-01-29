@@ -1,4 +1,4 @@
-import { Divider, Button, Input } from "semantic-ui-react";
+import { Divider, Button, Input, TextArea } from "semantic-ui-react";
 import { useState, useEffect } from "react";
 import PropertySearch from "../listmaker/PropertySearch";
 import ClientSearch from "../listmaker/ClientSearch";
@@ -7,17 +7,19 @@ import { new_guest_card } from "../store/actions/agent";
 import { reset_guest_card } from "../store/actions/ui";
 
 function GuestCard ({ client, property, user, new_guest_card, reset_guest_card }) {
-
+    const [msgHover, setMsgHover] = useState(false);
     const [formData, setFormData] = useState({
         agent: null,
         client: null,
         property: null,
+        msg: null,
         interested: '',
         move_by: ''
     });
 
-    const { interested, move_by } = formData;
+    const { msg, interested, move_by } = formData;
 
+    
     useEffect(() => {
         if (user) {
             setFormData(prevFormData => ({
@@ -47,7 +49,8 @@ function GuestCard ({ client, property, user, new_guest_card, reset_guest_card }
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (client && property) {
-            await new_guest_card(property.id, user.id, client.id, interested, move_by);
+            console.log("Submitting guest card with:", formData);  // Debugging log
+            await new_guest_card(property.id, user.id, client.id, msg, interested, move_by);
             handleResetCard();
         } else {
             console.error("Client or property not selected.");
@@ -59,6 +62,7 @@ function GuestCard ({ client, property, user, new_guest_card, reset_guest_card }
             agent: user.id,
             property: null,
             client: null, 
+            msg: null,
             interested: '',
             move_by: ''
         });
@@ -101,7 +105,32 @@ function GuestCard ({ client, property, user, new_guest_card, reset_guest_card }
                     <div className="text-white">
                         <div className="text-black p-7 rounded-lg bg-gradient-to-b from-[#FFFFFF] to-[#fbfbfb] shadow-inner shadow-md">
                             <p>Hey team,</p>
-                            <p>Below is the guest card info for my client {client?.first_name}. Please let me know if there are any issues.</p>
+                            <div
+                                onMouseOver={() => setMsgHover(true)} 
+                                onMouseOut={() => setMsgHover(false)}
+                                className="w-[300px]"
+                            >
+                                {msgHover ? (
+                                    <TextArea
+                                        name='msg'
+                                        value={msg}
+                                        onChange={handleChange}
+                                        size="huge"
+                                        placeholder="Enter custom message here."
+                                        className="ms-3 !w-[290px]"
+                                    />
+                                ) : (
+                                    <>
+                                        {!msg ? (
+                                            <p>Below is the guest card info for my client. Please let me know if there are any issues.</p>
+                                        ) : (
+                                            <p>{msg}</p>
+                                        )}
+                                    </>
+
+                                )}
+                            </div>
+                    
                             <div className="indent-5">
                                 <ul>
                                     <li className="mt-3"><strong>Name:</strong> {client?.name} </li>
@@ -114,7 +143,7 @@ function GuestCard ({ client, property, user, new_guest_card, reset_guest_card }
                                             value={interested}
                                             onChange={handleChange}
                                             size="small"
-                                            className="ms-3 !w-[100px]"
+                                            className="ms-3 !w-[100px] !h-[30px]"
                                         />
                                     </li>
                                     <li className="mt-3">
@@ -124,7 +153,7 @@ function GuestCard ({ client, property, user, new_guest_card, reset_guest_card }
                                             value={move_by}
                                             onChange={handleChange}
                                             size="small"
-                                            className="ms-3 !w-[125px]"
+                                            className="ms-3 !w-[125px] !h-[30px]"
                                         />
                                     </li>
                                 </ul>

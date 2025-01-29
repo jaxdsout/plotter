@@ -39,14 +39,15 @@ function DeleteClient({ delete_client, load_clients, client, handleCloseModal, u
                         type="submit"
                         color="red"
                         onClick={() => handleDelete(client.id, user.id)}
+            
                     >
-                        <i className="trash alternate icon"></i>
+                        <i className="trash alternate icon !-mr-1"></i>
                     </Button>
                 }
             />
         ) : (
             <Button className="drop-shadow-sm" type="submit" color="red" onClick={() => handleDeleteConfirm(client.id)}>
-                <i className="trash alternate icon"></i>
+                <i className="trash alternate icon !-mr-1"></i>
             </Button>
         )
     }

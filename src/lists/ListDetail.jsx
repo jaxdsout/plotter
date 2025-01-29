@@ -69,7 +69,7 @@ function ListDetail({ listID, list, options, property, client, user, set_list_mo
                             <div className="flex flex-row items-center justify-center">
                                 <PropertySearch />
                                 <Form onSubmit={() => handlePropertyAdd(list, property)} className="!ml-5">
-                                    <Button color="blue" type="submit">ADD PROPERTY</Button>
+                                    <Button color="blue" type="submit" size="tiny">ADD PROPERTY</Button>
                                 </Form>
                             </div>
                             <Divider />
@@ -95,7 +95,7 @@ function ListDetail({ listID, list, options, property, client, user, set_list_mo
                                         <div className="pr-2 pl-2">
                                             <ReorderList />
                                         </div>
-                                        <Button className="drop-shadow-sm" color="green" type="submit" onClick={handleSaveList}>
+                                        <Button className="drop-shadow-sm" color="green" type="submit" size='tiny' onClick={handleSaveList}>
                                             SAVE LIST
                                         </Button>
                                     </>
@@ -169,9 +169,7 @@ function ListDetail({ listID, list, options, property, client, user, set_list_mo
                         </div>
                     ) : (
                         <>
-                            <Dimmer active>
-                                <Loader />
-                            </Dimmer>
+                            <Loader active inverted />
                         </>
                     )}
                 </>

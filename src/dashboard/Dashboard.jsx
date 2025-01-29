@@ -19,11 +19,7 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, isLoa
         setProfileHover(prev => !prev);
     };
 
-    // const autoCloseWidget = () => {
-    //     setTimeout(() => {
-    //         setProfileHover(!true)
-    //     }, 15000)
-    // }
+    
 
     const checkAuth = useCallback(() => {
         if (!access && !refresh) {
@@ -71,7 +67,7 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, isLoa
                         </div>
                     </div>
                     {profileHover && (
-                        <div className='z-1 absolute inset-y-72 -mt-3'>
+                        <div className='z-1 absolute inset-y-72 -mt-3' onDoubleClick={() => handleProfileWidget()}>
                             <ProfileWidget /> 
                         </div>
                     )}

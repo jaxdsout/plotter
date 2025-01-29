@@ -39,10 +39,10 @@ function Login ({ login, isAuthenticated, error, message, auth_user }) {
                     <h6 className="mont text-white text-2xl md:text-4xl -mt-5"> sign into the platform </h6>
                 </div>
                 <Form onSubmit={handleSubmit} className="p-5">
-                    {message && (
+                    {error && (
                         <Message negative>
                             <Message.Header>Login Failed</Message.Header>
-                            <p>{message}</p>
+                            <p>{error}</p>
                         </Message>
                     )}
                     {message && (

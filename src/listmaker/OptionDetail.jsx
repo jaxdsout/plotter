@@ -17,7 +17,9 @@ function OptionDetail ({ option, isReorderMode }) {
         <div key={option.id} className="flex justify-between items-center">
             <div className="flex flex-row items-center justify-center">
                 <Popup
+                    position="bottom left"
                     content={
+                    
                         <List>
                             {option.price === null ? (
                                 <p>No details added yet.</p>

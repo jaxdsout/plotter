@@ -38,8 +38,8 @@ function AllDeals ({ deals, isDealMode, reset_deal_mode }) {
                                     <li className='p-3 flex flex-row justify-evenly items-start font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425]' key={deal.id}>
                                         <div className="flex justify-between">
                                             <Link onClick={() => handleOpenModal(deal.id)}>
-                                                <span>
-                                                    <b>{deal.client_name}</b> | {deal.prop_name} | Move-in Date: {deal.move_date}
+                                                <span className="text-nowrap text-sm sm:text-base">
+                                                    <b>{deal.client_name}</b> | {deal.prop_name} | {deal.move_date}
                                                 </span>
                                             </Link>
                                         </div>

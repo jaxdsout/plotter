@@ -2,9 +2,10 @@ import { Button, Popup } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { delete_list } from '../store/actions/listmaker';
 import { load_lists } from '../store/actions/agent';
+import { load_user } from '../store/actions/auth';
 import { connect } from 'react-redux';
 
-function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user }) {
+function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user, load_user }) {
     const [deleteConfirm, setDeleteConfirm] = useState(null);
 
     const handleDeleteConfirm = (listID) => {
@@ -14,17 +15,10 @@ function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user })
     const handleDelete = async (listID, userID) => {
         console.log(listID, "listID")
         await delete_list(listID)
+        await load_user();
         setDeleteConfirm(null);
-        load_lists(userID);
         handleCloseModal()
     }
-
-    useEffect(() => {
-        if (deleteConfirm) {
-            const timer = setTimeout(() => setDeleteConfirm(null), 5000);
-            return () => clearTimeout(timer);
-        }
-    }, [deleteConfirm]);
 
     return (
         <>
@@ -63,4 +57,4 @@ const mapStateToProps = (state) => ({
     user: state.auth.user
 });
 
-export default connect(mapStateToProps, { delete_list, load_lists })(DeleteList);
+export default connect(mapStateToProps, { delete_list, load_lists, load_user })(DeleteList);

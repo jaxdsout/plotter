@@ -36,7 +36,7 @@ function EarningDonut ({ deals }) {
     labels: ['Not Invoiced', 'Pending', 'Overdue', 'Paid'],
     datasets: [
       {
-        label: '',
+        label: '$',
         data: statusEarnings,
         backgroundColor: ['#5F85DB', '#FABC3F', '#C7253E', '#387F39'],
         borderWidth: 1,
@@ -55,6 +55,14 @@ function EarningDonut ({ deals }) {
         text: 'Invoice Status',
         color: 'white'
       },
+      tooltip: {
+        callbacks: {
+          label: function (tooltipItem) {
+            let value = tooltipItem.raw || 0;
+            return `$${value.toLocaleString()}`;
+          }
+        }
+      }
     },
   };
 

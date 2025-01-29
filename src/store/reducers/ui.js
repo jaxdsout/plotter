@@ -36,6 +36,7 @@ const initialState = {
     resetSuccess: false,
     activateSuccess: false,
     message: null,
+    error: null,
     clientTaken: null
 };
 

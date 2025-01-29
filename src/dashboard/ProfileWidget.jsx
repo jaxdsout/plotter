@@ -76,7 +76,13 @@ function ProfileWidget ({ user, update_profile, update_avatar, load_user }) {
             <Card className='!drop-shadow-xl !w-[250px]'>
                 <CardContent>
                     <div className='flex flex-col items-center'>
-                        <img src={user.profile.avatar} className="rounded-full w-32 h-32 object-cover" alt="avatar"/>
+                        <>
+                        {user.profile.avatar === null ? (
+                            <i className="user circle icon !text-[40px] !mt-2 !-mb-2"></i>
+                        ) : (
+                            <img src={user.profile.avatar} className="rounded-full w-32 h-32 object-cover" alt="avatar"/>
+                        )}
+                        </>
                     </div>
                 </CardContent>
                 <CardContent>
