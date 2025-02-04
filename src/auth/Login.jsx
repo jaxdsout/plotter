@@ -2,10 +2,11 @@ import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState, useEffect } from "react"
 import { auth_user, login } from "../store/actions/auth";
-import { Button, Divider, Form, FormField, Message, Image, Popup } from "semantic-ui-react";
+import { Button, Divider, Form, FormField, Message, Popup, Loader } from "semantic-ui-react";
 
 function Login ({ login, isAuthenticated, error, message, auth_user }) {
     const navigate = useNavigate()
+    const [imageLoad, setImageLoad] = useState(false)
 
     const [formData, setFormData] = useState({
         email: '',
@@ -31,11 +32,23 @@ function Login ({ login, isAuthenticated, error, message, auth_user }) {
     }, [isAuthenticated, navigate]);
     
 
+    useEffect(() => {
+        const img = new Image();
+        img.src = "https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.png";
+        img.onload = () => setImageLoad(true);
+    }, []);
+
+
     return (
         <div className="flex flex-col items-center justify-evenly animator">
+            {!imageLoad ? (
+                <>
+                    <Loader active/>
+                </>
+            ) : (
             <div className="w-11/12 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
                 <div className="mb-2 flex flex-col items-center">
-                    <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.png"/>
+                    <img src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.png" alt='login'/>
                     <h6 className="mont text-white text-2xl md:text-4xl -mt-5"> sign into the platform </h6>
                 </div>
                 <Form onSubmit={handleSubmit} className="p-5">
@@ -103,6 +116,7 @@ function Login ({ login, isAuthenticated, error, message, auth_user }) {
                     </div>
                 </div>
             </div>
+            )}
         </div>
     )
 }

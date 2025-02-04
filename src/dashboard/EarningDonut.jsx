@@ -53,9 +53,15 @@ function EarningDonut ({ deals }) {
       title: {
         display: true,
         text: 'Invoice Status',
-        color: 'white'
+        color: 'white',
       },
       tooltip: {
+        backgroundColor: function (tooltipItem) {
+          const dataset = tooltipItem.tooltip.dataPoints[0].dataset;
+          const index = tooltipItem.tooltip.dataPoints[0].dataIndex;
+          return dataset.backgroundColor[index] || 'rgba(0, 0, 0, 0.8)';
+        },
+        displayColors: false,
         callbacks: {
           label: function (tooltipItem) {
             let value = tooltipItem.raw || 0;

@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { connect } from "react-redux"
 import { activate } from "../store/actions/auth";
 import { set_activate_success } from "../store/actions/ui";
-import { Button, Image, Message, Loader } from "semantic-ui-react";
+import { Button, Message, Loader } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 
 function Activate ({ activate, message, activateSuccess, set_activate_success }) {
@@ -27,7 +27,7 @@ function Activate ({ activate, message, activateSuccess, set_activate_success })
         <div className="flex flex-col items-center justify-evenly">
             <div className="w-11/12 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
                 <div className="mb-3 flex flex-col items-center">
-                    <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1007.jpg"/>
+                    <img src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1007.jpg" alt="activate-header"/>
                     <p className="mont text-white text-2xl md:text-4xl mt-4"> activate your account </p>
                 </div>
                 <div className="flex flex-col items-center justify-evenly">

@@ -1,5 +1,5 @@
 import { Button, Popup } from 'semantic-ui-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { delete_list } from '../store/actions/listmaker';
 import { load_lists } from '../store/actions/agent';
 import { load_user } from '../store/actions/auth';

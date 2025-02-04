@@ -3,11 +3,12 @@ import { connect } from "react-redux"
 import { useEffect, useState } from "react"
 import { reset_password } from "../store/actions/auth";
 import { set_reset_success } from "../store/actions/ui";
-import { Button, FormField, Form, Image, Message, Loader } from "semantic-ui-react";
+import { Button, FormField, Form, Message, Loader } from "semantic-ui-react";
 
 function ResetPassword ({ reset_password, message, resetSuccess, set_reset_success }) {
     const navigate = useNavigate()
     const [isLoading, setLoading] = useState(false);
+    const [imageLoad, setImageLoad] = useState(false);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -31,11 +32,22 @@ function ResetPassword ({ reset_password, message, resetSuccess, set_reset_succe
         }
     }, [resetSuccess, set_reset_success, navigate])
 
+    useEffect(() => {
+        const img = new Image();
+        img.src = "https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.png";
+        img.onload = () => setImageLoad(true);
+    }, []);
+
     return (
         <div className="flex flex-col items-center justify-evenly">
+            {!imageLoad ? (
+                <>
+                    <Loader active/>
+                </>
+            ) : (
             <div className="w-11/12 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
                 <div className="flex flex-col items-center">
-                    <Image src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1010.png"/>
+                    <img src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1010.png" alt='reset-header'/>
                     <h6 className="mont text-white text-2xl md:text-4xl -mt-2"> reset your password </h6>
                 </div>
                 {message && (
@@ -66,6 +78,7 @@ function ResetPassword ({ reset_password, message, resetSuccess, set_reset_succe
                     </div>            
                 </Form>
             </div>
+            )}
         </div>
     )
 }

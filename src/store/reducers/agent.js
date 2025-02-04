@@ -32,8 +32,6 @@ import {
     LOGOUT,
     LOAD_USER_DATA_SUCCESS,
     LOAD_USER_DATA_FAIL,
-    LOAD_PROFILE_FAIL,
-    LOAD_PROFILE_SUCCESS
 } from '../actions/types';
 
 const initialState = {

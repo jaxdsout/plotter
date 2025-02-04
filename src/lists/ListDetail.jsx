@@ -1,4 +1,4 @@
-import { Button, Divider, Form, Popup, Loader, Dimmer } from "semantic-ui-react";
+import { Button, Divider, Form, Popup, Loader } from "semantic-ui-react";
 import { reset_list_mode, set_list_mode } from "../store/actions/ui";
 import { connect } from "react-redux";
 import { new_option, load_list, update_list} from "../store/actions/listmaker";

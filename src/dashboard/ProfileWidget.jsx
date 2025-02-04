@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Image, Form, FormField, Button, Icon, Loader } from 'semantic-ui-react';
+import { Card, CardContent, CardHeader, Form, FormField, Button, Icon, Loader } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { update_profile, update_avatar } from '../store/actions/agent';
 import { load_user } from '../store/actions/auth';

@@ -23,10 +23,10 @@ function App() {
       </header>
       <main className='mb-auto'>
       <Routes>
-        <Route path="/" element={ <Landing /> }/>
+        <Route path="/" element={ <Landing /> } />
         <Route path="/signup/" element={ <SignUpForm /> } />
         <Route path="/reset-password/" element={ <ResetPassword /> } />
-        <Route path="/password/reset/confirm/:uid/:token" element={ <ConfirmPassword /> } />
+        <Route path="/reset-password/confirm/:uid/:token" element={ <ConfirmPassword /> } />
         <Route path="/verify/:uid/:token" element={ <Activate /> } />
         <Route path="/login/" element={ <Login /> } />
         <Route path="/dashboard/" element={ <Dashboard /> }>

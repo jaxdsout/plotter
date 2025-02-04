@@ -49,6 +49,7 @@ function EarningBar ({ deals }) {
         color: 'white'
       },
       tooltip: {
+        displayColors: false,
         callbacks: {
           label: function (tooltipItem) {
             let value = tooltipItem.raw || 0;
