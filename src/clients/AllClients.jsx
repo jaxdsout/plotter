@@ -203,7 +203,7 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
 
 
             {showDealModal && selectedDeal && (
-                <Modal className="!w-11/12 sm:!w-[500px]" open={showDealModal} onClose={handleCloseDealModal}>
+                <Modal diclassName="!w-11/12 sm:!w-[500px]" open={showDealModal} onClose={handleCloseDealModal}>
                     <Modal.Header>Deal Details</Modal.Header>
                     <Modal.Content>
                         <DealDetail dealID={selectedDeal} handleCloseModal={handleCloseDealModal}/>
