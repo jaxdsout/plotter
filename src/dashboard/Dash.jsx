@@ -15,16 +15,6 @@ import { load_user, } from '../store/actions/auth';
 
 function Dash ({ tab_switch }) {
     const [activeTab, setActiveTab] = useState("to-do");
- 
-    const handleCommissionTab = () => {
-        tab_switch();
-        setActiveTab("commission")
-    }
-
-    const handleGuestCardTab = () => {
-        tab_switch();
-        setActiveTab("guest card")
-    }
 
     return (
         <div className='transition ease-in-out delay-150'>
@@ -40,28 +30,10 @@ function Dash ({ tab_switch }) {
             <Upcoming />
             <Divider />
             <div className='z-0 flex flex-row items-center justify-center bg-[#26282B] bg-blend-color-burn rounded'>
-                <Link 
-                    className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' 
-                    onClick={() => {setActiveTab("to-do")}}>
-                        <i class="tasks icon"></i>
-
-                </Link>
-                <Link 
-                    className='mont drop-shadow-md text-xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' 
-                    onClick={handleCommissionTab}>
-                        <i class="percent icon"></i>
-
-                </Link>
-                <Link 
-                    className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' 
-                    onClick={handleGuestCardTab}>
-                        <i class="address card icon"></i>
-                </Link>
-                <Link 
-                    className='mont drop-shadow-md text-2xl p-3 text-[#cccccc] sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' 
-                    onClick={() => setActiveTab("calculator")}>
-                        <i class="calculator icon"></i>
-                </Link>
+                <Tab tab_name="to-do" icon="tasks icon" activeTab={activeTab} setActiveTab={setActiveTab} tab_switch={tab_switch}></Tab>
+                <Tab tab_name="commission" icon="percent icon" activeTab={activeTab} setActiveTab={setActiveTab} tab_switch={tab_switch}></Tab>
+                <Tab tab_name="guest card" icon="address card icon" activeTab={activeTab} setActiveTab={setActiveTab} tab_switch={tab_switch}></Tab>
+                <Tab tab_name="calculator" icon="calculator icon" activeTab={activeTab} setActiveTab={setActiveTab} tab_switch={tab_switch}></Tab>
             </div>
             <Divider />
             <div className='flex items-center justify-center bg-[#1f2124] rounded'>
@@ -71,6 +43,23 @@ function Dash ({ tab_switch }) {
                 {activeTab === 'calculator' && <Calculator />}
             </div>
         </div>
+    )
+}
+
+const Tab = ({ setActiveTab, activeTab, tab_name, tab_switch, icon }) => {
+    const isActive = activeTab === tab_name;
+
+    return (
+        <button
+            onClickCapture={() => {
+                tab_switch();
+                setActiveTab(tab_name);
+            }}
+            className={`mont drop-shadow-md text-xl p-3 text-[#cccccc] sm:text-3xl active:translate-y-0.5
+                ${isActive ? "text-[#89a2dc]" : "text-white"} hover:text-[#5F85DB]`}
+        >
+            <i className={icon}></i> 
+        </button>
     )
 }
 

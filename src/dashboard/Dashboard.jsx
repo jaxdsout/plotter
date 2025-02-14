@@ -48,13 +48,18 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, isLoa
                 <>
                     <div className="w-11/12 md:w-3/4 max-w-[900px] p-5 mt-10 bg-gradient-to-b from-[#26282B] to-[#1f2124] shadow-inner shadow-md rounded-lg mb-10 pb-10">
                         <div className='z-0 p-5 flex flex-row items-center justify-center bg-[#1f2124] bg-blend-color-burn rounded-md'>
-                            <Link className='mont drop-shadow-md text-2xl p-2 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/home">
-                                <i className="home icon"></i>
-                            </Link>
-                            <Link className='mont drop-shadow-md text-2xl p-2 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/clients">clients</Link>
-                            <Link className='mont drop-shadow-md text-2xl p-2 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/lists">lists</Link>
-                            <Link className='mont drop-shadow-md text-2xl p-2 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' to="/dashboard/deals">deals</Link>
-                            <Link className='mont drop-shadow-md text-2xl p-2 text-white sm:text-3xl hover:text-[#5F85DB] !active:text-[#5475c1] active:translate-y-0.5' onClick={handleProfileWidget}>
+                            <Tab to="/dashboard/home" icon="home icon" currentPath={location.pathname}>
+                            </Tab>
+                            <Tab to="/dashboard/clients" currentPath={location.pathname}>
+                                clients
+                            </Tab>
+                            <Tab to="/dashboard/lists" currentPath={location.pathname}>
+                                lists
+                            </Tab>
+                            <Tab to="/dashboard/deals" currentPath={location.pathname}>
+                                deals
+                            </Tab>
+                            <Link icon="user icon" onClick={handleProfileWidget} className='mont drop-shadow-md text-2xl p-2 sm:text-3xl active:translate-y-0.5 text-white hover:text-[#5F85DB]'>
                                 <i className="user circle icon"></i>
                             </Link>
                         </div>
@@ -81,6 +86,22 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, isLoa
             )}
             
         </div>
+    )
+}
+
+
+const Tab = ({ to, icon, children, onClick, currentPath }) => {
+    const isActive = currentPath === to;
+
+    return (
+        <Link
+            to={to}
+            onClick={onClick}
+            className={`mont drop-shadow-md text-2xl p-2 sm:text-3xl active:translate-y-0.5
+                ${isActive ? "text-[#89a2dc]" : "text-white"} hover:text-[#5F85DB]`}
+        >
+            {icon ? <i className={icon}></i> : children}
+        </Link>
     )
 }
 

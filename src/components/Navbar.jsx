@@ -32,9 +32,12 @@ function Navbar ({ logout, isAuthenticated, isClientView, access }) {
                 </div>
                 <div>
                     {access ? 
-                        <Button className="drop-shadow-sm active:translate-y-0.5" onClick={logout_user}>LOGOUT</Button> 
+                        <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] drop-shadow active:translate-y-0.5" onClick={logout_user}>LOGOUT</Button> 
                         : 
-                        <Link className='drop-shadow-sm active:translate-y-0.5' to={"/login/"}><Button>LOGIN</Button></Link>
+                        <>
+                            <Link to="/login/"><Button className='text-[#26282B] !bg-white hover:!text-black active:translate-y-0.5'>LOGIN</Button></Link>
+                            <Link to={"/signup/"}><Button className='!bg-[#90B8F8] hover:!bg-[#5F85DB] drop-shadow active:translate-y-0.5'>SIGN UP</Button></Link>
+                        </>
                     }
                 </div>
             </nav>          
