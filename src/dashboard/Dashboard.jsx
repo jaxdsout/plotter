@@ -35,7 +35,7 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out }) {
         } else {
             auth_user(location.pathname);
         }
-    }, [access, refresh, auth_user, refresh_token, lock_out, location]);
+    }, [access, refresh, auth_user, refresh_token, lock_out]);
 
     useEffect(() => {
         checkAuth();
