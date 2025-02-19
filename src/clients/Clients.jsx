@@ -1,8 +1,6 @@
 import NewClient from "./NewClient";
 import AllClients from "./AllClients";
 import { connect } from "react-redux";
-import { load_user } from "../store/actions/auth";
-import { load_clients } from "../store/actions/agent";
 
 function Clients( ) {
     
@@ -22,4 +20,4 @@ const mapStateToProps = state => ({
     clients: state.agent.clients
 });
 
-export default connect(mapStateToProps, { load_user, load_clients })(Clients);
+export default connect(mapStateToProps, { })(Clients);

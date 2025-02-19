@@ -19,7 +19,9 @@ import {
     SET_DEAL_MODE,
     RESET_EDIT_LIST,
     CLIENT_FOUND_SOMEWHERE,
-    CLIENT_NOT_FOUND
+    CLIENT_NOT_FOUND,
+    PROFILE_WIDGET_OPEN,
+    PROFILE_WIDGET_CLOSE
 } from "./types"
 
 import axios from "axios";
@@ -231,3 +233,14 @@ export const reset_edit_list = () => dispatch => {
 }
 
 
+export const profile_widget_open = () => dispatch => {
+    dispatch({
+        type: PROFILE_WIDGET_OPEN
+    })
+}
+
+export const profile_widget_close = () => dispatch => {
+    dispatch({
+        type: PROFILE_WIDGET_CLOSE
+    })
+}

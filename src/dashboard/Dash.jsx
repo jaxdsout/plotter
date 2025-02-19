@@ -33,14 +33,12 @@ function Dash ({ tab_switch, isLoaded }) {
                     <Divider />
                     <div className='z-0 flex flex-row p-4 items-center justify-center bg-[#26282B] bg-blend-color-burn rounded'>
                         <Tab subtitle="To Do's" tab_name="to-do" icon="tasks icon" activeTab={activeTab} setActiveTab={setActiveTab} tab_switch={tab_switch}></Tab>
-                        <Tab subtitle="Commissions" tab_name="commission" icon="percent icon" activeTab={activeTab} setActiveTab={setActiveTab} tab_switch={tab_switch}></Tab>
                         <Tab subtitle="Guest Card" tab_name="guest card" icon="address card icon" activeTab={activeTab} setActiveTab={setActiveTab} tab_switch={tab_switch}></Tab>
                         <Tab subtitle="Net Effective" tab_name="calculator" icon="calculator icon" activeTab={activeTab} setActiveTab={setActiveTab} tab_switch={tab_switch}></Tab>
                     </div>
                     <Divider />
                     <div className='flex items-center justify-center bg-[#1f2124] rounded'>
                         {activeTab === `to-do` && <Tasks />}
-                        {activeTab === 'commission' && <Commission />}
                         {activeTab === 'guest card' && <GuestCard />}
                         {activeTab === 'calculator' && <Calculator />}
                     </div>

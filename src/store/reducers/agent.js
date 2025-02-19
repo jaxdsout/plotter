@@ -39,43 +39,18 @@ const initialState = {
     deals: [],
     lists: [],
     tasks: [],
-    deal: null,
     properties: [],
-    isLoaded: null
+    deal: null,
+    isLoaded: false
 };
 
 export default function agentReducer(state = initialState, action) {
     const { type, payload } = action;
     switch(type) {
-        case LOAD_CLIENTS_SUCCESS:
-            return {
-                ...state,
-                clients: payload
-            }
-        case LOAD_DEALS_SUCCESS:
-            return {
-                ...state,
-                deals: payload
-            }
         case LOAD_DEAL_SUCCESS:
             return {
                 ...state,
                 deal: payload
-            }
-        case LOAD_LISTS_SUCCESS:
-            return {
-                ...state,
-                lists: payload
-            }
-        case LOAD_TASKS_SUCCESS:
-            return {
-                ...state,
-                tasks: payload
-            }
-        case LOAD_PROPERTIES_SUCCESS:
-            return {
-                ...state,
-                properties: payload
             }
         case UPDATE_CLIENT_SUCCESS:
             return {
@@ -91,9 +66,34 @@ export default function agentReducer(state = initialState, action) {
                 tasks: [],
                 properties: [],
             }
-        case LOAD_USER_DATA_SUCCESS:
+        case LOAD_CLIENTS_SUCCESS:
             return {
                 ...state,
+                clients: payload,
+                isLoaded: true
+            }
+        case LOAD_DEALS_SUCCESS:
+            return {
+                ...state,
+                deals: payload,
+                isLoaded: true
+            }
+        case LOAD_LISTS_SUCCESS:
+            return {
+                ...state,
+                lists: payload,
+                isLoaded: true
+            }
+        case LOAD_TASKS_SUCCESS:
+            return {
+                ...state,
+                tasks: payload,
+                isLoaded: true
+            }
+        case LOAD_PROPERTIES_SUCCESS:
+            return {
+                ...state,
+                properties: payload,
                 isLoaded: true
             }
         case LOAD_USER_DATA_FAIL:
@@ -101,6 +101,11 @@ export default function agentReducer(state = initialState, action) {
                 ...state,
                 isLoaded: false
             }
+        case LOAD_CLIENTS_FAIL:
+        case LOAD_LISTS_FAIL:
+        case LOAD_DEALS_FAIL:
+        case LOAD_TASKS_FAIL:
+        case LOAD_PROPERTIES_FAIL:
         case LOAD_DEAL_FAIL:
         case NEW_CLIENT_SUCCESS:
         case NEW_LIST_SUCCESS:
@@ -111,9 +116,6 @@ export default function agentReducer(state = initialState, action) {
         case UPDATE_CLIENT_FAIL:
         case UPDATE_PROFILE_SUCCESS:
         case UPDATE_PROFILE_FAIL:
-        case LOAD_DEALS_FAIL:
-        case LOAD_LISTS_FAIL:
-        case LOAD_CLIENTS_FAIL:
         case DELETE_DEAL_FAIL:
         case DELETE_DEAL_SUCCESS:
         case UPDATE_STATUS_FAIL:
@@ -122,12 +124,9 @@ export default function agentReducer(state = initialState, action) {
         case DELETE_CLIENT_SUCCESS:
         case NEW_TASK_FAIL:
         case NEW_TASK_SUCCESS:
-        case LOAD_TASKS_FAIL:
-        case LOAD_PROPERTIES_FAIL:
             return {
                 ...state
             }
-        
         default:
             return state;
     }

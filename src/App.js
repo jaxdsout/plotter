@@ -13,6 +13,7 @@ import Dash from './dashboard/Dash';
 import Clients from './clients/Clients';
 import Lists from './lists/Lists';
 import Deals from './deals/Deals';
+import Commission from './dashboard/Commission';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="clients" element={<Clients />} />
           <Route path="lists" element={<Lists />} />
           <Route path="deals" element={<Deals />} />
+          <Route path="rates" element={<Commission />} />
         </Route>
         <Route path="/list/:uuid/" element={ <ClientList /> } />
       </Routes>

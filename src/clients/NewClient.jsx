@@ -7,32 +7,6 @@ import { verify_client_initial, reset_client_taken } from "../store/actions/ui";
 function NewClient({ user, load_clients, new_client, clientTaken, verify_client_initial, reset_client_taken }) {
     const [showModal, setShowModal] = useState(false);
     const [isProceeding, setProceeding] = useState(false);
-    const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
-        email: '',
-        phone_number: '',
-    });
-    const { first_name, last_name, email, phone_number } = formData;
-
-    const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (user) {
-            if (first_name && last_name && email && phone_number) {
-                if (!isProceeding) {
-                    await verify_client_initial(formData);
-                    setProceeding(true); 
-                } else {
-
-                    await new_client(user.id, first_name, last_name, email, phone_number);
-                    await load_clients(user.id);
-                    handleCloseModal();
-                }
-            }
-        }
-    };
 
     const handleOpenModal = () => setShowModal(true);
 
@@ -47,6 +21,35 @@ function NewClient({ user, load_clients, new_client, clientTaken, verify_client_
         setProceeding(false);
         reset_client_taken();
     }
+
+    const [formData, setFormData] = useState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone_number: '',
+    });
+
+    const { first_name, last_name, email, phone_number } = formData;
+
+
+    const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (user) {
+            if (first_name && last_name && email && phone_number) {
+                if (clientTaken) {
+                    await verify_client_initial(formData);
+                    setProceeding(true); 
+                } else {
+                    await new_client(user.id, first_name, last_name, email, phone_number);
+                    await load_clients(user.id);
+                    handleCloseModal();
+                }
+            }
+        }
+    };
+
 
     useEffect(() => {
         if (clientTaken) {

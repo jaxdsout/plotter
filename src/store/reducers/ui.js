@@ -22,7 +22,9 @@ import {
     LOGIN_FAIL,
     LOGOUT,
     CLIENT_FOUND_SOMEWHERE,
-    CLIENT_NOT_FOUND
+    CLIENT_NOT_FOUND,
+    PROFILE_WIDGET_CLOSE,
+    PROFILE_WIDGET_OPEN
 } from '../actions/types';
 
 const initialState = {
@@ -37,7 +39,8 @@ const initialState = {
     activateSuccess: false,
     message: null,
     error: null,
-    clientTaken: null
+    clientTaken: false,
+    profileWidget: false
 };
 
 export default function uiReducer(state = initialState, action) {
@@ -169,6 +172,16 @@ export default function uiReducer(state = initialState, action) {
             return {
                 ...state,
                 clientTaken: false
+            }
+        case PROFILE_WIDGET_OPEN:
+            return {
+                ...state,
+                profileWidget: true
+            }
+        case PROFILE_WIDGET_CLOSE:
+            return {
+                ...state,
+                profileWidget: false
             }
         default:
             return state;

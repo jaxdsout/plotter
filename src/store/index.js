@@ -1,9 +1,17 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import authReducer from './reducers/auth';
 import agentReducer from './reducers/agent';
 import listmakerReducer from './reducers/listmaker';
 import uiReducer from './reducers/ui';
 import timeoutWare from './middleware/timeout';
+
+const persistConfig = {
+    key: "root",
+    storage,
+    whitelist: ["auth", "agent", "listmaker", "ui"],
+};
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -12,10 +20,15 @@ const rootReducer = combineReducers({
     ui: uiReducer,
 });
 
-const store = configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(timeoutWare),
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false, 
+        }).concat(timeoutWare),
     preloadedState: {}, 
 });
 
-export default store;
+export const persistor = persistStore(store);

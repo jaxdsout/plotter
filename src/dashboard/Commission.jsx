@@ -38,7 +38,8 @@ function Commission ({ properties, property, reset_commission}) {
 
 
     return (
-        <div className="w-11/12 max-w-[500px] mt-5 mb-10 flex flex-col items-center justify-center bg-[#26282B] rounded-lg shadow-md shadow-inner">
+        <>
+        <div className=" mt-5 mb-10 flex flex-col items-center justify-center bg-[#26282B] rounded-lg shadow-md shadow-inner">
             <div className="mt-4 mb-2 flex flex-col items-center">
                 <h4 className='text-center text-white'>Commissions</h4>
             </div>
@@ -130,6 +131,7 @@ function Commission ({ properties, property, reset_commission}) {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

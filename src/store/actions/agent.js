@@ -34,9 +34,9 @@ import {
     UPDATE_DEAL_FAIL,
     UPDATE_DEAL_SUCCESS,
     LOAD_USER_DATA_FAIL,
-    LOAD_USER_DATA_SUCCESS,
     LOAD_PROFILE_SUCCESS,
-    LOAD_PROFILE_FAIL
+    LOAD_PROFILE_FAIL,
+    USER_DATA_UNCHANGED
 } from './types';
 
 import axios from 'axios';
@@ -129,34 +129,6 @@ export const update_avatar = (userObj, file) => async dispatch => {
 };
 
 
-export const load_clients = (userID) => async dispatch => {
-    if (localStorage.getItem('access')) {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('access')}`,
-            }
-        }; 
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/clients/?agent=${userID}`, config);
-            dispatch({
-                type: LOAD_CLIENTS_SUCCESS,
-                payload: res.data
-            });
-            return res.data;
-        } catch (err) {
-            dispatch({
-                type: LOAD_CLIENTS_FAIL
-            });
-        }
-    } else {
-        dispatch({
-            type: LOAD_CLIENTS_FAIL
-        });
-    }
-};
-
-
 export const new_client = (agent, first_name, last_name, email, phone_number) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
@@ -239,33 +211,6 @@ export const update_client = (clientID, agent, first_name, last_name, email, pho
     }
 };
 
-
-export const load_deals = (userID) => async dispatch => {
-    if (localStorage.getItem('access')) {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('access')}`,
-            }
-        }; 
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/deals/?agent=${userID}`, config);
-            dispatch({
-                type: LOAD_DEALS_SUCCESS,
-                payload: res.data
-            });
-            return res.data;
-        } catch (err) {
-            dispatch({
-                type: LOAD_DEALS_FAIL
-            });
-        }
-    } else {
-        dispatch({
-            type: LOAD_DEALS_FAIL
-        });
-    }
-};
 
 export const load_deal = (dealID) => async dispatch => {
     if (localStorage.getItem('access')) {
@@ -428,36 +373,6 @@ export const update_deal = (dealID, property, agent, client, unit_no, move_date,
     }
 };
 
-
-export const load_lists = (userID) => async dispatch => {
-    if (localStorage.getItem('access')) {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('access')}`,
-            }
-        }; 
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/lists/?agent=${userID}`, config);
-            dispatch({
-                type: LOAD_LISTS_SUCCESS,
-                payload: res.data
-            });
-            return res.data;
-        } catch (err) {
-            dispatch({
-                type: LOAD_LISTS_FAIL
-            });
-        }
-    } else {
-        dispatch({
-            type: LOAD_LISTS_FAIL
-        });
-    }
-};
-
-
-
 export const new_guest_card = (property, agent, client, msg, interested, move_by) => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
@@ -515,32 +430,7 @@ export const new_task = (user, description, is_active) => async dispatch => {
     }
 };
 
-export const load_tasks = (userID) => async dispatch => {
-    if (localStorage.getItem('access')) {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('access')}`,
-            }
-        }; 
-        try {
-            const res = await axios.get(`${process.env.REACT_APP_API_URL}/tasks/?user=${userID}`, config);
-            dispatch({
-                type: LOAD_TASKS_SUCCESS,
-                payload: res.data
-            });
-            return res.data;
-        } catch (err) {
-            dispatch({
-                type: LOAD_TASKS_FAIL
-            });
-        }
-    } else {
-        dispatch({
-            type: LOAD_TASKS_FAIL
-        });
-    }
-};
+
 
 export const update_task = (taskID, user, is_active) => async dispatch => {
     if (localStorage.getItem('access')) {
@@ -571,6 +461,119 @@ export const update_task = (taskID, user, is_active) => async dispatch => {
 };
 
 
+export const load_clients = (userID) => async dispatch => {
+
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/clients/?agent=${userID}`, config);
+            dispatch({
+                type: LOAD_CLIENTS_SUCCESS,
+                payload: res.data
+            });
+            return res.data;
+        } catch (err) {
+            dispatch({
+                type: LOAD_CLIENTS_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: LOAD_CLIENTS_FAIL
+        });
+    }
+};
+
+export const load_deals = (userID) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/deals/?agent=${userID}`, config);
+            dispatch({
+                type: LOAD_DEALS_SUCCESS,
+                payload: res.data
+            });
+            return res.data;
+        } catch (err) {
+            dispatch({
+                type: LOAD_DEALS_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: LOAD_DEALS_FAIL
+        });
+    }
+};
+
+export const load_lists = (userID) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/lists/?agent=${userID}`, config);
+            dispatch({
+                type: LOAD_LISTS_SUCCESS,
+                payload: res.data
+            });
+            return res.data;
+        } catch (err) {
+            dispatch({
+                type: LOAD_LISTS_FAIL
+            });
+        }
+     
+        
+    } else {
+        dispatch({
+            type: LOAD_LISTS_FAIL
+        });
+    }
+};
+
+
+export const load_tasks = (userID) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/tasks/?user=${userID}`, config);
+            dispatch({
+                type: LOAD_TASKS_SUCCESS,
+                payload: res.data
+            });
+            return res.data;
+        } catch (err) {
+            dispatch({
+                type: LOAD_TASKS_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: LOAD_TASKS_FAIL
+        });
+    }
+};
+
 export const load_properties = () => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
@@ -598,62 +601,46 @@ export const load_properties = () => async dispatch => {
     }
 };
 
+export const load_user_data = (userID, pathName) => async (dispatch, getState) => {
+    let hasFetched = false;
+    let state = getState();
 
-export const load_user_data = (userID, pathName) => async dispatch => {
-    console.log(pathName, "pathName")
-    if (pathName === '/dashboard/home') {
-        try {
-            const [deals, tasks, properties] = await Promise.all([
-                // dispatch(load_clients(userID)), 
-                dispatch(load_deals(userID)),
-                dispatch(load_tasks(userID)),
-                dispatch(load_properties())
-            ]);
-            dispatch({ type: LOAD_DEALS_SUCCESS, payload: deals });
-            dispatch({ type: LOAD_TASKS_SUCCESS, payload: tasks });
-            dispatch({ type: LOAD_PROPERTIES_SUCCESS, payload: properties });
-            dispatch({ type: LOAD_USER_DATA_SUCCESS });
-    
-        } catch (error) {
-            dispatch({
-                type: LOAD_USER_DATA_FAIL
-            });
+    try {
+        if (pathName === '/dashboard/home') {
+            if (state.agent.deals.length === 0) {
+                await dispatch(load_deals(userID));
+                await dispatch(load_tasks(userID));
+                hasFetched = true;
+            }
+        } else if (pathName === '/dashboard/clients') {
+            if (state.agent.clients.length === 0) {
+                await dispatch(load_clients(userID));
+                hasFetched = true;
+            }
+        } else if (pathName === '/dashboard/lists') {
+            if (state.agent.lists.length === 0) {
+                await dispatch(load_lists(userID));
+                hasFetched = true;
+            }
+        } else if (pathName === '/dashboard/deals') {
+            if (state.agent.deals.length === 0) {
+                await dispatch(load_deals(userID));
+                hasFetched = true;
+            }
+        } else if (pathName === '/dashboard/rates') {
+            if (state.agent.properties.length === 0) {
+                await dispatch(load_properties());
+                hasFetched = true;
+            }
         }
-    } else if (pathName === '/dashboard/lists') {
-        try {
-            const [lists] = await Promise.all([
-                dispatch(load_lists(userID)),
-            ]);
-            dispatch({ type: LOAD_LISTS_SUCCESS, payload: lists });
-            dispatch({ type: LOAD_USER_DATA_SUCCESS });
-        } catch (error) {
-            dispatch({
-                type: LOAD_USER_DATA_FAIL
-            });
+        
+        if (!hasFetched) {
+            console.log("Data is unchanged, skipping API calls.");
+            dispatch({ type: USER_DATA_UNCHANGED });
         }
-    } else if (pathName === '/dashboard/clients') {
-        try {
-            const [clients] = await Promise.all([
-                dispatch(load_clients(userID)), 
-            ]);
-            dispatch({ type: LOAD_CLIENTS_SUCCESS, payload: clients });
-            dispatch({ type: LOAD_USER_DATA_SUCCESS });
-        } catch (error) {
-            dispatch({
-                type: LOAD_USER_DATA_FAIL
-            });
-        }
-    } else if (pathName === '/dashboard/deals') {
-        try {
-            const [deals] = await Promise.all([
-                dispatch(load_deals(userID)),
-            ]);
-            dispatch({ type: LOAD_DEALS_SUCCESS, payload: deals });
-            dispatch({ type: LOAD_USER_DATA_SUCCESS });
-        } catch (error) {
-            dispatch({
-                type: LOAD_USER_DATA_FAIL
-            });
-        }
+
+    } catch (error) {
+        console.error("Error loading user data", error);
+        dispatch({ type: LOAD_USER_DATA_FAIL });
     }
 };
