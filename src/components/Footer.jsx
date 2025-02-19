@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { Icon } from 'semantic-ui-react';
 
-function Footer ({ isClientView }) {
+function Footer ({ isClientView, access }) {
 
     const logo_click =  () => {
         if (isClientView) {
@@ -20,19 +20,28 @@ function Footer ({ isClientView }) {
                 </p>
             </nav>
         ) : (
-            <div className='bg-[#f1e9df] text-center p-5 sticky bottom-0'>
+            <>
+            <div className='flex flex-col items-center bg-[#f1e9df] text-center p-5 sticky bottom-0'>
+                {/* {access ? ( */}
+                    <div className='mt-3'>
+                        <p className='-mb-0 text-xs uppercase'>Have a question or issue?</p>
+                        <a className="font-bold mont text-md" href="mailto:info@aptatlas.com">info@aptatlas.com</a>
+                    </div>
+                {/* ) : null } */}
                 <p className='font-sans text-[#26282B] p-5 !text-sm'>
                     <Icon className="copyright"/>
                     <span>2025 Apartment Atlas</span>
                 </p>
             </div>
+            </>
         )}
        </>  
     )
 }
 
 const mapStateToProps = state => ({
-    isClientView: state.ui.isClientView
+    isClientView: state.ui.isClientView,
+    access: state.auth.access,
 });
 
 export default connect(mapStateToProps, { })(Footer);

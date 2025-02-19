@@ -33,23 +33,21 @@ function DeleteOption ( { delete_option, load_list, option, list}) {
                     size="tiny"
                     className='!text-red-700 !font-black'
                     trigger={
-                        <Button
+                        <button
                             type="submit"
-                            color="red"
+                            className="p-3 bg-red-600 text-white rounded-lg mr-2 hover:bg-red-800"
                             onClick={() => handleDelete(option.id, list)}
                         >
-                            <Icon name='trash alternate icon' className='!-mr-1' />
-                        </Button>
+                            <i className="trash alternate icon !-mr-1 !-ml-1"></i>
+                        </button>
                     }
                 />
             ) : (
-                <Button 
-                    type="submit" 
-                    onClick={() => handleDeleteConfirm(option.id)} 
-                >
-                    <Icon name='trash alternate icon' className='!-mr-1'
- />
-                </Button>
+                <div>
+                    <button onClick={() => handleDeleteConfirm(option.id)} className="p-3 bg-[#2d2d2e] text-white rounded-lg mr-2 hover:bg-red-600">
+                        <i className="trash alternate icon !-mr-1 !-ml-1"></i>
+                    </button>
+                </div>
             )}
         </>
     )

@@ -8,7 +8,7 @@ import ListDetail from "../lists/ListDetail";
 import DealDetail from "../deals/DealDetail"
 import { reset_list_mode, reset_deal_mode, reset_edit_list } from "../store/actions/ui";
 
-function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_edit_list, reset_deal_mode}) {
+function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_edit_list, reset_deal_mode, isLoaded }) {
     const [showClientDetail, setShowClientDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [clientTab, setClientTab] = useState("info");
@@ -76,7 +76,7 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
     return (
         <>
             <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
-                {clients ? ( 
+                {isLoaded ? ( 
                     <>
                     {clients.length > 0 ? (
                         <>
@@ -175,11 +175,9 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
                         
                     </>
                 ) : (
-                    <>
-                        <Dimmer active>
-                            <Loader />
-                        </Dimmer>
-                    </>
+                    <div className='h-[40rem]'>
+                        <Loader inverted active />
+                    </div>
                 )
             }
             </div>
@@ -225,7 +223,8 @@ const mapStateToProps = state => ({
     error: state.auth.error,
     clients: state.agent.clients,
     isListMode: state.ui.isListMode,
-    isDealMode: state.ui.isDealMode
+    isDealMode: state.ui.isDealMode,
+    isLoaded: state.agent.isLoaded
 });
 
 export default connect(mapStateToProps, { reset_list_mode, reset_deal_mode, reset_edit_list })(AllClients);

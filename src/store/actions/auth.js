@@ -48,7 +48,7 @@ export const login = (email, password) => async (dispatch) => {
     }
 };
 
-export const auth_user = () => async (dispatch) => {
+export const auth_user = (pathName) => async (dispatch) => {
     const access = localStorage.getItem('access');
 
     if (!access) {
@@ -68,7 +68,8 @@ export const auth_user = () => async (dispatch) => {
         await axios.post(`${process.env.REACT_APP_API_URL}/jwt/verify/`, body, config);
 
         dispatch({ type: AUTHENTICATE_SUCCESS });
-        dispatch(load_user());
+        dispatch(load_user(pathName));
+        console.log("triggering load user")
     } catch (err) {
         const refresh = localStorage.getItem('refresh');
         if (refresh) {
@@ -78,7 +79,7 @@ export const auth_user = () => async (dispatch) => {
                 localStorage.setItem('access', res.data.access);
 
                 dispatch({ type: AUTHENTICATE_SUCCESS });
-                dispatch(load_user());
+                dispatch(load_user(pathName));
             } catch (refreshErr) {
                 dispatch({ type: AUTHENTICATE_FAIL });
                 localStorage.removeItem('access');
@@ -92,7 +93,7 @@ export const auth_user = () => async (dispatch) => {
     }
 };
 
-export const load_user = () => async (dispatch) => {
+export const load_user = (pathName) => async (dispatch) => {
     const access = localStorage.getItem('access');
 
     if (!access) {
@@ -110,7 +111,9 @@ export const load_user = () => async (dispatch) => {
     try {
         const res = await axios.get(`${process.env.REACT_APP_API_URL}/users/me/`, config);
         dispatch({ type: LOAD_USER_SUCCESS, payload: res.data });
-        dispatch(load_user_data(res.data.id));
+        dispatch(load_user_data(res.data.id, pathName));
+        console.log("triggering load user data")
+
     } catch (err) {
         dispatch({ type: LOAD_USER_FAIL });
     }

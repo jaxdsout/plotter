@@ -10,7 +10,7 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
     const map = new mapboxgl.Map({
       container: 'MAPBOXBOX',
       className: 'mapboxgl-ctrl',
-      style: 'mapbox://styles/mapbox/streets-v12',
+      style: 'mapbox://styles/mapbox/light-v11',
       center: {lng: '-95.36527442209143', lat: '29.76066296068062'}, 
       zoom: 8,
       scrollZoom: false,
@@ -26,7 +26,9 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
       mapOptions.forEach(option => {
         const searchAddy = option.address.replace(/\s+/g, "+")
 
-        const marker = new mapboxgl.Marker()
+        const marker = new mapboxgl.Marker({
+          color: "#90B8F8"
+        })
           .setLngLat([parseFloat(option.longitude), parseFloat(option.latitude)])
           .setPopup(new mapboxgl.Popup().setHTML(`
             <div class="rounded-full flex flex-col items-center justify-center">
@@ -36,13 +38,14 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
                 <a href='https://www.google.com/maps/place/${searchAddy}'>${option.address}<a>
             </div>
           `))
-          .addTo(map);
-  
+          .addTo(map)
 
         bounds.extend([parseFloat(option.longitude), parseFloat(option.latitude)]);
 
         return marker
       });
+
+      
 
       map.fitBounds(bounds, {
         padding: 70,

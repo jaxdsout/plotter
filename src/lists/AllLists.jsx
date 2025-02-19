@@ -8,7 +8,7 @@ import { reset_list_mode } from "../store/actions/ui";
 import { load_list } from "../store/actions/listmaker";
 
 
-function AllLists ({ lists, reset_list_mode, isListMode, load_list }) {
+function AllLists ({ lists, reset_list_mode, isListMode, load_list, isLoaded }) {
     const [showListDetail, setShowListDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
     
@@ -43,7 +43,7 @@ function AllLists ({ lists, reset_list_mode, isListMode, load_list }) {
     return (
         <>
             <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
-                {lists ? ( 
+                {isLoaded ? ( 
                     <>
                         {lists.length > 0 ? (
                             <>
@@ -85,11 +85,9 @@ function AllLists ({ lists, reset_list_mode, isListMode, load_list }) {
                         
                     </>
                 ) : (
-                    <>
-                        <Dimmer active>
-                            <Loader />
-                        </Dimmer>
-                    </>
+                    <div className='h-[40rem]'>
+                        <Loader inverted active />
+                    </div>
                 )}
             </div>
         </>
@@ -99,7 +97,8 @@ function AllLists ({ lists, reset_list_mode, isListMode, load_list }) {
 const mapStateToProps = state => ({
     error: state.auth.error,
     lists: state.agent.lists,
-    isListMode: state.ui.isListMode
+    isListMode: state.ui.isListMode,
+    isLoaded: state.agent.isLoaded
 });
 
 export default connect(mapStateToProps, { reset_list_mode, load_list })(AllLists);

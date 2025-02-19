@@ -91,27 +91,39 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, lo
                         )}
                     </Modal.Header>
                     <Modal.Content>
-                        <>
+                        <div className="bg-[#ededed] rounded-xl p-6 pt-10 drop-shadow-sm">
                             {isListMode ? (
-                                <div className="flex flex-col md:flex-row justify-evenly items-center md:items-start">
+                                <div className="flex flex-col-reverse md:flex-row justify-evenly items-center md:items-start">
                                     <div className="flex flex-col justify-start pb-5">
-                                        <div className="flex flex-row items-center justify-between">
-                                            <PropertySearch/>
-                                            <div className="!ml-2">
-                                                <Button 
-                                                    className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !text-xs" 
-                                                    onClick={() => handlePropertyAdd(list, property)}
-                                                >
-                                                    ADD PROPERTY
-                                                </Button>
-                                            </div>
-                                        </div>
-                                        <Divider />
+                                        {isReorderMode ? null : (
+                                            <>
+                                                <div className="flex flex-row items-center justify-center bg-[#dbdbdb] rounded-xl p-4">
+                                                    <PropertySearch/>
+                                                    <div className="!ml-2">
+                                                        <button 
+                                                            className="bg-[#90B8F8] hover:bg-[#5F85DB] text-2xl rounded-full p-2" 
+                                                            onClick={() => handlePropertyAdd(list, property)}
+                                                        >
+                                                            <i className="plus circle icon !-mr-0"/>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <Divider />
+                                            </>
+
+                                        )}
                                         <OptionList />
+                                        {isReorderMode ? (
+                                            <div className="flex flex-col items-center mt-6">
+                                                <ReorderList />
+                                            </div>
+                                        ) : null}
                                     </div>
-                                    <div className="flex justify-center items-center pb-5">
-                                        <MapBox />                                                      
-                                    </div>
+                                    {isReorderMode ? null : (
+                                        <div className="flex justify-center items-center pb-5">
+                                            <MapBox />                                                      
+                                        </div>
+                                    )}
                                 </div>
                             ) : isSendMode ? (
                                 <div className="flex flex-row justify-center items-center h-[20rem]">
@@ -123,7 +135,7 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, lo
                                         <ClientSearch />
                                         <Form onSubmit={handleCreateList} className="p-3">
                                             <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold drop-shadow" type="submit">
-                                                START LIST
+                                                <i className="magic icon"/>START LIST
                                             </Button>
                                         </Form>
                                     </div>
@@ -137,37 +149,33 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, lo
                                     )}
                                 </div>
                             )}
-                        </>
+                        </div>
                     </Modal.Content>
                     <Modal.Actions>
                         <>
                         {isListMode ? (
                             <div className="flex flex-col-reverse sm:flex-row justify-between items-center sm:items-start pb-5">
-                                <div>
-                                    <Button size='tiny' className="drop-shadow-sm" onClick={handleOpenResetModal}>BACK</Button>
-                                </div>
-                                <div className="flex flex-row">
-                                    {isReorderMode ? (
-                                        <>
-                                            <ReorderList />
-                                        </>
-                                    ) : (
+                                {isReorderMode ? null : (
+                                    <>
+                                        <div>
+                                            <Button size='tiny' className="drop-shadow-sm" onClick={handleOpenResetModal}><i className="long arrow alternate left icon"/>BACK</Button>
+                                        </div>
                                         <div className="flex flex-row mb-6 sm:mb-0">
                                             <ReorderList />
                                             <ClearOptions />
                                             <SendList />
                                         </div>
-                                    )}
-                                </div>
+                                    </>
+                                )}
                             </div>
                         ) : isSendMode ? (
                             <div className="flex justify-between pb-5">
-                                <Button size='tiny' className="drop-shadow-sm" onClick={handleEditList}>BACK</Button>
+                                <Button size='tiny' className="drop-shadow-sm" onClick={handleEditList}><i className="long arrow alternate left icon"/>BACK</Button>
                                 <Button size='tiny' className="drop-shadow-sm" color="green" onClick={handleCloseModal}>DONE</Button>
                             </div>
                         ) : (
                             <div className="flex justify-end pb-5">
-                            <Button size='tiny' className="drop-shadow-sm" onClick={handleCloseModal}>CLOSE</Button>
+                                <Button size='tiny' className="drop-shadow-sm" onClick={handleCloseModal}>CLOSE</Button>
                             </div>
                         )}
                         </>

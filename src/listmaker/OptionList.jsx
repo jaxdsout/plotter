@@ -9,11 +9,11 @@ function OptionList({ options, isReorderMode, set_option_order }) {
 
     const getItemStyle = (isDragging, draggableStyle) => ({
         userSelect: "none",
-        height: "5rem",
+        height: "3.5rem",
         margin: `0 0 ${grid}px 0`,
         padding: "1rem",
-        background: isDragging ? "rgb(53, 162, 195)" : "rgb(53, 162, 195)",
-        color: "white",
+        background: isDragging ? "#4d6cb2" : "#90B8F8",
+        color: isDragging ? "white" : "black",
         boxShadow: isDragging ? "0 4px 8px rgba(0, 0, 0, 0.2)" : "0 2px 4px rgba(0, 0, 0, 0.1)",
         position: "static",
         borderRadius: "1rem", 
@@ -21,10 +21,12 @@ function OptionList({ options, isReorderMode, set_option_order }) {
     });
 
     const getListStyle = (isDraggingOver) => ({
-        background: isDraggingOver ? "white" : "white",
-        padding: grid,
+        background: isDraggingOver ? "#bfbfbf" : "#dbdbdb",
+        padding: "3.5rem",
         height: "full",
-        position: "relative"
+        width: "full",
+        position: "relative",
+        borderRadius: "2rem",
     });
 
     const handleDragEnd = (result) => {
@@ -48,11 +50,15 @@ function OptionList({ options, isReorderMode, set_option_order }) {
                                     {options.map((option, index) => (
                                         <Draggable key={option.id} draggableId={String(option.id)} index={index}>
                                             {(provided, snapshot) => (
-                                                <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
+                                                <div className="flex flex-row items-center">
+                                                    {snapshot.isDragging ? <span className="mont mr-3">{index+1}.</span>: <span className="mont mr-3">{index+1}.</span> }
+                                                    <div className="w-full hover:!bg-[#4d6cb2]" ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}
                                                     style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
-                                                >
-                                                    <OptionDetail option={option}/>
+                                                    >
+                                                        <OptionDetail option={option}/>
+                                                    </div>
                                                 </div>
+                                           
                                             )}
                                         </Draggable>
                                     ))}
@@ -62,11 +68,11 @@ function OptionList({ options, isReorderMode, set_option_order }) {
                         </Droppable>
                     </DragDropContext>
                 ) : (
-                    <div className="overflow-y-auto">
+                    <div className="overflow-y-auto bg-[#dbdbdb] rounded-xl p-6 drop-shadow-md">
                         {options.map((option) => (
                             <div key={option.id} className="p-1">
                                 <OptionDetail option={option}/>
-                                <Divider />
+                                <Divider className=""/>
                             </div>
                         ))}
                     </div>

@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { reset_deal_mode } from "../store/actions/ui";
 import { load_deal } from "../store/actions/agent";
 
-function AllDeals ({ deals, isDealMode, reset_deal_mode }) {
+function AllDeals ({ deals, isDealMode, reset_deal_mode, isLoaded }) {
     const [showDealDetail, setShowDealDetail] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
@@ -29,7 +29,7 @@ function AllDeals ({ deals, isDealMode, reset_deal_mode }) {
     return (
         <>
             <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
-                {deals ? ( 
+                {isLoaded ? ( 
                     <>
                     {deals.length > 0 ? (
                         <>
@@ -77,11 +77,9 @@ function AllDeals ({ deals, isDealMode, reset_deal_mode }) {
                     )}
                     </>
                 ) : (
-                    <>
-                        <Dimmer active>
-                            <Loader />
-                        </Dimmer>
-                    </>
+                    <div className='h-[40rem]'>
+                        <Loader inverted active />
+                    </div>
                 )}
             </div>
         </>
@@ -92,7 +90,8 @@ const mapStateToProps = state => ({
     error: state.auth.error,
     deals: state.agent.deals,
     user: state.auth.user,
-    isDealMode: state.ui.isDealMode
+    isDealMode: state.ui.isDealMode,
+    isLoaded: state.agent.isLoaded
 });
 
 export default connect(mapStateToProps, { reset_deal_mode })(AllDeals);

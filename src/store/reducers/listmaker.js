@@ -35,7 +35,8 @@ import {
     RESET_COMMISSION_SEARCH,
     SET_OPTION_ORDER,
     LOGOUT,
-    NEW_DEAL_SUCCESS
+    NEW_DEAL_SUCCESS,
+    RESET_LIST_MODE
 } from '../actions/types';
 
 const initialState = {
@@ -132,6 +133,7 @@ export default function listmakerReducer(state = initialState, action) {
         case RESET_DEAL_FORM:
         case TAB_SWITCH_CLEAR:
         case RESET_CARD_FORM:
+        case RESET_LIST_MODE: 
             return {
                 ...state,
                 property: null,
@@ -139,6 +141,7 @@ export default function listmakerReducer(state = initialState, action) {
                 prop_results: [],
                 client_results: []
             }
+        
         case RESET_COMMISSION_SEARCH:
             return {
                 ...state,

@@ -54,12 +54,12 @@ function Landing({ access, refresh }) {
                         </div>    
                     </div>
                    
-                    <div className="flex flex-col sm:flex-row items-center sm:items-start w-full justify-evenly">
+                    <div className="flex flex-col sm:flex-row items-center w-full justify-evenly">
                         <div className="w-full sm:w-1/3 flex flex-col items-center justify-between ml-0 sm:ml-10 p-5 sm:p-0 mt-4 sm:mt-10 text-center max-h-1/3">
-                            <p className="text-white uppercase font-semibold bg-[#26282B] shadow-inner shadow-md rounded-xl p-8">Our mission is to streamline the entire apartment locating process for real estate agents </p>
-                            <p className="text-white text-sm bg-[#4d6cb2] shadow-inner shadow-md rounded-xl p-8">Instead of juggling multiple platforms and outdated tools, Atlas is designed to become the one-stop shop for daily work.</p>
+                            <p className="text-white uppercase font-semibold bg-[#4d6cb2] shadow-inner shadow-md rounded-xl p-8">Our mission is to streamline the entire apartment locating process for real estate agents </p>
+                            <p className="text-white text-sm bg-[#3a528a] shadow-inner shadow-md rounded-xl p-8">Instead of juggling multiple platforms and outdated tools, Atlas is designed to become the one-stop shop for daily work.</p>
                         </div>
-                        <div className="w-2/3">
+                        <div className="w-2/3 sm:w-1/2">
                             <img src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1009.png" className="drop-shadow" alt="sub-header-1"/>  
 
                         </div>    
@@ -83,8 +83,8 @@ function Landing({ access, refresh }) {
                         </div>
                     </div>
 
-                    <div className="bg-[#bfbbb6] flex flex-col sm:flex-row items-center sm:items-start w-full justify-evenly">
-                        <div className="w-2/3 mt-4 sm:mt-0">
+                    <div className="bg-[#bfbbb6] flex flex-col sm:flex-row items-center w-full justify-evenly">
+                        <div className="w-2/3 sm:w-1/2 mt-4 sm:mt-0">
                             <img src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1010.png" className="drop-shadow-md" alt='sub-header-0'/>  
                         </div>   
                         <div className="w-full sm:w-1/3 flex flex-col items-center justify-between mr-0 sm:mr-10 p-5 sm:p-0 mt-0 sm:mt-10 mb-8 text-center max-h-1/3">
@@ -100,22 +100,22 @@ function Landing({ access, refresh }) {
                     {/*  DEMO OF LISTMAKING FEATURE */}
 
 
-                    <div className="bg-[#a5a29d] flex flex-col-reverse sm:flex-row items-center sm:items-start w-full justify-evenly">
+                    <div className="bg-[#a5a29d] flex flex-col-reverse sm:flex-row items-center w-full justify-evenly">
                         <div className="w-full sm:w-1/3 flex flex-col items-center mt-0 sm:mt-10 ml-0 sm:ml-10 p-4 justify-center mb-8 sm:mb-0">
                             <p className="mont drop-shadow text-white text-5xl xl:text-7xl text-center text-nowrap mb-4 mt-2">best part?</p>
-                            <p className="w-full text-white font-semibold text-sm bg-[#26282B] shadow-inner shadow-md text-center uppercase rounded-xl p-8">Atlas is 100% free right now. </p>
-                            <p className="w-full text-white text-sm bg-[#4d6cb2] shadow-inner shadow-md rounded-xl p-8">
+                            <p className="w-full text-white font-semibold text-sm bg-[#4d6cb2] shadow-inner shadow-md text-center uppercase rounded-xl p-8">Atlas is 100% free right now. </p>
+                            <p className="w-full text-white text-sm bg-[#3a528a] shadow-inner shadow-md rounded-xl p-8">
                             Simply sign up, provide your TREC ID after activating your account, and a member of our team will confirm everything afterward.
                             </p>
                         </div>
-                        <div className="w-2/3 mt-4 sm:mt-0">
+                        <div className="w-2/3 sm:w-1/2 mt-4 sm:mt-0">
                             <img src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1008.png" className="drop-shadow-md" alt="sub-header-2"/>
 
                         </div>
                     </div>
 
                     <div className="bg-[#bfd0ccc5bbb6] flex flex-row items-start w-full justify-evenly">
-                        <div className="w-11/12 sm:w-1/3 flex flex-col items-center bg-[#26282B] shadow-inner shadow-md rounded-lg p-6 text-white mt-6 mb-6">
+                        <div className="w-11/12 sm:w-1/2 flex flex-col items-center bg-[#26282B] shadow-inner shadow-md rounded-lg p-6 text-white mt-6 mb-6">
                             <h1 className="mont text-white text-2xl md:text-3xl text-center text-wrap">ready to join?</h1>
                             <Link to={"/signup/"}><Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] hover:!text-white text-white drop-shadow active:translate-y-0.5">LET'S GO</Button></Link>
                         </div>

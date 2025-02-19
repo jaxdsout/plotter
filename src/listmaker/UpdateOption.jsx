@@ -34,85 +34,86 @@ function UpdateOption ({ option, list, update_option, load_list }) {
 
     return(
         <>
-        <Button onClick={handleOpenModal}>
-            <i className="edit icon !-mr-1"></i>
-        </Button>
         <div>
-            <Modal open={showModal} onClose={handleCloseModal} className="!w-5/6 sm:!w-[500px]">
-                <Modal.Header className="text-center">Update Option: {option.prop_name}</Modal.Header>
-                <Modal.Content className="bg-dark-subtle">
-                    <Form onSubmit={handleSubmit}>
-                        <FormField>                          
-                            <label className="noto-sans" htmlFor='price'>Price:</label>
-                            <div className="relative">
-                                <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] font-bold pointer-events-none">$</span>
-                                <input
-                                    type='number'
-                                    className="indent-4"
-                                    name='price'
-                                    value={price || option.price}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        </FormField>
-                        <FormField>
-                            <label className="noto-sans" htmlFor='unit_number'>Unit Number:</label>
+            <button onClick={handleOpenModal} className="p-3 bg-[#1f2124] text-white rounded-lg mr-2 hover:text-[#90B8F8]">
+                <i className="edit icon !-mr-1 !ml-0"></i>
+            </button>
+        </div>
+       
+        <Modal open={showModal} onClose={handleCloseModal} className="!w-5/6 sm:!w-[500px]">
+            <Modal.Header className="text-center">Update Option: {option.prop_name}</Modal.Header>
+            <Modal.Content className="bg-dark-subtle">
+                <Form onSubmit={handleSubmit}>
+                    <FormField>                          
+                        <label className="noto-sans" htmlFor='price'>Price:</label>
+                        <div className="relative">
+                            <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] font-bold pointer-events-none">$</span>
                             <input
-                                type='text'
-                                name='unit_number'
-                                value={unit_number}
+                                type='number'
+                                className="indent-4"
+                                name='price'
+                                value={price || option.price}
                                 onChange={handleChange}
                             />
-                        </FormField>
-                        <FormField>
-                            <label className="noto-sans" htmlFor='layout'>Layout:</label>
-                            <input
-                                type='text'
-                                name='layout'
-                                value={layout}
-                                onChange={handleChange}
-                            
-                            />
-                        </FormField>
-                        <FormField>
-                            <label className="noto-sans" htmlFor='sq_ft'>Sq Ft:</label>
-                            <input
-                                type='text'
-                                name='sq_ft'
-                                value={sq_ft}
-                                onChange={handleChange}
-                            />
-                        </FormField>
-                        <FormField>
-                            <label className="noto-sans" htmlFor='available'>Available:</label>
-                            <input
-                                type='date'
-                                name='available'
-                                value={available}
-                                onChange={handleChange}
-                            
-                            />
-                        </FormField>
-                        <FormField>
-                            <label className="noto-sans" htmlFor='notes'>Notes/Specials:</label>
-                            <input
-                                type='text'
-                                name='notes'
-                                value={notes}
-                                onChange={handleChange}
-                            />
-                        </FormField>
-                        <div className="flex justify-center">
-                            <Button className="drop-shadow-sm" type="submit" color="green">UPDATE OPTION</Button>
-
                         </div>
-                    </Form>
-                    </Modal.Content>
-                    <Modal.Actions>
-                        <Button className="drop-shadow-sm" onClick={handleCloseModal} color="red">CANCEL</Button>
-                    </Modal.Actions>
-                </Modal>
-            </div>
+                    </FormField>
+                    <FormField>
+                        <label className="noto-sans" htmlFor='unit_number'>Unit Number:</label>
+                        <input
+                            type='text'
+                            name='unit_number'
+                            value={unit_number}
+                            onChange={handleChange}
+                        />
+                    </FormField>
+                    <FormField>
+                        <label className="noto-sans" htmlFor='layout'>Layout:</label>
+                        <input
+                            type='text'
+                            name='layout'
+                            value={layout}
+                            onChange={handleChange}
+                        
+                        />
+                    </FormField>
+                    <FormField>
+                        <label className="noto-sans" htmlFor='sq_ft'>Sq Ft:</label>
+                        <input
+                            type='text'
+                            name='sq_ft'
+                            value={sq_ft}
+                            onChange={handleChange}
+                        />
+                    </FormField>
+                    <FormField>
+                        <label className="noto-sans" htmlFor='available'>Available:</label>
+                        <input
+                            type='date'
+                            name='available'
+                            value={available}
+                            onChange={handleChange}
+                        
+                        />
+                    </FormField>
+                    <FormField>
+                        <label className="noto-sans" htmlFor='notes'>Notes/Specials:</label>
+                        <input
+                            type='text'
+                            name='notes'
+                            value={notes}
+                            onChange={handleChange}
+                        />
+                    </FormField>
+                    <div className="flex justify-center">
+                        <Button className="drop-shadow-sm" type="submit" color="green">UPDATE OPTION</Button>
+
+                    </div>
+                </Form>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button className="drop-shadow-sm" onClick={handleCloseModal} color="red">CANCEL</Button>
+                </Modal.Actions>
+            </Modal>
         </>
     )
 }

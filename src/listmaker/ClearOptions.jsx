@@ -25,9 +25,13 @@ function ClearOptions ({ clear_options, list, load_list }) {
     return (
         <>
             {clearConfirm ? (
-                <Button className="drop-shadow-sm" color='red' size='tiny' onClick={(() => handleClearOptions(list.id))}>CONFIRM CLEAR LIST</Button>
+                <Button className="drop-shadow-sm" color='red' size='tiny' onClick={(() => handleClearOptions(list.id))}>
+                    <i className="check circle icon"/>CONFIRM CLEAR
+                </Button>
             ) : (
-                <Button className="drop-shadow-sm text-nowrap" color='black' size='tiny' onClick={(() => handleConfirmClear())}>CLEAR LIST</Button>
+                <Button className="drop-shadow-sm text-nowrap hover:!bg-red-500" color='black' size='tiny' onClick={(() => handleConfirmClear())}>
+                    <i className="exclamation triangle icon"/>CLEAR LIST
+                </Button>
             )}
         </>
     )

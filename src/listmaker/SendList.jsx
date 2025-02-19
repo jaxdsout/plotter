@@ -13,7 +13,9 @@ function SendList ({ user, client, list, update_list, set_send_mode, options, lo
     }
 
     return (
-        <Button className="drop-shadow text-nowrap" type='submit' color='green' size='tiny' onClick={handleSendList}>SEND LIST</Button>
+        <Button className="drop-shadow text-nowrap" type='submit' color='green' size='tiny' onClick={handleSendList}>
+            <i className="check circle icon"/>SEND LIST
+        </Button>
     )
 }
 

@@ -598,26 +598,61 @@ export const load_properties = () => async dispatch => {
 };
 
 
-export const load_user_data = (userID) => async dispatch => {
-    try {
-        const [clients, lists, deals, tasks, properties] = await Promise.all([
-            dispatch(load_clients(userID)), 
-            dispatch(load_lists(userID)),
-            dispatch(load_deals(userID)),
-            dispatch(load_tasks(userID)),
-            dispatch(load_properties())
-        ]);
-
-        dispatch({ type: LOAD_CLIENTS_SUCCESS, payload: clients });
-        dispatch({ type: LOAD_LISTS_SUCCESS, payload: lists });
-        dispatch({ type: LOAD_DEALS_SUCCESS, payload: deals });
-        dispatch({ type: LOAD_TASKS_SUCCESS, payload: tasks });
-        dispatch({ type: LOAD_PROPERTIES_SUCCESS, payload: properties });
-        dispatch({ type: LOAD_USER_DATA_SUCCESS });
-
-    } catch (error) {
-        dispatch({
-            type: LOAD_USER_DATA_FAIL
-        });
+export const load_user_data = (userID, pathName) => async dispatch => {
+    console.log(pathName, "pathName")
+    if (pathName === '/dashboard/home') {
+        try {
+            const [deals, tasks, properties] = await Promise.all([
+                // dispatch(load_clients(userID)), 
+                dispatch(load_deals(userID)),
+                dispatch(load_tasks(userID)),
+                dispatch(load_properties())
+            ]);
+            dispatch({ type: LOAD_DEALS_SUCCESS, payload: deals });
+            dispatch({ type: LOAD_TASKS_SUCCESS, payload: tasks });
+            dispatch({ type: LOAD_PROPERTIES_SUCCESS, payload: properties });
+            dispatch({ type: LOAD_USER_DATA_SUCCESS });
+    
+        } catch (error) {
+            dispatch({
+                type: LOAD_USER_DATA_FAIL
+            });
+        }
+    } else if (pathName === '/dashboard/lists') {
+        try {
+            const [lists] = await Promise.all([
+                dispatch(load_lists(userID)),
+            ]);
+            dispatch({ type: LOAD_LISTS_SUCCESS, payload: lists });
+            dispatch({ type: LOAD_USER_DATA_SUCCESS });
+        } catch (error) {
+            dispatch({
+                type: LOAD_USER_DATA_FAIL
+            });
+        }
+    } else if (pathName === '/dashboard/clients') {
+        try {
+            const [clients] = await Promise.all([
+                dispatch(load_clients(userID)), 
+            ]);
+            dispatch({ type: LOAD_CLIENTS_SUCCESS, payload: clients });
+            dispatch({ type: LOAD_USER_DATA_SUCCESS });
+        } catch (error) {
+            dispatch({
+                type: LOAD_USER_DATA_FAIL
+            });
+        }
+    } else if (pathName === '/dashboard/deals') {
+        try {
+            const [deals] = await Promise.all([
+                dispatch(load_deals(userID)),
+            ]);
+            dispatch({ type: LOAD_DEALS_SUCCESS, payload: deals });
+            dispatch({ type: LOAD_USER_DATA_SUCCESS });
+        } catch (error) {
+            dispatch({
+                type: LOAD_USER_DATA_FAIL
+            });
+        }
     }
 };

@@ -7,21 +7,27 @@ function ReorderList ({ reset_reorder_mode, set_reorder_mode, isReorderMode }) {
     const handleReorder = () => {
         if (isReorderMode) {
             reset_reorder_mode()
-            console.log("re order mode disabled")
         } else {
             set_reorder_mode();
         }
-        console.log("re order mode activated")
     }
     
     return (
         <Button 
-            className="drop-shadow-sm" 
+            className="drop-shadow-sm hover:!bg-[#3a528a] !h-[40px]" 
             onClick={handleReorder}
-            style={{ backgroundColor: isReorderMode ? "red" : "#35a2c3", color: "white" }}
+            style={{ backgroundColor: isReorderMode ? "green" : "#4d6cb2", color: "white" }}
             size='tiny'
         >
-            {isReorderMode ? "CONFIRM" : "REORDER"}
+            {isReorderMode ? 
+                <div>
+                    <i className="check circle icon"/> CONFIRM REORDER 
+                </div> 
+            : 
+                <div>
+                    <i className="sort icon"/> REORDER 
+                </div>
+            }
         </Button>
     )
 }
