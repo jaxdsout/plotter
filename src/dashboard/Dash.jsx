@@ -68,7 +68,7 @@ const Tab = ({ setActiveTab, activeTab, tab_name, tab_switch, icon, subtitle }) 
                     setActiveTab(tab_name);
                 }}
             />
-            <p className='mont text-[0.65rem] text-white'>{subtitle.toUpperCase()}</p>
+            <p className='mont text-center text-[0.65rem] text-white'>{subtitle.toUpperCase()}</p>
         </div>
 
     )

@@ -27,10 +27,9 @@ function AllDeals ({ deals, isDealMode, reset_deal_mode, isLoaded }) {
     }
 
     return (
-        <>
-            <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
-                {isLoaded ? ( 
-                    <>
+        <div>
+            {isLoaded ? ( 
+                <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
                     {deals.length > 0 ? (
                         <>
                             <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
@@ -75,14 +74,13 @@ function AllDeals ({ deals, isDealMode, reset_deal_mode, isLoaded }) {
                             </div>
                         </>
                     )}
-                    </>
-                ) : (
-                    <div className='h-[40rem]'>
-                        <Loader inverted active />
-                    </div>
-                )}
-            </div>
-        </>
+                </div>
+            ) : (
+                <div className='h-[40rem] flex flex-col items-center justify-center mt-3 pt-5'>
+                    <Loader inverted active />
+                </div>
+            )}
+        </div>
     )
 }
 
