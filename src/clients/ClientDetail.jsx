@@ -22,7 +22,7 @@ function ClientDetail ({ client, update_client, user, load_clients, message, cli
     const handleSubmit = async (e) => {
         e.preventDefault();
         await update_client(clientID, agent, first_name, last_name, email, phone_number);
-        await load_clients(agent)
+        await load_clients(agent);
     }
 
     useEffect(() => {

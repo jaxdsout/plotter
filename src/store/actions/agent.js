@@ -220,6 +220,7 @@ export const update_client = (clientID, agent, first_name, last_name, email, pho
             }
         }; 
         const body = JSON.stringify({ agent, first_name, last_name, email, phone_number });
+        console.log(body)
         try {
             const res = await axios.put(`${process.env.REACT_APP_API_URL}/clients/${clientID}/`, body, config);
             dispatch({
