@@ -82,7 +82,7 @@ function Upcoming ({ deals }) {
                                         className="font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425] text-center cursor-pointer"
                                     >
                                         <td className="p-2 hover:text-[#5F85DB]">{deal.client_name}</td>
-                                        <td className="p-2 text-[0.7rem] sm:text-base hover:text-[#5F85DB]">{deal.lease_end_date.toLocaleDateString()}</td>
+                                        <td className="p-2 text-[0.7rem] sm:text-base hover:text-[#5F85DB]">{deal.move_date.toLocaleDateString()}</td>
                                     </tr>
                                 ))}
                             </tbody>

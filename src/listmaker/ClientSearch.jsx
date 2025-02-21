@@ -13,6 +13,7 @@ function ClientSearch ({ client_results, search_clients, userID, set_search_clie
     const handleSearchChange = (e, { value }) => {
         setSearchValue(value);
         if (value.length > 1) {
+            console.log(value, userID)
             search_clients(value, userID);
         }
     };
