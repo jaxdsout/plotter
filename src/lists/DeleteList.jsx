@@ -5,7 +5,7 @@ import { load_lists } from '../store/actions/agent';
 import { load_user } from '../store/actions/auth';
 import { connect } from 'react-redux';
 
-function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user, load_user }) {
+function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user }) {
     const [deleteConfirm, setDeleteConfirm] = useState(null);
 
     const handleDeleteConfirm = (listID) => {
@@ -15,7 +15,7 @@ function DeleteList ( { delete_list, load_lists, list, handleCloseModal, user, l
     const handleDelete = async (listID, userID) => {
         console.log(listID, "listID")
         await delete_list(listID)
-        await load_user();
+        await load_lists(userID);
         setDeleteConfirm(null);
         handleCloseModal()
     }
@@ -57,4 +57,4 @@ const mapStateToProps = (state) => ({
     user: state.auth.user
 });
 
-export default connect(mapStateToProps, { delete_list, load_lists, load_user })(DeleteList);
+export default connect(mapStateToProps, { delete_list, load_lists })(DeleteList);

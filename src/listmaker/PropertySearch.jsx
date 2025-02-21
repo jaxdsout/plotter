@@ -42,7 +42,6 @@ function PropertySearch({ userID, search_properties, set_search_prop, prop_resul
                 value={searchValue}
                 icon="none"
                 size="large"
-                className=""
                 placeholder="Search for property..."
                 />
         </>

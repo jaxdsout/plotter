@@ -39,32 +39,25 @@ function Commission ({ properties, property, reset_commission}) {
 
     return (
         <>
-        <div className=" mt-5 mb-10 flex flex-col items-center justify-center bg-[#26282B] rounded-lg shadow-md shadow-inner">
-            <div className="mt-4 mb-2 flex flex-col items-center">
-                <h4 className='text-center text-white'>Commissions</h4>
-            </div>
-            <div className="p-5">
-                <div className="flex flex-col md:flex-row justify-center items-center p-3">
+            <div className="h-[43.3rem] flex flex-col items-center justify-start bg-[#26282B] rounded-lg shadow-md shadow-inner">
+                <div className="w-full flex flex-row justify-center items-center mb-5 relative">
                     <PropertySearch />
                     {propSel && property !== null ? (
-                        <div className="mt-3 md:mt-0 ml-0 md:ml-5">
-                        <Button 
-                            size="tiny" 
-                            color="red" 
-                            inverted 
-                            onClick={handleCommSearchReset} 
-                            className=""
-                        >
-                            RESET
-                        </Button>
+                        <div className="ml-5 absolute right-[19rem]">
+                            <Button 
+                                size="tiny" 
+                                color="red" 
+                                inverted 
+                                onClick={handleCommSearchReset} 
+                                className=""
+                            >
+                                RESET
+                            </Button>
                         </div>
                         
-                    ) : (
-                        <>
-                        </>
-                    )}                    
+                    ) : null}                    
                 </div>
-                <div className="flex flex-col overflow-y-auto min-h-[24rem] max-h-[30rem] text-left max-w-[260px] md:max-w-[480px] mt-3 scroll-ml-12 snap-start">
+                <div className="flex flex-col overflow-y-auto min-h-[24rem] max-h-full text-left w-11/12 mt-3 mb-10 snap-start">
                     {properties.length > 0 ? (
                         <table className="">
                             <thead className="text-gray-500 bg-[#1f2124] text-xs">
@@ -90,9 +83,9 @@ function Commission ({ properties, property, reset_commission}) {
                                                 </div>
                                              
                                             </td>   
-                                            <td className="p-2">{property.commission.send}%</td>
-                                            <td className="p-2">{property.commission.escort}%</td>
-                                            <td className="p-2">${property.commission.flat_fee}</td>
+                                            <td className="p-1">{property.commission.send}%</td>
+                                            <td className="p-1">{property.commission.escort}%</td>
+                                            <td className="p-1">${property.commission.flat_fee}</td>
                                         </tr>
                                     </>
                                 ) : (
@@ -113,9 +106,9 @@ function Commission ({ properties, property, reset_commission}) {
                                                         <p className="text-xs text-gray-500 text-nowrap">{property.address} | {property.neighborhood}</p>
                                                     </div>
                                                 </td>
-                                                <td className="p-2">{property.commission.send}%</td>
-                                                <td className="p-2">{property.commission.escort}%</td>
-                                                <td className="p-2">${property.commission.flat_fee}</td>
+                                                <td className="p-1">{property.commission.send}%</td>
+                                                <td className="p-1">{property.commission.escort}%</td>
+                                                <td className="p-1">${property.commission.flat_fee}</td>
                                             </tr>
                                         ))}
                                     </>
@@ -130,7 +123,6 @@ function Commission ({ properties, property, reset_commission}) {
                     }
                 </div>
             </div>
-        </div>
         </>
     )
 }

@@ -30,7 +30,7 @@ function AllDeals ({ deals, isDealMode, reset_deal_mode, isLoaded }) {
         <div>
             {isLoaded ? ( 
                 <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
-                    {deals.length > 0 ? (
+                    {deals?.length > 0 ? (
                         <>
                             <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                                 {deals?.map(deal => (
@@ -69,15 +69,15 @@ function AllDeals ({ deals, isDealMode, reset_deal_mode, isLoaded }) {
                         </>
                     ) : (
                         <>
-                            <div className="flex flex-col justify-center items-center text-white font-semi">
-                                <p>There are currently no deals to display. Use the button above to get started.</p>
-                            </div>
+                            <div className='flex flex-col items-center justify-center'>
+                                <Loader inverted active />
+                            </div>   
                         </>
                     )}
                 </div>
             ) : (
                 <div className='h-[40rem] flex flex-col items-center justify-center mt-3 pt-5'>
-                    <Loader inverted active />
+                    <p>There are currently no deals to display. Use the button above to get started.</p>
                 </div>
             )}
         </div>

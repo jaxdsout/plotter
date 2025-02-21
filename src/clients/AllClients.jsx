@@ -77,7 +77,7 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
         <div>
             {isLoaded ? ( 
                 <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
-                    {clients.length > 0 ? (
+                    {clients?.length > 0 ? (
                         <>
                             <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
                                 {clients.map(client => (
@@ -91,9 +91,9 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
                         </>
                     ) : (
                         <>
-                            <div className="flex flex-col justify-center items-center text-white font-semi">
-                                <p>There are currently no clients to display. Use the button above to get started.</p>
-                            </div>
+                            <div className='flex flex-col items-center justify-center'>
+                                <Loader inverted active />
+                            </div>   
                         </>
                     )} 
 
@@ -206,7 +206,7 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
                     </div>
                 ) : (
                     <div className='h-[40rem] flex flex-col items-center justify-center mt-3 pt-5'>
-                        <Loader inverted active />
+                        <p>There are currently no clients to display. Use the button above to get started.</p>
                     </div>                
                 )
             }   
