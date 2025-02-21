@@ -49,8 +49,8 @@ function AllDeals ({ deals, isDealMode, reset_deal_mode, isLoaded }) {
                                                 onClick={() => handleOpenModal(deal.id)}
                                             >
                                                 <td className="p-2 hover:text-[#5F85DB]">{deal.client_name}</td>
-                                                <td className="p-2 hover:text-[#5F85DB]">{deal.prop_name}</td>
-                                                <td className="p-2 hover:text-[#5F85DB]">{deal.deal_date}</td>
+                                                <td className="p-2 text-[0.7rem] sm:text-base hover:text-[#5F85DB]">{deal.prop_name}</td>
+                                                <td className="p-2 text-[0.7rem] sm:text-base hover:text-[#5F85DB]">{deal.deal_date}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -74,7 +74,7 @@ function AllDeals ({ deals, isDealMode, reset_deal_mode, isLoaded }) {
                     ) : (
                         <>
                             <div className='flex flex-col items-center text-white justify-center'>
-                            <p>There are currently no lists to display. Use the button above to get started.</p>                            
+                                <Loader inverted active />
                             </div>  
                         </>
                     )} 

@@ -62,7 +62,7 @@ function AllLists ({ lists, reset_list_mode, isListMode, load_list, isLoaded }) 
                                                 onClick={() => handleOpenModal(list.id)}
                                             >
                                                 <td className="p-2 hover:text-[#5F85DB]">{list.client_name}</td>
-                                                <td className="p-2 hover:text-[#5F85DB]">{formatDate(list.date)}</td>
+                                                <td className="p-2 text-[0.7rem] sm:text-base hover:text-[#5F85DB]">{formatDate(list.date)}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -86,7 +86,7 @@ function AllLists ({ lists, reset_list_mode, isListMode, load_list, isLoaded }) 
                         ) : (
                             <>
                                 <div className='flex flex-col items-center text-white justify-center'>
-                                    <p>There are currently no lists to display. Use the button above to get started.</p>                            
+                                    <Loader inverted active />
                                 </div>  
                             </>
                         )} 

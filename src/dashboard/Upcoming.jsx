@@ -38,45 +38,59 @@ function Upcoming ({ deals }) {
         <div className="flex flex-col-reverse md:flex-row justify-evenly">
             <div className='p-5 w-full md:w-1/2'>
                 <h4 className='text-center text-white'>Upcoming Renewals</h4>
-                <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
+                <div className='flex flex-col items-center overflow-y-auto text-left mt-3 mb-10 snap-start border border-gray-300 rounded-md'>
                     {renewals.length > 0 ? (
-                        renewals.map(deal => (
-                            <li key={deal.id} className="p-2">
-                                <div className='flex flex-col md:flex-row justify-center text-center items-center md:items-start text-white hover:text-black hover:bg-gray-100 transition'>
-                                    <span className="text-sm md:text-base m-1">
-                                        <b>Client:</b> {deal.client_name}
-                                    </span>
-                                    <span className="text-sm md:text-base m-1">
-                                        <b>Lease End Date:</b> {deal.lease_end_date.toLocaleDateString()}
-                                    </span>
-                                </div>
-                            </li>
-                        ))
+                        <table className="w-full">
+                            <thead className="text-gray-500 bg-[#1f2124] text-xs text-center">
+                                <tr className="">
+                                    <th className="p-2 rounded-tl-md rounded-bl-md">Client</th>
+                                    <th className="p-2 ounded-tr-md rounded-br-md">Lease End Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {renewals.map((deal) => (
+                                    <tr
+                                        key={deal.id}
+                                        className="font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425] text-center cursor-pointer"
+                                    >
+                                        <td className="p-2 hover:text-[#5F85DB]">{deal.client_name}</td>
+                                        <td className="p-2 text-[0.7rem] sm:text-base hover:text-[#5F85DB]">{deal.lease_end_date.toLocaleDateString()}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     ) : (
-                        <li className='p-2 text-center text-white'>No upcoming renewals...</li>
+                        <p className='p-2 text-center text-white'>No upcoming renewals...</p>
                     )}
-                </ul>
+                </div>
             </div>
             <div className='p-5 w-full md:w-1/2'>
                 <h4 className='text-center text-white'>Upcoming Move-Ins</h4>
-                <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
+                <div className='flex flex-col items-center overflow-y-auto text-left mt-3 mb-10 snap-start border border-gray-300 rounded-md'>
                     {move_ins.length > 0 ? (
-                        move_ins.map(deal => (
-                            <li key={deal.id} className="p-2">
-                                <div className='flex flex-col md:flex-row justify-center text-center items-center md:items-start text-white hover:text-black hover:bg-gray-100 transition'>
-                                    <span className="text-sm md:text-base m-1">
-                                        <b>Client:</b> {deal.client_name}
-                                    </span>
-                                    <span className="text-sm md:text-base m-1">
-                                        <b>Move-In Date:</b> {deal.move_date.toLocaleDateString()}
-                                    </span>
-                                </div>
-                            </li>
-                        ))
+                        <table className="w-full">
+                            <thead className="text-gray-500 bg-[#1f2124] text-xs text-center">
+                                <tr className="">
+                                    <th className="p-2 rounded-tl-md rounded-bl-md">Client</th>
+                                    <th className="p-2 ounded-tr-md rounded-br-md">Move-In Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {move_ins.map((deal) => (
+                                    <tr
+                                        key={deal.id}
+                                        className="font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425] text-center cursor-pointer"
+                                    >
+                                        <td className="p-2 hover:text-[#5F85DB]">{deal.client_name}</td>
+                                        <td className="p-2 text-[0.7rem] sm:text-base hover:text-[#5F85DB]">{deal.lease_end_date.toLocaleDateString()}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     ) : (
-                        <li className='p-2 text-center text-white'>No upcoming move-ins...</li>
+                        <p className='p-2 text-center text-white'>No upcoming renewals...</p>
                     )}
-                </ul>
+                </div>
             </div>
         </div>
     )

@@ -100,7 +100,7 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
                         ) : (
                             <>
                                 <div className='flex flex-col items-center text-white justify-center'>
-                                    <p>There are currently no clients to display. Use the button above to get started.</p>                            
+                                    <Loader inverted active />
                                 </div>  
                             </>
                         )} 

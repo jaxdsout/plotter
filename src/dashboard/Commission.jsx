@@ -68,7 +68,7 @@ function Commission ({ properties, property, reset_commission}) {
                                 <th className="text-left p-2" onClick={() => sortProperties('escort')}>
                                     Escort {sortConfig.key === 'escort' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                                 </th>
-                                <th className="text-left text-nowrap p-2" onClick={() => sortProperties('flat_fee')}>
+                                <th className="text-left text-wrap sm:text-nowrap p-2" onClick={() => sortProperties('flat_fee')}>
                                     Flat Fee {sortConfig.key === 'flat_fee' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                                 </th>
                             </thead>
@@ -83,9 +83,9 @@ function Commission ({ properties, property, reset_commission}) {
                                                 </div>
                                              
                                             </td>   
-                                            <td className="p-1">{property.commission.send}%</td>
-                                            <td className="p-1">{property.commission.escort}%</td>
-                                            <td className="p-1">${property.commission.flat_fee}</td>
+                                            <td className="p-1 text-[0.7rem] sm:text-base">{property.commission.send}%</td>
+                                            <td className="p-1 text-[0.7rem] sm:text-base">{property.commission.escort}%</td>
+                                            <td className="p-1 text-[0.7rem] sm:text-base">${property.commission.flat_fee}</td>
                                         </tr>
                                     </>
                                 ) : (
@@ -106,9 +106,9 @@ function Commission ({ properties, property, reset_commission}) {
                                                         <p className="text-xs text-gray-500 text-nowrap">{property.address} | {property.neighborhood}</p>
                                                     </div>
                                                 </td>
-                                                <td className="p-1">{property.commission.send}%</td>
-                                                <td className="p-1">{property.commission.escort}%</td>
-                                                <td className="p-1">${property.commission.flat_fee}</td>
+                                                <td className="p-1 text-[0.7rem] sm:text-base">{property.commission.send}%</td>
+                                                <td className="p-1 text-[0.7rem] sm:text-base">{property.commission.escort}%</td>
+                                                <td className="p-1 text-[0.7rem] sm:text-base">${property.commission.flat_fee}</td>
                                             </tr>
                                         ))}
                                     </>
@@ -117,7 +117,7 @@ function Commission ({ properties, property, reset_commission}) {
                         </table>
                         ) : (
                             <div className="text-center text-white">
-                                <Loader />
+                                <Loader inverted active />
                             </div>
                         )
                     }
