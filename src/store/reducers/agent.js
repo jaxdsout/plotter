@@ -52,11 +52,6 @@ export default function agentReducer(state = initialState, action) {
                 ...state,
                 deal: payload
             }
-        case UPDATE_CLIENT_SUCCESS:
-            return {
-                ...state,
-                message: 'Client updated successfully'
-            }
         case LOGOUT:
             return {
                 ...state,
@@ -122,6 +117,7 @@ export default function agentReducer(state = initialState, action) {
         case UPDATE_STATUS_SUCCESS:
         case DELETE_CLIENT_FAIL:
         case DELETE_CLIENT_SUCCESS:
+        case UPDATE_CLIENT_SUCCESS:
         case NEW_TASK_FAIL:
         case NEW_TASK_SUCCESS:
             return {

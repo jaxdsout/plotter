@@ -70,32 +70,41 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
             hour: '2-digit',
             minute: '2-digit',
             hour12: true,
-        }).replace(',', '');
+        }).replace('', '');
     };
 
     return (
-        <div>
+        <div className="h-[43.3rem] flex flex-col items-between justify-start bg-[#26282B] rounded-lg shadow-md shadow-inner">
             {isLoaded ? ( 
                 <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
-                    {clients?.length > 0 ? (
-                        <>
-                            <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
-                                {clients.map(client => (
-                                    <li key={client.id} className='p-3 flex flex-row justify-evenly items-start font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425]' >
-                                        <Link onClick={() => handleOpenModal(client.id)}>
-                                            {client.first_name} {client.last_name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </>
-                    ) : (
-                        <>
-                            <div className='flex flex-col items-center justify-center'>
-                                <Loader inverted active />
-                            </div>   
-                        </>
-                    )} 
+                    <div className="flex flex-col items-center overflow-y-auto min-h-[24rem] max-h-full text-left mt-3 mb-10 snap-start">
+                        {clients.length > 0 ? (
+                            <table className="w-11/12">
+                                <thead className="text-gray-500 bg-[#1f2124] text-xs text-center">
+                                    <tr>
+                                        <th className="p-2 rounded-md">Client</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {clients.map((client) => (
+                                        <tr
+                                            key={client.id}
+                                            className="font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425] text-center cursor-pointer"
+                                            onClick={() => handleOpenModal(client.id)}
+                                        >
+                                            <td className="p-4 hover:text-[#5F85DB]">{client.first_name} {client.last_name}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <>
+                                <div className='flex flex-col items-center text-white justify-center'>
+                                    <p>There are currently no clients to display. Use the button above to get started.</p>                            
+                                </div>  
+                            </>
+                        )} 
+                    </div>
 
                     {clients.map(client => (
                         <>
@@ -206,8 +215,8 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
                     </div>
                 ) : (
                     <div className='h-[40rem] flex flex-col items-center justify-center mt-3 pt-5'>
-                        <p>There are currently no clients to display. Use the button above to get started.</p>
-                    </div>                
+                        <Loader inverted active />
+                    </div>               
                 )
             }   
         </div>

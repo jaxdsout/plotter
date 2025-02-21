@@ -36,7 +36,6 @@ export default function authReducer(state = initialState, action) {
             return {
                 ...state,
                 isAuthenticated: true,
-                message: '',
             }
         case LOGIN_SUCCESS:
             localStorage.setItem('access', payload.access);
@@ -94,11 +93,6 @@ export default function authReducer(state = initialState, action) {
                 refresh: null,
                 isAuthenticated: false,
                 user: null,
-            };
-        case CLEAR_MESSAGE:
-            return {
-                ...state,
-                message: null,
             };
         case LOCK_OUT:
         case REFRESH_TOKEN_FAIL:

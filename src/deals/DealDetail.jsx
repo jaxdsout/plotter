@@ -33,12 +33,12 @@ function DealDetail ({ dealID, deal, handleCloseModal, isDealMode, update_deal_s
     }
 
     const formatDate = (dateStr) => {
-        const dateObj = new Date(dateStr);
+        const dateObj = new Date(dateStr + "T00:00:00");
         return dateObj.toLocaleString('default', {
-            day: '2-digit',
-            month: '2-digit',
-            year: '2-digit',
-        }).replace(',', '/');
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric',
+        }).replace(' ', '/');
     };
 
     const changeStatus = async (dealID, status) => {
@@ -66,7 +66,7 @@ function DealDetail ({ dealID, deal, handleCloseModal, isDealMode, update_deal_s
                     {deal ? (
                         <div className="flex flex-col mb-4">
                             <div className="text-center">
-                                <p><b>Date Deal Created: </b>{formatDate(deal?.deal_date)}</p>
+                                <p><b>Date Deal Created: </b>{formatDate(deal.deal_date)}</p>
                                 <Divider />
                             </div>
                             <div className="flex flex-col-reverse sm:flex-row justify-evenly items-center">
@@ -75,7 +75,7 @@ function DealDetail ({ dealID, deal, handleCloseModal, isDealMode, update_deal_s
                                     <p><b>Property: </b>{deal?.prop_name}</p>
                                     <p><b>Unit Number: </b>{deal?.unit_no}</p>
                                     <p><b>Lease Term: </b>{deal?.lease_term}</p>
-                                    <p><b>Move Date: </b>{formatDate(deal?.move_date)}</p>
+                                    <p><b>Move Date: </b>{deal.move_date}</p>
                                     <p><b>Rent: </b>${deal?.rent}</p>
                                     {deal?.rate ? (
                                         <p><b>Rate: </b>{deal?.rate}%</p>

@@ -8,11 +8,11 @@ import { reset_deal_mode } from "../store/actions/ui";
 import { load_deal } from "../store/actions/agent";
 
 function AllDeals ({ deals, isDealMode, reset_deal_mode, isLoaded }) {
-    const [showDealDetail, setShowDealDetail] = useState(null);
+    const [selectedDealID, setSelectedDealID] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
     const handleOpenModal = (id) => {
-        setShowDealDetail(showDealDetail === id ? null : id)
+        setSelectedDealID(selectedDealID === id ? null : id)
         setShowModal(true);
     };
 
@@ -27,58 +27,65 @@ function AllDeals ({ deals, isDealMode, reset_deal_mode, isLoaded }) {
     }
 
     return (
-        <div>
+        <div className="h-[43.3rem] flex flex-col items-between justify-start bg-[#26282B] rounded-lg shadow-md shadow-inner">
             {isLoaded ? ( 
                 <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
-                    {deals?.length > 0 ? (
-                        <>
-                            <ul className='divide-y divide-gray-200 border border-gray-300 rounded-md'>
-                                {deals?.map(deal => (
-                                    <li className='p-3 flex flex-row justify-evenly items-start font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425]' key={deal.id}>
-                                        <div className="flex justify-between">
-                                            <Link onClick={() => handleOpenModal(deal.id)}>
-                                                <span className="text-nowrap text-sm sm:text-base">
-                                                    <b>{deal.client_name}</b> | {deal.prop_name} | {deal.move_date}
-                                                </span>
-                                            </Link>
-                                        </div>
-                                        {showDealDetail === deal.id && (
-                                            <Modal className='!w-10/12 sm:!w-[500px]' open={showModal} onClose={handleCloseModal}>
-                                                <Modal.Header>
-                                                    {isDealMode ? (
-                                                        <span>Edit Deal</span>
-                                                    ) :(
-                                                        <span>Deal Info</span>
-                                                    )}
-                                                </Modal.Header>
-                                                <Modal.Content>
-                                                    <DealDetail dealID={deal.id} handleCloseModal={handleCloseModal}/>
-                                                </Modal.Content>
-                                                <Modal.Actions className="flex justify-end">
-                                                    {isDealMode ? (
-                                                        <Button onClick={(() => handleCancelEdit(deal))}>CANCEL</Button>
-                                                    ): (
-                                                        <Button onClick={handleCloseModal}>CLOSE</Button>
-                                                    )}                                            
-                                                </Modal.Actions>
-                                            </Modal>
-                                        )}
-                                    </li>
-                                ))}
-                            </ul>
+                    <div className="flex flex-col items-center overflow-y-auto min-h-[24rem] max-h-full text-left mt-3 mb-10 snap-start">
+                            {deals.length > 0 ? (
+                            <>
+                                <table className="w-11/12">
+                                    <thead className="text-gray-500 bg-[#1f2124] text-xs text-center">
+                                        <tr className="">
+                                            <th className="p-2 rounded-tl-md rounded-bl-md">Client</th>
+                                            <th className="p-2">Property</th>
+                                            <th className="p-2 ounded-tr-md rounded-br-md">Date Created</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {deals.map((deal) => (
+                                            <tr
+                                                key={deal.id}
+                                                className="font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425] text-center cursor-pointer"
+                                                onClick={() => handleOpenModal(deal.id)}
+                                            >
+                                                <td className="p-2 hover:text-[#5F85DB]">{deal.client_name}</td>
+                                                <td className="p-2 hover:text-[#5F85DB]">{deal.prop_name}</td>
+                                                <td className="p-2 hover:text-[#5F85DB]">{deal.deal_date}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            {selectedDealID && (
+                                <Modal className='!w-11/12 sm:!w-[500px] !mb-10' open={showModal} onClose={handleCloseModal}>
+                                    <Modal.Header>List Info</Modal.Header>
+                                    <Modal.Content>
+                                        <DealDetail dealID={selectedDealID} handleCloseModal={handleCloseModal}/>
+                                    </Modal.Content>
+                                    <Modal.Actions className="flex justify-end">
+                                        {isDealMode ? (
+                                            <Button onClick={(() => handleCancelEdit(selectedDealID))}>CANCEL</Button>
+                                        ): (
+                                            <Button onClick={handleCloseModal}>CLOSE</Button>
+                                        )}  
+                                    </Modal.Actions>
+                                </Modal>
+                            )}
                         </>
                     ) : (
                         <>
-                            <div className='flex flex-col items-center justify-center'>
-                                <Loader inverted active />
-                            </div>   
+                            <div className='flex flex-col items-center text-white justify-center'>
+                            <p>There are currently no lists to display. Use the button above to get started.</p>                            
+                            </div>  
                         </>
-                    )}
+                    )} 
+                </div>
+
                 </div>
             ) : (
                 <div className='h-[40rem] flex flex-col items-center justify-center mt-3 pt-5'>
-                    <p>There are currently no deals to display. Use the button above to get started.</p>
+                    <Loader inverted active />
                 </div>
+                
             )}
         </div>
     )

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Button, Form, FormField, Message } from "semantic-ui-react";
 import { load_clients, update_client } from "../store/actions/agent";
-import { verify_client_status } from "../store/actions/ui";
+import { clear_message, verify_client_status } from "../store/actions/ui";
 
-function ClientDetail ({ client, update_client, user, load_clients, message, clientTaken, verify_client_status }) {
+function ClientDetail ({ client, update_client, user, load_clients, message, clear_message, clientTaken, verify_client_status }) {
     const [formData, setFormData] = useState({
         first_name: client.first_name || '',
         last_name: client.last_name || '',
@@ -28,6 +28,13 @@ function ClientDetail ({ client, update_client, user, load_clients, message, cli
     useEffect(() => {
         verify_client_status(client)
     }, [verify_client_status, client])
+
+    useEffect(() => {
+        if (message) {
+            setTimeout( () => {clear_message()}, 1000 )
+        }
+    }
+    )
 
     return (
         <>
@@ -85,13 +92,13 @@ function ClientDetail ({ client, update_client, user, load_clients, message, cli
                             required
                         />
                     </FormField>
-                    <div className="flex justify-center items-center">
+                    <div className="flex relative justify-center items-center">
                         <Button className="drop-shadow" type="submit" color="green">UPDATE CLIENT</Button>   
-                        {message && (
-                            <Message positive size="mini">
+                        {message ? (
+                            <Message positive size="mini" className="!absolute !text-xs !text-nowrap !left-[9rem] !bottom-[0.05rem]">
                                 <Message.Header>{message}</Message.Header>
                             </Message>
-                        )}
+                        ) : null}
                     </div>
                 </Form>
             </div>
@@ -101,8 +108,8 @@ function ClientDetail ({ client, update_client, user, load_clients, message, cli
 
 const mapStateToProps = state => ({
     user: state.auth.user,
-    message: state.agent.message,
+    message: state.ui.message,
     clientTaken: state.ui.clientTaken
 });
 
-export default connect(mapStateToProps, { update_client, load_clients, verify_client_status })(ClientDetail);
+export default connect(mapStateToProps, { update_client, load_clients, verify_client_status, clear_message })(ClientDetail);

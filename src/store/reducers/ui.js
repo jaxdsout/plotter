@@ -24,7 +24,8 @@ import {
     CLIENT_FOUND_SOMEWHERE,
     CLIENT_NOT_FOUND,
     PROFILE_WIDGET_CLOSE,
-    PROFILE_WIDGET_OPEN
+    PROFILE_WIDGET_OPEN,
+    UPDATE_CLIENT_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -37,11 +38,12 @@ const initialState = {
     signupSuccess: false,
     resetSuccess: false,
     activateSuccess: false,
-    message: null,
+    message: '',
     error: null,
     clientTaken: false,
     profileWidget: false
 };
+
 
 export default function uiReducer(state = initialState, action) {
     const { type } = action;
@@ -102,7 +104,7 @@ export default function uiReducer(state = initialState, action) {
         case SET_SIGNUP_SUCCESS:
             return {
                 ...state,
-                signupSuccess: false,
+                signupSuccess: true,
             }
         case PASSWORD_RESET_SUCCESS:
             return {
@@ -140,8 +142,8 @@ export default function uiReducer(state = initialState, action) {
         case CLEAR_MESSAGE:
             return {
                 ...state,
-                message: null,
-                error: null,
+                message: '',
+                error: '',
             };
         case SIGNUP_FAIL:
             return {
@@ -182,6 +184,11 @@ export default function uiReducer(state = initialState, action) {
             return {
                 ...state,
                 profileWidget: false
+            }
+        case UPDATE_CLIENT_SUCCESS:
+            return {
+                ...state,
+                message: 'Client updated successfully'
             }
         default:
             return state;
