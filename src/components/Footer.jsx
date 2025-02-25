@@ -1,10 +1,12 @@
 import { connect } from 'react-redux'
 import { Icon } from 'semantic-ui-react';
+import { reset_client_view } from '../store/actions/ui';
 
-function Footer ({ isClientView, access }) {
+function Footer ({ isClientView, reset_client_view }) {
 
     const logo_click =  () => {
         if (isClientView) {
+            reset_client_view();
             window.location.href = "/";
         } 
     }
@@ -41,7 +43,6 @@ function Footer ({ isClientView, access }) {
 
 const mapStateToProps = state => ({
     isClientView: state.ui.isClientView,
-    access: state.auth.access,
 });
 
-export default connect(mapStateToProps, { })(Footer);
+export default connect(mapStateToProps, { reset_client_view })(Footer);
