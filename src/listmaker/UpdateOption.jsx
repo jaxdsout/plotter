@@ -43,7 +43,7 @@ function UpdateOption ({ option, list, update_option, load_list }) {
         <Modal open={showModal} onClose={handleCloseModal} className="!w-5/6 sm:!w-[500px]">
             <Modal.Header className="text-center">Update Option: {option.prop_name}</Modal.Header>
             <Modal.Content className="bg-dark-subtle">
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit} autocomplete="off">
                     <FormField>                          
                         <label className="noto-sans" htmlFor='price'>Price:</label>
                         <div className="relative">

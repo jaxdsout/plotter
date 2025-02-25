@@ -30,7 +30,8 @@ import {
     LOAD_LISTS_SUCCESS,
     LOAD_PROPERTIES_SUCCESS,
     LOAD_TASKS_SUCCESS,
-    LOAD_DEALS_SUCCESS
+    LOAD_DEALS_SUCCESS,
+    LOAD_CARDS_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -200,6 +201,7 @@ export default function uiReducer(state = initialState, action) {
         case LOAD_LISTS_SUCCESS:
         case LOAD_TASKS_SUCCESS:
         case LOAD_PROPERTIES_SUCCESS:
+        case LOAD_CARDS_SUCCESS:
             return {
                 ...state,
                 isClientView: false

@@ -36,7 +36,7 @@ function Navbar ({ logout, isAuthenticated, isClientView, access, profile_widget
             <>
             </>
         ) : (
-            <nav className='bg-white shadow-inner pl-8 pr-8 pt-8 pb-6 flex flex-row justify-between items-start'>
+            <nav className='bg-white pl-8 pr-8 pt-8 pb-6 flex flex-row justify-between items-start'>
                 <div>
                     <p className='mont text-[#5F85DB] text-5xl sm:text-6xl hover:text-[#4d6ebb] active:translate-y-0.5 drop-shadow' onClick={logo_click}>atlas</p>
 

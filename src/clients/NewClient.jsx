@@ -66,7 +66,7 @@ function NewClient({ user, load_clients, new_client, clientTaken, verify_client_
                 <Modal open={showModal} onClose={handleCloseModal} className='!w-11/12 sm:!w-[500px]'>
                     <Modal.Header className="text-center">Add New Client</Modal.Header>
                     <Modal.Content>
-                        <Form onSubmit={handleSubmit}>
+                        <Form onSubmit={handleSubmit} autocomplete="off">
                             <FormField>
                                 <label htmlFor='first_name'>First Name:</label>
                                 <input

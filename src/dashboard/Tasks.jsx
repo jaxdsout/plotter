@@ -58,9 +58,10 @@ function Tasks ({ user, load_tasks, tasks, new_task, update_task}) {
     
     return (
         <div className="w-11/12 max-w-[500px] mt-5 mb-10 flex flex-col items-center justify-center bg-[#26282B] rounded-lg shadow-md shadow-inner">
-            <div className="mt-4 mb-2 flex flex-col items-center">
-                <h4 className='text-center text-white'>Tasks to Complete</h4>
-            </div>
+            <div className='flex flex-col items-center justify-center ml-4 mr-4'>
+                <i className="tasks icon mont drop-shadow-md !text-3xl text-white  !mb-4 !mt-4" />
+                <p className='mont text-[0.65rem] text-white'>TASKS</p>
+            </div>            
             <div className="p-3">
                 {tasks.length > 0 ? (
                     <ul className='rounded-md pl-2 pr-2'>
@@ -86,16 +87,11 @@ function Tasks ({ user, load_tasks, tasks, new_task, update_task}) {
                                         </Form>
                                     </div>
                                 </li>
-                            ) : (
-                                <>
-                                </>
-                            )
+                            ) : null
                         ))}
                     </ul>
-                ) : (
-                    <>
-                    </>
-                )}
+                ) : null 
+                }
             </div>
             <div className="mb-4 p-2 flex flex-row items-center relative">
                 <Checkbox checked className="me-2 pointer-events-none"/>
@@ -133,9 +129,10 @@ function Tasks ({ user, load_tasks, tasks, new_task, update_task}) {
                 )}
                
                 {showCompleted ? (
-                    <div className="rounded-md bg-[#3f5647] p-3">
+                    <div className="">
                         {tasks.map(task => (
-                            !task.is_active ? (
+                            <div className="bg-[#3f5647] rounded-md p-3">
+                            {!task.is_active ? (
                                 <li className='mb-0 p-2 flex flex-row items-center text-white bg-none' key={task.id}>
                                     <div className="flex flex-row items-center">
                                         <Checkbox
@@ -157,16 +154,11 @@ function Tasks ({ user, load_tasks, tasks, new_task, update_task}) {
                                         </Form>
                                     </div>
                                 </li>
-                            ) : (
-                                <>
-                                </>
-                            )
+                            ) : null}
+                            </div>
                         ))}
                     </div>
-                ) : (
-                    <>
-                    </>
-                )}
+                ) : null }
             </div>
         </div>
     )

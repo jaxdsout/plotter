@@ -14,6 +14,8 @@ import Clients from './clients/Clients';
 import Lists from './lists/Lists';
 import Deals from './deals/Deals';
 import Commission from './dashboard/Commission';
+import Cards from './cards/Cards';
+import Calculator from './dashboard/Calculator';
 
 
 function App() {
@@ -36,6 +38,8 @@ function App() {
           <Route path="lists" element={<Lists />} />
           <Route path="deals" element={<Deals />} />
           <Route path="rates" element={<Commission />} />
+          <Route path="cards" element={<Cards />} />
+          <Route path="calculator" element={<Calculator />} />
         </Route>
         <Route path="/list/:uuid/" element={ <ClientList /> } />
       </Routes>

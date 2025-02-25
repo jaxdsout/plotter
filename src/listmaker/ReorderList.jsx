@@ -14,7 +14,7 @@ function ReorderList ({ reset_reorder_mode, set_reorder_mode, isReorderMode }) {
     
     return (
         <Button 
-            className="drop-shadow-sm hover:!bg-[#3a528a] !h-[40px]" 
+            className="drop-shadow-sm hover:!bg-[#3a528a]" 
             onClick={handleReorder}
             style={{ backgroundColor: isReorderMode ? "green" : "#4d6cb2", color: "white" }}
             size='tiny'

@@ -32,6 +32,8 @@ import {
     LOGOUT,
     LOAD_USER_DATA_SUCCESS,
     LOAD_USER_DATA_FAIL,
+    LOAD_CARDS_SUCCESS,
+    LOAD_CARDS_FAIL
 } from '../actions/types';
 
 const initialState = {
@@ -40,6 +42,7 @@ const initialState = {
     lists: [],
     tasks: [],
     properties: [],
+    cards: [],
     deal: null,
     isLoaded: false
 };
@@ -85,6 +88,12 @@ export default function agentReducer(state = initialState, action) {
                 tasks: payload,
                 isLoaded: true
             }
+        case LOAD_CARDS_SUCCESS:
+            return {
+                ...state,
+                cards: payload,
+                isLoaded: true
+            }
         case LOAD_PROPERTIES_SUCCESS:
             return {
                 ...state,
@@ -101,6 +110,7 @@ export default function agentReducer(state = initialState, action) {
         case LOAD_DEALS_FAIL:
         case LOAD_TASKS_FAIL:
         case LOAD_PROPERTIES_FAIL:
+        case LOAD_CARDS_FAIL:
         case LOAD_DEAL_FAIL:
         case NEW_CLIENT_SUCCESS:
         case NEW_LIST_SUCCESS:

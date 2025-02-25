@@ -36,7 +36,9 @@ import {
     LOAD_USER_DATA_FAIL,
     LOAD_PROFILE_SUCCESS,
     LOAD_PROFILE_FAIL,
-    USER_DATA_UNCHANGED
+    USER_DATA_UNCHANGED,
+    LOAD_CARDS_FAIL,
+    LOAD_CARDS_SUCCESS
 } from './types';
 
 import axios from 'axios';
@@ -238,6 +240,7 @@ export const load_deal = (dealID) => async dispatch => {
         });
     }
 };
+
 
 
 export const new_deal = (property, agent, client, unit_no, move_date, lease_term, rent, rate, flat_fee, commission) => async dispatch => {
@@ -574,6 +577,33 @@ export const load_tasks = (userID) => async dispatch => {
     }
 };
 
+export const load_cards = (userID) => async dispatch => {
+    if (localStorage.getItem('access')) {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+            }
+        }; 
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_API_URL}/cards/?user=${userID}`, config);
+            dispatch({
+                type: LOAD_CARDS_SUCCESS,
+                payload: res.data
+            });
+            return res.data;
+        } catch (err) {
+            dispatch({
+                type: LOAD_CARDS_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: LOAD_CARDS_FAIL
+        });
+    }
+};
+
 export const load_properties = () => async dispatch => {
     if (localStorage.getItem('access')) {
         const config = {
@@ -601,41 +631,64 @@ export const load_properties = () => async dispatch => {
     }
 };
 
-export const load_user_data = (userID, pathName) => async (dispatch, getState) => {
+export const load_user_data = (userID, pathName, forceRefresh) => async (dispatch, getState) => {
     let hasFetched = false;
     let state = getState();
 
+    const shouldFetch = (dataKey, lastFetchedKey) => {
+        const hasData = state.agent[dataKey]?.length > 0;
+        const isStale = Date.now() - (state.agent[lastFetchedKey] || 0) > 5 * 60 * 1000;
+        return forceRefresh || !hasData || isStale;
+    };
+
     try {
-        if (pathName === '/dashboard/home') {
-            if (state.agent.deals.length === 0) {
-                await dispatch(load_deals(userID));
-                await dispatch(load_tasks(userID));
-                hasFetched = true;
-            }
-        } else if (pathName === '/dashboard/clients') {
-            if (state.agent.clients.length === 0) {
-                await dispatch(load_clients(userID));
-                hasFetched = true;
-            }
-        } else if (pathName === '/dashboard/lists') {
-            if (state.agent.lists.length === 0) {
-                await dispatch(load_lists(userID));
-                hasFetched = true;
-            }
-        } else if (pathName === '/dashboard/deals') {
-            if (state.agent.deals.length === 0) {
-                await dispatch(load_deals(userID));
-                hasFetched = true;
-            }
-        } else if (pathName === '/dashboard/rates') {
-            if (state.agent.properties.length === 0) {
-                await dispatch(load_properties());
-                hasFetched = true;
-            }
+        switch (pathName) {
+            case '/dashboard/home':
+                if (shouldFetch('deals', 'lastFetchedDeals')) {
+                    await dispatch(load_deals(userID));
+                    hasFetched = true;
+                }
+                if (shouldFetch('tasks', 'lastFetchedTasks')) {
+                    await dispatch(load_tasks(userID));
+                    hasFetched = true;
+                }
+                break;
+            case '/dashboard/clients':
+                if (shouldFetch('clients', 'lastFetchedClients')) {
+                    await dispatch(load_clients(userID));
+                    hasFetched = true;
+                }
+                break;
+            case '/dashboard/lists':
+                if (shouldFetch('lists', 'lastFetchedLists')) {
+                    await dispatch(load_lists(userID));
+                    hasFetched = true;
+                }
+                break;
+            case '/dashboard/deals':
+                if (shouldFetch('deals', 'lastFetchedDeals')) {
+                    await dispatch(load_deals(userID));
+                    hasFetched = true;
+                }
+                break;
+            case '/dashboard/rates':
+                if (shouldFetch('properties', 'lastFetchedProperties')) {
+                    await dispatch(load_properties());
+                    hasFetched = true;
+                }
+                break;
+            case '/dashboard/cards':
+                if (shouldFetch('cards', 'lastFetchedCards')) {
+                    await dispatch(load_cards(userID));
+                    hasFetched = true;
+                }
+                break;
+            default:
+                console.log("Default case: No matching path");
         }
-        
+
         if (!hasFetched) {
-            console.log("Data is unchanged, skipping API calls.");
+            console.log("Data is unchanged or fresh, skipping API calls.");
             dispatch({ type: USER_DATA_UNCHANGED });
         }
 

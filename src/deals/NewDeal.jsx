@@ -145,7 +145,7 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
                             </div>
                         </div>
                         <Divider />
-                        <Form onSubmit={handleSubmit}>
+                        <Form onSubmit={handleSubmit} autocomplete="off">
                             <FormField>
                                 <label htmlFor='unit_no'>Unit Number:</label>
                                 <input
