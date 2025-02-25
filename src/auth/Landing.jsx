@@ -3,6 +3,7 @@ import { Button, Loader } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import { reset_client_view } from "../store/actions/ui";
 import { connect } from "react-redux";
+import LandingLoop from "../elements/0224.mp4";
 
 function Landing({ access, refresh }) {
     const navigate = useNavigate();
@@ -83,7 +84,13 @@ function Landing({ access, refresh }) {
                         </div>
                     </div>
 
-                    <div className="bg-[#bfbbb6] flex flex-col sm:flex-row items-center w-full justify-evenly">
+                    <div className="w-full h-1/3 bg-black shadow-inner z-40">
+                        <video autoPlay loop className="opacity-40 hover:opacity-90">
+                            <source src={LandingLoop} />
+                        </video>
+                    </div>
+
+                    <div className="bg-[#bfbbb6] flex flex-col sm:flex-row items-center w-full justify-evenly drop-shadow-md z-40">
                         <div className="w-2/3 sm:w-1/2 mt-4 sm:mt-0">
                             <img src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1010.png" className="drop-shadow-md" alt='sub-header-0'/>  
                         </div>   
@@ -95,12 +102,9 @@ function Landing({ access, refresh }) {
                                 And we're currently developing a comprehensive stats feature (exciting, right?) to track everything from most-recommended properties to most-leased, and beyond! 
                             </p>
                         </div>
-                    </div>
+                    </div>                    
 
-                    {/*  DEMO OF LISTMAKING FEATURE */}
-
-
-                    <div className="bg-[#a5a29d] flex flex-col-reverse sm:flex-row items-center w-full justify-evenly">
+                    <div className="bg-[#a5a29d] flex flex-col-reverse sm:flex-row items-center w-full justify-evenly z-40">
                         <div className="w-full sm:w-1/3 flex flex-col items-center mt-0 sm:mt-10 ml-0 sm:ml-10 p-4 justify-center mb-8 sm:mb-0">
                             <p className="mont drop-shadow text-white text-5xl xl:text-7xl text-center text-nowrap mb-4 mt-2">best part?</p>
                             <p className="w-full text-white font-semibold text-sm bg-[#4d6cb2] shadow-inner shadow-md text-center uppercase rounded-xl p-8">Atlas is 100% free right now. </p>
