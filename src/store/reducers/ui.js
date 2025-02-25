@@ -25,7 +25,12 @@ import {
     CLIENT_NOT_FOUND,
     PROFILE_WIDGET_CLOSE,
     PROFILE_WIDGET_OPEN,
-    UPDATE_CLIENT_SUCCESS
+    UPDATE_CLIENT_SUCCESS,
+    LOAD_CLIENTS_SUCCESS,
+    LOAD_LISTS_SUCCESS,
+    LOAD_PROPERTIES_SUCCESS,
+    LOAD_TASKS_SUCCESS,
+    LOAD_DEALS_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -190,6 +195,16 @@ export default function uiReducer(state = initialState, action) {
                 ...state,
                 message: 'Client updated successfully'
             }
+        case LOAD_CLIENTS_SUCCESS:
+        case LOAD_DEALS_SUCCESS:
+        case LOAD_LISTS_SUCCESS:
+        case LOAD_TASKS_SUCCESS:
+        case LOAD_PROPERTIES_SUCCESS:
+            return {
+                ...state,
+                isClientView: false
+            }
+        
         default:
             return state;
     }
