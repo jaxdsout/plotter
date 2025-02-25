@@ -85,7 +85,7 @@ function Landing({ access, refresh }) {
                     </div>
 
                     <div className="w-full h-1/3 bg-black shadow-inner z-40">
-                        <video autoPlay loop className="opacity-40 hover:opacity-90">
+                        <video autoPlay loop muted playsInline className="opacity-40 hover:opacity-90 w-full h-full object-cover">
                             <source src={LandingLoop} />
                         </video>
                     </div>
