@@ -101,20 +101,6 @@ function Login ({ login, isAuthenticated, error, message, auth_user }) {
                     </div>
                 </div>
                 <Divider className="mt-4 mb-4" />
-                <div className="flex flex-col sm:flex-col md:flex-row justify-evenly text-center mt-5">            
-                    <div className="mb-5">
-                        <h6 className="noto-sans text-white mb-4">Here for portfolio purposes?</h6>
-                        <Popup
-                            content={
-                                <div>
-                                    <p><b>Email:</b> aptatlas.test@gmail.com</p>
-                                    <p><b>PW:</b> example123</p>
-                                </div>    
-                            }
-                            trigger={<Button size="tiny" inverted>SANDBOX</Button>}
-                        />  
-                    </div>
-                </div>
             </div>
             )}
         </div>
