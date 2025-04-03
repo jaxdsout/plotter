@@ -49,7 +49,7 @@ function Login ({ login, isAuthenticated, error, message, auth_user }) {
             <div className="w-11/12 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
                 <div className="mb-2 flex flex-col items-center">
                     <img src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.png" alt='login'/>
-                    <h6 className="mont text-white text-2xl md:text-4xl -mt-5"> dashboard login </h6>
+                    <h6 className="mont text-white text-2xl md:text-4xl -mt-5 uppercase"> dashboard login </h6>
                 </div>
                 <Form onSubmit={handleSubmit} className="p-5">
                     {error && (
@@ -92,18 +92,18 @@ function Login ({ login, isAuthenticated, error, message, auth_user }) {
                 <Divider className="mt-4 mb-4" />
                 <div className="flex flex-col sm:flex-col md:flex-row justify-evenly text-center mt-5">            
                     <div className="mb-5">
-                        <h6 className="noto-sans text-white mb-4">don't have an atlas account?</h6>
+                        <h6 className="noto-sans text-white mb-4">Don't have an atlas account?</h6>
                         <Link to={"/signup/"}><Button inverted className="active:translate-y-0.5">SIGN UP</Button></Link>
                     </div>
                     <div className="mb-5">
-                        <h6 className="noto-sans text-white mb-4">forgot your password?</h6>          
+                        <h6 className="noto-sans text-white mb-4">Forgot your password?</h6>          
                         <Link to={"/reset-password/"}><Button inverted className="active:translate-y-0.5">RESET</Button></Link>
                     </div>
                 </div>
                 <Divider className="mt-4 mb-4" />
                 <div className="flex flex-col sm:flex-col md:flex-row justify-evenly text-center mt-5">            
                     <div className="mb-5">
-                        <h6 className="noto-sans text-white mb-4">here for portfolio purposes?</h6>
+                        <h6 className="noto-sans text-white mb-4">Here for portfolio purposes?</h6>
                         <Popup
                             content={
                                 <div>

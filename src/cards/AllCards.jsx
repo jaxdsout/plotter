@@ -35,7 +35,7 @@ function AllCards ({ cards, isLoaded }) {
             {isLoaded ? ( 
                 <div className=" h-[40rem] mt-3 pt-5">
                     <div className="flex flex-col items-center overflow-y-auto min-h-[24rem] max-h-full text-left mt-3 mb-10 snap-start">
-                            {cards?.length > 0 ? (
+                            {cards?.length > 0 && (
                             <>
                                 <table className="w-11/12">
                                     <thead className="text-gray-500 bg-[#1f2124] text-xs text-center">
@@ -71,13 +71,7 @@ function AllCards ({ cards, isLoaded }) {
                                 </Modal>
                             )}
                         </>
-                    ) : (
-                        <>
-                            <div className='flex flex-col items-center text-white justify-center'>
-                                <Loader inverted active />
-                            </div>  
-                        </>
-                    )} 
+                    )}
                 </div>
 
                 </div>
