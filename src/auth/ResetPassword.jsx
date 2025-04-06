@@ -48,7 +48,7 @@ function ResetPassword ({ reset_password, message, resetSuccess, set_reset_succe
             <div className="w-11/12 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
                 <div className="flex flex-col items-center">
                     <img src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1010.png" alt='reset-header'/>
-                    <h6 className="mont text-white text-2xl md:text-4xl -mt-2 uppercase"> reset your password </h6>
+                    <h6 className="font-mont text-white text-2xl md:text-4xl -mt-2 uppercase"> reset your password </h6>
                 </div>
                 {message && (
                         <Message positive>

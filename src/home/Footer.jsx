@@ -15,7 +15,7 @@ function Footer ({ isClientView, reset_client_view }) {
        <>
        {isClientView ? (
             <nav className='bg-[#26282B] text-center p-5 sticky bottom-0'>
-                <h1 className='mont text-[#5F85DB] p-5 text-6xl hover:text-[#4d6ebb] active:translate-y-0.5' onClick={logo_click}>atlas</h1>
+                <h1 className='font-mont text-[#5F85DB] p-5 text-6xl hover:text-[#4d6ebb] active:translate-y-0.5' onClick={logo_click}>atlas</h1>
                 <p className='text-white !text-sm font-sans !mb-5'>
                     <Icon className="copyright"/>
                     <span>2025 Apartment Atlas</span>
@@ -27,7 +27,7 @@ function Footer ({ isClientView, reset_client_view }) {
                 {/* {access ? ( */}
                     <div className='mt-3'>
                         <p className='-mb-0 text-xs uppercase'>Have a question or issue?</p>
-                        <a className="font-bold mont text-md" href="mailto:info@aptatlas.com">info@aptatlas.com</a>
+                        <a className="font-bold font-mont text-md" href="mailto:info@aptatlas.com">info@aptatlas.com</a>
                     </div>
                 {/* ) : null } */}
                 <p className='font-sans text-[#26282B] p-5 !text-sm'>

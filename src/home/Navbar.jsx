@@ -38,7 +38,7 @@ function Navbar ({ logout, isAuthenticated, isClientView, access, profile_widget
         ) : (
             <nav className='bg-white pl-8 pr-8 pt-8 pb-6 flex flex-row justify-between items-start rounded-bl-2xl rounded-br-2xl'>
                 <div>
-                    <p className='mont text-[#5F85DB] text-5xl sm:text-6xl hover:text-[#4d6ebb] active:translate-y-0.5 drop-shadow' onClick={logo_click}>atlas</p>
+                    <p className='font-mont text-[#5F85DB] text-5xl sm:text-6xl hover:text-[#4d6ebb] active:translate-y-0.5 drop-shadow' onClick={logo_click}>atlas</p>
 
                 </div>
                 <div>
@@ -46,11 +46,11 @@ function Navbar ({ logout, isAuthenticated, isClientView, access, profile_widget
                         <div className='flex flex-row items-start justify-start'>
                             <div className='flex flex-col items-center justify-center ml-4 mr-8 sm:mr-8'>
                                 <button onClick={() => handleProfileWidget()}
-                                    className='mmont drop-shadow-md text-3xl active:translate-y-0.5 text-[#26282B] hover:text-[#5F85DB]'
+                                    className='font-mont drop-shadow-md text-3xl active:translate-y-0.5 text-[#26282B] hover:text-[#5F85DB]'
                                 >
                                     <i className="user circle icon !-mr-0 !mb-3 !h-[27px]" />                            
                                 </button>
-                                <p className='text-[0.65rem] text-[#26282B] mont'>PROFILE</p>
+                                <p className='text-[0.65rem] text-[#26282B] font-mont'>PROFILE</p>
                             </div>
                             <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] drop-shadow active:translate-y-0.5" onClick={logout_user}>LOGOUT</Button> 
                         </div>

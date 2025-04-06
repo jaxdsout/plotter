@@ -4,11 +4,11 @@ import Login from './auth/Login';
 import ResetPassword from './auth/ResetPassword';
 import ConfirmPassword from './auth/ConfirmPassword';
 import Activate from './auth/Activate';
-import Navbar from './components/Navbar';
-import Landing from './auth/Landing';
+import Navbar from './home/Navbar';
+import Landing from './home/Landing';
 import Dashboard from './dashboard/Dashboard';
 import ClientList from './listmaker/PublicList';
-import Footer from './components/Footer';
+import Footer from './home/Footer';
 import Dash from './dashboard/Dash';
 import Clients from './clients/Clients';
 import Lists from './lists/Lists';
@@ -20,7 +20,7 @@ import Calculator from './dashboard/Calculator';
 
 function App() {
   return (
-    <div className='flex flex-col h-screen justify-between'>
+    <div className='flex flex-col h-screen justify-between bg-body'>
       <header>
         <Navbar />
       </header>

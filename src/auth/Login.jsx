@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { connect } from "react-redux"
 import { useState, useEffect } from "react"
 import { auth_user, login } from "../store/actions/auth";
-import { Button, Divider, Form, FormField, Message, Popup, Loader } from "semantic-ui-react";
+import { Button, Divider, Form, FormField, Message, Loader } from "semantic-ui-react";
 
 function Login ({ login, isAuthenticated, error, message, auth_user }) {
     const navigate = useNavigate()
@@ -49,7 +49,7 @@ function Login ({ login, isAuthenticated, error, message, auth_user }) {
             <div className="w-11/12 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
                 <div className="mb-2 flex flex-col items-center">
                     <img src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1005.png" alt='login'/>
-                    <h6 className="mont text-white text-2xl md:text-4xl -mt-5 uppercase"> dashboard login </h6>
+                    <h6 className="font-mont text-white text-2xl md:text-4xl -mt-5 uppercase"> dashboard login </h6>
                 </div>
                 <Form onSubmit={handleSubmit} className="p-5">
                     {error && (

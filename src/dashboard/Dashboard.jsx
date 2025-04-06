@@ -5,7 +5,7 @@ import Clients from '../clients/Clients';
 import Lists from '../lists/Lists';
 import Deals from '../deals/Deals';
 import Dash from './Dash'
-import ProfileWidget from '../components/ProfileWidget';
+import ProfileWidget from '../home/ProfileWidget';
 import Commission from './Commission';
 import Cards from '../cards/Cards';
 import Calculator from './Calculator';
@@ -93,12 +93,12 @@ const Tab = ({ to, icon, currentPath, subtitle }) => {
         <div className='flex flex-col items-center justify-end ml-2 mr-2 sm:ml-4 sm:mr-4'>
             <Link
                 to={to}
-                className={`mont drop-shadow-md text-2xl sm:text-3xl active:translate-y-0.5
+                className={`font-mont drop-shadow-md text-2xl sm:text-3xl active:translate-y-0.5
                     ${isActive ? "text-[#89a2dc]" : "text-white"} hover:text-[#5F85DB]`}
             >
                 { icon ? <i className={`${icon} !-mr-0 !mb-3 !h-[27px]`} /> : null }
             </Link>
-            <p className='mont text-[0.65rem] text-white'>{subtitle.toUpperCase()}</p>
+            <p className='font-mont text-[0.65rem] text-white'>{subtitle.toUpperCase()}</p>
 
         </div>
 

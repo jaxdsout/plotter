@@ -61,7 +61,7 @@ function Signup ({ signup, error, message, signupSuccess, set_signup_success }) 
             <div className="w-11/12 max-w-[500px] p-5 mt-5 mb-10 flex flex-col bg-[#26282B] rounded-lg shadow-md shadow-inner">
                 <div className="mb-2 flex flex-col items-center">
                     <img src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1000.png" alt='signup-header'/>
-                    <h6 className="mont text-white text-2xl md:text-4xl -mt-5 text-center"> SIGN UP FOR ATLAS </h6>
+                    <h6 className="font-mont text-white text-2xl md:text-4xl -mt-5 text-center"> SIGN UP FOR ATLAS </h6>
                     <p className="text-white text-sm">IT'S 100% FREE FOR NOW!</p>
                 </div>
                 <Form onSubmit={handleSubmit} className="p-5">

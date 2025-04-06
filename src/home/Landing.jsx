@@ -7,7 +7,8 @@ import LandingLoop from "../elements/0224.mp4";
 
 function Landing({ access, refresh }) {
     const navigate = useNavigate();
-    const [imageLoad, setImageLoad] = useState(false)
+    const [imageLoad, setImageLoad] = useState(false);
+    const [videoHover, setVideoHover] = useState(false);
 
     useEffect(() => {
         reset_client_view()
@@ -51,17 +52,17 @@ function Landing({ access, refresh }) {
                         <img className="drop-shadow-md h-1/2 sm:h-[400px] mt-2" src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1006.png" alt='main-header'/>
                      
                         <div className="w-full flex flex-col items-center mt-4">
-                            <p className="mont drop-shadow text-[#5F85DB] text-4xl md:text-5xl xl:text-6xl text-center text-nowrap mb-4 mt-2">A NEW WAY TO LOCATE</p>
+                            <p className="font-mont drop-shadow text-[#5F85DB] text-4xl md:text-5xl xl:text-6xl text-center text-nowrap mb-4 mt-2">A NEW WAY TO LOCATE</p>
 
                             <p className="text-sm bg-white shadow-inner shadow-md rounded-xl p-4  w-3/4 text-center text-black z-40">Stop juggling multiple platforms and outdated tools.<br></br> Get the new one-stop shop for locators.</p>
                         </div>
                     </div>
                    
 
-                    <div className="flex flex-col items-center justify-center bg-white shadow-inner-sm drop-shadow-xl rounded-2xl p-6 text-[#26282B] w-full z-40">
+                    <div className="flex flex-col items-center justify-center bg-white shadow-inner-sm drop-shadow-xl-180 rounded-2xl p-6 text-[#26282B] w-full z-40">
                         <div className="flex flex-col items-center justify-center w-full sm:w-3/4">
                             <p className="italic text-lg -mb-1">THE ATLAS MISSION:</p>    
-                            <p className="mont drop-shadow text-[#26282B] uppercase text-2xl text-center mb-4 mt-2 w-3/4 md:w-1/2">streamline the entire apartment locating process for real estate agents </p>
+                            <p className="font-mont drop-shadow text-[#26282B] uppercase text-2xl text-center mb-4 mt-2 w-3/4 md:w-1/2">streamline the entire apartment locating process for real estate agents </p>
                         </div>
                         <div className="mt-6 flex flex-col items-center justify-center">
                             <div className="h-[300px] -mb-24 relative">
@@ -69,8 +70,8 @@ function Landing({ access, refresh }) {
                             </div>
                             <div className="flex flex-col items-center drop-shadow uppercase mt-4 ">
                                 <span className="font-light text-xl">the three pillars of Atlas</span>
-                                <p className="text-3xl mb-4 mt-2"> 
-                                    <b className="mont">clients</b>, <b className="mont">lists</b>, <span className="text-xl">&</span> <b className="mont">deals</b> 
+                                <p className="text-3xl mb-4 mt-2 font-mont"> 
+                                    <b>clients</b>, <b>lists</b>, <span className="text-xl">&</span> <b>deals</b> 
                                 </p>
                             </div>
                         
@@ -93,10 +94,23 @@ function Landing({ access, refresh }) {
                         </div>
                     </div>
 
-                    <div className="w-full h-1/3 bg-black shadow-inner z-30 -mt-4 -mb-4">
-                        <video autoPlay loop muted playsInline className="opacity-40 hover:opacity-90 w-full h-full object-cover">
-                            <source src={LandingLoop} />
-                        </video>
+                    <div className="w-full h-1/3 bg-black shadow-inner z-30 -mt-4 -mb-4" onMouseEnter={() => setVideoHover(true)} onMouseLeave={() => setVideoHover(false)} onTouchStart={() => setVideoHover(true)} onTouchEnd={() => setVideoHover(false)}>
+                        <div className="flex flex-col items-center justify-center relative">
+                            <h1 
+                                className="text-white font-mont z-40 text-center absolute" 
+                                style={{ opacity: videoHover ? "0%" : "30%"}}
+                            >
+                                <span className="text-4xl">CHECK OUT </span><br></br>
+                                <span className="lowercase text-8xl">ATLAS</span><br></br> 
+                                <span className="text-4xl">IN ACTION</span>
+                            </h1>
+                            <video autoPlay loop muted playsInline 
+                                className="z-30 w-full h-full object-cover"
+                                style={{ opacity: videoHover ? "90%" : "40%"}}
+                                >
+                                <source src={LandingLoop} />
+                            </video>
+                        </div>
                     </div>
 
                     <div className="flex flex-col items-center justify-center bg-white shadow-inner-sm drop-shadow-xl rounded-2xl p-6 text-[#26282B] w-full z-40">
@@ -105,7 +119,7 @@ function Landing({ access, refresh }) {
                             <div className="flex flex-col items-center drop-shadow uppercase mb-2">
                                 <span className="font-light text-xl">A GLIMPSE AT THE </span>
                                 <span className="text-3xl mt-0"> 
-                                    <b className="mont">DASHBOARD</b>
+                                    <b className="font-mont">DASHBOARD</b>
                                 </span>
                             </div>
                         </div>
@@ -121,7 +135,7 @@ function Landing({ access, refresh }) {
                         </div>
                         <div className="bg-[#bfd0ccc5bbb6] flex flex-row items-start w-full justify-evenly shadow-inner-sm">
                             <div className="w-11/12 sm:w-1/2 flex flex-col items-center bg-[#26282B] shadow-inner shadow-md rounded-lg p-6 text-white mt-6 mb-6">
-                                <h1 className="mont text-white text-2xl md:text-3xl text-center text-wrap uppercase">ready to JOIN ?</h1>
+                                <h1 className="font-mont text-white text-2xl md:text-3xl text-center text-wrap uppercase">ready to JOIN ?</h1>
                                 <Link to={"/signup/"}><Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] hover:!text-white text-white drop-shadow active:translate-y-0.5">LET'S GO</Button></Link>
                             </div>
                         </div>
