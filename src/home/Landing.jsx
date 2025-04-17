@@ -49,7 +49,7 @@ function Landing({ access, refresh }) {
                 <div className="flex flex-col bg-[#] flex flex-col items-center justify-center">
 
                     <div className="flex flex-col xl:flex-row items-center justify-center pb-10 pl-5 pr-5">
-                        <img className="drop-shadow-md h-1/2 sm:h-[400px] mt-2" src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1006.png" alt='main-header'/>
+                        <img className="drop-shadow-md h-[200px] sm:h-[400px] mt-2" src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1006.png" alt='main-header'/>
                      
                         <div className="w-full flex flex-col items-center mt-4">
                             <p className="font-mont drop-shadow text-[#5F85DB] text-4xl md:text-5xl xl:text-6xl text-center text-nowrap mb-4 mt-2">A NEW WAY TO LOCATE</p>
