@@ -14,7 +14,7 @@ function Footer ({ isClientView, reset_client_view }) {
     return (
        <>
        {isClientView ? (
-            <nav className='bg-[#26282B] text-center p-5 sticky bottom-0'>
+            <nav className='bg-[#262626] text-center p-5 sticky bottom-0'>
                 <h1 className='font-mont text-[#5F85DB] p-5 text-6xl hover:text-[#4d6ebb] active:translate-y-0.5' onClick={logo_click}>atlas</h1>
                 <p className='text-white !text-sm font-sans !mb-5'>
                     <Icon className="copyright"/>
@@ -23,7 +23,7 @@ function Footer ({ isClientView, reset_client_view }) {
             </nav>
         ) : (
             <>
-            <div className='flex flex-col items-center bg-[#f1e9df] text-center p-5 sticky bottom-0'>
+            <div className='flex flex-col items-center bg-[#262626] text-white text-center p-5 sticky bottom-0'>
                 {/* {access ? ( */}
                     <div className='mt-3'>
                         <p className='-mb-0 text-xs uppercase'>Have a question or issue?</p>

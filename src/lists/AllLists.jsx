@@ -41,7 +41,7 @@ function AllLists ({ lists, reset_list_mode, isListMode, load_list, isLoaded }) 
     };
 
     return (
-        <div className="h-[43.3rem] flex flex-col items-between justify-start bg-[#26282B] rounded-lg shadow-md shadow-inner">
+        <div className="h-[42.3rem] flex flex-col items-between justify-start bg-[#26282B] rounded-lg shadow-md shadow-inner mt-3">
             {isLoaded ? ( 
                 <div className="overflow-y-auto h-[40rem] mt-3 pt-5">
                     <div className="flex flex-col items-center overflow-y-auto min-h-[24rem] max-h-full text-left mt-3 mb-10 snap-start">

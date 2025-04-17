@@ -53,7 +53,7 @@ function EarningDonut ({ deals }) {
       title: {
         display: true,
         text: 'Invoice Status',
-        color: 'white',
+        color: '#1f2124',
       },
       tooltip: {
         backgroundColor: function (tooltipItem) {

@@ -46,7 +46,7 @@ function EarningBar ({ deals }) {
       title: {
         display: true,
         text: 'Monthly Sales Revenue',
-        color: 'white'
+        color: '#1f2124'
       },
       tooltip: {
         displayColors: false,
@@ -62,8 +62,8 @@ function EarningBar ({ deals }) {
       y: {
         beginAtZero: true,
         grid: {
-          color: 'rgba(255, 255, 255, 0.2)',
-          borderColor: 'rgba(255, 255, 255, 0.5)', 
+          color: '#1f2124',
+          borderColor: '#1f2124', 
           borderDash: [5, 5], 
         },
         ticks: {
@@ -77,11 +77,11 @@ function EarningBar ({ deals }) {
       },
       x: {
         grid: {
-          color: 'rgba(255, 255, 255, 0.2)', 
+          color: '#1f2124', 
           drawOnChartArea: false, 
         },
         ticks: {
-          color: 'white', 
+          color: '#1f2124', 
         },
       },
     },

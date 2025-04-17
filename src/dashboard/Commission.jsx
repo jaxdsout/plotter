@@ -40,7 +40,7 @@ function Commission ({ properties, property, reset_commission}) {
     return (
         <>
             <div className="h-[45.9rem] flex flex-col items-center justify-start bg-[#26282B] rounded-lg shadow-md shadow-inner">
-                <div className="w-full flex flex-row justify-center items-center mb-5 relative">
+                <div className="w-full flex flex-row justify-center items-center mt-5 mb-5 relative">
                     <PropertySearch />
                     {propSel && property !== null ? (
                         <div className="ml-5 absolute right-[19rem]">

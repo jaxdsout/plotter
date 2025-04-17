@@ -55,7 +55,7 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, profi
 
     return (    
         <div className='flex flex-col items-center justify-evenly'>
-            <div className="w-11/12 md:w-3/4 max-w-[1000px] p-3 sm:p-5 mt-10 bg-gradient-to-b from-[#26282B] to-[#1f2124] shadow-inner shadow-md rounded-lg mb-10 pb-10">
+            <div className="w-11/12 md:w-3/4 max-w-[1000px] p-3 sm:p-5 mt-10 bg-white shadow-inner shadow-md rounded-lg mb-10 pb-10">
                 <div className='z-0 p-3 sm:p-5 flex flex-row items-center justify-center bg-[#1f2124] bg-blend-color-burn rounded-md'>
                     <Tab to="/dashboard/home" icon="home icon" subtitle="home" currentPath={pathName} />
                     <Tab to="/dashboard/clients" icon="users icon" subtitle="clients" currentPath={pathName} />
@@ -90,15 +90,14 @@ const Tab = ({ to, icon, currentPath, subtitle }) => {
     const isActive = currentPath === to;
 
     return (
-        <div className='flex flex-col items-center justify-end ml-2 mr-2 sm:ml-4 sm:mr-4'>
-            <Link
-                to={to}
-                className={`font-mont drop-shadow-md text-2xl sm:text-3xl active:translate-y-0.5
-                    ${isActive ? "text-[#89a2dc]" : "text-white"} hover:text-[#5F85DB]`}
-            >
-                { icon ? <i className={`${icon} !-mr-0 !mb-3 !h-[27px]`} /> : null }
-            </Link>
-            <p className='font-mont text-[0.65rem] text-white'>{subtitle.toUpperCase()}</p>
+        <div className='relative flex flex-col items-center justify-center px-2 md:px-5'>
+            <h1 className='text-3xl md:text-5xl'>
+                <Link to={to}>
+                    { icon ? <i className={`font-mont drop-shadow-md active:translate-y-0.5
+                    ${isActive ? "text-[#89a2dc]" : "text-white"} hover:text-[#5F85DB] ${icon}`} /> : null }
+                </Link>
+            </h1>
+            <p className='font-mont text-white text-center text-[0.6rem] -mt-2 -ml-1'>{subtitle.toUpperCase()}</p>
 
         </div>
 
