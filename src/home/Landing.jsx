@@ -49,7 +49,7 @@ function Landing({ access, refresh }) {
                 <div className="flex flex-col bg-[#262626] flex flex-col items-center justify-center">
                     <img className="drop-shadow-md h-[200px] sm:h-[400px] mt-2" src="https://plotter-medi-0814.s3.us-east-2.amazonaws.com/1006.png" alt='main-header'/>
 
-                    <h1 className="font-mont drop-shadow text-[#5F85DB] bg-[#101011] text-4xl md:text-5xl xl:text-6xl text-center text-nowrap py-6 mt-2 w-full -mb-16">THE NEW WAY TO LOCATE</h1>
+                    <h1 className="font-mont drop-shadow text-[#5F85DB] bg-[#101011] text-3xl md:text-5xl xl:text-6xl text-center text-nowrap py-6 mt-2 w-full -mb-16">THE NEW WAY TO LOCATE</h1>
 
                     <h2 className="text-sm  shadow-inner shadow-md p-6 text-center text-white z-40 w-full mb-0 bg-[#101011]">Stop juggling multiple platforms and outdated tools.<br></br> Get the new one-stop shop for locators.</h2>
                    
