@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { Modal, Button, Form, Divider, Message } from "semantic-ui-react";
-import MapBox from "./MapBox";
-import PropertySearch from "./PropertySearch";
-import OptionList from "./OptionList";
-import ClearOptions from "./ClearOptions";
-import ClientSearch from "./ClientSearch";
-import SendList from "./SendList";
-import ShareURL from "./ShareURL";
-import ReorderList from "./ReorderList";
+import { Modal, Button, Form, Divider, Message, FormField, Input } from "semantic-ui-react";
+import MapBox from "../components/MapBox";
+import PropertySearch from "../components/PropertySearch";
+import OptionList from "../options/OptionList";
+import ClientSearch from "../components/ClientSearch";
+import OptionControls from "../options/OptionControls";
 import { new_list, delete_list, new_option, load_list } from "../store/actions/listmaker";
 import { reset_list_mode, reset_send_mode, set_list_mode, reset_reorder_mode } from "../store/actions/ui"
 import { load_lists } from "../store/actions/agent";
@@ -18,6 +15,9 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, lo
     const [showModal, setShowModal] = useState(false);
     const [showResetModal, setShowResetModal] = useState(false);
     const [error, setError] = useState(null);
+    const [copied, setCopied] = useState(false)
+
+    const link = `localhost:3000/list/${list?.uuid}`
 
     const handleErrorReset = () => {
         setError(null);
@@ -52,6 +52,26 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, lo
         await reset_send_mode();
         set_list_mode()
     }
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(link)
+            .then(() => {
+                setCopied(true)
+                setTimeout(() => setCopied(false), 2000);
+            })
+            .catch(err => {
+                console.error('Failed to copy: ', err)
+            })
+    }
+
+    const handleOpenURL = () => {
+        if (list?.uuid) {
+            const fullURL = `${window.location.origin}/list/${list.uuid}`;
+            window.open(fullURL, '_blank');
+        }
+    };
+
+    /* MODAL HANDLERS */
 
     const handleOpenResetModal = () => {
         setShowResetModal(true);
@@ -94,8 +114,8 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, lo
                         <div className="bg-[#ededed] rounded-xl p-6 pt-10 drop-shadow-sm">
                             {isListMode ? (
                                 <div className="flex flex-col-reverse md:flex-row justify-evenly items-center md:items-start">
-                                    <div className="flex flex-col justify-start pb-5">
-                                        {isReorderMode ? null : (
+                                    <div className="flex flex-col items-center justify-start pb-5">
+                                        {!isReorderMode && (
                                             <>
                                                 <div className="flex flex-row items-center justify-center bg-[#dbdbdb] rounded-xl p-4">
                                                     <PropertySearch/>
@@ -113,13 +133,11 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, lo
 
                                         )}
                                         <OptionList />
-                                        {isReorderMode ? (
-                                            <div className="flex flex-col items-center mt-6">
-                                                <ReorderList />
-                                            </div>
-                                        ) : null}
+                                        {isReorderMode && (
+                                            <OptionControls />
+                                        )}
                                     </div>
-                                    {isReorderMode ? null : (
+                                    {!isReorderMode && (
                                         <div className="flex justify-center items-center pb-5">
                                             <MapBox />                                                      
                                         </div>
@@ -127,7 +145,24 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, lo
                                 </div>
                             ) : isSendMode ? (
                                 <div className="flex flex-row justify-center items-center h-[20rem]">
-                                       <ShareURL />
+                                    {isSendMode && (
+                                        <Form>
+                                            { copied && (
+                                                <Message positive>
+                                                    <Message.Header>Link copied to clipboard!</Message.Header>
+                                                </Message>
+                                            )}
+                                            <FormField>
+                                                <label>Shareable URL</label>
+                                                <Input 
+                                                    value={link} readOnly onClick={handleCopy} 
+                                                    className="!w-[20rem] !border-none pr-4" />
+                                                <Button onClick={handleOpenURL}>
+                                                    <i class="external alternate icon !-mr-1"></i>
+                                                </Button>
+                                            </FormField>
+                                        </Form>
+                                    )}
                                 </div>
                             ) : (
                                 <div className="flex flex-col justify-center items-center h-[20rem]">
@@ -155,15 +190,13 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, lo
                         <>
                         {isListMode ? (
                             <div className="flex flex-col-reverse sm:flex-row justify-between items-center sm:items-start pb-5">
-                                {isReorderMode ? null : (
+                                {!isReorderMode && (
                                     <>
                                         <div>
                                             <Button size='tiny' className="drop-shadow-sm" onClick={handleOpenResetModal}><i className="long arrow alternate left icon"/>BACK</Button>
                                         </div>
                                         <div className="flex flex-row mb-6 sm:mb-0">
-                                            <ReorderList />
-                                            <ClearOptions />
-                                            <SendList />
+                                            <OptionControls />
                                         </div>
                                     </>
                                 )}

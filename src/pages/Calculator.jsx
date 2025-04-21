@@ -2,9 +2,7 @@ import { connect } from "react-redux";
 import { Form, FormField, Divider, Button } from "semantic-ui-react";
 import { useState } from "react";
 
-
 function Calculator () {
-
     const [formData, setFormData] = useState({
             lease_term: 0,
             rent_free: 0,

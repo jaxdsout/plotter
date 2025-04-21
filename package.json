@@ -4,21 +4,17 @@
   "homepage": "https://aptatlas.com",
   "private": true,
   "dependencies": {
-    "@capacitor/core": "^6.1.2",
-    "@capacitor/ios": "^6.1.2",
-    "@hello-pangea/dnd": "^17.0.0",
     "@reduxjs/toolkit": "^2.2.5",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "autoprefixer": "^10.4.20",
     "axios": "^1.6.8",
     "chart.js": "^4.4.4",
+    "framer-motion": "^12.7.4",
     "js-base64": "^3.7.7",
     "mapbox-gl": "^3.2.0",
     "postcss": "^8.4.49",
     "react": "^18.2.0",
-    "react-beautiful-dnd": "^13.1.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.2",
@@ -59,7 +55,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^6.1.1",
     "tailwindcss": "^3.4.17"
   }
 }

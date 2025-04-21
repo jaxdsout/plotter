@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import MapBox from "./MapBox";
+import MapBox from "../components/MapBox";
 import { useParams } from "react-router-dom";
 import { retrieve_list } from "../store/actions/listmaker";
 import { set_client_view } from "../store/actions/ui"

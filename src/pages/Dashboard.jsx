@@ -1,13 +1,17 @@
 import { useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Clients from '../clients/Clients';
-import Lists from '../lists/Lists';
-import Deals from '../deals/Deals';
-import Dash from './Dash'
-import ProfileWidget from '../home/ProfileWidget';
-import Commission from './Commission';
-import Cards from '../cards/Cards';
+import Dash from '../dash/Dash'
+import NewClient from '../clients/NewClient';
+import NewDeal from '../deals/NewDeal';
+import NewList from '../lists/NewList';
+import NewCard from '../cards/NewCard';
+import AllClients from '../clients/AllClients';
+import AllDeals from '../deals/AllDeals';
+import AllLists from '../lists/AllLists';
+import AllCards from '../cards/AllCards';
+import ProfileWidget from '../components/ProfileWidget';
+import Rates from './Rates';
 import Calculator from './Calculator';
 import { Divider } from 'semantic-ui-react';
 import { auth_user, refresh_token, load_user, lock_out } from '../store/actions/auth';
@@ -68,11 +72,31 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, profi
                 <Divider/>
                 <div className='mt-6'>
                     {basePath === 'home' && <Dash />}
-                    {basePath === 'clients' && <Clients />}
-                    {basePath === 'lists' && <Lists />}
-                    {basePath === 'deals' && <Deals />}
-                    {basePath === 'rates' && <Commission />}
-                    {basePath === 'cards' && <Cards />}
+                    {basePath === 'clients' && 
+                        <>
+                            <NewClient />
+                            <AllClients />
+                        </>
+                    }
+                    {basePath === 'lists' && 
+                        <>
+                            <NewList />
+                            <AllLists />
+                        </>
+                    }
+                    {basePath === 'deals' && 
+                        <>
+                            <NewDeal />
+                            <AllDeals />
+                        </>
+                    }
+                    {basePath === 'rates' && <Rates />}
+                    {basePath === 'cards' && 
+                        <>
+                            <NewCard />
+                            <AllCards />
+                        </>
+                    }
                     {basePath === 'calculator' && <Calculator />}
                 </div>
             </div>

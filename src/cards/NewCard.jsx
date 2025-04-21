@@ -1,7 +1,7 @@
 import { Divider, Button, Input, TextArea, Modal } from "semantic-ui-react";
 import { useState, useEffect } from "react";
-import PropertySearch from "../listmaker/PropertySearch";
-import ClientSearch from "../listmaker/ClientSearch";
+import PropertySearch from "../components/PropertySearch";
+import ClientSearch from "../components/ClientSearch";
 import { connect } from "react-redux";
 import { load_cards, new_guest_card } from "../store/actions/agent";
 import { reset_guest_card } from "../store/actions/ui";

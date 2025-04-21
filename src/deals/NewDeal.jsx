@@ -2,8 +2,8 @@ import { Form, Modal, Button, FormField, Checkbox, Divider } from "semantic-ui-r
 import { useState, useEffect } from "react";
 import { load_deals, new_deal } from "../store/actions/agent";
 import { connect } from "react-redux";
-import ClientSearch from "../listmaker/ClientSearch";
-import PropertySearch from "../listmaker/PropertySearch";
+import ClientSearch from "../components/ClientSearch";
+import PropertySearch from "../components/PropertySearch";
 
 function NewDeal({ user, load_deals, new_deal, client, property }) {
     const [showModal, setShowModal] = useState(false);

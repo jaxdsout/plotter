@@ -1,12 +1,12 @@
 import { Button, Loader, Icon, Popup } from "semantic-ui-react"
 import { connect } from "react-redux";
 import { useEffect } from "react";
-import PropertySearch from "../listmaker/PropertySearch";
+import PropertySearch from "../components/PropertySearch";
 import { useState } from "react";
 import { reset_commission } from "../store/actions/ui";
 
 
-function Commission ({ properties, property, reset_commission}) {
+function Rates ({ properties, property, reset_commission}) {
     const [propSel, setPropSel] = useState(null);
     const [sortConfig, setSortConfig] = useState({ key: 'send', direction: 'desc' });
     const [sortedProperties, setSortedProperties] = useState(properties);
@@ -134,4 +134,4 @@ const mapStateToProps = state => ({
     property: state.listmaker.property
 })
 
-export default connect(mapStateToProps, { reset_commission })(Commission);
+export default connect(mapStateToProps, { reset_commission })(Rates);

@@ -2,16 +2,14 @@ import { Button, Divider, Form, Popup, Loader } from "semantic-ui-react";
 import { reset_list_mode, set_list_mode } from "../store/actions/ui";
 import { connect } from "react-redux";
 import { new_option, load_list, update_list} from "../store/actions/listmaker";
-import PropertySearch from "../listmaker/PropertySearch";
-import OptionList from "../listmaker/OptionList";
-import MapBox from "../listmaker/MapBox";
-import ClearOptions from "../listmaker/ClearOptions";
+import PropertySearch from "../components/PropertySearch";
+import OptionList from "../options/OptionList";
+import MapBox from "../components/MapBox";
 import DeleteList from "./DeleteList";
-import ReorderList from "../listmaker/ReorderList";
 import { useEffect } from "react";
+import OptionControls from "../options/OptionControls";
 
-function ListDetail({ listID, list, options, property, client, user, set_list_mode, new_option, handleCloseModal, 
-    update_list, reset_list_mode, load_list, isReorderMode, isListMode }) {
+function ListDetail({ listID, list, property, user, set_list_mode, new_option, handleCloseModal, load_list, isListMode }) {
 
     const formatDate = (datetimeStr) => {
         const dateObj = new Date(datetimeStr);
@@ -28,14 +26,6 @@ function ListDetail({ listID, list, options, property, client, user, set_list_mo
     const handleEditList = async () => {
         if (user && list) {
             set_list_mode()
-        }
-    }
-
-    const handleSaveList = async () => {
-        if (isListMode) {
-            await update_list(user.id, list.client, list, options)
-            await reset_list_mode()
-            load_list(list.id);
         }
     }
 
@@ -63,47 +53,29 @@ function ListDetail({ listID, list, options, property, client, user, set_list_mo
     return(
         <>   
             {isListMode ? (
-                <>
-                    <div className="flex flex-col justify-evenly">
-                        <div className="">
-                            <div className="flex flex-row items-center justify-center">
-                                <PropertySearch />
-                                <Form onSubmit={() => handlePropertyAdd(list, property)} className="!ml-5">
-                                    <Button color="blue" type="submit" size="tiny">ADD PROPERTY</Button>
-                                </Form>
-                            </div>
-                            <Divider />
-                            <div>
-                                <OptionList />
-                            </div>
+                <div className="flex flex-col justify-evenly">
+                    <div className="">
+                        <div className="flex flex-row items-center justify-center">
+                            <PropertySearch />
+                            <Form onSubmit={() => handlePropertyAdd(list, property)} className="!ml-5">
+                                <Button color="blue" type="submit" size="tiny">ADD PROPERTY</Button>
+                            </Form>
                         </div>
+                        <Divider />
                         <div>
-                            <div className="flex items-center justify-center pt-7 pb-3">
-                                <MapBox />
-                            </div>
-                            <Divider />
-                            <div className="flex justify-center items-center">
-                                {isReorderMode ? (
-                                    <>
-                                        <ReorderList />
-                                    </>
-                                ) : (
-                                    <>
-                                        <div>
-                                            <ClearOptions />
-                                        </div>
-                                        <div className="pr-2 pl-2">
-                                            <ReorderList />
-                                        </div>
-                                        <Button className="drop-shadow-sm" color="green" type="submit" size='tiny' onClick={handleSaveList}>
-                                            SAVE LIST
-                                        </Button>
-                                    </>
-                                )}
-                            </div>
+                            <OptionList />
                         </div>
                     </div>
-                </>
+                    <div>
+                        <div className="flex items-center justify-center pt-7 pb-3">
+                            <MapBox />
+                        </div>
+                        <Divider />
+                        <div className="flex justify-center items-center">
+                            <OptionControls />
+                        </div>
+                    </div>
+                </div>
             ) : (
                 <>
                     {list ? (
