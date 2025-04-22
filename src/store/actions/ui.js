@@ -21,7 +21,8 @@ import {
     CLIENT_FOUND_SOMEWHERE,
     CLIENT_NOT_FOUND,
     PROFILE_WIDGET_OPEN,
-    PROFILE_WIDGET_CLOSE
+    PROFILE_WIDGET_CLOSE,
+    SET_EDIT_LIST
 } from "./types"
 
 import axios from "axios";
@@ -225,6 +226,14 @@ export const set_signup_success = () => dispatch => {
         type: SET_SIGNUP_SUCCESS
     })
 }
+
+
+export const set_edit_list = () => dispatch => {
+    dispatch({
+        type: SET_EDIT_LIST
+    })
+}
+
 
 export const reset_edit_list = () => dispatch => {
     dispatch({

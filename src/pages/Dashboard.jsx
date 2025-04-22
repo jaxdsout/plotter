@@ -10,8 +10,8 @@ import AllClients from '../clients/AllClients';
 import AllDeals from '../deals/AllDeals';
 import AllLists from '../lists/AllLists';
 import AllCards from '../cards/AllCards';
+import AllProps from '../search/AllProps';
 import ProfileWidget from '../components/ProfileWidget';
-import Rates from './Rates';
 import Calculator from './Calculator';
 import { Divider } from 'semantic-ui-react';
 import { auth_user, refresh_token, load_user, lock_out } from '../store/actions/auth';
@@ -62,16 +62,17 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, profi
             <div className="w-11/12 md:w-3/4 max-w-[1000px] p-3 sm:p-5 mt-10 bg-white shadow-inner shadow-md rounded-lg mb-10 pb-10">
                 <div className='z-0 p-3 sm:p-5 flex flex-row items-center justify-center bg-[#1f2124] bg-blend-color-burn rounded-md'>
                     <Tab to="/dashboard/home" icon="home icon" subtitle="home" currentPath={pathName} />
+                    <Tab to="/dashboard/search" icon="search icon" subtitle="search" currentPath={pathName} />
                     <Tab to="/dashboard/clients" icon="users icon" subtitle="clients" currentPath={pathName} />
                     <Tab to="/dashboard/lists" icon="list alternate icon" subtitle="lists" currentPath={pathName} />
                     <Tab to="/dashboard/deals" icon="chart pie icon" subtitle="deals" currentPath={pathName} />
-                    <Tab to="/dashboard/rates" icon="percent icon" subtitle="rates" currentPath={pathName} />
                     <Tab to="/dashboard/cards" icon="address card icon" subtitle="cards" currentPath={pathName} />
                     <Tab to="/dashboard/calculator" icon="calculator icon" subtitle="calc" currentPath={pathName} />
                 </div>
                 <Divider/>
                 <div className='mt-6'>
                     {basePath === 'home' && <Dash />}
+                    {basePath === 'search' && <AllProps />}
                     {basePath === 'clients' && 
                         <>
                             <NewClient />
@@ -90,7 +91,6 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, profi
                             <AllDeals />
                         </>
                     }
-                    {basePath === 'rates' && <Rates />}
                     {basePath === 'cards' && 
                         <>
                             <NewCard />

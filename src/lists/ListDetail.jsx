@@ -1,5 +1,5 @@
 import { Button, Divider, Form, Popup, Loader } from "semantic-ui-react";
-import { reset_list_mode, set_list_mode } from "../store/actions/ui";
+import { reset_list_mode, set_list_mode, set_edit_list } from "../store/actions/ui";
 import { connect } from "react-redux";
 import { new_option, load_list, update_list} from "../store/actions/listmaker";
 import PropertySearch from "../components/PropertySearch";
@@ -9,7 +9,7 @@ import DeleteList from "./DeleteList";
 import { useEffect } from "react";
 import OptionControls from "../options/OptionControls";
 
-function ListDetail({ listID, list, property, user, set_list_mode, new_option, handleCloseModal, load_list, isListMode }) {
+function ListDetail({ listID, list, property, user, set_list_mode, new_option, handleCloseModal, load_list, isListMode, set_edit_list }) {
 
     const formatDate = (datetimeStr) => {
         const dateObj = new Date(datetimeStr);
@@ -25,6 +25,7 @@ function ListDetail({ listID, list, property, user, set_list_mode, new_option, h
 
     const handleEditList = async () => {
         if (user && list) {
+            set_edit_list()
             set_list_mode()
         }
     }
@@ -161,4 +162,4 @@ const mapStateToProps = state => ({
     options: state.listmaker.options
 });
 
-export default connect(mapStateToProps, { set_list_mode, load_list, new_option, update_list, reset_list_mode })(ListDetail);
+export default connect(mapStateToProps, { set_list_mode, load_list, new_option, update_list, reset_list_mode, set_edit_list })(ListDetail);

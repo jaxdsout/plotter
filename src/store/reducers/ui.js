@@ -31,7 +31,8 @@ import {
     LOAD_PROPERTIES_SUCCESS,
     LOAD_TASKS_SUCCESS,
     LOAD_DEALS_SUCCESS,
-    LOAD_CARDS_SUCCESS
+    LOAD_CARDS_SUCCESS,
+    SET_EDIT_LIST
 } from '../actions/types';
 
 const initialState = {
@@ -41,6 +42,7 @@ const initialState = {
     resetDealForm: false,
     isReorderMode: false,
     isDealMode: false,
+    isEditMode: false,
     signupSuccess: false,
     resetSuccess: false,
     activateSuccess: false,
@@ -89,7 +91,8 @@ export default function uiReducer(state = initialState, action) {
         case RESET_LIST_MODE:
             return { 
             ...state, 
-            isListMode: false, 
+            isListMode: false,
+            isEditMode: false 
         }
         case RESET_SEND_MODE:
             return { 
@@ -195,6 +198,11 @@ export default function uiReducer(state = initialState, action) {
             return {
                 ...state,
                 message: 'Client updated successfully'
+            }
+        case SET_EDIT_LIST:
+            return {
+                ...state,
+                isEditMode: true
             }
         case LOAD_CLIENTS_SUCCESS:
         case LOAD_DEALS_SUCCESS:

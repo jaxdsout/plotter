@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 import { useState } from "react";
-import { set_reorder_mode, set_send_mode, reset_list_mode, reset_reorder_mode } from "../store/actions/ui";
+import { set_reorder_mode, set_send_mode, reset_list_mode, reset_reorder_mode, set_edit_list } from "../store/actions/ui";
 import { clear_options, load_list, update_list } from "../store/actions/listmaker";
 import { Button } from "semantic-ui-react";
 
-function OptionControls ({ clear_options, list, load_list, reset_reorder_mode, set_reorder_mode, isSendMode, isReorderMode, isListMode, reset_list_mode, set_send_mode, update_list, user, client, options }) {
+function OptionControls ({ clear_options, list, load_list, reset_reorder_mode, set_reorder_mode, isEditMode, isReorderMode, isListMode, reset_list_mode, set_send_mode, update_list, user, client, options }) {
 
     const [clearConfirm, setClearConfirm] = useState(false);
 
@@ -95,16 +95,20 @@ function OptionControls ({ clear_options, list, load_list, reset_reorder_mode, s
                     </div>
                 }
             </Button>
-            {isSendMode && (
-                <Button className="drop-shadow text-nowrap" type='submit' color='green' size='tiny' onClick={handleSendList}>
-                    <i className="check circle icon"/>SEND LIST
-                </Button>
+            {isListMode &&  (
+                <>
+                    {isEditMode ? (
+                        <Button className="drop-shadow-sm" color="green" type="submit" size='tiny' onClick={handleSaveList}>
+                            <i className="check circle icon"/>SAVE LIST
+                        </Button>
+                    ) : (
+                        <Button className="drop-shadow text-nowrap" type='submit' color='green' size='tiny' onClick={handleSendList}>
+                            <i className="check circle icon"/>SEND LIST
+                        </Button>
+                    )}
+                </>
             )}
-            {isListMode && (
-                <Button className="drop-shadow-sm" color="green" type="submit" size='tiny' onClick={handleSaveList}>
-                    SAVE LIST
-                </Button>
-            )}
+            
             
         
         </>
@@ -120,8 +124,9 @@ const mapStateToProps = state => ({
     isReorderMode: state.ui.isReorderMode,
     options: state.listmaker.options,
     isSendMode: state.ui.isSendMode,
-    isListMode: state.ui.isListMode
+    isListMode: state.ui.isListMode,
+    isEditMode: state.ui.isEditMode
 
 });
 
-export default connect(mapStateToProps, { clear_options, load_list, set_reorder_mode, update_list, set_send_mode, reset_list_mode , reset_reorder_mode })(OptionControls);
+export default connect(mapStateToProps, { clear_options, load_list, set_reorder_mode, update_list, set_send_mode, reset_list_mode, reset_reorder_mode, set_edit_list })(OptionControls);

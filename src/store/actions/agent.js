@@ -671,7 +671,7 @@ export const load_user_data = (userID, pathName, forceRefresh) => async (dispatc
                     hasFetched = true;
                 }
                 break;
-            case '/dashboard/rates':
+            case '/dashboard/search':
                 if (shouldFetch('properties', 'lastFetchedProperties')) {
                     await dispatch(load_properties());
                     hasFetched = true;

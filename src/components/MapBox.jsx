@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import mapboxgl from 'mapbox-gl';
+import MapboxDraw from "@mapbox/mapbox-gl-draw";
 
-const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
+const MapBox = ({ options, retr_options, isClientView, isListMode, properties }) => {
   useEffect(() => {
 
     mapboxgl.accessToken = process.env.REACT_APP_YOUR_MAPBOX_ACCESS_TOKEN;
@@ -18,7 +19,8 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
       
     });
     
-    const mapOptions = retr_options || options;
+    const mapOptions = options || retr_options;
+    const mapProperties = properties;
 
     if (mapOptions && mapOptions.length > 0) {
       const bounds = new mapboxgl.LngLatBounds();
@@ -45,7 +47,42 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
         return marker
       });
 
-      
+      map.fitBounds(bounds, {
+        padding: 70,
+        maxZoom: 15, 
+        duration: 1000  
+      });
+
+      map.addControl(new mapboxgl.NavigationControl({
+        showCompass: false,
+      }))
+        
+    }
+
+    if (mapProperties && mapProperties.length > 0) {
+      const bounds = new mapboxgl.LngLatBounds();
+
+      mapProperties.forEach(property => {
+        const searchAddy = property.address.replace(/\s+/g, "+")
+
+        const marker = new mapboxgl.Marker({
+          color: "#90B8F8"
+        })
+          .setLngLat([parseFloat(property.longitude), parseFloat(property.latitude)])
+          .setPopup(new mapboxgl.Popup().setHTML(`
+            <div class="rounded-full flex flex-col items-center justify-center">
+                <img class="max-w-[150px]" src="${property.image}" alt="option"/>
+                <p class="mb-1 font-bold">${property.name}</p>
+                <hr>
+                <a href='https://www.google.com/maps/place/${searchAddy}'>${property.address}<a>
+            </div>
+          `))
+          .addTo(map)
+
+        bounds.extend([parseFloat(property.longitude), parseFloat(property.latitude)]);
+
+        return marker
+      });
 
       map.fitBounds(bounds, {
         padding: 70,
@@ -55,7 +92,6 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
 
       map.addControl(new mapboxgl.NavigationControl({
         showCompass: false,
-        
       }))
         
     }
@@ -72,7 +108,7 @@ const MapBox = ({ options, retr_options, isClientView, isListMode }) => {
     ) : isListMode ? (
       <div id="MAPBOXBOX" className='rounded-md lg:h-[23rem] lg:w-[23rem] h-[19rem] w-[19rem] shadow-md' />
     ) : (
-      <></>
+      <div id="MAPBOXBOX" className='rounded-md  h-[36rem] w-[44rem] shadow-md' />
     )
   }
     </>
@@ -84,6 +120,7 @@ const mapStateToProps = state => ({
   error: state.auth.error,
   client_results: state.listmaker.client_results,
   options: state.listmaker.options,
+  properties: state.agent.properties,
   isClientView: state.ui.isClientView,
   isListMode: state.ui.isListMode
 });
