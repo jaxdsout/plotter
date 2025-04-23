@@ -33,7 +33,11 @@ import {
     LOAD_USER_DATA_SUCCESS,
     LOAD_USER_DATA_FAIL,
     LOAD_CARDS_SUCCESS,
-    LOAD_CARDS_FAIL
+    LOAD_CARDS_FAIL,
+    SET_POLYGON_FILTER,
+    RESET_POLYGON_FILTER,
+    SET_POLYGON,
+    RESET_POLYGON
 } from '../actions/types';
 
 const initialState = {
@@ -43,6 +47,8 @@ const initialState = {
     tasks: [],
     properties: [],
     cards: [],
+    polygonProps: [],
+    userPolygon: {},
     deal: null,
     isLoaded: false
 };
@@ -63,6 +69,7 @@ export default function agentReducer(state = initialState, action) {
                 lists: [],
                 tasks: [],
                 properties: [],
+                polygonProps: []
             }
         case LOAD_CLIENTS_SUCCESS:
             return {
@@ -104,6 +111,26 @@ export default function agentReducer(state = initialState, action) {
             return {
                 ...state,
                 isLoaded: false
+            }
+        case SET_POLYGON_FILTER:
+            return {
+                ...state,
+                polygon: payload
+            }
+        case RESET_POLYGON_FILTER:
+            return {
+                ...state,
+                polygonProps: []
+            }
+        case SET_POLYGON:
+            return {
+                ...state,
+                userPolygon: payload
+            }
+        case RESET_POLYGON:
+            return {
+                ...state,
+                userPolygon: {}
             }
         case LOAD_CLIENTS_FAIL:
         case LOAD_LISTS_FAIL:

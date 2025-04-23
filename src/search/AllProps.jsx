@@ -7,10 +7,11 @@ import { reset_commission } from "../store/actions/ui";
 import PropDetail from "./PropDetail";
 import MapBox from "../components/MapBox"
 
-function AllProps ({ property, properties, reset_commission }) {
+function AllProps ({ property, properties, reset_commission, polygonProps }) {
     const [propSel, setPropSel] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const [tabSwitch, setTabSwitch] = useState('list')
+    const [tabSwitch, setTabSwitch] = useState('list');
+    const [passedProps, setPassedProps] = useState(properties)
 
     const handleCommSearchReset = () => {
         reset_commission();
@@ -29,10 +30,10 @@ function AllProps ({ property, properties, reset_commission }) {
     }
 
     useEffect(() => {
-        if (property !== null) {
-            handleOpenModal(property)
-        }
-    }, [property])
+        if (polygonProps?.length > 0) {
+            setPassedProps(polygonProps)
+        } 
+    }, [polygonProps])
 
 
     return (
@@ -60,10 +61,10 @@ function AllProps ({ property, properties, reset_commission }) {
 
             <div className="flex flex-col items-center justify-center w-full h-full min-h-[24rem]">
                 {tabSwitch === 'list' && (
-                    <PropList properties={properties} property={property} handleOpenModal={handleOpenModal} />
+                    <PropList properties={passedProps} property={property} handleOpenModal={handleOpenModal} />
                 )}
                 {tabSwitch === 'map' && (
-                    <PropMap />
+                    <PropMap properties={passedProps} />
                 )}     
             </div>              
         
@@ -153,11 +154,11 @@ function PropList ({ properties, property, handleOpenModal }) {
     )
 }
 
-function PropMap () {
+function PropMap ({ properties }) {
 
     return (
         <div>
-            <MapBox />
+            <MapBox properties={properties} />
         </div>
     )
 }
@@ -166,7 +167,8 @@ const mapStateToProps = state => ({
     user: state.auth.user,
     error: state.auth.error,
     properties: state.agent.properties,
-    property: state.listmaker.property
+    property: state.listmaker.property,
+    polygonProps: state.agent.polygonProps
 })
 
 export default connect(mapStateToProps, { reset_commission })(AllProps);

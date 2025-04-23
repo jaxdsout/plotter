@@ -69,7 +69,7 @@ function ListDetail({ listID, list, property, user, set_list_mode, new_option, h
                     </div>
                     <div>
                         <div className="flex items-center justify-center pt-7 pb-3">
-                            <MapBox />
+                            <MapBox options={list.options}/>
                         </div>
                         <Divider />
                         <div className="flex justify-center items-center">

@@ -38,7 +38,10 @@ import {
     LOAD_PROFILE_FAIL,
     USER_DATA_UNCHANGED,
     LOAD_CARDS_FAIL,
-    LOAD_CARDS_SUCCESS
+    LOAD_CARDS_SUCCESS,
+    SET_POLYGON_FILTER,
+    SET_POLYGON_FILTER_FAIL,
+    SET_POLYGON
 } from './types';
 
 import axios from 'axios';
@@ -697,3 +700,39 @@ export const load_user_data = (userID, pathName, forceRefresh) => async (dispatc
         dispatch({ type: LOAD_USER_DATA_FAIL });
     }
 };
+
+
+export const set_polygon_props = (filteredProps) => dispatch => {
+    if (localStorage.getItem('access')) {
+        try {
+            dispatch({
+                type: SET_POLYGON_FILTER,
+                payload: filteredProps
+            });
+            console.log(filteredProps, "filteredProps")
+        } catch (err) {
+            dispatch({
+                type: SET_POLYGON_FILTER_FAIL
+            });
+        }
+    } else {
+        dispatch({
+            type: SET_POLYGON_FILTER_FAIL
+        });
+    }
+}
+
+
+export const set_polygon = (userPolygon) => dispatch => {
+    if (localStorage.getItem('access')) {
+        try {
+            console.log(userPolygon, "userPolygon set")
+            dispatch({
+                type: SET_POLYGON,
+                payload: userPolygon
+            });
+        } catch (err) {
+            console.error(err)
+        }
+    }
+}
