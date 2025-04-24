@@ -77,7 +77,7 @@ function NewCard ({ client, property, user, new_guest_card, reset_guest_card, lo
 
     return (
         <>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center p-4">
                 <Button color="blue" onClick={handleOpenModal} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">+</Button>
             </div>
             <div>

@@ -108,7 +108,7 @@ function NewDeal({ user, load_deals, new_deal, client, property }) {
 
     return (
         <>
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center p-4">
                 <Button color="blue" onClick={handleOpenModal} className="!bg-[#90B8F8] hover:!bg-[#5F85DB] !font-extrabold">+</Button>
             </div>
             <div>

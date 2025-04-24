@@ -11,28 +11,18 @@ import AllDeals from '../deals/AllDeals';
 import AllLists from '../lists/AllLists';
 import AllCards from '../cards/AllCards';
 import AllProps from '../search/AllProps';
-import ProfileWidget from '../components/ProfileWidget';
-import Calculator from './Calculator';
+import Widget from '../components/Widget';
 import { Divider } from 'semantic-ui-react';
 import { auth_user, refresh_token, load_user, lock_out } from '../store/actions/auth';
 import { connect } from 'react-redux';
-import { profile_widget_close, profile_widget_open } from '../store/actions/ui';
+import { motion, AnimatePresence } from 'framer-motion';
+import { widget_close } from '../store/actions/ui';
 
 
-function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, profileWidget, profile_widget_open, profile_widget_close }) {
+function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, widget }) {
     const location = useLocation();
     const basePath = location.pathname.split('/').pop();
     const pathName = location.pathname;
-
-
-    const handleProfileWidget = () => {
-        if (profileWidget) {
-            profile_widget_close();
-        } else {
-            profile_widget_open();
-        };
-    }
-
 
     const checkTokens = useCallback(() => {
         if (!access && !refresh) {
@@ -56,55 +46,80 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, profi
         auth_user(pathName);
     }, [auth_user, pathName])
 
+    useEffect(() => {
+        if (widget === '') {
+            setTimeout(() => {
+                widget_close()
+            }, 40)
+        }
+    }, [widget])
+
 
     return (    
-        <div className='flex flex-col items-center justify-evenly'>
-            <div className="w-11/12 md:w-3/4 max-w-[1000px] p-3 sm:p-5 mt-10 bg-white shadow-inner shadow-md rounded-lg mb-10 pb-10">
-                <div className='z-0 p-3 sm:p-5 flex flex-row items-center justify-center bg-[#1f2124] bg-blend-color-burn rounded-md'>
+        <div className='w-full flex flex-col items-center justify-evenly'>
+            <div className="w-full h-full p-3 sm:p-5 mt-3 bg-white shadow-inner shadow-md overflow-y-hidden">
+                <motion.div 
+                    className='p-3 sm:p-5 flex flex-row items-center justify-center bg-[#1f2124] bg-blend-color-burn rounded-md'
+                    style={{ zIndex: 3 }}
+                    initial={{ translateY: -200 }}
+                    animate={{ translateY: 0 }}
+                    exit={{ translateY: -200 }}
+                    transition={{ duration: 0.5 }}
+                >
                     <Tab to="/dashboard/home" icon="home icon" subtitle="home" currentPath={pathName} />
                     <Tab to="/dashboard/search" icon="search icon" subtitle="search" currentPath={pathName} />
                     <Tab to="/dashboard/clients" icon="users icon" subtitle="clients" currentPath={pathName} />
                     <Tab to="/dashboard/lists" icon="list alternate icon" subtitle="lists" currentPath={pathName} />
                     <Tab to="/dashboard/deals" icon="chart pie icon" subtitle="deals" currentPath={pathName} />
                     <Tab to="/dashboard/cards" icon="address card icon" subtitle="cards" currentPath={pathName} />
-                    <Tab to="/dashboard/calculator" icon="calculator icon" subtitle="calc" currentPath={pathName} />
-                </div>
+                </motion.div>
                 <Divider/>
-                <div className='mt-6'>
-                    {basePath === 'home' && <Dash />}
-                    {basePath === 'search' && <AllProps />}
-                    {basePath === 'clients' && 
-                        <>
-                            <NewClient />
-                            <AllClients />
-                        </>
-                    }
-                    {basePath === 'lists' && 
-                        <>
-                            <NewList />
-                            <AllLists />
-                        </>
-                    }
-                    {basePath === 'deals' && 
-                        <>
-                            <NewDeal />
-                            <AllDeals />
-                        </>
-                    }
-                    {basePath === 'cards' && 
-                        <>
-                            <NewCard />
-                            <AllCards />
-                        </>
-                    }
-                    {basePath === 'calculator' && <Calculator />}
-                </div>
+                <AnimatePresence mode='wait'>
+
+                    <motion.div 
+                        key={basePath}
+                        className='w-full min-h-[50rem] flex flex-col items-center justify-start bg-gray-100 rounded-lg shadow-inner mt-6 mb-8 '
+                        initial={{ translateY: 800 }}
+                        animate={{ translateY: 0 }}
+                        exit={{ translateY: 800 }} 
+                        transition={{ duration: 0.5 }}
+                    >
+                            {basePath === 'home' && <Dash />}
+                            {basePath === 'search' && <AllProps />}
+                            {basePath === 'clients' && 
+                                <>
+                                    <NewClient />
+                                    <AllClients />
+                                </>
+                            }
+                            {basePath === 'lists' && 
+                                <>
+                                    <NewList />
+                                    <AllLists />
+                                </>
+                            }
+                            {basePath === 'deals' && 
+                                <>
+                                    <NewDeal />
+                                    <AllDeals />
+                                </>
+                            }
+                            {basePath === 'cards' && 
+                                <>
+                                    <NewCard />
+                                    <AllCards />
+                                </>
+                            }
+                    </motion.div>
+                </AnimatePresence>
+
             </div>
-            {profileWidget ? (
-                    <div className='z-1 absolute inset-y-72 -mt-3' onDoubleClick={() => handleProfileWidget()}>
-                        <ProfileWidget /> 
-                    </div>
-            ) : null}
+            <AnimatePresence>
+                {widget !== '' && (
+                    <Widget type={widget} />
+                )}
+            </AnimatePresence>
+        
         </div>
     )
 }
@@ -133,7 +148,7 @@ const mapStateToProps = state => ({
     access: state.auth.access,
     refresh: state.auth.refresh,
     user: state.auth.user,
-    profileWidget: state.ui.profileWidget
+    widget: state.ui.widget
 });
 
-export default connect(mapStateToProps, { auth_user, refresh_token, load_user, lock_out, profile_widget_close, profile_widget_open })(Dashboard);
+export default connect(mapStateToProps, { auth_user, refresh_token, load_user, lock_out })(Dashboard);

@@ -20,9 +20,9 @@ import {
     RESET_EDIT_LIST,
     CLIENT_FOUND_SOMEWHERE,
     CLIENT_NOT_FOUND,
-    PROFILE_WIDGET_OPEN,
-    PROFILE_WIDGET_CLOSE,
-    SET_EDIT_LIST
+    WIDGET_OPEN,
+    WIDGET_CLOSE,
+    SET_EDIT_LIST,
 } from "./types"
 
 import axios from "axios";
@@ -242,14 +242,15 @@ export const reset_edit_list = () => dispatch => {
 }
 
 
-export const profile_widget_open = () => dispatch => {
+export const widget_open = (type) => dispatch => {
     dispatch({
-        type: PROFILE_WIDGET_OPEN
+        type: WIDGET_OPEN,
+        payload: type
     })
 }
 
-export const profile_widget_close = () => dispatch => {
+export const widget_close = () => dispatch => {
     dispatch({
-        type: PROFILE_WIDGET_CLOSE
+        type: WIDGET_CLOSE
     })
 }

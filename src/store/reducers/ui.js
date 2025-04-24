@@ -23,8 +23,8 @@ import {
     LOGOUT,
     CLIENT_FOUND_SOMEWHERE,
     CLIENT_NOT_FOUND,
-    PROFILE_WIDGET_CLOSE,
-    PROFILE_WIDGET_OPEN,
+    WIDGET_CLOSE,
+    WIDGET_OPEN,
     UPDATE_CLIENT_SUCCESS,
     LOAD_CLIENTS_SUCCESS,
     LOAD_LISTS_SUCCESS,
@@ -32,7 +32,7 @@ import {
     LOAD_TASKS_SUCCESS,
     LOAD_DEALS_SUCCESS,
     LOAD_CARDS_SUCCESS,
-    SET_EDIT_LIST
+    SET_EDIT_LIST,
 } from '../actions/types';
 
 const initialState = {
@@ -49,12 +49,12 @@ const initialState = {
     message: '',
     error: null,
     clientTaken: false,
-    profileWidget: false
+    widget: '',
 };
 
 
 export default function uiReducer(state = initialState, action) {
-    const { type } = action;
+    const { type, payload } = action;
     switch(type) {
         case SET_CLIENT_VIEW:
             return { 
@@ -184,15 +184,15 @@ export default function uiReducer(state = initialState, action) {
                 ...state,
                 clientTaken: false
             }
-        case PROFILE_WIDGET_OPEN:
+        case WIDGET_OPEN:
             return {
                 ...state,
-                profileWidget: true
+                widget: payload
             }
-        case PROFILE_WIDGET_CLOSE:
+        case WIDGET_CLOSE:
             return {
                 ...state,
-                profileWidget: false
+                widget: ''
             }
         case UPDATE_CLIENT_SUCCESS:
             return {

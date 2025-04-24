@@ -2,9 +2,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { logout } from '../store/actions/auth';
 import { Button } from 'semantic-ui-react';
-import { profile_widget_close, profile_widget_open } from '../store/actions/ui';
+import { widget_close, widget_open } from '../store/actions/ui';
 
-function Navbar ({ logout, isAuthenticated, isClientView, access, profile_widget_close, profile_widget_open, profileWidget }) {
+function Navbar ({ logout, isAuthenticated, isClientView, access, widget_open, widget_close, widget }) {
     const navigate = useNavigate()
 
     const logout_user = () => {
@@ -20,20 +20,23 @@ function Navbar ({ logout, isAuthenticated, isClientView, access, profile_widget
         }
     }
 
-    const handleProfileWidget = () => {
-        if (profileWidget) {
-            profile_widget_close();
+    const handleWidget = (type) => {
+        if (type === 'calculator' || type === 'profile') {
+            if (widget === type) {
+                widget_close();
+            } else {
+                widget_close();
+                widget_open(type);
+            }
         }
-        
-        if (!profileWidget) {
-            profile_widget_open();
-        };
+    
+
     }
 
     return (
         <>
         {!isClientView && (
-            <nav className='bg-[#262626] pl-8 pr-8 pt-8 pb-6 flex flex-row justify-between items-start rounded-bl-2xl rounded-br-2xl'>
+            <nav className='bg-[#262626] p-8 flex flex-row justify-between items-start rounded-bl-2xl rounded-br-2xl' style={{ zIndex: 5 }}>
                 <div>
                     <p className='font-mont text-[#5F85DB] text-5xl sm:text-6xl hover:text-[#4d6ebb] active:translate-y-0.5 drop-shadow' onClick={logo_click}>atlas</p>
 
@@ -42,13 +45,22 @@ function Navbar ({ logout, isAuthenticated, isClientView, access, profile_widget
                     {access ? 
                         <div className='flex flex-row items-start justify-start'>
                             <div className='flex flex-col items-center justify-center ml-4 mr-8 sm:mr-8'>
-                                <button onClick={() => handleProfileWidget()}
+                                <button onClick={() => handleWidget('calculator')}
+                                    className='font-mont drop-shadow-md text-3xl active:translate-y-0.5 text-white hover:text-[#5F85DB]'
+                                >
+                                    <i className="calculator icon !-mr-0 !mb-3 !h-[27px]" />                            
+                                </button>
+                                <p className='text-[0.65rem] text-white font-mont'>CALCULATOR</p>
+                            </div>
+                            <div className='flex flex-col items-center justify-center ml-4 mr-8 sm:mr-8'>
+                                <button onClick={() => handleWidget('profile')}
                                     className='font-mont drop-shadow-md text-3xl active:translate-y-0.5 text-white hover:text-[#5F85DB]'
                                 >
                                     <i className="user circle icon !-mr-0 !mb-3 !h-[27px]" />                            
                                 </button>
                                 <p className='text-[0.65rem] text-white font-mont'>PROFILE</p>
                             </div>
+                       
                             <Button className="!bg-[#90B8F8] hover:!bg-[#5F85DB] drop-shadow active:translate-y-0.5" onClick={logout_user}>LOGOUT</Button> 
                         </div>
                         : 
@@ -68,8 +80,8 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     isClientView: state.ui.isClientView,
     access: state.auth.access,
-    profileWidget: state.ui.profileWidget
+    widget: state.ui.widget,
 });
 
-export default connect(mapStateToProps, { logout, profile_widget_close, profile_widget_open })(Navbar);
+export default connect(mapStateToProps, { logout, widget_close, widget_open })(Navbar);
 

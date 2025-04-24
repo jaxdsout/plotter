@@ -47,15 +47,15 @@ function Calculator () {
     }
 
     return (
-        <div className="h-[45.7rem] flex flex-col items-center justify-start bg-[#26282B] rounded-lg shadow-md shadow-inner">
+        <div className="flex flex-col items-center justify-start rounded-lg text-white bg-gray-500">
             <div className="mt-4 mb-2 flex flex-col items-center">
-                <h4 className='text-center text-white'>Net Effective Rent Calculator</h4>
+                <h4 className='text-center'>Net Effective Rent Calculator</h4>
             </div>
             <div className="mb-2">  
                 <Form className="p-5">
                     <div>
                         <FormField type="number">
-                            <label className="!text-white" htmlFor='lease_term'>Lease Term:</label>
+                            <label htmlFor='lease_term' className="!text-white">Lease Term:</label>
                             <div className="relative">
                                 <span className="absolute inset-y-0 left-0 pl-32 flex items-center text-[1rem] font-bold text-white pointer-events-none">mos</span>
                                 <input 
@@ -69,7 +69,7 @@ function Calculator () {
                             </div>
                         </FormField>
                         <FormField>
-                            <label className="!text-white" htmlFor='monthly_rent'>Monthly Rent:</label>
+                            <label htmlFor='monthly_rent' className="!text-white">Monthly Rent:</label>
                             <div className="relative">
                                 <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] font-bold text-white pointer-events-none">$</span>
                                 <span className="absolute inset-y-0 left-0 pl-32 flex items-center text-[1rem] font-bold text-white pointer-events-none">/ mo</span>
@@ -88,7 +88,7 @@ function Calculator () {
                     <Divider />
                     <div>
                         <FormField>
-                            <label className="!text-white" htmlFor='rent_free'>No. of Rent-Free Months:</label>
+                            <label htmlFor='rent_free' className="!text-white">No. of Rent-Free Months:</label>
                             <div className="relative">
                                 <span className="absolute inset-y-0 left-0 pl-32 flex items-center text-[1rem] font-bold text-white pointer-events-none">mos</span>
                                 <input 
@@ -103,7 +103,7 @@ function Calculator () {
                             </div>
                         </FormField>
                         <FormField>
-                            <label className="!text-white" htmlFor='cash_allowance'>Tenant Cash Allowance:</label>
+                            <label htmlFor='cash_allowance' className="!text-white">Tenant Cash Allowance:</label>
                             <div className="relative">
                                 <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] font-bold text-white pointer-events-none">$</span>
                                 <input 
@@ -120,12 +120,12 @@ function Calculator () {
                     <Divider />
                     <div>
                         <FormField>
-                            <label className="!text-white" htmlFor='net_effective'>Net Effective Rent:</label>
+                            <label  htmlFor='net_effective' className="!text-white">Net Effective Rent:</label>
                             <div className="relative">
                                 <span className="absolute inset-y-0 left-0 pl-4 flex items-center text-[1rem] font-bold text-white pointer-events-none">$</span>
                                 <span className="absolute inset-y-0 left-0 pl-32 flex items-center text-[1rem] font-bold text-white pointer-events-none">/ mo</span>
                                 <input 
-                                    className="!bg-[#496299] !bg-opacity-30 !text-white indent-4"
+                                    className="!bg-[#FF8B3D] !bg-opacity-30 !text-white indent-4"
                                     type='text'
                                     name='net_effective'
                                     value={net_effective}

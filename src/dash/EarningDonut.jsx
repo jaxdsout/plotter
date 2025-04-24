@@ -75,7 +75,7 @@ function EarningDonut ({ deals }) {
   return(
         <Doughnut 
           data={data} options={options} 
-          className='!h-[16rem] !w-[16rem] sm:!h-[16rem] sm:!w-[16rem] md:!h-[24rem] md:!w-[24rem] lg:!h-[24rem] lg:!w-[24rem]'/>
+          className='!h-[16rem] !w-[16rem] sm:!h-[16rem] sm:!w-[16rem] md:!h-[24rem] md:!w-[24rem] lg:!h-[24rem] lg:!w-[24rem] mt-3 md:mt-0'/>
   )
 }
 

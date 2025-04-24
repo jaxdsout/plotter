@@ -37,8 +37,8 @@ function AllProps ({ property, properties, reset_commission, polygonProps }) {
 
 
     return (
-        <div className="h-[45.9rem] flex flex-col items-center justify-start bg-[#26282B] rounded-lg shadow-md shadow-inner">
-            <div className="w-full flex flex-row justify-evenly  items-center mt-5 mb-5 relative">
+        <div className="flex flex-col w-full max-h-[50rem]">
+            <div className="flex flex-row justify-evenly items-center relative">
                 <PropertySearch />
                 {property !== null && (
                     <div className="ml-5 absolute left-5">
@@ -107,24 +107,24 @@ function PropList ({ properties, property, handleOpenModal }) {
     }, [properties, sortConfig]);
 
     return (
-        <div className="flex flex-col overflow-y-auto overflow-x-hidden text-left mt-3 mb-10 snap-start w-full">            
+        <div className="flex flex-col overflow-x-hidden text-left mt-3 mb-10 snap-start w-full p-3">            
             {properties.length > 0 ? (
-                <table className="">
-                    <thead className="text-gray-500 bg-[#1f2124] text-xs">
-                        <th className="text-left p-2">Property</th>
-                        <th className="text-left p-2" onClick={() => sortProperties('send')}>
+                <table>
+                    <thead className="sticky text-white bg-[#1f2124] text-xs">
+                        <th className="text-left p-2 rounded-tl-md rounded-bl-md">Property</th>
+                        <th className="text-left p-2 " onClick={() => sortProperties('send')}>
                             Send {sortConfig.key === 'send' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                         </th>
-                        <th className="text-left p-2" onClick={() => sortProperties('escort')}>
+                        <th className="text-left p-2 " onClick={() => sortProperties('escort')}>
                             Escort {sortConfig.key === 'escort' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                         </th>
-                        <th className="text-left text-wrap sm:text-nowrap p-2" onClick={() => sortProperties('flat_fee')}>
+                        <th className="text-left text-wrap sm:text-nowrap p-2 rounded-tr-md rounded-br-md" onClick={() => sortProperties('flat_fee')}>
                             Flat Fee {sortConfig.key === 'flat_fee' && (sortConfig.direction === 'asc' ? '↑' : '↓')}
                         </th>
                     </thead>
-                    <tbody>
+                    <tbody className="overflow-y-auto">
                         {sortedProperties.map(property => (
-                            <tr key={property.id} className="font-bold text-white hover:text-black hover:bg-gray-100 transition odd:bg-none even:bg-[#232425]">
+                            <tr key={property.id} className="font-bold text-black hover:text-black hover:bg-gray-500 transition odd:bg-none even:bg-gray-200">
                                 <td className="p-2 pr-4 md:pr-12">
                                     <div className="flex flex-col cursor-pointer" onClick={() => handleOpenModal(property)}>
                                         <p className="text-sm">

@@ -10,8 +10,7 @@ import Dashboard from './pages/Dashboard';
 import ClientList from './pages/ClientList';
 import Footer from './partials/Footer';
 import Dash from './dash/Dash';
-import Calculator from './pages/Calculator';
-
+import NetEffective from './pages/NetEffective';
 
 function App() {
   return (
@@ -19,25 +18,25 @@ function App() {
       <header>
         <Navbar />
       </header>
-      <main className='mb-auto'>
-      <Routes>
-        <Route path="/" element={ <Landing /> } />
-        <Route path="/signup/" element={ <SignUpForm /> } />
-        <Route path="/reset-password/" element={ <ResetPassword /> } />
-        <Route path="/reset-password/confirm/:uid/:token" element={ <ConfirmPassword /> } />
-        <Route path="/verify/:uid/:token" element={ <Activate /> } />
-        <Route path="/login/" element={ <Login /> } />
-        <Route path="/dashboard/" element={ <Dashboard /> }>
-          <Route path="home" element={<Dash />} />
-          <Route path="clients" element={<Dashboard />} />
-          <Route path="lists" element={<Dashboard />} />
-          <Route path="deals" element={<Dashboard />} />
-          <Route path="search" element={<Dashboard />} />
-          <Route path="cards" element={<Dashboard />} />
-          <Route path="calculator" element={<Calculator />} />
-        </Route>
-        <Route path="/list/:uuid/" element={ <ClientList /> } />
-      </Routes>
+      <main className=''>
+        <Routes>
+          <Route path="/" element={ <Landing /> } />
+          <Route path="/signup/" element={ <SignUpForm /> } />
+          <Route path="/reset-password/" element={ <ResetPassword /> } />
+          <Route path="/reset-password/confirm/:uid/:token" element={ <ConfirmPassword /> } />
+          <Route path="/verify/:uid/:token" element={ <Activate /> } />
+          <Route path="/login/" element={ <Login /> } />
+          <Route path="/dashboard/" element={ <Dashboard /> }>
+            <Route path="home" element={<Dash />} />
+            <Route path="clients" element={<Dashboard />} />
+            <Route path="lists" element={<Dashboard />} />
+            <Route path="deals" element={<Dashboard />} />
+            <Route path="search" element={<Dashboard />} />
+            <Route path="cards" element={<Dashboard />} />
+          </Route>
+          <Route path="/list/:uuid/" element={ <ClientList /> } />
+          <Route path="/net-effective" element={ <NetEffective />} />
+        </Routes>
       </main>
       <footer>
         <Footer />
