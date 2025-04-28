@@ -44,7 +44,7 @@ function EarningBar ({ deals }) {
         display: false,
       },
       title: {
-        display: true,
+        display: false,
         text: 'Monthly Sales Revenue',
         color: '#1f2124'
       },
@@ -67,7 +67,7 @@ function EarningBar ({ deals }) {
           borderDash: [5, 5], 
         },
         ticks: {
-          color: 'white', 
+          color: 'black', 
           callback: function(value, index, ticks) {
             return '$' + value;
           }
@@ -88,8 +88,11 @@ function EarningBar ({ deals }) {
   };
 
   return (
-        <Bar data={data} options={options} 
-        className='!h-[12rem] !w-[24rem] sm:!h-[12rem] sm:!w-[24rem] md:!h-[12rem] md:!w-[24rem] lg:!h-[18rem] lg:!w-[36rem] mt-3 md:mt-0'/>
+    <div className='relative mt-2 mb-10 md:mb-5 max-h-[20rem] flex flex-col items-center'>
+      <h2 className='absolute text-sm top-[20rem] md:left-[25rem]'>Monthly Earnings</h2>
+      <Bar data={data} options={options} className='h-full' />    
+    </div>
+       
   )
 
 

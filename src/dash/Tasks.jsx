@@ -57,7 +57,7 @@ function Tasks ({ user, load_tasks, tasks, new_task, update_task}) {
     }
     
     return (
-        <div className="w-11/12 max-w-[500px] mt-5 mb-10 flex flex-col items-center justify-center bg-[#26282B] rounded-lg shadow-md shadow-inner">
+        <div className="mt-5 mx-5 mb-10 flex flex-col items-center justify-center bg-[#26282B] rounded-lg shadow-inner">
             <div className='flex flex-col items-center justify-center ml-4 mr-4'>
                 <i className="tasks icon font-mont drop-shadow-md !text-3xl text-white  !mb-4 !mt-4" />
                 <p className='font-mont text-[0.65rem] text-white'>TASKS</p>

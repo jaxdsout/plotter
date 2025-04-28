@@ -22,8 +22,7 @@ function Footer ({ isClientView, reset_client_view }) {
                 </p>
             </nav>
         ) : (
-            <>
-            <div className='flex flex-col items-center bg-gray-300 text-black text-center p-5 sticky bottom-0'>
+            <div className='flex flex-col items-center bg-gray-300 text-black text-center p-6'>
                 {/* {access ? ( */}
                     <div className='mt-3'>
                         <p className='-mb-0 text-xs uppercase'>Have a question or issue?</p>
@@ -35,7 +34,6 @@ function Footer ({ isClientView, reset_client_view }) {
                     <span>2025 Apartment Atlas</span>
                 </p>
             </div>
-            </>
         )}
        </>  
     )

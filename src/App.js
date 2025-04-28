@@ -14,11 +14,11 @@ import NetEffective from './pages/NetEffective';
 
 function App() {
   return (
-    <div className='flex flex-col h-screen justify-between bg-body'>
+    <div className='flex flex-col h-screen justify-end bg-body'>
       <header>
         <Navbar />
       </header>
-      <main className=''>
+      <main>
         <Routes>
           <Route path="/" element={ <Landing /> } />
           <Route path="/signup/" element={ <SignUpForm /> } />

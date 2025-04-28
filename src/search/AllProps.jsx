@@ -1,16 +1,16 @@
-import { Button, Loader, Icon, Popup, Modal, Tab, TabPane } from "semantic-ui-react"
+import { Button, Loader, Icon, Popup, Modal } from "semantic-ui-react"
 import { connect } from "react-redux";
-import { useEffect } from "react";
 import PropertySearch from "../components/PropertySearch";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { reset_commission } from "../store/actions/ui";
 import PropDetail from "./PropDetail";
 import MapBox from "../components/MapBox"
+import { AnimatePresence, motion } from "framer-motion";
 
 function AllProps ({ property, properties, reset_commission, polygonProps }) {
     const [propSel, setPropSel] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const [tabSwitch, setTabSwitch] = useState('list');
+    const [activeTab, setActiveTab] = useState('list');
     const [passedProps, setPassedProps] = useState(properties)
 
     const handleCommSearchReset = () => {
@@ -19,15 +19,21 @@ function AllProps ({ property, properties, reset_commission, polygonProps }) {
     }
 
     const handleOpenModal = (property) => {
+        console.log(property, "handleOpenmodal")
         setPropSel(property)
         setShowModal(true);
     };
 
     const handleCloseModal = async () => {
         setPropSel(null)
-        // await reset_list_mode();
         setShowModal(false);
     }
+
+    const tabSwitch = (string) => {
+        if (activeTab !== string) {
+            setActiveTab(string);
+        }
+    };
 
     useEffect(() => {
         if (polygonProps?.length > 0) {
@@ -35,52 +41,54 @@ function AllProps ({ property, properties, reset_commission, polygonProps }) {
         } 
     }, [polygonProps])
 
-
     return (
         <div className="flex flex-col w-full max-h-[50rem]">
-            <div className="flex flex-row justify-evenly items-center relative">
+            <div className="flex flex-row justify-evenly items-center relative mt-4">
                 <PropertySearch />
                 {property !== null && (
                     <div className="ml-5 absolute left-5">
-                        <Button 
-                            size="tiny" 
-                            color="red" 
-                            inverted 
-                            onClick={handleCommSearchReset} 
-                            className=""
-                        >
-                            RESET
-                        </Button>
+                        <Button size="tiny"  olor="red" inverted onClick={handleCommSearchReset}>RESET</Button>
                     </div>
                 )}
-                <div className="flex flex-row items-center bg-gray-200 rounded-lg">
-                    <Button onClick={() => setTabSwitch('list')} className="border-2 border-black p-3 text-start">List</Button>
-                    <Button onClick={() => setTabSwitch('map')} className="border-2 border-black p-3 text-start">Map</Button>
+                <div className="flex flex-row items-start justify-start bg-gray-200 rounded-md">
+                    <Button onClick={() => tabSwitch('list')} className="border-2 border-black text-start !mr-0">List</Button>
+                    <Button onClick={() => tabSwitch('map')} className="border-2 border-black text-start !mr-0">Map</Button>
                 </div>                    
             </div>
-
-            <div className="flex flex-col items-center justify-center w-full h-full min-h-[24rem]">
-                {tabSwitch === 'list' && (
-                    <PropList properties={passedProps} property={property} handleOpenModal={handleOpenModal} />
-                )}
-                {tabSwitch === 'map' && (
-                    <PropMap properties={passedProps} />
-                )}     
-            </div>              
+            <AnimatePresence mode="wait">
+                <motion.div 
+                    key={activeTab}
+                    className="flex flex-col items-center justify-center w-full h-full min-h-[24rem]"
+                    initital={{ translateY: 500}}
+                    animate={{ translateY: 0}}
+                    exit={{ translateY: 500}}
+                    transition={{ duration: 0.5 }}
+                >
+                    {activeTab === 'list' && (
+                        <PropList properties={passedProps} property={property} handleOpenModal={handleOpenModal} />
+                    )}
+                    {activeTab === 'map' && (
+                        <PropMap properties={passedProps} handleOpenModal={handleOpenModal} />
+                    )}     
+                </motion.div>   
+            </AnimatePresence>
+                  
         
             {propSel && (
                 <Modal className='!w-11/12 sm:!w-[500px] !mb-10' open={showModal} onClose={handleCloseModal}>
-                    <Modal.Header>{propSel?.name}</Modal.Header>
+                    <Modal.Header>
+                        <div className="flex flex-row items-center justify-between">
+                        {propSel?.name}
+                        <Modal.Actions className="flex justify-end">
+                            <Button onClick={handleCloseModal}>CLOSE</Button>
+                        </Modal.Actions>
+                        </div>
+                 
+                    </Modal.Header>
                     <Modal.Content>
                         <PropDetail propSel={propSel} handleCloseModal={handleCloseModal}/>
                     </Modal.Content>
-                    <Modal.Actions className="flex justify-end">
-                        {/* {isListMode ? (
-                            <Button onClick={(() => handleCancelEdit(selectedListID))}>CANCEL</Button>
-                        ): ( */}
-                            <Button onClick={handleCloseModal}>CLOSE</Button>
-                        {/* )} */}
-                    </Modal.Actions>
+                
                 </Modal>
             )}
         </div>
@@ -124,7 +132,7 @@ function PropList ({ properties, property, handleOpenModal }) {
                     </thead>
                     <tbody className="overflow-y-auto">
                         {sortedProperties.map(property => (
-                            <tr key={property.id} className="font-bold text-black hover:text-black hover:bg-gray-500 transition odd:bg-none even:bg-gray-200">
+                            <tr key={property.id} className="font-bold text-black hover:text-white hover:bg-gray-500 transition odd:bg-none even:bg-gray-200">
                                 <td className="p-2 pr-4 md:pr-12">
                                     <div className="flex flex-col cursor-pointer" onClick={() => handleOpenModal(property)}>
                                         <p className="text-sm">
@@ -135,7 +143,7 @@ function PropList ({ properties, property, handleOpenModal }) {
                                                 trigger={ <Icon name="info circle icon" className="!text-xs !text-gray-500 !ml-2" />}
                                             /> 
                                         </p>
-                                        <p className="text-xs text-gray-500 text-nowrap">{property.address} | {property.neighborhood}</p>
+                                        <p className="text-xs text-nowrap">{property.address} | {property.neighborhood}</p>
                                     </div>
                                 </td>
                                 <td className="p-1 text-[0.7rem] sm:text-base">{property.commission.send}%</td>
@@ -154,11 +162,13 @@ function PropList ({ properties, property, handleOpenModal }) {
     )
 }
 
-function PropMap ({ properties }) {
+function PropMap ({ properties, handleOpenModal }) {
+
 
     return (
-        <div>
-            <MapBox properties={properties} />
+        
+        <div className="w-[84rem] h-[64rem] flex flex-col items-center justify-center p-5">
+            <MapBox properties={properties} handleOpenModal={handleOpenModal} />
         </div>
     )
 }

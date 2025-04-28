@@ -51,7 +51,7 @@ function EarningDonut ({ deals }) {
         display: false,
       },
       title: {
-        display: true,
+        display: false,
         text: 'Invoice Status',
         color: '#1f2124',
       },
@@ -73,9 +73,11 @@ function EarningDonut ({ deals }) {
   };
 
   return(
-        <Doughnut 
-          data={data} options={options} 
-          className='!h-[16rem] !w-[16rem] sm:!h-[16rem] sm:!w-[16rem] md:!h-[24rem] md:!w-[24rem] lg:!h-[24rem] lg:!w-[24rem] mt-3 md:mt-0'/>
+    <div className='relative flex flex-col items-center mt-5 mb-2 max-h-[24rem]'>
+      <h2 className='absolute text-sm top-[11.5rem] left-[18.5rem] md:left-[25rem]'>Invoice Status</h2>
+      <Doughnut data={data} options={options} className='h-full'/>
+    </div>
+
   )
 }
 

@@ -88,7 +88,7 @@ function Upcoming ({ deals }) {
                             </tbody>
                         </table>
                     ) : (
-                        <p className='p-2 text-center text-[#1f2124]'>No upcoming renewals...</p>
+                        <p className='text-white bg-[#1f2124] text-xs text-center p-2 rounded-md w-full'>No upcoming renewals...</p>
                     )}
                 </div>
             </div>
