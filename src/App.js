@@ -14,7 +14,7 @@ import NetEffective from './pages/NetEffective';
 
 function App() {
   return (
-    <div className='flex flex-col h-screen justify-end bg-body'>
+    <div className='flex flex-col h-screen justify-start bg-body'>
       <header>
         <Navbar />
       </header>

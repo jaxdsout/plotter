@@ -12,7 +12,6 @@ const MapBox = ({ options, retr_options, properties, set_polygon_props, set_poly
   const [mapOptions, setMapOptions] = useState();
   const mapContainerRef = useRef();
   const mapRef = useRef();
-  const drawRef = useRef();
 
   const location = useLocation();
   const isListMatch = useMatch('/dashboard/lists');
@@ -29,7 +28,7 @@ const MapBox = ({ options, retr_options, properties, set_polygon_props, set_poly
     } else {
       setMapOptions([]);
     }
-  }, [location.pathname]);
+  }, [isClientListMatch, isListMatch, isSearchMatch, options, retr_options, properties]);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -46,7 +45,7 @@ const MapBox = ({ options, retr_options, properties, set_polygon_props, set_poly
     });
 
     mapRef.current = map;
-
+ 
     const draw = new MapboxDraw({
       controls: {
         point: false,
@@ -58,11 +57,9 @@ const MapBox = ({ options, retr_options, properties, set_polygon_props, set_poly
       },
     });
 
-    drawRef.current = draw;
-
-    if ((isSearchMatch || isListMatch) && draw) {
+    if ((isSearchMatch)) {
       map.addControl(draw, 'top-right');
-    }
+    } 
 
     map.on('load', () => {
       if (mapOptions && mapOptions.length > 0) {
@@ -72,11 +69,33 @@ const MapBox = ({ options, retr_options, properties, set_polygon_props, set_poly
           if (!option.longitude || !option.latitude) return;
 
           const popupContent = document.createElement('div');
-          const button = document.createElement('button');
-          button.textContent = option.name;
-          button.className = 'text-black px-3 py-2 text-blue-600'
-          button.onclick = () => handleOpenModal(option);
-          popupContent.appendChild(button);
+
+          if (isSearchMatch) {
+            const button = document.createElement('button');
+            button.textContent = option.name;
+            button.className = 'text-black px-3 py-2 text-blue-600'
+            button.onclick = () => handleOpenModal(option);
+            popupContent.appendChild(button);
+          }
+
+          if (isClientListMatch) {
+            popupContent.className = 'flex flex-col items-center'
+            const img = document.createElement('img');
+            img.src = option.prop_image;
+            img.alt = option.prop_name;
+            const text = document.createElement('h4');
+            text.textContent = option.prop_name;
+            const link = document.createElement('a');
+            link.textContent = 'Directions';
+            link.href = `https://www.google.com/maps/search/?q=${option.prop_name}`
+            link.target="_blank" 
+            link.rel="noopener noreferrer"
+            img.className = 'h-[100px] rounded-md'
+            popupContent.appendChild(img)
+            popupContent.appendChild(text)
+            popupContent.appendChild(link)
+          }
+    
 
           const popup = new mapboxgl.Popup({ offset: 25 }).setDOMContent(popupContent);
 
@@ -118,8 +137,13 @@ const MapBox = ({ options, retr_options, properties, set_polygon_props, set_poly
           }
         };
 
-        draw.delete(feature.id);
-        draw.add(polygonFeature);
+
+        if ((isSearchMatch || isListMatch)) {
+          draw.delete(feature.id);
+          draw.add(polygonFeature);
+        } 
+
+        
 
         const rawPoints = coords.map(([lng, lat]) => [lng, lat]);
         const polyCoords = concaveman(rawPoints);
@@ -141,9 +165,6 @@ const MapBox = ({ options, retr_options, properties, set_polygon_props, set_poly
     });
 
     return () => {
-      if (drawRef.current && mapRef.current) {
-        map.removeControl(drawRef.current);
-      }
       if (mapRef.current) {
         mapRef.current.remove();
       }
@@ -153,11 +174,11 @@ const MapBox = ({ options, retr_options, properties, set_polygon_props, set_poly
   return (
     <div 
       ref={mapContainerRef}
-      className='rounded-md shadow-md'
-      style={{
-          height: isClientView ? '33rem' : isListMode ? '23rem' : '100%' ,
-          width: isClientView ? '33rem' : isListMode ? '23rem' : '100%'
-      }}
+      className={`rounded-md shadow-md 
+        ${isClientListMatch && 'h-[24rem] w-[24rem] md:h-[33rem] md:w-[33rem]'}
+        ${isListMatch && 'h-[24rem] w-[24rem]'}
+        ${isSearchMatch && 'h-[42rem] w-[28rem] md:h-full md:w-full'}
+      `}
     ></div>
   );
 };

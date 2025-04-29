@@ -139,7 +139,7 @@ function NewList({ new_option, reset_reorder_mode, property, list, load_list, lo
                                     </div>
                                     {!isReorderMode && (
                                         <div className="flex justify-center items-center pb-5">
-                                            <MapBox />                                                      
+                                            <MapBox options={list.options}/>                                                      
                                         </div>
                                     )}
                                 </div>

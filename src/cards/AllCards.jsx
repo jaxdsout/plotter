@@ -31,7 +31,7 @@ function AllCards ({ cards }) {
     };
 
     return (
-        <div className="w-full overflow-y-auto">
+        <div className="w-full overflow-y-auto min-h-[44rem]">
             <div className="flex flex-col items-center overflow-y-auto min-h-[24rem] max-h-full text-left mt-3 mb-10 snap-start">
                 {cards?.length > 0 && (
                     <>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ClientDetail from "./ClientDetail";
 import { Modal, Button, Divider, Loader, Dimmer } from "semantic-ui-react";
@@ -16,6 +16,12 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
     const [showListModal, setShowListModal] = useState(null);
     const [selectedList, setSelectedList] = useState(null);
     const [selectedDeal, setSelectedDeal] = useState(null);
+    const [sortedClients, setSortedClients] = useState([]);
+
+    useEffect(() => {
+        const sorted = [...clients].sort((a, b) => a.last_name.localeCompare(b.last_name));
+        setSortedClients(sorted)
+    }, [clients]);
 
     const handleOpenModal = (id) => {
         setShowClientDetail(showClientDetail === id ? null : id)
@@ -74,9 +80,9 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
     };
 
     return (
-        <div className="w-full overflow-y-auto">
+        <div className="w-full overflow-y-auto min-h-[44rem]">
             <div className="flex flex-col items-center overflow-y-auto min-h-[24rem] max-h-full text-left mt-3 mb-10 snap-start">
-                {clients.length > 0 ? (
+                {sortedClients.length > 0 ? (
                     <table className="w-11/12">
                         <thead className="text-white bg-[#1f2124] text-xs text-center">
                             <tr>
@@ -84,7 +90,7 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
                             </tr>
                         </thead>
                         <tbody>
-                            {clients.map((client) => (
+                            {sortedClients.map((client) => (
                                 <tr
                                     key={client.id}
                                     className="font-bold text-black hover:text-black hover:bg-gray-500 transition odd:bg-none even:bg-gray-200 text-center cursor-pointer"
@@ -104,7 +110,7 @@ function AllClients ({ clients, isListMode, isDealMode, reset_list_mode, reset_e
                 )} 
             </div>
 
-            {clients.map(client => (
+            {sortedClients.map(client => (
                 <>
                     {showClientDetail === client.id && (
                         <Modal className='!w-11/12 sm:!w-[500px]' open={showModal} close onClose={handleCloseModal}>

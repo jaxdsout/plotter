@@ -56,10 +56,10 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, widge
 
 
     return (    
-        <div className='w-full flex flex-col items-center justify-evenly'>
+        <div className='w-full h-screen flex flex-col items-center justify-evenly'>
             <div className="w-full h-full p-3 sm:p-5 mt-3 bg-white shadow-inner shadow-md overflow-y-hidden">
                 <motion.div 
-                    className='p-3 sm:p-5 flex flex-row items-center justify-center bg-[#1f2124] bg-blend-color-burn rounded-md'
+                    className='p-3 sm:p-5 flex flex-row items-center justify-center bg-[#3e3e3e] bg-blend-color-burn rounded-md'
                     style={{ zIndex: 3 }}
                     initial={{ translateY: -200 }}
                     animate={{ translateY: 0 }}
@@ -78,7 +78,7 @@ function Dashboard ({ auth_user, refresh_token, access, refresh, lock_out, widge
 
                     <motion.div 
                         key={basePath}
-                        className='w-full min-h-[50rem] flex flex-col items-center justify-start bg-gray-100 rounded-lg shadow-inner mt-6 mb-8 '
+                        className='w-full flex flex-col items-center justify-start bg-gray-100 rounded-lg shadow-inner mt-6 mb-8'
                         initial={{ translateY: 800 }}
                         animate={{ translateY: 0 }}
                         exit={{ translateY: 800 }} 
@@ -129,8 +129,8 @@ const Tab = ({ to, icon, currentPath, subtitle }) => {
     const isActive = currentPath === to;
 
     return (
-        <div className='relative flex flex-col items-center justify-center px-2 md:px-5'>
-            <h1 className='text-3xl md:text-5xl'>
+        <div className='relative flex flex-col items-center justify-center px-4 md:px-5'>
+            <h1 className='text-4xl md:text-5xl'>
                 <Link to={to}>
                     { icon ? <i className={`font-mont drop-shadow-md active:translate-y-0.5
                     ${isActive ? "text-[#89a2dc]" : "text-white"} hover:text-[#5F85DB] ${icon}`} /> : null }

@@ -74,7 +74,6 @@ function EarningDonut ({ deals }) {
 
   return(
     <div className='relative flex flex-col items-center mt-5 mb-2 max-h-[24rem]'>
-      <h2 className='absolute text-sm top-[11.5rem] left-[18.5rem] md:left-[25rem]'>Invoice Status</h2>
       <Doughnut data={data} options={options} className='h-full'/>
     </div>
 

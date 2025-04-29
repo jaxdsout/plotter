@@ -27,9 +27,9 @@ function Widget ({ widget, type  }) {
             key={widget}
             className='absolute' 
             onDoubleClick={() => handleWidget(type)}
-            initial={{ translateY: -900 }}
-            animate={{ translateY: 0 }}
-            exit={{ translateY: -900 }}
+            initial={{ top: 0 }}
+            animate={{ top: widget === 'calculator' ? 120 : 120 }}
+            exit={{ top: 0 }}
             transition={{ duration: 0.5 }}
         >
             <Card className='drop-shadow-xl shadow-inner'>

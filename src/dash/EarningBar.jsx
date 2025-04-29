@@ -88,8 +88,7 @@ function EarningBar ({ deals }) {
   };
 
   return (
-    <div className='relative mt-2 mb-10 md:mb-5 max-h-[20rem] flex flex-col items-center'>
-      <h2 className='absolute text-sm top-[20rem] md:left-[25rem]'>Monthly Earnings</h2>
+    <div className='relative mt-2 mb-20 px-5 md:mb-20 max-h-[20rem] flex flex-col items-center'>
       <Bar data={data} options={options} className='h-full' />    
     </div>
        

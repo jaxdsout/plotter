@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Modal, Button, Loader, Dimmer } from "semantic-ui-react";
 import ListDetail from "./ListDetail";
@@ -11,8 +11,14 @@ import { load_list } from "../store/actions/listmaker";
 function AllLists ({ lists, reset_list_mode, isListMode, load_list, isLoaded }) {
     const [selectedListID, setSelectedListID] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [sortedLists, setSortedLists] = useState([]);
 
-
+    useEffect(() => {
+        const sorted = [...lists].sort((a, b) => new Date(b.date) - new Date(a.date));
+        setSortedLists(sorted);
+        console.log(sortedLists)
+    }, [sortedLists]);
+    
     const handleOpenModal = (id) => {
         setSelectedListID(selectedListID === id ? null : id)
         setShowModal(true);
@@ -41,9 +47,9 @@ function AllLists ({ lists, reset_list_mode, isListMode, load_list, isLoaded }) 
     };
 
     return (
-        <div className="overflow-y-auto w-full">
+        <div className="overflow-y-auto w-full min-h-[44rem]">
             <div className="flex flex-col items-center overflow-y-auto min-h-[24rem] max-h-full text-left mt-3 mb-10 snap-start">
-                {lists.length > 0 ? (
+                {sortedLists.length > 0 ? (
                     <>
                         <table className="w-11/12">
                             <thead className="text-white bg-[#1f2124] text-xs text-center">
@@ -53,7 +59,7 @@ function AllLists ({ lists, reset_list_mode, isListMode, load_list, isLoaded }) 
                                 </tr>
                             </thead>
                             <tbody>
-                                {lists.map((list) => (
+                                {sortedLists.map((list) => (
                                     <tr
                                         key={list.id}
                                         className="font-bold text-black hover:text-black hover:bg-gray-500 transition odd:bg-none even:bg-gray-200 text-center cursor-pointer"

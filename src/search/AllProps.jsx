@@ -42,7 +42,7 @@ function AllProps ({ property, properties, reset_commission, polygonProps }) {
     }, [polygonProps])
 
     return (
-        <div className="flex flex-col w-full max-h-[50rem]">
+        <div className="flex flex-col w-full max-h-[49rem]">
             <div className="flex flex-row justify-evenly items-center relative mt-4">
                 <PropertySearch />
                 {property !== null && (
@@ -50,9 +50,9 @@ function AllProps ({ property, properties, reset_commission, polygonProps }) {
                         <Button size="tiny"  olor="red" inverted onClick={handleCommSearchReset}>RESET</Button>
                     </div>
                 )}
-                <div className="flex flex-row items-start justify-start bg-gray-200 rounded-md">
-                    <Button onClick={() => tabSwitch('list')} className="border-2 border-black text-start !mr-0">List</Button>
-                    <Button onClick={() => tabSwitch('map')} className="border-2 border-black text-start !mr-0">Map</Button>
+                <div className="bg-gray-300 p-1 flex flex-row items-start justify-start rounded-md">
+                    <Button onClick={() => tabSwitch('list')} toggle active={activeTab === 'list'} className="border-2 border-black text-start !mx-0.5">List</Button>
+                    <Button onClick={() => tabSwitch('map')} toggle active={activeTab === 'map'} className={`border-2 border-black text-start !mx-0.5`}>Map</Button>
                 </div>                    
             </div>
             <AnimatePresence mode="wait">
@@ -167,7 +167,7 @@ function PropMap ({ properties, handleOpenModal }) {
 
     return (
         
-        <div className="w-[84rem] h-[64rem] flex flex-col items-center justify-center p-5">
+        <div className="w-full h-[64rem] flex flex-col items-center justify-center p-5">
             <MapBox properties={properties} handleOpenModal={handleOpenModal} />
         </div>
     )
